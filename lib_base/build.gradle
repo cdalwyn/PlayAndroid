@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: "libs", include: ["*.jar"])
+    api rootProject.ext.androidx["design"]
+    api rootProject.ext.androidx["constraintlayout"]
+    api rootProject.ext.androidx["appcompat"]
+    api rootProject.ext.androidx["constraintlayout"]
+    api rootProject.ext.androidx["junit"]
+    api rootProject.ext.androidx["runner"]
+    api rootProject.ext.androidx["espresso-core"]
+    api rootProject.ext.androidx["lifecycle-extensions"]
+    api rootProject.ext.androidx["multidex"]
+    api rootProject.ext.androidx["kotlin_lib"]
+    api rootProject.ext.androidx["kotlin_core"]
+    api rootProject.ext.dependencies["arouter_api"]
+    api rootProject.ext.dependencies["arouter_compiler"]
+}
