@@ -108,7 +108,7 @@ open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected v
     /**
      * 跳转容器页面
      *
-     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()：com.czl.module_user.ui.fragment.FirstFragment
      * @param bundle        跳转所携带的信息
      */
     fun startContainerActivity(

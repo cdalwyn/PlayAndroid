@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.mvvm.ui.CommonActivity
 import com.czl.lib_base.route.RouteCenter
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -205,19 +206,18 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     /**
      * 跳转容器页面
-     *
-     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     * 内部通过canonicalName反射调用类名.newInstance()动态实例化fragment
+     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()：com.czl.module_user.ui.fragment.FirstFragment
      * @param bundle        跳转所携带的信息
      */
     fun startContainerActivity(
         canonicalName: String?,
         bundle: Bundle? = null
     ) {
-        val intent =
-            Intent(this, ContainerActivity::class.java)
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName)
+        val intent = Intent(this, CommonActivity::class.java)
+        intent.putExtra(CommonActivity.FRAGMENT, canonicalName)
         if (bundle != null) {
-            intent.putExtra(ContainerActivity.BUNDLE, bundle)
+            intent.putExtra(CommonActivity.BUNDLE, bundle)
         }
         startActivity(intent)
     }

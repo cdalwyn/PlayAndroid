@@ -14,6 +14,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.entity.ArticleBean
 import com.czl.lib_base.mvvm.entity.CollectArticle
+import com.czl.lib_base.mvvm.ui.CommonActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
@@ -83,12 +84,7 @@ class MainViewModel(application: MyApplication, model: DataRepository) :
 
     // 启动Fragment
     val startFmOnClick: View.OnClickListener = View.OnClickListener {
-//        val bundle = Bundle()
-//        bundle.putInt(ParameterField.BUNDLE_KEY, 0)
-//        startActivity(CommonActivity::class.java, bundle)
-        val firstFragment:SupportFragment = RouteCenter.navigate(AppConstants.Router.User.F_FIRST) as SupportFragment
-        // todo
-//        startContainerActivity("FirstFragment")
+        startContainerActivity("com.czl.module_user.ui.fragment.FirstFragment")
     }
 
     // 启动VP+Fragment
