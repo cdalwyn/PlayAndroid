@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.czl.lib_base.base.BaseViewModel" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/home_toolbar"
+        style="@style/actionBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/toolbarShadow"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="?android:actionBarSize"
+                android:background="@drawable/toolbar_shad" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/back_btn_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:onClick="@{(x)->viewModel.finish()}"
+                    android:visibility="@{viewModel.btnBackVisibility.equals(`0`)?view.INVISIBLE:view.VISIBLE}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_16"
+                        app:srcCompat="@drawable/ic_back_black_24dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@+id/back_btn_layout"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/toolbar_contentTitle"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="@{viewModel.tvTitle}"
+                        android:textColor="@color/md_grey_900"
+                        android:textSize="@dimen/sp_16"
+                        tools:text="鉴真" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btn_toolbar_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/toolbar_right_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/dp_16"
+                        android:layout_marginEnd="@dimen/dp_16"
+                        android:minWidth="@dimen/dp_24"
+                        binding:onClickCommand="@{viewModel.ivToolbarIconOnClick}"
+                        binding:src="@{viewModel.ivToolbarIconRes}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/toolbar_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:minWidth="@dimen/dp_24"
+                        android:paddingEnd="@dimen/dp_10"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_14"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </FrameLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+</layout>

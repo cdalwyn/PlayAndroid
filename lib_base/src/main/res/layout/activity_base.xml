@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.czl.lib_base.base.BaseViewModel" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/activity_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/notch_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <include layout="@layout/common_toolbar"
+            bind:viewModel="@{viewModel}"/>
+
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/empty_common_layout"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="match_parent"-->
+        <!--        android:orientation="vertical"-->
+        <!--        android:visibility="gone">-->
+        <!--        <include layout="@layout/common_net_error_view" />-->
+        <!--    </LinearLayout>-->
+
+
+    </LinearLayout>
+</layout>

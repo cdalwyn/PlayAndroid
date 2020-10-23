@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -12,18 +13,36 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
 
+        //阿里路由框架配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath = true
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug{
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled true
     }
 }
 
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
+    api project(path: ":mvvmhabit")
     api rootProject.ext.androidx["design"]
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
@@ -37,4 +56,16 @@ dependencies {
     api rootProject.ext.androidx["kotlin_core"]
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_compiler"]
+
+    api rootProject.ext.dependencies["koin_scope"]
+    api rootProject.ext.dependencies["koin_viewmodel"]
+    api rootProject.ext.dependencies["koin_fragment"]
+    api rootProject.ext.dependencies["utils"]
+    api rootProject.ext.dependencies["mmkv"]
+    api rootProject.ext.dependencies["livebus"]
+    api rootProject.ext.dependencies["fragmentationx"]
+    api rootProject.ext.dependencies["swipeback"]
+    api rootProject.ext.dependencies["permissionx"]
+    api rootProject.ext.dependencies["leakcanary"]
+
 }

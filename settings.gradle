@@ -1,5 +1,7 @@
 include ':module_user'
+include ':module_main'
 include ':module_login'
 include ':lib_base'
+include ':mvvmhabit'
 include ':app'
 rootProject.name = "MvvmComponents"

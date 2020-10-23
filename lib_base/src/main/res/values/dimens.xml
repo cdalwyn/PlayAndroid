@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="login_logo_hw">140dp</dimen>
+    <dimen name="login_logo_mg_top">74dp</dimen>
+    <dimen name="login_editText_height">46dp</dimen>
+    <!--SearchView参数设置-->
+    <dimen name="search_bar_height">30dp</dimen>
+    <dimen name="search_view_corner_radius">20dp</dimen>
+    <dimen name="square_button_icon_size">24dp</dimen>
+    <dimen name="square_button_size">30dp</dimen>
+    <dimen name="square_button_padding">6dp</dimen>
+    <dimen name="search_bar_left_icon_left_margin">5dp</dimen>
+    <dimen name="search_bar_right_icon_right_margin">4dp</dimen>
+    <dimen name="search_bar_search_input_left_margin">10dp</dimen>
+
+    <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_14">14dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_18">18dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_6">6dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_20">20sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_26">26sp</dimen>
+    <dimen name="sp_28">28sp</dimen>
+    <dimen name="sp_30">30sp</dimen>
+
+</resources>

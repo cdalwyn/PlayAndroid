@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -16,10 +17,10 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
+                includeCompileClasspath = true
             }
         }
     }
-    
     buildTypes {
         release {
             minifyEnabled false
@@ -47,13 +48,17 @@ android {
     dataBinding {
         enabled true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
+    implementation project(path: ':lib_base')
     if (!isBuildModule.toBoolean()){
         implementation project(path: ':module_login')
+        implementation project(path: ':module_main')
         implementation project(path: ':module_user')
-    }else {
-        implementation project(path: ':lib_base')
     }
 }

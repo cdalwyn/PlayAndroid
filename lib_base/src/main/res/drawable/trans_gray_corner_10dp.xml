@@ -1,0 +1,9 @@
+<shape android:shape="rectangle"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--填充色-->
+    <solid android:color="@color/tran_gray"/>
+    <!--边框的宽 和 边框颜色-->
+    <!--按钮的四个角为  弧角  -->
+    <!--  弧角radius 半径-->
+    <corners android:radius="@dimen/dp_10"/>
+</shape>
