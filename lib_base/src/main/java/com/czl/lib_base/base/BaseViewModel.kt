@@ -107,7 +107,7 @@ open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected v
 
     /**
      * 跳转容器页面
-     *
+     * 先通过路由获取Fragment
      * @param canonicalName 规范名 : Fragment.class.getCanonicalName()：com.czl.module_user.ui.fragment.FirstFragment
      * @param bundle        跳转所携带的信息
      */

@@ -125,15 +125,6 @@
                 android:textAllCaps="false"
                 binding:layout_constraintTop_toBottomOf="@id/btnCollection" />
 
-            <Button
-                android:id="@+id/btnVp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{viewModel.startVpFmOnClick}"
-                android:text="启动VP+Fragment"
-                android:textAllCaps="false"
-                binding:layout_constraintTop_toBottomOf="@id/btnStart" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
-import com.czl.lib_base.base.AppViewModelFactory
-import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.R
+import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.gyf.immersionbar.ImmersionBar
-import me.goldze.mvvmhabit.base.ContainerActivity
 import me.goldze.mvvmhabit.base.IBaseView
 import me.goldze.mvvmhabit.bus.Messenger
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils
@@ -23,7 +20,7 @@ import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 
 /**
- * Created by goldze on 2017/6/15.
+ * Created by Alwyn on 2020/10/10.
  */
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxFragment(), IBaseView {
@@ -211,10 +208,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         canonicalName: String?,
         bundle: Bundle? = null
     ) {
-        val intent = Intent(context, ContainerActivity::class.java)
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName)
+        val intent = Intent(context, ContainerFmActivity::class.java)
+        intent.putExtra(ContainerFmActivity.FRAGMENT, canonicalName)
         if (bundle != null) {
-            intent.putExtra(ContainerActivity.BUNDLE, bundle)
+            intent.putExtra(ContainerFmActivity.BUNDLE, bundle)
         }
         startActivity(intent)
     }

@@ -1,6 +1,5 @@
 package com.czl.module_main.viewmodel
 
-import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
@@ -14,7 +13,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.entity.ArticleBean
 import com.czl.lib_base.mvvm.entity.CollectArticle
-import com.czl.lib_base.mvvm.ui.CommonActivity
+import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
@@ -25,7 +24,6 @@ import me.goldze.mvvmhabit.binding.command.BindingConsumer
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent
 import me.goldze.mvvmhabit.utils.ToastUtils
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author Alwyn
@@ -84,14 +82,10 @@ class MainViewModel(application: MyApplication, model: DataRepository) :
 
     // 启动Fragment
     val startFmOnClick: View.OnClickListener = View.OnClickListener {
-        startContainerActivity("com.czl.module_user.ui.fragment.FirstFragment")
-    }
-
-    // 启动VP+Fragment
-    val startVpFmOnClick: View.OnClickListener = View.OnClickListener {
-//        val bundle = Bundle()
-//        bundle.putInt(ParameterField.BUNDLE_KEY, 1)
-//        startActivity(CommonActivity::class.java, bundle)
+        val fragment: Fragment = RouteCenter.navigate(AppConstants.Router.User.F_FIRST) as Fragment
+        fragment::class.java.canonicalName?.apply {
+            startContainerActivity(this)
+        }
     }
 
     // 获取列表数据

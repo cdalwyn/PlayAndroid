@@ -209,10 +209,10 @@ public abstract class RootActivity<V extends ViewDataBinding, VM extends RootVie
      * @param bundle        跳转所携带的信息
      */
     public void startContainerActivity(String canonicalName, Bundle bundle) {
-        Intent intent = new Intent(this, ContainerActivity.class);
-        intent.putExtra(ContainerActivity.FRAGMENT, canonicalName);
+        Intent intent = new Intent(this, CommonFragmentActivity.class);
+        intent.putExtra(CommonFragmentActivity.FRAGMENT, canonicalName);
         if (bundle != null) {
-            intent.putExtra(ContainerActivity.BUNDLE, bundle);
+            intent.putExtra(CommonFragmentActivity.BUNDLE, bundle);
         }
         startActivity(intent);
     }

@@ -13,12 +13,11 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
-import com.czl.lib_base.mvvm.ui.CommonActivity
+import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.goldze.mvvmhabit.base.AppManager
-import me.goldze.mvvmhabit.base.ContainerActivity
 import me.goldze.mvvmhabit.base.IBaseView
 import me.goldze.mvvmhabit.bus.Messenger
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils
@@ -60,7 +59,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         super.onDestroy()
         //解除Messenger注册
         Messenger.getDefault().unregister(viewModel)
-        //        if (viewModel != null) {
+//        if (viewModel != null) {
 //            viewModel.removeRxBus();
 //        }
         binding?.unbind()
@@ -81,8 +80,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
             rootBinding?.setVariable(initVariableId(), initViewModel())
             rootBinding?.lifecycleOwner = this
             // 在根布局添加公共布局 目前只添加了标题栏
-            if (parentContentView != 0) {
-                parentContent = LayoutInflater.from(this).inflate(parentContentView, null)
+            if (addParentContentView() != 0) {
+                parentContent = LayoutInflater.from(this).inflate(addParentContentView(), null)
                 mActivityRoot.addView(parentContent)
             }
 //            DataBindingUtil类需要在project的build中配置 dataBinding {enabled true }, 同步后会自动关联android.databinding包
@@ -100,7 +99,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         //关联ViewModel
         binding?.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding?.setLifecycleOwner(this)
+        binding?.lifecycleOwner = this
         //让ViewModel拥有View的生命周期感应
         lifecycle.addObserver(viewModel)
         //注入RxLifecycle生命周期
@@ -214,10 +213,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         canonicalName: String?,
         bundle: Bundle? = null
     ) {
-        val intent = Intent(this, CommonActivity::class.java)
-        intent.putExtra(CommonActivity.FRAGMENT, canonicalName)
+        val intent = Intent(this, ContainerFmActivity::class.java)
+        intent.putExtra(ContainerFmActivity.FRAGMENT, canonicalName)
         if (bundle != null) {
-            intent.putExtra(CommonActivity.BUNDLE, bundle)
+            intent.putExtra(ContainerFmActivity.BUNDLE, bundle)
         }
         startActivity(intent)
     }
@@ -237,8 +236,9 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @return
      */
-    private val parentContentView: Int
-        get() = 0
+    protected open fun addParentContentView():Int{
+        return 0
+    }
 
     /**
      * 初始化根布局
@@ -270,13 +270,13 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     override fun initViewObservable() {}
 
-    /**
-     * 创建ViewModel
-     *
-     * @param cls
-     * @param <T>
-     * @return
-     */
+//    /**
+//     * 创建ViewModel
+//     *
+//     * @param cls
+//     * @param <T>
+//     * @return
+//     */
 //    fun <T : ViewModel?> createViewModel(
 //        activity: FragmentActivity?,
 //        cls: Class<T>?
