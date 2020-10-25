@@ -1,10 +1,12 @@
 package com.czl.module_main.viewmodel
 
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.launcher.ARouter
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.DataRepository
@@ -82,10 +84,9 @@ class MainViewModel(application: MyApplication, model: DataRepository) :
 
     // 启动Fragment
     val startFmOnClick: View.OnClickListener = View.OnClickListener {
-        val fragment: Fragment = RouteCenter.navigate(AppConstants.Router.User.F_FIRST) as Fragment
-        fragment::class.java.canonicalName?.apply {
-            startContainerActivity(this)
-        }
+        val bundle = Bundle()
+        bundle.putString(AppConstants.BundleKey.MAIN2FIRST,"这是MainModule路由携带过来的数据")
+        startContainerActivity(AppConstants.Router.User.F_FIRST,bundle)
     }
 
     // 获取列表数据

@@ -139,7 +139,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
             this, Observer { params: Map<String?, Any?> ->
-                val canonicalName = params[BaseViewModel.ParameterField.CANONICAL_NAME] as String?
+                val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                 startContainerActivity(canonicalName, bundle)
             }
@@ -200,16 +200,15 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     /**
      * 跳转容器页面
-     *
-     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()
+     * @param routePath Fragment路由地址
      * @param bundle        跳转所携带的信息
      */
     fun startContainerActivity(
-        canonicalName: String?,
+        routePath: String?,
         bundle: Bundle? = null
     ) {
         val intent = Intent(context, ContainerFmActivity::class.java)
-        intent.putExtra(ContainerFmActivity.FRAGMENT, canonicalName)
+        intent.putExtra(ContainerFmActivity.FRAGMENT, routePath)
         if (bundle != null) {
             intent.putExtra(ContainerFmActivity.BUNDLE, bundle)
         }

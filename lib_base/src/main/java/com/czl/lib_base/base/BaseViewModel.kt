@@ -2,7 +2,6 @@ package com.czl.lib_base.base
 
 import android.os.Bundle
 import androidx.databinding.ObservableField
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -25,7 +24,10 @@ import java.util.*
  * 由于ViewModel工厂通过反射动态实例化，无需再手动构造实例
  * 所以子类继承构造指定为 application: MyApplication, model: DataRepository 泛型为<DataRepository>。
  */
-open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected var model: M? = null) :
+open class BaseViewModel<M : BaseModel?>(
+    application: MyApplication,
+    protected var model: M? = null
+) :
     AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?>, KoinComponent {
 
     val uC: UIChangeLiveData = UIChangeLiveData()
@@ -107,16 +109,15 @@ open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected v
 
     /**
      * 跳转容器页面
-     * 先通过路由获取Fragment
-     * @param canonicalName 规范名 : Fragment.class.getCanonicalName()：com.czl.module_user.ui.fragment.FirstFragment
-     * @param bundle        跳转所携带的信息
+     * @param routePath Fragment路由地址
+     * @param bundle    跳转所携带的信息
      */
     fun startContainerActivity(
-        canonicalName: String,
+        routePath: String,
         bundle: Bundle? = null
     ) {
         val params: MutableMap<String, Any> = HashMap()
-        params[ParameterField.CANONICAL_NAME] = canonicalName
+        params[ParameterField.ROUTE_PATH] = routePath
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
         }
@@ -176,12 +177,10 @@ open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected v
         var CLASS = "CLASS"
 
         @JvmField
-        var CANONICAL_NAME = "CANONICAL_NAME"
+        var ROUTE_PATH = "ROUTE_PATH"
 
         @JvmField
         var BUNDLE = "BUNDLE"
 
-        @JvmField
-        var BUNDLE_KEY = "BUNDLE_KEY"
     }
 }

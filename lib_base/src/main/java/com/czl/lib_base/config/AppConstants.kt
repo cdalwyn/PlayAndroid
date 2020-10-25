@@ -15,15 +15,21 @@ interface AppConstants {
      * 路由 A_ : Activity
      *     F_ : Fragment
      */
-    interface Router{
-        object Main{
+    interface Router {
+        object Main {
             const val A_MAIN = "/main/MainActivity"
         }
-        object Login{
+
+        object Login {
             const val A_LOGIN = "/login/LoginActivity"
         }
-        object User{
+
+        object User {
             const val F_FIRST = "/user/FirstFragment"
         }
+    }
+
+    object BundleKey {
+        const val MAIN2FIRST = "main2first"
     }
 }

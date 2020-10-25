@@ -1,17 +1,19 @@
 package com.czl.lib_base.mvvm.ui
 
 import android.os.Bundle
+import com.alibaba.android.arouter.launcher.ARouter
 import com.czl.lib_base.BR
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.databinding.CommonContainerBinding
 import com.czl.lib_base.mvvm.viewmodel.CommonViewModel
+import com.czl.lib_base.route.RouteCenter
 import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author Alwyn
  * @Date 2020/10/19
- * @Description Fragment容器 根据canonicalName加载根Fragment
+ * @Description Fragment容器 根据路由地址加载根Fragment
  */
 class ContainerFmActivity : BaseActivity<CommonContainerBinding, CommonViewModel>() {
     companion object {
@@ -32,19 +34,15 @@ class ContainerFmActivity : BaseActivity<CommonContainerBinding, CommonViewModel
     }
 
     override fun initData() {
-        val fragmentName: String? = intent.getStringExtra(FRAGMENT)
-        if (fragmentName.isNullOrBlank()){
+        ARouter.getInstance().inject(this)
+        val fragmentPath: String? = intent.getStringExtra(FRAGMENT)
+        if (fragmentPath.isNullOrBlank()) {
             return
         }
-        val fragmentClass = Class.forName(fragmentName)
-        val fragment = fragmentClass.newInstance() as SupportFragment
         val args: Bundle? = intent.getBundleExtra(BUNDLE)
-        if (args != null) {
-            fragment.arguments = args
-        }
+        val fragment: SupportFragment = RouteCenter.navigate(fragmentPath,args) as SupportFragment
         if (findFragment(fragment::class.java) == null) {
             loadRootFragment(R.id.fl_container, fragment)
         }
     }
-
 }
