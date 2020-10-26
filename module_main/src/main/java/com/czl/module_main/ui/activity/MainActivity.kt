@@ -67,6 +67,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     override fun initData() {
+        ToastUtils.showShort("${viewModel.getLoginUserName()} 登录成功")
         viewModel.tvTitle.set("首页")
         viewModel.btnBackVisibility.set("0")
         PermissionUtil.reqStorage(

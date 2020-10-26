@@ -1,48 +1,11 @@
-package com.czl.lib_base.mvvm.entity
+package com.czl.lib_base.data.entity
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-
 /**
  * @author Alwyn
  * @Date 2020/10/15
  * @Description
  */
-data class CollectionsBean(
-    @SerializedName("is_end")
-    val isEnd: Int,
-    @SerializedName("last_page")
-    val lastPage: Int,
-    @SerializedName("list")
-    val list: List<Collection>,
-    @SerializedName("page")
-    val page: Int,
-    @SerializedName("page_size")
-    val pageSize: Int,
-    @SerializedName("total")
-    val total: Int
-) : Serializable {
-    data class Collection(
-        @SerializedName("hot_url")
-        val hotUrl: String,
-        @SerializedName("id")
-        val id: Int,
-        @SerializedName("log_coding_id")
-        val logCodingId: Int,
-        @SerializedName("name")
-        val name: String,
-        @SerializedName("transfer_code")
-        val transferCode: String,
-        @SerializedName("type_id")
-        val typeId: Int,
-        @SerializedName("photo_id")
-        val photoId: Int,
-        @SerializedName("qrcode_url")
-        val qrCode_url: String
-//        @SerializedName("copyright")
-//        val copyRight: CopyRight
-    ) : Serializable
-}
 data class UserBean(
     @SerializedName("admin")
     val admin: Boolean,

@@ -1,5 +1,6 @@
 package com.czl.module_login.ui.activity
 
+import android.content.Intent
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.module_login.BR
 import com.czl.module_login.R
@@ -26,6 +27,7 @@ class LoginActivity : BaseActivity<LoginActivityLoginBinding, LoginViewModel>() 
 
     override fun initData() {
         super.initData()
+
     }
 
     override fun useBaseLayout(): Boolean {

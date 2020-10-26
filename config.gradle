@@ -32,11 +32,8 @@ ext {
     //support配置
     support = [
             'support-v4'              : "androidx.legacy:legacy-support-v4:${versions["support-version"]}",
-            'appcompat-v7'            : "androidx.appcompat:appcompat:${versions["support-version"]}",
             'recyclerview-v7'         : "androidx.recyclerview:recyclerview:${versions["support-version"]}",
             'support-v13'             : "androidx.legacy:legacy-support-v13:${versions["support-version"]}",
-            'support-fragment'        : "androidx.fragment:fragment:${versions["support-version"]}",
-            'design'                  : "com.google.android.material:material:${versions["support-version"]}",
             'animated-vector-drawable': "androidx.vectordrawable:vectordrawable-animated:${versions["support-version"]}",
             'junit'                   : "junit:junit:${versions["junit-version"]}",
     ]

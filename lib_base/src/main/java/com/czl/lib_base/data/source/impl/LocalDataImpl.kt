@@ -1,7 +1,7 @@
-package com.czl.lib_base.base.source.impl
+package com.czl.lib_base.data.source.impl
 
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.base.source.LocalDataSource
+import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpUtils
 
 /**
@@ -17,10 +17,10 @@ class LocalDataImpl : LocalDataSource {
 
     override fun getLocalData(): String {
 
-        val data = (1..50)
-        val list: MutableList<String> = mutableListOf()
+        val data:IntRange = 1..50
+        val list: MutableList<Int> = mutableListOf()
         for (i in data) {
-            list.add(i.toString())
+            list.add(i)
         }
         return list.toString()
     }

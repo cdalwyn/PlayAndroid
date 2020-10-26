@@ -1,7 +1,9 @@
-package com.czl.lib_base.base.source
+package com.czl.lib_base.data.source
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.mvvm.entity.*
+import com.czl.lib_base.data.entity.ArticleBean
+import com.czl.lib_base.data.entity.CollectArticle
+import com.czl.lib_base.data.entity.UserBean
 import io.reactivex.Observable
 
 /**

@@ -1,11 +1,8 @@
 package com.czl.module_user.ui.fragment
 
-import android.os.Bundle
-import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.util.PermissionUtil
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -21,7 +18,6 @@ import me.goldze.mvvmhabit.utils.ToastUtils
  */
 @Route(path = AppConstants.Router.User.F_FIRST)
 class FirstFragment : BaseFragment<UserFragmentFirstBinding, FirstFmViewModel>() {
-
 
     override fun initContentView(): Int {
         return R.layout.user_fragment_first
@@ -39,11 +35,9 @@ class FirstFragment : BaseFragment<UserFragmentFirstBinding, FirstFmViewModel>()
         ToastUtils.showShort(arguments?.getString(AppConstants.BundleKey.MAIN2FIRST))
         viewModel.tvTitle.set("FirstFragment")
         viewModel.ivToolbarIconRes = R.drawable.ic_setting
-        PermissionUtil.reqStorage(fragment = this, callback = RequestCallback {
-                allGranted, grantedList, deniedList ->
-                if (allGranted) {
-
-                }
+        PermissionUtil.reqStorage(
+            fragment = this,
+            callback = RequestCallback { allGranted, grantedList, deniedList ->
             })
     }
 

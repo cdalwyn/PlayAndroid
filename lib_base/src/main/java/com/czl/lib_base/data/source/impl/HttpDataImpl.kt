@@ -1,11 +1,11 @@
-package com.czl.lib_base.base.source.impl
+package com.czl.lib_base.data.source.impl
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.base.api.ApiService
-import com.czl.lib_base.base.source.HttpDataSource
-import com.czl.lib_base.mvvm.entity.ArticleBean
-import com.czl.lib_base.mvvm.entity.CollectArticle
-import com.czl.lib_base.mvvm.entity.UserBean
+import com.czl.lib_base.data.api.ApiService
+import com.czl.lib_base.data.source.HttpDataSource
+import com.czl.lib_base.data.entity.ArticleBean
+import com.czl.lib_base.data.entity.CollectArticle
+import com.czl.lib_base.data.entity.UserBean
 import io.reactivex.Observable
 
 /**

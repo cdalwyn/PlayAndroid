@@ -1,10 +1,7 @@
 package com.czl.module_login.viewmodel
 
-import android.app.Activity
-import com.alibaba.android.arouter.launcher.ARouter
-import com.czl.lib_base.base.BaseRxActivity
 import com.czl.lib_base.base.BaseViewModel
-import com.czl.lib_base.base.DataRepository
+import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter

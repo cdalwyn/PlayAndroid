@@ -1,4 +1,4 @@
-package com.czl.lib_base.base.net
+package com.czl.lib_base.data.net
 
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.event.LiveBusCenter

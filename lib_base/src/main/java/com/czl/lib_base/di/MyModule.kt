@@ -3,12 +3,12 @@ package com.czl.lib_base.di
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.base.AppViewModelFactory
-import com.czl.lib_base.base.DataRepository
-import com.czl.lib_base.base.api.ApiService
-import com.czl.lib_base.base.source.HttpDataSource
-import com.czl.lib_base.base.source.LocalDataSource
-import com.czl.lib_base.base.source.impl.HttpDataImpl
-import com.czl.lib_base.base.source.impl.LocalDataImpl
+import com.czl.lib_base.data.DataRepository
+import com.czl.lib_base.data.api.ApiService
+import com.czl.lib_base.data.source.HttpDataSource
+import com.czl.lib_base.data.source.LocalDataSource
+import com.czl.lib_base.data.source.impl.HttpDataImpl
+import com.czl.lib_base.data.source.impl.LocalDataImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 

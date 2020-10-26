@@ -1,15 +1,11 @@
 package com.czl.module_user.viewmodel
 
-import android.app.Application
-import android.view.View
 import com.czl.lib_base.base.BaseViewModel
-import com.czl.lib_base.base.DataRepository
+import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.event.LiveBusCenter
-import me.goldze.mvvmhabit.base.BaseModel
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
-import me.goldze.mvvmhabit.utils.ToastUtils
 
 /**
  * @author Alwyn

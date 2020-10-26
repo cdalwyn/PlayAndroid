@@ -2,6 +2,7 @@ package com.czl.lib_base.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.czl.lib_base.data.DataRepository
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -25,7 +26,7 @@ class AppViewModelFactory(
         return try {
             val className = modelClass.canonicalName
             val classViewModel = Class.forName(className!!)
-            val cons = classViewModel.getConstructor(MyApplication::class.java,DataRepository::class.java)
+            val cons = classViewModel.getConstructor(MyApplication::class.java, DataRepository::class.java)
             val viewModel = cons.newInstance(mApplication,mRepository) as ViewModel
             viewModel as T
         } catch (e: ClassNotFoundException) {

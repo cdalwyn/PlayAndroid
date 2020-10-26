@@ -2,7 +2,7 @@ package com.czl.module_main.viewmodel
 
 import androidx.databinding.ObservableField
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.mvvm.entity.ArticleBean
+import com.czl.lib_base.data.entity.ArticleBean
 
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand

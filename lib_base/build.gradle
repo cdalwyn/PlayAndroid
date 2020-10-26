@@ -46,7 +46,6 @@ dependencies {
     api rootProject.ext.androidx["design"]
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
-    api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["junit"]
     api rootProject.ext.androidx["runner"]
     api rootProject.ext.androidx["espresso-core"]

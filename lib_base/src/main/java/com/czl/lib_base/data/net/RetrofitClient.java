@@ -2,9 +2,6 @@ package com.czl.lib_base.data.net;
 
 import android.text.TextUtils;
 
-import com.czl.lib_base.base.net.RequestDataInterceptor;
-import com.czl.lib_base.base.net.ResponseInterceptor;
-
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;

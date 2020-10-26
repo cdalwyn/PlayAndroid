@@ -1,6 +1,6 @@
-package com.czl.lib_base.base.net
+package com.czl.lib_base.data.net
 
-import com.czl.lib_base.base.DataRepository
+import com.czl.lib_base.data.DataRepository
 import okhttp3.Interceptor
 import okhttp3.RequestBody
 import okhttp3.Response
@@ -32,7 +32,7 @@ class RequestDataInterceptor : Interceptor, KoinComponent {
             body?.writeTo(buffer)
             val reqBuilder = request.newBuilder()
             // 未加密的请求参数
-            val requestData = URLDecoder.decode(buffer.readString(StandardCharsets.UTF_8))
+            val requestData = URLDecoder.decode(buffer.readString(StandardCharsets.UTF_8),"utf-8")
             // 新的请求体
             val newRequestBody: RequestBody
             try {
@@ -50,7 +50,7 @@ class RequestDataInterceptor : Interceptor, KoinComponent {
         return chain.proceed(request)
     }
 
-    private fun bodyToString(request: RequestBody): String {
+    private fun bodyToString(request: RequestBody?): String {
         return try {
             val buffer = Buffer()
             if (request != null) request.writeTo(buffer) else return ""

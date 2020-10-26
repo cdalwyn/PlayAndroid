@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
