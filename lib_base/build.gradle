@@ -65,6 +65,6 @@ dependencies {
     api rootProject.ext.dependencies["fragmentationx"]
     api rootProject.ext.dependencies["swipeback"]
     api rootProject.ext.dependencies["permissionx"]
-    api rootProject.ext.dependencies["leakcanary"]
+    debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

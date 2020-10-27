@@ -9,6 +9,7 @@ import me.goldze.mvvmhabit.base.BaseApplication
 import me.goldze.mvvmhabit.crash.CaocConfig
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BuildConfig
+import com.czl.lib_base.util.switchicon.LauncherIconManager
 
 import me.goldze.mvvmhabit.utils.ToastUtils
 import me.yokeyword.fragmentation.Fragmentation
@@ -62,5 +63,7 @@ open class MyApplication : Application() {
             ToastUtils.showShort("系统错误")
             it.printStackTrace()
         }
+        // 根据活动时间动态更换资源图标（如淘宝双11）
+//        LauncherIconManager.register(this)
     }
 }

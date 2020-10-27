@@ -6,14 +6,20 @@ import com.permissionx.guolindev.callback.RequestCallback
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.api.ApiService
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.PermissionUtil
+import com.czl.lib_base.util.switchicon.LauncherIconManager
+import com.czl.lib_base.util.switchicon.SwitchIconTask
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
 import com.czl.module_main.viewmodel.MainViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import me.goldze.mvvmhabit.utils.ToastUtils
+import org.koin.android.ext.android.get
 
 /**
  * @author Alwyn
@@ -61,18 +67,21 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
                 .show()
         })
         // 接收通信事件
-        LiveBusCenter.observeMainEvent(this){
+        LiveBusCenter.observeMainEvent(this) {
             ToastUtils.showShort("MainActivity收到消息：${it.msg}")
         }
     }
 
     override fun initData() {
-        ToastUtils.showShort("${viewModel.getLoginUserName()} 登录成功")
+        ToastUtils.showShort(
+            if (viewModel.getLoginUserName().isNullOrBlank())
+                "当前尚未登录" else "当前用户${viewModel.getLoginUserName()}已登录"
+        )
         viewModel.tvTitle.set("首页")
         viewModel.btnBackVisibility.set("0")
         PermissionUtil.reqStorage(
             this, callback = RequestCallback { allGranted, grantedList, deniedList ->
-                if (allGranted){
+                if (allGranted) {
                     LogUtils.i("存储权限授予成功")
                 }
             })

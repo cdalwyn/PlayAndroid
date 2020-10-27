@@ -11,6 +11,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.czl.module_login.ui.activity.LoginActivity" />
+
     </application>
+
 
 </manifest>
