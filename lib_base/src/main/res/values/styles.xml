@@ -2,11 +2,14 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
 
     <!--Toolbar-->
@@ -20,7 +23,29 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowAnimationStyle">@style/Animation_Splash</item>
     </style>
+
     <style name="Animation_Splash" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/anim_scale_in</item>
+    </style>
+    <!--全局活动跳转动画-->
+    <style name="Animation_Activity" parent="@android:style/Animation.Activity">
+        <!-- 进入一个新的Activity的时候，A->B B进入动画 -->
+        <item name="android:activityOpenEnterAnimation">@anim/v_fragment_enter</item>
+        <!-- 进入一个新的Activity的时候，A->B A退出动画 -->
+        <!--        <item name="android:activityOpenExitAnimation">@anim/slide_right_out</item>-->
+        <!-- 退出一个Activity的时候，B返回到A A进入动画 -->
+        <!--        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>-->
+        <!-- 退出一个Activity的时候，B返回到A B退出动画 -->
+        <item name="android:activityCloseExitAnimation">@anim/v_fragment_exit</item>
+    </style>
+    <style name="TextInputWhiteStyle" parent="AppTheme">
+        <!--输入框提示字体色-->
+        <item name="android:textColorHint">@color/white</item>
+        <!--输入框下划线默认颜色-->
+        <!--        <item name="colorControlNormal">@color/white</item>-->
+        <!--输入框下划线选中状态色-->
+        <item name="colorControlActivated">@color/white</item>
+        <!--输入框光标颜色-->
+        <item name="colorControlHighlight">@color/white</item>
     </style>
 </resources>

@@ -77,6 +77,8 @@ dependencies {
 
     api rootProject.ext.dependencies["toolbar"]
     api rootProject.ext.dependencies["viewpager2"]
+    api rootProject.ext.dependencies["navigation"]
+
 }
 repositories {
     mavenCentral()

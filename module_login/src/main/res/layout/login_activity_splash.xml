@@ -6,11 +6,10 @@
     <data>
 
     </data>
-
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splash_bg"
+        android:background="@drawable/ic_login_background"
         tools:context=".mvvm.ui.activity.SplashActivity">
 
     </androidx.appcompat.widget.AppCompatImageView>

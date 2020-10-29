@@ -82,11 +82,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     override fun onSupportVisible() {
         super.onSupportVisible()
-        if (isImmersionBarEnabled()) {
-            ImmersionBar.with(this)
-                .titleBar(rootView)
-                .statusBarDarkFont(true, 0.2f)
-                .init()
+        if (useBaseLayout()) {
+            ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
         }
     }
 
@@ -261,6 +258,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun initData() {}
 
     override fun initViewObservable() {}
+
     open fun isImmersionBarEnabled(): Boolean {
         return true
     }

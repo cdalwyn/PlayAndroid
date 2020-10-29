@@ -17,7 +17,9 @@ interface AppConstants {
      */
     interface Router {
         object Main {
+            const val A_TEST = "/main/TestActivity"
             const val A_MAIN = "/main/MainActivity"
+            const val F_HOME = "/main/HomeFragment"
         }
 
         object Login {
@@ -26,6 +28,19 @@ interface AppConstants {
 
         object User {
             const val F_FIRST = "/user/FirstFragment"
+            const val F_USER = "/user/UserFragment"
+        }
+
+        object Square {
+            const val F_SQUARE = "/square/SquareFragment"
+        }
+
+        object Project {
+            const val F_PROJECT = "/project/ProjectFragment"
+        }
+
+        object Search{
+            const val F_SEARCH = "/search/SearchFragment"
         }
     }
 

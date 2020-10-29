@@ -1,0 +1,16 @@
+apply from: "../module.build.gradle"
+android {
+    defaultConfig {
+        //如果是独立模块，则使用当前组件的包名
+        if (isBuildModule.toBoolean()) {
+            applicationId "com.czl.square"
+        }
+    }
+    //统一资源前缀，规范资源引用
+    resourcePrefix "square_"
+}
+
+dependencies {
+    //组件依赖基础库
+    api project(':lib_base')
+}

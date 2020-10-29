@@ -88,6 +88,12 @@ ext {
             'swipeback'                            : "me.yokeyword:fragmentation-swipeback:1.3.7",
             'permissionx'                          : 'com.permissionx.guolindev:permissionx:1.4.0',
             // 内存泄漏检查
-            'leakcanary'                           : 'com.squareup.leakcanary:leakcanary-android:2.5'
+            'leakcanary'                           : 'com.squareup.leakcanary:leakcanary-android:2.5',
+            'navigation'                           : 'com.ashokvarma.android:bottom-navigation-bar:2.2.0',
+            'banner'                               : 'com.youth.banner:banner:2.1.0',
+            'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
+            'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
+            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
+
     ]
 }

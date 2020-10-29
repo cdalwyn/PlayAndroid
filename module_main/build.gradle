@@ -1,4 +1,5 @@
 apply from: "../module.build.gradle"
+apply plugin: 'kotlin-android'
 android {
     defaultConfig {
         //如果是独立模块，则使用当前组件的包名
@@ -13,4 +14,7 @@ android {
 dependencies {
     //组件依赖基础库
     api project(':lib_base')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }

@@ -23,6 +23,8 @@ import me.goldze.mvvmhabit.base.IBaseView
 import me.goldze.mvvmhabit.bus.Messenger
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import me.goldze.mvvmhabit.utils.ToastUtils
+import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
+import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
@@ -66,6 +68,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         binding?.unbind()
         rootBinding?.unbind()
 
+    }
+
+    override fun onCreateFragmentAnimator(): FragmentAnimator {
+        return DefaultVerticalAnimator()
     }
 
     /**

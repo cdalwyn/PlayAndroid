@@ -74,7 +74,7 @@
                         android:singleLine="true"
                         android:text="@{viewModel.tvTitle}"
                         android:textColor="@color/md_grey_900"
-                        android:textSize="@dimen/sp_16"
+                        android:textSize="@dimen/sp_20"
                         tools:text="鉴真" />
                 </RelativeLayout>
 
@@ -86,13 +86,12 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/toolbar_right_img"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/dp_24"
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/dp_16"
                         android:layout_marginEnd="@dimen/dp_16"
-                        android:minWidth="@dimen/dp_24"
                         binding:onClickCommand="@{viewModel.ivToolbarIconOnClick}"
                         binding:src="@{viewModel.ivToolbarIconRes}" />
 

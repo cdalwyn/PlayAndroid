@@ -76,5 +76,8 @@ dependencies {
         implementation project(path: ':module_login')
         implementation project(path: ':module_main')
         implementation project(path: ':module_user')
+        implementation project(path: ':module_search')
+        implementation project(path: ':module_square')
+        implementation project(path: ':module_project')
     }
 }

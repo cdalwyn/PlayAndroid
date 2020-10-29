@@ -6,7 +6,7 @@ import android.net.ParseException;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.NetworkUtils;
-import com.blankj.utilcode.util.ToastUtils;
+import com.czl.lib_base.util.ToastHelper;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
@@ -35,7 +35,7 @@ public abstract class ApiSubscriberHelper<T> extends DisposableObserver<T> {
     protected void onStart() {
         super.onStart();
         if (!NetworkUtils.isConnected()) {
-            ToastUtils.showShort("连接失败，请检查网络后再试");
+            ToastHelper.INSTANCE.showNormalToast("连接失败，请检查网络后再试");
             onComplete();
         }
     }

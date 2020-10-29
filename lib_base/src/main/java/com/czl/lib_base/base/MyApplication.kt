@@ -1,16 +1,22 @@
 package com.czl.lib_base.base
 
 import android.app.Application
+import android.content.Context
+import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.LogUtils
+import com.czl.lib_base.BuildConfig
+import com.czl.lib_base.R
 import com.czl.lib_base.di.allModule
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshHeader
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshHeaderCreator
 import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import me.goldze.mvvmhabit.base.BaseApplication
 import me.goldze.mvvmhabit.crash.CaocConfig
-import com.blankj.utilcode.util.LogUtils
-import com.czl.lib_base.BuildConfig
-import com.czl.lib_base.util.switchicon.LauncherIconManager
-
 import me.goldze.mvvmhabit.utils.ToastUtils
 import me.yokeyword.fragmentation.Fragmentation
 import org.koin.android.ext.koin.androidContext
@@ -26,7 +32,7 @@ open class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             ARouter.openLog()
             ARouter.openDebug()
         }
@@ -65,5 +71,19 @@ open class MyApplication : Application() {
         }
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
+    }
+
+    companion object {
+        init {
+            SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+                layout.setPrimaryColorsId(R.color.md_theme_red, R.color.white)
+                MaterialHeader(context).setColorSchemeColors(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.md_theme_red
+                    )
+                )
+            }
+        }
     }
 }

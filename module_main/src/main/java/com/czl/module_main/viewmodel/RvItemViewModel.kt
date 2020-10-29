@@ -13,11 +13,11 @@ import me.goldze.mvvmhabit.utils.ToastUtils
  * @Date 2020/7/28
  * @Description
  */
-class RvItemViewModel(mainViewModel: MainViewModel) : ItemViewModel<MainViewModel>(mainViewModel) {
+class RvItemViewModel(testViewModel: TestViewModel) : ItemViewModel<TestViewModel>(testViewModel) {
 
     var entity: ObservableField<ArticleBean.Data> = ObservableField()
 
-    constructor(mainViewModel: MainViewModel, data: ArticleBean.Data) : this(mainViewModel) {
+    constructor(testViewModel: TestViewModel, data: ArticleBean.Data) : this(testViewModel) {
         entity.set(data)
     }
 
