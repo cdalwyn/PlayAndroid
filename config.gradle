@@ -58,8 +58,9 @@ ext {
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
             "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.8.0",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.8.0",
+            "glide"                                : "com.github.bumptech.glide:glide:4.11.0",
+            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.11.0",
+            'glide-transfer'                       : 'jp.wasabeef:glide-transformations:4.3.0',
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.5",
             //material-dialogs
@@ -93,7 +94,8 @@ ext {
             'banner'                               : 'com.youth.banner:banner:2.1.0',
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
             'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
-            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
+            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1'
+
 
     ]
 }

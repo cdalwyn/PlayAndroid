@@ -63,6 +63,7 @@ dependencies {
     api(rootProject.ext.dependencies.glide) {
         exclude group: 'com.android.support'
     }
+    api rootProject.ext.dependencies["glide-transfer"]
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
     //recyclerview的databinding套装
     api(rootProject.ext.dependencies.bindingcollectionadapter) {
@@ -78,6 +79,8 @@ dependencies {
     api rootProject.ext.dependencies["toolbar"]
     api rootProject.ext.dependencies["viewpager2"]
     api rootProject.ext.dependencies["navigation"]
+    api rootProject.ext.dependencies["refresh-header"]
+    api rootProject.ext.dependencies["refresh"]
 
 }
 repositories {

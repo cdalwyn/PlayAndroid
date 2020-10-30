@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit
  */
 abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxActivity(), IBaseView {
-    protected var binding: V? = null
+    protected lateinit var binding: V
     lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
@@ -65,7 +65,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 //        if (viewModel != null) {
 //            viewModel.removeRxBus();
 //        }
-        binding?.unbind()
+        binding.unbind()
         rootBinding?.unbind()
 
     }
@@ -104,9 +104,9 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModelId = initVariableId()
         viewModel = initViewModel()
         //关联ViewModel
-        binding?.setVariable(viewModelId, viewModel)
+        binding.setVariable(viewModelId, viewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding?.lifecycleOwner = this
+        binding.lifecycleOwner = this
         //让ViewModel拥有View的生命周期感应
         lifecycle.addObserver(viewModel)
         //注入RxLifecycle生命周期
@@ -115,7 +115,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     //刷新布局
     fun refreshLayout() {
-        binding?.setVariable(viewModelId, viewModel)
+        binding.setVariable(viewModelId, viewModel)
     }
 
     /**

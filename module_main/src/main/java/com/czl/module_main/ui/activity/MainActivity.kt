@@ -30,22 +30,23 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initViewObservable() {
         viewModel.uc.tabChangeLiveEvent.observe(this, Observer {
-            binding?.viewPager2?.currentItem = it
+            binding.viewPager2.currentItem = it
             viewModel.tvTitle.set(
                 when (it) {
-                    0 -> "首页"
-                    1 -> "广场"
-                    2 -> "项目"
-                    else -> "我的"
+                    0 -> getString(R.string.main_tab_home)
+                    1 -> getString(R.string.main_tab_square)
+                    2 -> getString(R.string.main_tab_project)
+                    else -> getString(R.string.main_tab_me)
                 }
             )
         })
         viewModel.uc.pageChangeLiveEvent.observe(this, Observer {
-            binding?.bottomBar?.selectTab(it)
+            binding.bottomBar.selectTab(it)
         })
     }
 
     override fun initData() {
+        setSwipeBackEnable(false)
         initToolbar()
         initBottomBar()
         initViewPager()
@@ -59,38 +60,41 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
             RouteCenter.navigate(AppConstants.Router.Project.F_PROJECT) as SupportFragment
         val userFragment = RouteCenter.navigate(AppConstants.Router.User.F_USER) as SupportFragment
         val fragments = arrayListOf(homeFragment, squareFragment, projectFragment, userFragment)
-        binding?.viewPager2?.adapter =
+        binding.viewPager2.adapter =
             ViewPagerFmAdapter(supportFragmentManager, lifecycle, fragments)
     }
 
     private fun initBottomBar() {
-        binding?.apply {
+        binding.apply {
             bottomBar.apply {
                 setMode(BottomNavigationBar.MODE_FIXED)
                 setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
                 addItem(
                     BottomNavigationItem(
                         R.drawable.ic_home_on,
-                        "首页"
+                        getString(R.string.main_tab_home)
                     ).setActiveColorResource(R.color.md_theme_red)
                         .setInactiveIconResource(R.drawable.ic_home_off)
                 )
                 addItem(
                     BottomNavigationItem(
                         R.drawable.ic_square_on,
-                        "广场"
+                        getString(R.string.main_tab_square)
                     ).setActiveColorResource(R.color.md_theme_red)
                         .setInactiveIconResource(R.drawable.ic_square_off)
                 )
                 addItem(
-                    BottomNavigationItem(R.drawable.ic_project_on, "项目").setActiveColorResource(
-                        R.color.md_theme_red
-                    ).setInactiveIconResource(R.drawable.ic_project_off)
+                    BottomNavigationItem(
+                        R.drawable.ic_project_on,
+                        getString(R.string.main_tab_project)
+                    )
+                        .setActiveColorResource(R.color.md_theme_red)
+                        .setInactiveIconResource(R.drawable.ic_project_off)
                 )
                 addItem(
                     BottomNavigationItem(
                         R.drawable.ic_me_on,
-                        "我的"
+                        getString(R.string.main_tab_me)
                     ).setActiveColorResource(R.color.md_theme_red)
                         .setInactiveIconResource(R.drawable.ic_me_off)
                 )
@@ -101,7 +105,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     private fun initToolbar() {
-        viewModel.tvTitle.set("首页")
+        viewModel.tvTitle.set(getString(R.string.main_tab_home))
         viewModel.ivToolbarIconRes = R.drawable.ic_search
         viewModel.btnBackVisibility.set("0")
     }
@@ -111,7 +115,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
             AppManager.getInstance().AppExit()
         } else {
             touchTime = System.currentTimeMillis()
-            ToastHelper.showNormalToast("再按一次退出应用")
+            ToastHelper.showNormalToast(getString(R.string.main_press_again))
         }
     }
 }

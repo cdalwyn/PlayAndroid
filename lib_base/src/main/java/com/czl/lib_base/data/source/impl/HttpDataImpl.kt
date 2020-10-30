@@ -2,10 +2,8 @@ package com.czl.lib_base.data.source.impl
 
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.api.ApiService
+import com.czl.lib_base.data.entity.*
 import com.czl.lib_base.data.source.HttpDataSource
-import com.czl.lib_base.data.entity.ArticleBean
-import com.czl.lib_base.data.entity.CollectArticle
-import com.czl.lib_base.data.entity.UserBean
 import io.reactivex.Observable
 
 /**
@@ -41,6 +39,14 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 
     override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticle>> {
         return apiService.getCollectArticle(page)
+    }
+
+    override fun getBannerData(): Observable<BaseBean<List<HomeBannerBean>>> {
+        return apiService.getBannerData()
+    }
+
+    override fun getHomeArticle(page: String): Observable<BaseBean<HomeArticleBean>> {
+        return apiService.getHomeArticle(page)
     }
 
 }

@@ -1,9 +1,7 @@
 package com.czl.lib_base.data.api
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.data.entity.ArticleBean
-import com.czl.lib_base.data.entity.CollectArticle
-import com.czl.lib_base.data.entity.UserBean
+import com.czl.lib_base.data.entity.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -26,4 +24,10 @@ interface ApiService {
 
     @GET("lg/collect/list/{page}/json")
     fun getCollectArticle(@Path("page") page: String): Observable<BaseBean<CollectArticle>>
+
+    @GET("banner/json")
+    fun getBannerData(): Observable<BaseBean<List<HomeBannerBean>>>
+
+    @GET("article/list/{page}/json")
+    fun getHomeArticle(@Path("page") page: String):Observable<BaseBean<HomeArticleBean>>
 }

@@ -67,8 +67,7 @@ dependencies {
     api rootProject.ext.dependencies["permissionx"]
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["toast"]
-    api rootProject.ext.dependencies["refresh-header"]
-    api rootProject.ext.dependencies["refresh"]
+
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

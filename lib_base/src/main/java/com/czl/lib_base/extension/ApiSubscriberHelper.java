@@ -6,6 +6,7 @@ import android.net.ParseException;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.czl.lib_base.base.BaseBean;
 import com.czl.lib_base.util.ToastHelper;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
@@ -28,6 +29,9 @@ public abstract class ApiSubscriberHelper<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
+        if (t instanceof BaseBean && ((BaseBean) t).getErrorCode() != 0) {
+            ToastHelper.INSTANCE.showErrorToast(((BaseBean) t).getErrorMsg());
+        }
         onResult(t);
     }
 

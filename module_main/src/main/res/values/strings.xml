@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="main_app_name">module_main</string>
+    <string name="main_tab_home">首页</string>
+    <string name="main_tab_square">广场</string>
+    <string name="main_tab_project">项目</string>
+    <string name="main_tab_me">我的</string>
+    <string name="main_press_again">再按一次退出应用</string>
+    <string name="main_home_tab_blog">热门博文</string>
+    <string name="main_home_tab_project">热门项目</string>
 </resources>

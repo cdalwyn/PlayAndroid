@@ -48,7 +48,7 @@ class ResponseInterceptor : Interceptor {
                             bodyString,
                             object : TypeToken<BaseBean<*>?>() {}.type
                         )
-                        LogUtils.i("Interceptor Response=" + baseBean.toString() + ",code=" + baseBean.errorCode)
+//                        LogUtils.i("Interceptor Response=" + baseBean.toString() + ",code=" + baseBean.errorCode)
                         when (baseBean.errorCode) {
                             -1001 -> {
                                 // 请先登录

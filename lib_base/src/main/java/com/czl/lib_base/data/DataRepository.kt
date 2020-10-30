@@ -1,11 +1,9 @@
 package com.czl.lib_base.data
 
 import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.data.entity.*
 import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
-import com.czl.lib_base.data.entity.ArticleBean
-import com.czl.lib_base.data.entity.CollectArticle
-import com.czl.lib_base.data.entity.UserBean
 import io.reactivex.Observable
 import me.goldze.mvvmhabit.base.BaseModel
 
@@ -44,6 +42,14 @@ class DataRepository constructor(
 
     override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticle>> {
         return mHttpDataSource.getCollectArticle(page)
+    }
+
+    override fun getBannerData(): Observable<BaseBean<List<HomeBannerBean>>> {
+        return mHttpDataSource.getBannerData()
+    }
+
+    override fun getHomeArticle(page: String): Observable<BaseBean<HomeArticleBean>> {
+        return mHttpDataSource.getHomeArticle(page)
     }
 
     override fun getLocalData(): String {
