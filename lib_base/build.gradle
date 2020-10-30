@@ -43,7 +43,6 @@ android {
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
     api project(path: ":mvvmhabit")
-    api rootProject.ext.androidx["design"]
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
     api rootProject.ext.androidx["junit"]
@@ -67,7 +66,8 @@ dependencies {
     api rootProject.ext.dependencies["permissionx"]
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["toast"]
-
+    api rootProject.ext.dependencies["webview"]
+    api rootProject.ext.dependencies["tablayout"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

@@ -10,6 +10,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:fontFamily">sans-serif</item>
+        <!--取消水波纹效果-->
+<!--        <item name="android:colorControlHighlight">@android:color/transparent</item>-->
     </style>
 
     <!--Toolbar-->
@@ -18,9 +20,7 @@
         <item name="contentInsetEnd">0dp</item>
     </style>
     <!--启动页-->
-    <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+    <style name="AppTheme.Launcher" parent="AppTheme">
         <item name="android:windowAnimationStyle">@style/Animation_Splash</item>
     </style>
 

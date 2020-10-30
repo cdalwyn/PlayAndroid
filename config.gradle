@@ -94,7 +94,9 @@ ext {
             'banner'                               : 'com.youth.banner:banner:2.1.0',
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
             'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
-            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1'
+            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
+            'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
+            'tablayout'                              : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
 
     ]

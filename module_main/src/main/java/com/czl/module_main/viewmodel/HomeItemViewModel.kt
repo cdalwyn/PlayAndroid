@@ -14,6 +14,8 @@ import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
 class HomeItemViewModel(homeViewModel: HomeViewModel) :
     ItemViewModel<HomeViewModel>(homeViewModel) {
     var entity: ObservableField<HomeArticleBean.Data> = ObservableField()
+    val tvShare = "分享者："
+    val tvAuthor = "作者："
 
     constructor(homeViewModel: HomeViewModel, data: HomeArticleBean.Data) : this(homeViewModel) {
         entity.set(data)

@@ -3,15 +3,9 @@
     <dimen name="login_logo_hw">140dp</dimen>
     <dimen name="login_logo_mg_top">74dp</dimen>
     <dimen name="login_editText_height">46dp</dimen>
-    <!--SearchView参数设置-->
-    <dimen name="search_bar_height">30dp</dimen>
-    <dimen name="search_view_corner_radius">20dp</dimen>
-    <dimen name="square_button_icon_size">24dp</dimen>
-    <dimen name="square_button_size">30dp</dimen>
-    <dimen name="square_button_padding">6dp</dimen>
-    <dimen name="search_bar_left_icon_left_margin">5dp</dimen>
-    <dimen name="search_bar_right_icon_right_margin">4dp</dimen>
-    <dimen name="search_bar_search_input_left_margin">10dp</dimen>
+
+    <!--BottomBar title与屏幕底部的距离-->
+    <dimen name="fixed_height_bottom_padding">5dp</dimen>
 
     <dimen name="dp_10">10dp</dimen>
     <dimen name="dp_12">12dp</dimen>

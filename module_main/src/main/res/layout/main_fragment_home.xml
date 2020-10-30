@@ -42,12 +42,15 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
+                    app:tabBackground="@color/trans"
+                    app:tabRippleColor="@color/trans"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/banner"
                     app:tabGravity="start"
                     app:tabIndicatorGravity="bottom"
                     app:tabIndicatorHeight="0dp"
-                    app:tabSelectedTextColor="@color/md_theme_red">
+                    app:tabSelectedTextColor="@color/md_theme_red"
+                    binding:onTabSelectedCommand="@{viewModel.onTabSelectedListener}">
 
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
@@ -64,6 +67,7 @@
                     android:id="@+id/ry_common"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tabLayout"
                     binding:adapter="@{adapter}"

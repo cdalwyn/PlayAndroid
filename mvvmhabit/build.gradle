@@ -37,6 +37,7 @@ dependencies {
     api(rootProject.ext.dependencies["rxlifecycle-components"]) {
         exclude group: 'com.android.support'
     }
+    api rootProject.ext.androidx["design"]
     //rxbinding
     api(rootProject.ext.dependencies.rxbinding) {
         exclude group: 'com.android.support'
@@ -81,7 +82,6 @@ dependencies {
     api rootProject.ext.dependencies["navigation"]
     api rootProject.ext.dependencies["refresh-header"]
     api rootProject.ext.dependencies["refresh"]
-
 }
 repositories {
     mavenCentral()

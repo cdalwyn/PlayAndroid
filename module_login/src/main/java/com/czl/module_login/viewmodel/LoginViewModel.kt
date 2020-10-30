@@ -44,7 +44,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
                         dismissLoading()
                         if (t.errorCode == 0) {
                             saveLoginName(t.data?.publicName)
-                            RouteCenter.navigate(AppConstants.Router.Main.A_TEST)
+                            RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
                             finish()
                         }
                     }

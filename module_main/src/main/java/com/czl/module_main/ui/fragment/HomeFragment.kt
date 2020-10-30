@@ -11,6 +11,7 @@ import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter
 import com.czl.module_main.databinding.MainFragmentHomeBinding
 import com.czl.module_main.viewmodel.HomeViewModel
+import com.flyco.tablayout.listener.CustomTabEntity
 import com.youth.banner.config.IndicatorConfig
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.indicator.RectangleIndicator

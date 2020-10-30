@@ -50,6 +50,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
         initToolbar()
         initBottomBar()
         initViewPager()
+
     }
 
     private fun initViewPager() {

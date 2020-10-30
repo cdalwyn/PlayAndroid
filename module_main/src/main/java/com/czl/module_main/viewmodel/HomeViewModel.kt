@@ -1,8 +1,10 @@
 package com.czl.module_main.viewmodel
 
 import android.content.ClipData.Item
+import android.text.TextUtils
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
+import androidx.recyclerview.widget.DiffUtil
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
@@ -17,6 +19,7 @@ import com.czl.module_main.BR
 import com.czl.module_main.R
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
+import me.goldze.mvvmhabit.binding.command.BindingConsumer
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList
@@ -45,7 +48,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     val observableList: ObservableList<HomeItemViewModel> = ObservableArrayList()
 
     var list: DiffObservableList<HomeArticleBean.Data> =
-        DiffObservableList(object : DiffObservableList.Callback<HomeArticleBean.Data> {
+        DiffObservableList(object : DiffUtil.ItemCallback<HomeArticleBean.Data>() {
             override fun areItemsTheSame(
                 oldItem: HomeArticleBean.Data,
                 newItem: HomeArticleBean.Data
@@ -61,14 +64,17 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             }
         })
 
+    val onTabSelectedListener: BindingCommand<Int> = BindingCommand(BindingConsumer{
 
-    val onRefreshListener: BindingCommand<Any> = BindingCommand(BindingAction {
+    })
+
+    val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
         getBanner(model)
         getArticle(model)
     })
 
     private fun getArticle(model: DataRepository) {
-        model.getHomeArticle("0")
+        model.getHomeArticle()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
                 override fun onResult(t: BaseBean<HomeArticleBean>) {

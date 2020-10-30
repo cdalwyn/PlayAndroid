@@ -15,5 +15,5 @@ interface HttpDataSource {
     fun getMainArticle(page: String = "0"): Observable<BaseBean<ArticleBean>>
     fun getCollectArticle(page: String = "0"): Observable<BaseBean<CollectArticle>>
     fun getBannerData():Observable<BaseBean<List<HomeBannerBean>>>
-    fun getHomeArticle(page: String):Observable<BaseBean<HomeArticleBean>>
+    fun getHomeArticle(page: String = "0"):Observable<BaseBean<HomeArticleBean>>
 }

@@ -5,6 +5,10 @@
 
     <data>
 
+        <import
+            alias="textUtils"
+            type="android.text.TextUtils" />
+
         <variable
             name="viewModel"
             type="com.czl.module_main.viewmodel.HomeItemViewModel" />
@@ -17,35 +21,36 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-
             android:layout_marginBottom="@dimen/dp_10"
+
+            android:background="@color/white"
             app:cardCornerRadius="@dimen/dp_10"
-            app:contentPadding="@dimen/dp_10"
             app:cardElevation="2dp"
+            app:contentPadding="@dimen/dp_10"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/item_tv_state"
+                    android:id="@+id/item_tv_identity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{textUtils.isEmpty(viewModel.entity.author)?viewModel.tvShare:viewModel.tvAuthor}"
+                    app:layout_constraintEnd_toStartOf="@id/item_tv_author"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="置顶" />
+                    tools:text="作者:" />
 
                 <TextView
+                    android:id="@+id/item_tv_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:text="@{viewModel.entity.author.empty?viewModel.entity.shareUser:viewModel.entity.author}"
-                    app:layout_constraintStart_toEndOf="@id/item_tv_state"
+                    android:text="@{textUtils.isEmpty(viewModel.entity.author)?viewModel.entity.shareUser:viewModel.entity.author}"
+                    app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="扔物线" />
 
@@ -58,14 +63,15 @@
                     android:text="@{viewModel.entity.title}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
-                    app:layout_constraintTop_toBottomOf="@id/item_tv_state"
+                    app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
                     tools:text="啊实打实大啊实打实大苏打实打实的啊实打实的撒啊实打实的阿松大苏打" />
 
                 <TextView
+                    android:id="@+id/item_tv_sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="@{viewModel.entity.chapterName}"
+                    android:text="@{viewModel.entity.superChapterName}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
                     tools:text="干货资源" />
@@ -74,8 +80,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.entity.niceShareDate}"
+                    app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item_tv_desc" />
+                    app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
+                    tools:text="1天前" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
