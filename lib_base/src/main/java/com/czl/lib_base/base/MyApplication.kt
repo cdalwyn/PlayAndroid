@@ -14,6 +14,7 @@ import io.reactivex.plugins.RxJavaPlugins
 import me.goldze.mvvmhabit.base.BaseApplication
 import me.goldze.mvvmhabit.crash.CaocConfig
 import me.goldze.mvvmhabit.utils.ToastUtils
+import me.jessyan.autosize.AutoSizeConfig
 import me.yokeyword.fragmentation.Fragmentation
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -40,6 +41,8 @@ open class MyApplication : Application() {
             .stackViewMode(Fragmentation.BUBBLE)
             .debug(BuildConfig.DEBUG)
             .install()
+        // 屏幕适配
+        AutoSizeConfig.getInstance().setCustomFragment(true).setBaseOnWidth(false).setExcludeFontScale(true).designHeightInDp = 720
         //是否开启日志打印
         LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).setConsoleSwitch(BuildConfig.DEBUG)
         // 配置全局日志

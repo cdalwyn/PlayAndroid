@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
@@ -25,11 +26,11 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxFragment(), IBaseView {
     protected lateinit var binding: V
-    protected lateinit var viewModel: VM
+    public lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
     private lateinit var rootView: View
-    private var rootBinding: ViewDataBinding? = null
+    protected var rootBinding: ViewDataBinding? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initParam()
@@ -43,6 +44,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
+            // 设置跑马灯
+            rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
@@ -143,16 +146,20 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         )
         //关闭界面
         viewModel.uC.getFinishEvent().observe(this, Observer {
-            if (preFragment == null) {
-                requireActivity().finish()
-            } else {
-                pop()
-            }
+            back()
         })
         //关闭上一层
         viewModel.uC.getOnBackPressedEvent().observe(
             this, Observer { onBackPressedSupport() }
         )
+    }
+
+     open fun back() {
+        if (preFragment == null) {
+            requireActivity().finish()
+        } else {
+            pop()
+        }
     }
 
     fun showDialog(title: String?) {

@@ -22,6 +22,11 @@ android {
             }
         }
     }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -52,9 +57,9 @@ dependencies {
     api rootProject.ext.androidx["multidex"]
     api rootProject.ext.androidx["kotlin_lib"]
     api rootProject.ext.androidx["kotlin_core"]
+
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_compiler"]
-
     api rootProject.ext.dependencies["koin_scope"]
     api rootProject.ext.dependencies["koin_viewmodel"]
     api rootProject.ext.dependencies["koin_fragment"]
@@ -68,6 +73,8 @@ dependencies {
     api rootProject.ext.dependencies["toast"]
     api rootProject.ext.dependencies["webview"]
     api rootProject.ext.dependencies["tablayout"]
+    api rootProject.ext.dependencies["autosize"]
+    api rootProject.ext.dependencies["xpopup"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

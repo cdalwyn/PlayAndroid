@@ -66,16 +66,16 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/toolbar_contentTitle"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerHorizontal="true"
-                        android:ellipsize="end"
+                        android:ellipsize="marquee"
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="@{viewModel.tvTitle}"
                         android:textColor="@color/md_grey_900"
                         android:textSize="@dimen/sp_20"
-                        tools:text="鉴真" />
+                        tools:text="鉴真啊实打阿斯顿撒阿斯顿撒阿斯顿实大大" />
                 </RelativeLayout>
 
                 <RelativeLayout

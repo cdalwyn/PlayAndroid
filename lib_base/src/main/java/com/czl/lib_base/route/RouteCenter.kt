@@ -16,7 +16,7 @@ object RouteCenter {
     fun navigate(path: String, bundle: Bundle? = null): Any? {
         val build = ARouter.getInstance().build(path)
         bundle?.let {
-            build.with(it)
+            return build.with(it).navigation()
         }
         return build.navigation()
     }

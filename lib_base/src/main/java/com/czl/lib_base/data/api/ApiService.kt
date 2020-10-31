@@ -30,4 +30,7 @@ interface ApiService {
 
     @GET("article/list/{page}/json")
     fun getHomeArticle(@Path("page") page: String):Observable<BaseBean<HomeArticleBean>>
+
+    @GET("article/listproject/{page}/json")
+    fun getHomeProject(@Path("page") page: String):Observable<BaseBean<HomeProjectBean>>
 }

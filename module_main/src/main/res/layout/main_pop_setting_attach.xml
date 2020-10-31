@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_36"
+        android:background="@drawable/trans_gray_btn_corner_10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_like_off" />
+
+        <TextView
+            android:id="@+id/tv_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dp_6"
+            android:text="收藏"
+            android:gravity="center_vertical"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp_14" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="15dp"
+            android:background="#eee" />
+
+        <ImageView
+            android:gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@drawable/ic_same" />
+
+        <TextView
+            android:id="@+id/tv_same"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/dp_6"
+            android:gravity="center_vertical"
+            android:text="找相似"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+</layout>

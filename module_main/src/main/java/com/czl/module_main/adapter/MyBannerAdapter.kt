@@ -1,5 +1,6 @@
 package com.czl.module_main.adapter
 
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.entity.HomeBannerBean
 import com.czl.lib_base.extension.loadImage
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter.ImageTitleHolder
+import com.czl.module_main.ui.fragment.HomeFragment
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerAdapter
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
-class MyBannerAdapter(mData: List<HomeBannerBean>?) :
+class MyBannerAdapter(
+    mData: List<HomeBannerBean>?,
+    val homeFragment: HomeFragment
+) :
     BannerAdapter<HomeBannerBean, ImageTitleHolder>(mData) {
 
     private var mDiffer: AsyncListDiffer<HomeBannerBean>
@@ -57,6 +64,11 @@ class MyBannerAdapter(mData: List<HomeBannerBean>?) :
     ) {
         holder.imageView.loadImage(data.imagePath)
         holder.title.text = data.title
+        holder.imageView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString(AppConstants.BundleKey.WEB_URL, data.url)
+            homeFragment.viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB,bundle)
+        }
     }
 
     class ImageTitleHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -78,7 +90,7 @@ class MyBannerAdapter(mData: List<HomeBannerBean>?) :
         setDatas(data)
         submitList(data)
         banner.apply {
-            setCurrentItem(1,false)
+            setCurrentItem(1, false)
             setIndicatorPageChange()
         }
     }

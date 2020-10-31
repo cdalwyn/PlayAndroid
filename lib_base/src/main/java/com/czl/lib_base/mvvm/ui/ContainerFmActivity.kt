@@ -33,8 +33,6 @@ class ContainerFmActivity : BaseActivity<CommonContainerBinding, CommonViewModel
         return false
     }
 
-
-
     override fun initData() {
         val fragmentPath: String? = intent.getStringExtra(FRAGMENT)
         if (fragmentPath.isNullOrBlank()) {

@@ -52,6 +52,10 @@ class DataRepository constructor(
         return mHttpDataSource.getHomeArticle(page)
     }
 
+    override fun getHomeProject(page: String): Observable<BaseBean<HomeProjectBean>> {
+        return mHttpDataSource.getHomeProject(page)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

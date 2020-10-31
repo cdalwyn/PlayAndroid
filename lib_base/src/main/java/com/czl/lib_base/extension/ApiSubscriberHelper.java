@@ -35,14 +35,6 @@ public abstract class ApiSubscriberHelper<T> extends DisposableObserver<T> {
         onResult(t);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (!NetworkUtils.isConnected()) {
-            ToastHelper.INSTANCE.showNormalToast("连接失败，请检查网络后再试");
-            onComplete();
-        }
-    }
 
     @Override
     public void onComplete() {

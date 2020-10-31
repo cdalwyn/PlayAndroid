@@ -91,6 +91,7 @@
     <color name="button_bg">#FAFAFA</color>
     <color name="item_bg">#FFFFFF</color>
     <color name="tran_gray">#66000000</color>
+    <color name="tran_gray_cd">#CD000000</color>
     <color name="tran_gray_7C">#7C000000</color>
 
     <color name="green_68">#13CE68</color>

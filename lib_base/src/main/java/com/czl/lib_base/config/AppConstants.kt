@@ -16,6 +16,9 @@ interface AppConstants {
      *     F_ : Fragment
      */
     interface Router {
+        object Base {
+            const val F_WEB = "/base/WebFragment"
+        }
         object Main {
             const val A_TEST = "/main/TestActivity"
             const val A_MAIN = "/main/MainActivity"
@@ -46,5 +49,6 @@ interface AppConstants {
 
     object BundleKey {
         const val MAIN2FIRST = "main2first"
+        const val WEB_URL = "web_url"
     }
 }

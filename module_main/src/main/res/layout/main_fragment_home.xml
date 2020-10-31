@@ -42,13 +42,13 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="?actionBarSize"
-                    app:tabBackground="@color/trans"
-                    app:tabRippleColor="@color/trans"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/banner"
+                    app:tabBackground="@color/trans"
                     app:tabGravity="start"
                     app:tabIndicatorGravity="bottom"
                     app:tabIndicatorHeight="0dp"
+                    app:tabRippleColor="@color/trans"
                     app:tabSelectedTextColor="@color/md_theme_red"
                     binding:onTabSelectedCommand="@{viewModel.onTabSelectedListener}">
 
@@ -64,15 +64,30 @@
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/ry_common"
+                    android:id="@+id/ry_article"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:nestedScrollingEnabled="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tabLayout"
                     binding:adapter="@{adapter}"
-                    binding:itemBinding="@{viewModel.itemBinding}"
-                    binding:items="@{viewModel.observableList}"
+                    binding:isVisible="@{viewModel.tabSelectedPosition==0}"
+                    binding:itemBinding="@{viewModel.articleItemBinding}"
+                    binding:items="@{viewModel.observableArticles}"
+                    binding:layoutManager="@{LayoutManagers.linear}" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ry_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                    binding:adapter="@{adapter}"
+                    binding:isVisible="@{viewModel.tabSelectedPosition==1}"
+                    binding:itemBinding="@{viewModel.projectItemBinding}"
+                    binding:items="@{viewModel.observableProjects}"
                     binding:layoutManager="@{LayoutManagers.linear}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
