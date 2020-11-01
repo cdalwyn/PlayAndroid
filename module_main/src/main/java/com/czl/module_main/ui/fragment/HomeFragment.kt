@@ -70,24 +70,5 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 binding.refreshLayout.finishRefresh()
             }
         })
-        viewModel.uc.picShowEvent.observe(this, Observer {
-            XPopup.Builder(context)
-                .asImageViewer(it.get(1) as ImageView, it.get(0), ImagePopLoader())
-                .show()
-        })
-        val projectItemSettingPop = ProjectItemSettingPop(requireContext())
-        viewModel.uc.settingShowEvent.observe(this, Observer {
-            val popView = XPopup.Builder(context).hasShadowBg(false).atView(it.get(2) as View)
-                .asCustom(projectItemSettingPop)
-            popView.show()
-            projectItemSettingPop.binding?.apply {
-                tvCollect.setOnClickListener {
-                    popView.dismiss()
-                }
-                tvSame.setOnClickListener {
-                    popView.dismiss()
-                }
-            }
-        })
     }
 }

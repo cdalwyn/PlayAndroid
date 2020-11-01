@@ -41,8 +41,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
         val rvLoadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val picShowEvent:SingleLiveEvent<SparseArray<Any>> = SingleLiveEvent()
-        val settingShowEvent:SingleLiveEvent<SparseArray<Any?>> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -198,18 +196,4 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             })
     }
 
-    fun showSettingAttachPop(id: Int?, sameId: Int?, view: View){
-        val sparseArray = SparseArray<Any?>(3)
-        sparseArray[0] = id
-        sparseArray[1] = sameId
-        sparseArray[2] = view
-        uc.settingShowEvent.postValue(sparseArray)
-    }
-
-    fun showPicView(imageView: View, url: String){
-        val sparseArray = SparseArray<Any>(2)
-        sparseArray[0] = url
-        sparseArray[1] = imageView
-        uc.picShowEvent.postValue(sparseArray)
-    }
 }
