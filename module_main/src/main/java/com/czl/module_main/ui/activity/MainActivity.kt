@@ -107,7 +107,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     private fun initToolbar() {
         viewModel.tvTitle.set(getString(R.string.main_tab_home))
-        viewModel.ivToolbarIconRes = R.drawable.ic_search
+        viewModel.ivToolbarIconRes.set(R.drawable.ic_search)
         viewModel.btnBackVisibility.set("0")
     }
 

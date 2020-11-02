@@ -1,9 +1,11 @@
 package me.goldze.mvvmhabit.binding.viewadapter.image;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.databinding.BindingAdapter;
+import androidx.databinding.ObservableInt;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -24,9 +26,15 @@ public final class ViewAdapter {
     }
 
     @BindingAdapter(value = {"src"}, requireAll = false)
-    public static void setImageRes(ImageView imageView, int resId) {
-        if (resId != 0) {
-            imageView.setImageResource(resId);
+    public static void setImageRes(ImageView imageView, ObservableInt resId) {
+        if (resId == null) {
+            return;
+        }
+        if (resId.get() != 0) {
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(resId.get());
+        }else {
+            imageView.setVisibility(View.INVISIBLE);
         }
     }
 }

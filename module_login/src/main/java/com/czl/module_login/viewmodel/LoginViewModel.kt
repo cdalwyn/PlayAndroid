@@ -35,7 +35,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
             ToastUtils.showShort("账号或密码不能为空")
             return
         }
-        model?.apply {
+        model.apply {
             userLogin(account.get()!!, pwd.get()!!)
                 .compose(RxThreadHelper.rxSchedulerHelper(this@LoginViewModel))
                 .doOnSubscribe { showLoading() }

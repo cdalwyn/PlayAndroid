@@ -148,7 +148,7 @@ class TestViewModel(application: MyApplication, model: DataRepository) :
     }
 
     fun getLoginUserName():String?{
-        return model?.getLoginName()
+        return model.getLoginName()
     }
 
 }

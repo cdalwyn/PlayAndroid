@@ -34,7 +34,7 @@ class FirstFragment : BaseFragment<UserFragmentFirstBinding, FirstFmViewModel>()
     override fun initData() {
         ToastUtils.showShort(arguments?.getString(AppConstants.BundleKey.MAIN2FIRST))
         viewModel.tvTitle.set("FirstFragment")
-        viewModel.ivToolbarIconRes = R.drawable.ic_setting
+        viewModel.ivToolbarIconRes.set(R.drawable.ic_setting)
         PermissionUtil.reqStorage(
             fragment = this,
             callback = RequestCallback { allGranted, grantedList, deniedList ->

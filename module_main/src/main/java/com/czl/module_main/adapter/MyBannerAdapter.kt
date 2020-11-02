@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MyBannerAdapter(
     mData: List<HomeBannerBean>?,
-    val homeFragment: HomeFragment
+    private val homeFragment: HomeFragment
 ) :
     BannerAdapter<HomeBannerBean, ImageTitleHolder>(mData) {
 
@@ -87,8 +87,11 @@ class MyBannerAdapter(
         if (data == mDatas) {
             return
         }
+        // 重新赋值新数据到banner
         setDatas(data)
+        // 计算差异并赋值新数据
         submitList(data)
+        // 设置banner
         banner.apply {
             setCurrentItem(1, false)
             setIndicatorPageChange()

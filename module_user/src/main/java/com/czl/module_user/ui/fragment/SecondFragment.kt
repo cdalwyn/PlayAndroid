@@ -24,7 +24,7 @@ class SecondFragment : BaseFragment<UserFragmentSecondBinding, SecFmViewModel>()
 
     override fun initData() {
         viewModel.tvTitle.set("SecondFragment")
-        viewModel.ivToolbarIconRes = R.drawable.ic_setting_more
+        viewModel.ivToolbarIconRes.set(R.drawable.ic_setting_more)
         viewModel.ivToolbarIconOnClick = BindingCommand(BindingAction {
             ToastUtils.showShort("这是 SecondFragment 标题栏图标点击事件")
         })

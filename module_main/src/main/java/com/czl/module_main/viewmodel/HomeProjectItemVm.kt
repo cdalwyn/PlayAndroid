@@ -5,19 +5,16 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.ObservableField
-import androidx.lifecycle.ViewModel
-import com.czl.lib_base.base.BaseViewModel
+import androidx.lifecycle.Observer
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.entity.HomeProjectBean
 import com.czl.lib_base.extension.ImagePopLoader
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.util.ToastHelper
-import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
-import me.goldze.mvvmhabit.base.BaseModel
+import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.interfaces.XPopupCallback
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
 
@@ -46,17 +43,58 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
 
     /*Item的设置点击事件*/
     val onItemSettingClickCommand: View.OnClickListener = View.OnClickListener {
-        val projectItemSettingPop = ProjectItemSettingPop(it.context)
-        projectItemSettingPop.post {
-            projectItemSettingPop.findViewById<TextView>(R.id.tv_collect)
-                .setOnClickListener { projectItemSettingPop.dismiss() }
-            projectItemSettingPop.findViewById<TextView>(R.id.tv_same)
-                .setOnClickListener { projectItemSettingPop.dismiss() }
-        }
         XPopup.Builder(it.context)
             .hasShadowBg(false)
+            .setPopupCallback(object : XPopupCallback {
+                override fun onBackPressed(popupView: BasePopupView?): Boolean {
+                    return false
+                }
+
+                override fun onDismiss(popupView: BasePopupView?) {
+
+                }
+
+                override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {
+                }
+
+                override fun beforeShow(popupView: BasePopupView?) {
+
+                }
+
+                override fun onCreated(popupView: BasePopupView) {
+                    val tvCollect = popupView.findViewById<TextView>(R.id.tv_collect)
+                    if (entity.get()!!.collect) {
+                        popupView.findViewById<ImageView>(R.id.iv_collect)
+                            .setImageResource(R.drawable.ic_like_on)
+                        tvCollect.text = "取消收藏"
+                    } else {
+                        popupView.findViewById<ImageView>(R.id.iv_collect)
+                            .setImageResource(R.drawable.ic_like_off)
+                        tvCollect.text = "收藏"
+                    }
+                    tvCollect.setOnClickListener {
+                        // 收藏/取消收藏
+                        homeViewModel.collectArticle(entity.get()!!.id)
+                        popupView.dismiss()
+                    }
+                    popupView.findViewById<TextView>(R.id.tv_same)
+                        .setOnClickListener {
+                            // 查相似
+                            popupView.dismiss()
+                        }
+                }
+
+                override fun beforeDismiss(popupView: BasePopupView?) {
+
+                }
+
+                override fun onShow(popupView: BasePopupView?) {
+
+                }
+
+            })
             .atView(it)
-            .asCustom(projectItemSettingPop)
+            .asCustom(ProjectItemSettingPop(it.context))
             .show()
     }
 

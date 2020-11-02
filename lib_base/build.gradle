@@ -72,7 +72,7 @@ dependencies {
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["toast"]
     api rootProject.ext.dependencies["webview"]
-    api rootProject.ext.dependencies["tablayout"]
+//    api rootProject.ext.dependencies["tablayout"]
     api rootProject.ext.dependencies["autosize"]
     api rootProject.ext.dependencies["xpopup"]
     debugApi rootProject.ext.dependencies["leakcanary"]

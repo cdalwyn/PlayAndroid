@@ -2,6 +2,7 @@ package com.czl.lib_base.base
 
 import android.os.Bundle
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -24,7 +25,7 @@ import java.util.*
  * 由于ViewModel工厂通过反射动态实例化，无需再手动构造实例
  * 所以子类继承构造指定为 application: MyApplication, model: DataRepository 泛型为<DataRepository>。
  */
-open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected var model: M? = null) :
+open class BaseViewModel<M : BaseModel?>(application: MyApplication, val model: M) :
     AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?>, KoinComponent {
 
     val uC: UIChangeLiveData = UIChangeLiveData()
@@ -33,7 +34,7 @@ open class BaseViewModel<M : BaseModel?>(application: MyApplication, protected v
     val tvTitle = ObservableField("")
 
     // 标题栏右图标id
-    var ivToolbarIconRes = 0
+    val ivToolbarIconRes = ObservableInt(0)
 
     // 标题栏返回箭头的显示隐藏 1 显示 0 隐藏
     val btnBackVisibility = ObservableField("1")

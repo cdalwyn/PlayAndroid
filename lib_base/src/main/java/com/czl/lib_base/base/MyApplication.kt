@@ -1,14 +1,19 @@
 package com.czl.lib_base.base
 
 import android.app.Application
+import android.content.Context
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BuildConfig
 import com.czl.lib_base.R
 import com.czl.lib_base.di.allModule
+import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.api.RefreshFooter
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import me.goldze.mvvmhabit.base.BaseApplication
@@ -42,7 +47,8 @@ open class MyApplication : Application() {
             .debug(BuildConfig.DEBUG)
             .install()
         // 屏幕适配
-        AutoSizeConfig.getInstance().setCustomFragment(true).setBaseOnWidth(false).setExcludeFontScale(true).designHeightInDp = 720
+        AutoSizeConfig.getInstance().setCustomFragment(true).setBaseOnWidth(false)
+            .setExcludeFontScale(true).designHeightInDp = 720
         //是否开启日志打印
         LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).setConsoleSwitch(BuildConfig.DEBUG)
         // 配置全局日志
@@ -82,6 +88,9 @@ open class MyApplication : Application() {
                         R.color.md_theme_red
                     )
                 )
+            }
+            SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+                BallPulseFooter(context)
             }
         }
     }

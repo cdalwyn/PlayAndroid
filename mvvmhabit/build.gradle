@@ -81,7 +81,9 @@ dependencies {
     api rootProject.ext.dependencies["viewpager2"]
     api rootProject.ext.dependencies["navigation"]
     api rootProject.ext.dependencies["refresh-header"]
+    api rootProject.ext.dependencies["refresh-footer"]
     api rootProject.ext.dependencies["refresh"]
+
 }
 repositories {
     mavenCentral()

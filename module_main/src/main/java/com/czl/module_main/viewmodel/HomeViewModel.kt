@@ -2,7 +2,6 @@ package com.czl.module_main.viewmodel
 
 import android.util.SparseArray
 import android.view.View
-import androidx.core.util.set
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
@@ -37,10 +36,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     val uc = UiChangeEvent()
     var tabSelectedPosition = ObservableField(0)
+    var currentArticlePage = 0
+    var currentProjectPage = 0
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
-        val rvLoadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val refreshCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -75,23 +78,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         return observableProjects.indexOf(itemViewModel)
     }
 
-    var articleList: DiffObservableList<HomeArticleBean.Data> =
-        DiffObservableList(object : DiffUtil.ItemCallback<HomeArticleBean.Data>() {
-            override fun areItemsTheSame(
-                oldItem: HomeArticleBean.Data,
-                newItem: HomeArticleBean.Data
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: HomeArticleBean.Data,
-                newItem: HomeArticleBean.Data
-            ): Boolean {
-                return oldItem.title == newItem.title
-            }
-        })
-
     var projectList: DiffObservableList<HomeProjectBean.Data> =
         DiffObservableList(object : DiffUtil.ItemCallback<HomeProjectBean.Data>() {
             override fun areItemsTheSame(
@@ -109,15 +95,22 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             }
         })
 
+    /*置顶*/
+    val fabOnClickListener: View.OnClickListener = View.OnClickListener {
+        uc.moveTopEvent.postValue(tabSelectedPosition.get())
+    }
+
     val onTabSelectedListener: BindingCommand<Int> = BindingCommand(BindingConsumer { position ->
         tabSelectedPosition.set(position)
         when (position) {
-            0 -> getArticle(model)
-            1 -> getProject(model)
+            0 -> if (observableArticles.isEmpty()) getArticle(model)
+            1 -> if (observableProjects.isEmpty()) getProject(model)
         }
     })
 
     val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        currentArticlePage = 0
+        currentProjectPage = 0
         getBanner(model)
         when (tabSelectedPosition.get()) {
             0 -> getArticle(model)
@@ -125,53 +118,115 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         }
     })
 
+    val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        when (tabSelectedPosition.get()) {
+            0 -> {
+                currentArticlePage += 1
+                getArticle(model)
+            }
+            1 -> {
+                currentProjectPage += 1
+                getProject(model)
+            }
+        }
+    })
+
     private fun getProject(model: DataRepository) {
-        model.getHomeProject()
+        model.getHomeProject(currentProjectPage.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeProjectBean>>() {
                 override fun onResult(t: BaseBean<HomeProjectBean>) {
-                    uc.rvLoadCompleteEvent.call()
+                    uc.refreshCompleteEvent.call()
                     if (t.errorCode == 0) {
                         t.data?.let {
-                            if (observableProjects.isNotEmpty()) {
-                                projectList.update(it.datas, projectList.calculateDiff(it.datas))
+                            if (currentProjectPage == 0 && observableProjects.isNotEmpty()) {
+                                observableProjects.clear()
+                                for (data in it.datas) {
+                                    observableProjects.add(
+                                        HomeProjectItemVm(
+                                            this@HomeViewModel,
+                                            data
+                                        )
+                                    )
+                                }
                                 return
+                            }
+                            if (currentProjectPage != 0) {
+                                uc.loadCompleteEvent.call()
                             }
                             for (data in it.datas) {
                                 observableProjects.add(HomeProjectItemVm(this@HomeViewModel, data))
                             }
                         }
+                    } else {
+                        currentProjectPage -= 1
+                        uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
+                    uc.refreshCompleteEvent.call()
+                    uc.loadCompleteEvent.call()
+                    ToastHelper.showErrorToast(msg)
+                }
+            })
+    }
 
+    fun collectArticle(id: Int) {
+        model.collectArticle(id)
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object :ApiSubscriberHelper<BaseBean<*>>(){
+                override fun onResult(t: BaseBean<*>) {
+                    if (t.errorCode==0){
+                        ToastHelper.showSuccessToast("收藏成功")
+                    }else{
+                        ToastHelper.showErrorToast("收藏失败")
+                    }
                 }
 
+                override fun onFailed(msg: String?) {
+                    ToastHelper.showErrorToast("收藏失败")
+                }
             })
     }
 
     private fun getArticle(model: DataRepository) {
-        model.getHomeArticle()
+        model.getHomeArticle(currentArticlePage.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
                 override fun onResult(t: BaseBean<HomeArticleBean>) {
-                    uc.rvLoadCompleteEvent.call()
+                    uc.refreshCompleteEvent.call()
                     if (t.errorCode == 0) {
                         t.data?.let {
-                            if (observableArticles.isNotEmpty()) {
-                                articleList.update(it.datas, articleList.calculateDiff(it.datas))
+                            if (currentArticlePage == 0 && observableArticles.isNotEmpty()) {
+                                observableArticles.clear()
+                                for (data in it.datas) {
+                                    observableArticles.add(
+                                        HomeArticleItemVm(
+                                            this@HomeViewModel,
+                                            data
+                                        )
+                                    )
+                                }
                                 return
+                            }
+                            if (currentArticlePage != 0) {
+                                uc.loadCompleteEvent.call()
                             }
                             for (data in it.datas) {
                                 observableArticles.add(HomeArticleItemVm(this@HomeViewModel, data))
                             }
                         }
+                    } else {
+                        currentArticlePage -= 1
+                        uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.rvLoadCompleteEvent.call()
+                    currentArticlePage -= 1
+                    uc.refreshCompleteEvent.call()
+                    uc.loadCompleteEvent.call()
                     ToastHelper.showErrorToast(msg)
                 }
             })
