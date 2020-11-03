@@ -28,17 +28,21 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
         return BR.viewModel
     }
 
+    override fun useBaseLayout(): Boolean {
+        return false
+    }
+
     override fun initViewObservable() {
         viewModel.uc.tabChangeLiveEvent.observe(this, Observer {
             binding.viewPager2.currentItem = it
-            viewModel.tvTitle.set(
-                when (it) {
-                    0 -> getString(R.string.main_tab_home)
-                    1 -> getString(R.string.main_tab_square)
-                    2 -> getString(R.string.main_tab_project)
-                    else -> getString(R.string.main_tab_me)
-                }
-            )
+//            viewModel.tvTitle.set(
+//                when (it) {
+//                    0 -> getString(R.string.main_tab_home)
+//                    1 -> getString(R.string.main_tab_square)
+//                    2 -> getString(R.string.main_tab_project)
+//                    else -> getString(R.string.main_tab_me)
+//                }
+//            )
         })
         viewModel.uc.pageChangeLiveEvent.observe(this, Observer {
             binding.bottomBar.selectTab(it)
@@ -47,7 +51,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initData() {
         setSwipeBackEnable(false)
-        initToolbar()
+//        initToolbar()
         initBottomBar()
         initViewPager()
 

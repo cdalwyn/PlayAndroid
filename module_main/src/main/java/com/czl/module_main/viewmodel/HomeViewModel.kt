@@ -1,11 +1,14 @@
 package com.czl.module_main.viewmodel
 
-import android.util.SparseArray
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.DiffUtil
+import com.blankj.utilcode.util.StringUtils
+import com.blankj.utilcode.util.Utils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
@@ -18,6 +21,8 @@ import com.czl.lib_base.util.RxThreadHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
+import es.dmoral.toasty.Toasty
+import io.reactivex.Observable
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
 import me.goldze.mvvmhabit.binding.command.BindingConsumer
@@ -131,6 +136,9 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         }
     })
 
+    /**
+     * 获取热门项目列表
+     */
     private fun getProject(model: DataRepository) {
         model.getHomeProject(currentProjectPage.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
@@ -151,12 +159,19 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                                 }
                                 return
                             }
+                            // 加载更多
                             if (currentProjectPage != 0) {
                                 uc.loadCompleteEvent.call()
                             }
                             for (data in it.datas) {
-                                observableProjects.add(HomeProjectItemVm(this@HomeViewModel, data))
+                                observableProjects.add(
+                                    HomeProjectItemVm(
+                                        this@HomeViewModel,
+                                        data
+                                    )
+                                )
                             }
+
                         }
                     } else {
                         currentProjectPage -= 1
@@ -172,24 +187,20 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             })
     }
 
-    fun collectArticle(id: Int) {
-        model.collectArticle(id)
-            .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<*>>(){
-                override fun onResult(t: BaseBean<*>) {
-                    if (t.errorCode==0){
-                        ToastHelper.showSuccessToast("收藏成功")
-                    }else{
-                        ToastHelper.showErrorToast("收藏失败")
-                    }
-                }
-
-                override fun onFailed(msg: String?) {
-                    ToastHelper.showErrorToast("收藏失败")
-                }
-            })
+    /**
+     * 收藏
+     */
+    fun collectArticle(id: Int): Observable<BaseBean<Any?>> {
+        return model.collectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
     }
 
+    fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
+        return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
+
+    /**
+     * 获取热门博文列表
+     */
     private fun getArticle(model: DataRepository) {
         model.getHomeArticle(currentArticlePage.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
@@ -198,6 +209,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     uc.refreshCompleteEvent.call()
                     if (t.errorCode == 0) {
                         t.data?.let {
+                            // 刷新
                             if (currentArticlePage == 0 && observableArticles.isNotEmpty()) {
                                 observableArticles.clear()
                                 for (data in it.datas) {
@@ -214,8 +226,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                                 uc.loadCompleteEvent.call()
                             }
                             for (data in it.datas) {
-                                observableArticles.add(HomeArticleItemVm(this@HomeViewModel, data))
+                                observableArticles.add(
+                                    HomeArticleItemVm(
+                                        this@HomeViewModel,
+                                        data
+                                    )
+                                )
                             }
+
                         }
                     } else {
                         currentArticlePage -= 1

@@ -5,11 +5,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.ObservableField
-import androidx.lifecycle.Observer
+import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.entity.HomeProjectBean
+import com.czl.lib_base.data.net.RetrofitClient
+import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.extension.ImagePopLoader
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
+import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
 import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
@@ -27,8 +30,6 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand
 class HomeProjectItemVm(homeViewModel: HomeViewModel) :
     ItemViewModel<HomeViewModel>(homeViewModel) {
     var entity: ObservableField<HomeProjectBean.Data> = ObservableField()
-    val tvShare = "分享者："
-    val tvAuthor = "作者："
 
     constructor(homeViewModel: HomeViewModel, data: HomeProjectBean.Data) : this(homeViewModel) {
         entity.set(data)
@@ -42,8 +43,8 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
     })
 
     /*Item的设置点击事件*/
-    val onItemSettingClickCommand: View.OnClickListener = View.OnClickListener {
-        XPopup.Builder(it.context)
+    val onItemSettingClickCommand: View.OnClickListener = View.OnClickListener { view ->
+        XPopup.Builder(view.context)
             .hasShadowBg(false)
             .setPopupCallback(object : XPopupCallback {
                 override fun onBackPressed(popupView: BasePopupView?): Boolean {
@@ -51,50 +52,86 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
                 }
 
                 override fun onDismiss(popupView: BasePopupView?) {
-
                 }
 
                 override fun onKeyBoardStateChanged(popupView: BasePopupView?, height: Int) {
                 }
 
                 override fun beforeShow(popupView: BasePopupView?) {
-
                 }
 
                 override fun onCreated(popupView: BasePopupView) {
                     val tvCollect = popupView.findViewById<TextView>(R.id.tv_collect)
+                    val ivCollect = popupView.findViewById<ImageView>(R.id.iv_collect)
                     if (entity.get()!!.collect) {
-                        popupView.findViewById<ImageView>(R.id.iv_collect)
-                            .setImageResource(R.drawable.ic_like_on)
-                        tvCollect.text = "取消收藏"
+                        ivCollect.setImageResource(R.drawable.ic_like_on)
+                        tvCollect.text = view.context.getString(R.string.main_cancel_collect)
                     } else {
-                        popupView.findViewById<ImageView>(R.id.iv_collect)
-                            .setImageResource(R.drawable.ic_like_off)
-                        tvCollect.text = "收藏"
+                        ivCollect.setImageResource(R.drawable.ic_like_off)
+                        tvCollect.text = view.context.getString(R.string.main_collect)
                     }
                     tvCollect.setOnClickListener {
-                        // 收藏/取消收藏
-                        homeViewModel.collectArticle(entity.get()!!.id)
-                        popupView.dismiss()
+                        if (!entity.get()!!.collect) {
+                            // 收藏
+                            homeViewModel.collectArticle(entity.get()!!.id)
+                                .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
+                                    override fun onResult(t: BaseBean<*>) {
+                                        if (t.errorCode == 0) {
+                                            entity.get()?.collect = true
+                                            ToastHelper.showSuccessToast("收藏成功")
+                                            ivCollect.setImageResource(R.drawable.ic_like_on)
+                                            tvCollect.text =
+                                                it.context.getString(R.string.main_cancel_collect)
+                                        } else {
+                                            ToastHelper.showErrorToast(t.errorMsg)
+                                        }
+                                    }
+
+                                    override fun onFailed(msg: String?) {
+                                        ToastHelper.showErrorToast(msg)
+                                    }
+                                })
+                        } else {
+                            // 取消收藏
+                            homeViewModel.unCollectArticle(entity.get()!!.id)
+                                .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
+                                    override fun onResult(t: BaseBean<*>) {
+                                        if (t.errorCode == 0) {
+                                            entity.get()?.collect = false
+                                            ivCollect.setImageResource(R.drawable.ic_like_off)
+                                            tvCollect.text =
+                                                it.context.getString(R.string.main_collect)
+                                        } else {
+                                            ToastHelper.showErrorToast(t.errorMsg)
+                                        }
+                                    }
+
+                                    override fun onFailed(msg: String?) {
+                                        ToastHelper.showErrorToast(msg)
+                                    }
+
+                                })
+                        }
+
                     }
                     popupView.findViewById<TextView>(R.id.tv_same)
                         .setOnClickListener {
                             // 查相似
+                            val bundle = Bundle()
+                            bundle.putString(AppConstants.BundleKey.WEB_URL,RetrofitClient.baseUrl+entity.get()!!.tags[0].url)
+                            homeViewModel.startContainerActivity(AppConstants.Router.Base.F_WEB,bundle)
                             popupView.dismiss()
                         }
                 }
 
                 override fun beforeDismiss(popupView: BasePopupView?) {
-
                 }
 
                 override fun onShow(popupView: BasePopupView?) {
-
                 }
-
             })
-            .atView(it)
-            .asCustom(ProjectItemSettingPop(it.context))
+            .atView(view)
+            .asCustom(ProjectItemSettingPop(view.context))
             .show()
     }
 

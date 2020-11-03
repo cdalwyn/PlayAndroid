@@ -15,6 +15,7 @@ import com.czl.module_main.adapter.MyBannerAdapter
 import com.czl.module_main.databinding.MainFragmentHomeBinding
 import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.ProjectItemSettingPop
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.XPopupCallback
@@ -28,6 +29,10 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var bannerAdapter: MyBannerAdapter
     private var bannerFlag = false
     private var rvFlag = false
+
+    override fun initParam() {
+        ImmersionBar.hideStatusBar(requireActivity().window)
+    }
 
     override fun initContentView(): Int {
         return R.layout.main_fragment_home

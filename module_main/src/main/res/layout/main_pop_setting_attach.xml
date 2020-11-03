@@ -6,45 +6,57 @@
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_collect"
-        android:layout_width="20dp"
+    <LinearLayout
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_10"
-        android:gravity="center_vertical"
-        android:src="@drawable/ic_like_off" />
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/tv_collect"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="@dimen/dp_6"
-        android:text=" 收藏 "
-        android:textColor="#fff"
-        android:textSize="@dimen/sp_14" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_collect"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@drawable/ic_like_off" />
+
+        <TextView
+            android:id="@+id/tv_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_6"
+            android:text="收藏"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
 
     <View
-        android:layout_width="1px"
+        android:layout_width="1dp"
         android:layout_height="15dp"
-        android:background="#eee" />
+        android:background="@color/white_cc" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="20dp"
+    <LinearLayout
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_10"
-        android:gravity="center_vertical"
-        android:src="@drawable/ic_same" />
+        android:gravity="center">
 
-    <TextView
-        android:id="@+id/tv_same"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground"
-        android:gravity="center_vertical"
-        android:padding="@dimen/dp_6"
-        android:text=" 相似 "
-        android:textColor="#fff"
-        android:textSize="@dimen/sp_14" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:src="@drawable/ic_same" />
+
+        <TextView
+            android:id="@+id/tv_same"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp_6"
+            android:text="相似"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_14" />
+    </LinearLayout>
+
 </LinearLayout>

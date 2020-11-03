@@ -60,6 +60,10 @@ class DataRepository constructor(
         return mHttpDataSource.collectArticle(articleId)
     }
 
+    override fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.unCollectArticle(articleId)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

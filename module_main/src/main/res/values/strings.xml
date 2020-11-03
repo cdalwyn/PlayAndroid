@@ -8,4 +8,7 @@
     <string name="main_press_again">再按一次退出应用</string>
     <string name="main_home_tab_blog">热门博文</string>
     <string name="main_home_tab_project">热门项目</string>
+    <string name="main_collect"> 收藏 </string>
+    <string name="main_cancel_collect">取消收藏</string>
+    <string name="main_same">相似</string>
 </resources>

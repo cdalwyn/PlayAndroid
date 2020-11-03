@@ -28,7 +28,11 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
     }
 
     override fun initData() {
-        viewModel.tvTitle.set("搜索")
+
+    }
+
+    override fun useBaseLayout(): Boolean {
+        return false
     }
 
 }

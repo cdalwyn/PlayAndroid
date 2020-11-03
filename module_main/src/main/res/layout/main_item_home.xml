@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/tools">
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import
             alias="textUtils"
             type="android.text.TextUtils" />
@@ -57,25 +56,34 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="扔物线" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_24"
+                    binding:src="@{viewModel.ivCollect}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_like_off_gray"
+                    binding:onClickCommand="@{viewModel.onCollectClickCommand}"/>
+
                 <TextView
                     android:id="@+id/item_tv_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:ellipsize="end"
                     android:maxLines="3"
                     android:text="@{viewModel.entity.title}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
-                    android:ellipsize="end"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
                     tools:text="啊实打实大啊实打实大苏打实打实的阿三大苏打萨达萨达萨达萨达是阿斯顿撒打算啊实打实大苏打撒旦萨达萨达萨达是阿斯顿撒旦啊实打实的撒啊实打实的阿松大苏打" />
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/item_tv_sort"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
+                    android:maxLines="1"
                     android:text="@{viewModel.entity.superChapterName}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
@@ -84,8 +92,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.entity.niceShareDate}"
                     android:maxLines="1"
+                    android:text="@{viewModel.entity.niceShareDate}"
                     app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"

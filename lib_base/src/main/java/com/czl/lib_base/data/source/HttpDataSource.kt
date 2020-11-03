@@ -18,4 +18,5 @@ interface HttpDataSource {
     fun getHomeArticle(page: String = "0"): Observable<BaseBean<HomeArticleBean>>
     fun getHomeProject(page: String = "0"): Observable<BaseBean<HomeProjectBean>>
     fun collectArticle(articleId: Int): Observable<BaseBean<Any?>>
+    fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>>
 }

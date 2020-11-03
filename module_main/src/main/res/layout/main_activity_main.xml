@@ -11,38 +11,32 @@
             type="com.czl.module_main.viewmodel.MainViewModel" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".ui.activity.MainActivity">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:overScrollMode="never"
+            binding:onPageSelectedCommand="@{viewModel.onPageSelectedListener}" />
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:overScrollMode="never"
-                app:layout_constraintBottom_toTopOf="@id/bottomBar"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_weight="1"
-                binding:onPageSelectedCommand="@{viewModel.onPageSelectedListener}" />
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:bnbAutoHideEnabled="false"
+            binding:onTabChangeCommand="@{viewModel.onTabSelectedListener}">
 
-            <com.ashokvarma.bottomnavigation.BottomNavigationBar
-                android:id="@+id/bottomBar"
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewPager2"
-                binding:onTabChangeCommand="@{viewModel.onTabSelectedListener}">
+        </com.ashokvarma.bottomnavigation.BottomNavigationBar>
 
-            </com.ashokvarma.bottomnavigation.BottomNavigationBar>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

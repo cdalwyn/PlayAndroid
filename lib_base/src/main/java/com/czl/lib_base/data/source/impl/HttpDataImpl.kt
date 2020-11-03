@@ -57,4 +57,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.collectArticle(articleId)
     }
 
+    override fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>> {
+        return apiService.unCollectArticle(articleId)
+    }
+
 }

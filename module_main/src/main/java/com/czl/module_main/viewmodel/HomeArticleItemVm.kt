@@ -2,15 +2,16 @@ package com.czl.module_main.viewmodel
 
 import android.os.Bundle
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
+import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.ArticleBean
 import com.czl.lib_base.data.entity.HomeArticleBean
+import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.ToastHelper
+import com.czl.module_main.R
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
-import me.yokeyword.fragmentation.SupportFragment
 
 
 /**
@@ -21,17 +22,66 @@ import me.yokeyword.fragmentation.SupportFragment
 class HomeArticleItemVm(homeViewModel: HomeViewModel) :
     ItemViewModel<HomeViewModel>(homeViewModel) {
     var entity: ObservableField<HomeArticleBean.Data> = ObservableField()
+    // 绑定收藏图标
+    var ivCollect : ObservableInt = ObservableInt(R.drawable.ic_like_off_gray)
+
     val tvShare = "分享者："
     val tvAuthor = "作者："
 
     constructor(homeViewModel: HomeViewModel, data: HomeArticleBean.Data) : this(homeViewModel) {
         entity.set(data)
+        // 判断收藏状态
+        if (data.collect){
+            ivCollect.set(R.drawable.ic_like_on)
+        }
     }
 
     val onArticleItemClick: BindingCommand<Void> = BindingCommand(BindingAction {
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.WEB_URL, this.entity.get()?.link)
         viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
+    })
+
+    val onCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        val data = entity.get()
+        data?.let {
+            if (!data.collect) {
+                homeViewModel.collectArticle(data.id)
+                    .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
+                        override fun onResult(t: BaseBean<*>) {
+                            if (t.errorCode == 0) {
+                                ToastHelper.showSuccessToast("收藏成功")
+                                data.collect = true
+                                ivCollect.set(R.drawable.ic_like_on)
+                            } else {
+                                ToastHelper.showErrorToast(t.errorMsg)
+                            }
+                        }
+
+                        override fun onFailed(msg: String?) {
+                            ToastHelper.showErrorToast(msg)
+                        }
+
+                    })
+            } else {
+                homeViewModel.unCollectArticle(data.id)
+                    .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
+                        override fun onResult(t: BaseBean<*>) {
+                            if (t.errorCode == 0) {
+                                data.collect = false
+                                ivCollect.set(R.drawable.ic_like_off_gray)
+                            } else {
+                                ToastHelper.showErrorToast(t.errorMsg)
+                            }
+                        }
+
+                        override fun onFailed(msg: String?) {
+                            ToastHelper.showErrorToast(msg)
+                        }
+
+                    })
+            }
+        }
     })
 
 }

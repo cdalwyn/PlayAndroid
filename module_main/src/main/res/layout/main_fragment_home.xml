@@ -32,41 +32,65 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/trans">
+                android:background="@color/trans"
+                app:elevation="0dp">
 
-                <com.youth.banner.Banner
-                    android:id="@+id/banner"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_36"
-                    android:layout_marginStart="@dimen/dp_10"
-                    android:layout_marginTop="@dimen/dp_10"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/banner"
-                    app:tabBackground="@drawable/selector_tab"
-                    app:tabGravity="start"
-                    app:tabIndicatorGravity="bottom"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabRippleColor="@color/trans"
-                    app:tabSelectedTextColor="@color/white"
-                    binding:onTabSelectedCommand="@{viewModel.onTabSelectedListener}">
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.google.android.material.tabs.TabItem
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/cl_banner">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabLayout"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_home_tab_blog" />
+                        android:layout_height="@dimen/dp_36"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tabBackground="@drawable/selector_tab"
+                        app:tabGravity="start"
+                        app:tabIndicatorGravity="bottom"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabRippleColor="@color/trans"
+                        app:tabSelectedTextColor="@color/white"
+                        binding:onTabSelectedCommand="@{viewModel.onTabSelectedListener}">
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/main_home_tab_project" />
-                </com.google.android.material.tabs.TabLayout>
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_home_tab_blog" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_home_tab_project" />
+                    </com.google.android.material.tabs.TabLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/dp_36"
+                        android:layout_height="@dimen/dp_36"
+                        android:layout_marginEnd="@dimen/dp_28"
+                        android:padding="@dimen/dp_6"
+                        android:src="@drawable/ic_search"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </com.google.android.material.appbar.AppBarLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -105,12 +129,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="@dimen/dp_20"
-                android:src="@drawable/ic_top"
                 android:onClick="@{viewModel.fabOnClickListener}"
-                app:fabSize="mini"
-                app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+                android:src="@drawable/ic_top"
                 app:backgroundTint="@color/white"
                 app:elevation="@dimen/dp_6"
+                app:fabSize="mini"
+                app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
                 app:pressedTranslationZ="@dimen/dp_10" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
