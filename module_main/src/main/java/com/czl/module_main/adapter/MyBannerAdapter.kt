@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.entity.HomeBannerBean
 import com.czl.lib_base.extension.loadImage
+import com.czl.lib_base.extension.loadRoundImage
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter.ImageTitleHolder
 import com.czl.module_main.ui.fragment.HomeFragment

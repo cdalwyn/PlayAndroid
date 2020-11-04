@@ -5,6 +5,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
@@ -18,7 +19,8 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * @Description
  */
 fun ImageView.loadImage(url: String) {
-    Glide.with(this).load(url).apply(RequestOptions.placeholderOf(R.drawable.ic_placeholder)).into(this)
+    Glide.with(this).load(url).apply(RequestOptions.placeholderOf(R.drawable.ic_default_bg))
+        .into(this)
 }
 
 fun ImageView.loadImage(uri: String?, requestListener: RequestListener<Drawable?>) {
@@ -73,6 +75,19 @@ fun ImageView.loadCircleImage(url: String?, @DrawableRes holder: Int? = null) {
     }
 }
 
+fun ImageView.loadCircleImageRes(resId: Int, @DrawableRes holder: Int? = null) {
+    if (resId == 0) {
+        if (holder != null) {
+            setImageResource(holder)
+        }
+    } else if (holder == null) {
+        Glide.with(this).load(resId).apply(RequestOptions().circleCrop()).into(this)
+    } else {
+        Glide.with(this).load(resId).apply(RequestOptions().placeholder(holder).circleCrop())
+            .into(this)
+    }
+}
+
 fun ImageView.loadRoundImage(url: String?, radius: Int, @DrawableRes holder: Int? = null) {
     if (url.isNullOrBlank() && holder != null) {
         setImageResource(holder)
@@ -82,7 +97,7 @@ fun ImageView.loadRoundImage(url: String?, radius: Int, @DrawableRes holder: Int
             .into(this)
     } else {
         Glide.with(this).load(url).apply(
-            RequestOptions().transform(RoundedCornersTransformation(radius, 0))
+            RequestOptions.bitmapTransform(RoundedCornersTransformation(radius, 0))
                 .placeholder(holder)
         )
             .into(this)

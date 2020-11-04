@@ -83,6 +83,7 @@ dependencies {
     api rootProject.ext.dependencies["refresh-header"]
     api rootProject.ext.dependencies["refresh-footer"]
     api rootProject.ext.dependencies["refresh"]
+    api rootProject.ext.dependencies["searchview"]
 
 }
 repositories {

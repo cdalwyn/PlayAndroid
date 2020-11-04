@@ -26,7 +26,7 @@ import java.lang.reflect.ParameterizedType
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxFragment(), IBaseView {
     protected lateinit var binding: V
-    public lateinit var viewModel: VM
+    lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
     private lateinit var rootView: View
@@ -41,7 +41,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        if (useBaseLayout()) {
+        return if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
             // 设置跑马灯
@@ -49,10 +49,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
-            return attachToSwipeBack(rootBinding?.root)
+            attachToSwipeBack(rootBinding?.root)
         } else {
             binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
-            return attachToSwipeBack(binding.root)
+            attachToSwipeBack(binding.root)
         }
     }
 
@@ -86,7 +86,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onSupportVisible() {
         super.onSupportVisible()
         if (useBaseLayout()) {
-            ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
+            ImmersionBar.with(this).statusBarDarkFont(true).init()
         }
     }
 
@@ -154,7 +154,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         )
     }
 
-     open fun back() {
+    open fun back() {
         if (preFragment == null) {
             requireActivity().finish()
         } else {
@@ -267,7 +267,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun initViewObservable() {}
 
     open fun isImmersionBarEnabled(): Boolean {
-        return true
+        return false
     }
 //    open fun <T : ViewModel?> createViewModel(
 //        fragment: Fragment?,

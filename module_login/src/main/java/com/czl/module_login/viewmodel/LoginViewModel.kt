@@ -13,6 +13,7 @@ import com.czl.lib_base.data.entity.UserBean
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import me.goldze.mvvmhabit.utils.ToastUtils
+import me.yokeyword.fragmentation.SupportFragment
 
 
 /**
@@ -28,6 +29,10 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
 
     var btnLoginClick: BindingCommand<Any> = BindingCommand(BindingAction {
         loginByPwd()
+    })
+
+    val registerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startFragment(RouteCenter.navigate(AppConstants.Router.Login.F_REGISTER) as SupportFragment)
     })
 
     private fun loginByPwd() {

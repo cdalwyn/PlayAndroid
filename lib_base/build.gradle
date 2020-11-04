@@ -75,7 +75,6 @@ dependencies {
 //    api rootProject.ext.dependencies["tablayout"]
     api rootProject.ext.dependencies["autosize"]
     api rootProject.ext.dependencies["xpopup"]
-    api rootProject.ext.dependencies["searchview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

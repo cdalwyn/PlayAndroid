@@ -3,6 +3,7 @@ package com.czl.lib_base.data.source
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.entity.*
 import io.reactivex.Observable
+import retrofit2.http.Field
 import retrofit2.http.Path
 
 /**
@@ -19,4 +20,6 @@ interface HttpDataSource {
     fun getHomeProject(page: String = "0"): Observable<BaseBean<HomeProjectBean>>
     fun collectArticle(articleId: Int): Observable<BaseBean<Any?>>
     fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>>
+    fun logout(): Observable<BaseBean<Any?>>
+    fun register(username: String, password: String, repassword: String):Observable<BaseBean<Any?>>
 }

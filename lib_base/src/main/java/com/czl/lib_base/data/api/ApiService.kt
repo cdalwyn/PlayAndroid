@@ -66,5 +66,19 @@ interface ApiService {
      */
     @POST("article/query/{page}/json")
     @FormUrlEncoded
-    fun searchByKeyword(@Path("page") page: String,@Field("k") keyword:String):Observable<BaseBean<SearchDataBean>>
+    fun searchByKeyword(
+        @Path("page") page: String,
+        @Field("k") keyword: String
+    ): Observable<BaseBean<SearchDataBean>>
+
+    @GET("user/logout/json")
+    fun logout(): Observable<BaseBean<Any?>>
+
+    @POST("user/register")
+    @FormUrlEncoded
+    fun register(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("repassword") repassword: String
+    ):Observable<BaseBean<Any?>>
 }

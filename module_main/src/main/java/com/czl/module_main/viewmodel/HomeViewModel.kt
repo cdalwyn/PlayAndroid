@@ -1,28 +1,26 @@
 package com.czl.module_main.viewmodel
 
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableInt
 import androidx.databinding.ObservableList
 import androidx.recyclerview.widget.DiffUtil
-import com.blankj.utilcode.util.StringUtils
-import com.blankj.utilcode.util.Utils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.entity.HomeArticleBean
 import com.czl.lib_base.data.entity.HomeBannerBean
 import com.czl.lib_base.data.entity.HomeProjectBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
+import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
-import es.dmoral.toasty.Toasty
 import io.reactivex.Observable
+import me.goldze.mvvmhabit.base.AppManager
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
 import me.goldze.mvvmhabit.binding.command.BindingConsumer
@@ -49,6 +47,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val refreshCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -99,6 +98,16 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 return oldItem.title == newItem.title
             }
         })
+
+    /*打开抽屉*/
+    val onDrawerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.drawerOpenEvent.call()
+    })
+
+    /*搜索*/
+    val onSearchClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.Search.F_SEARCH)
+    })
 
     /*置顶*/
     val fabOnClickListener: View.OnClickListener = View.OnClickListener {
@@ -184,6 +193,30 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     uc.loadCompleteEvent.call()
                     ToastHelper.showErrorToast(msg)
                 }
+            })
+    }
+
+    /**
+     * 退出登录
+     */
+    fun logout() {
+        model.logout()
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .doOnSubscribe { showLoading("正在退出登录") }
+            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
+                override fun onResult(t: BaseBean<Any?>) {
+                    dismissLoading()
+                    if (t.errorCode == 0) {
+                        model.clearLoginState()
+                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
+                        AppManager.getInstance().finishAllActivity()
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+                    ToastHelper.showErrorToast(msg)
+                }
+
             })
     }
 

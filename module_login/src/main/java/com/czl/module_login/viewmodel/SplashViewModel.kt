@@ -23,7 +23,7 @@ class SplashViewModel(application: MyApplication, model: DataRepository) :
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     if (model.getLoginName().isNullOrBlank()) {
-                        RouteCenter.navigate(AppConstants.Router.Login.A_LOGIN)
+                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
                     } else {
                         RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
                     }

@@ -98,6 +98,19 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
                 binding:onClickCommand="@{viewModel.btnLoginClick}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:text="注册"
+                android:textColor="@color/white"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/btnLogin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                binding:onClickCommand="@{viewModel.registerClickCommand}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.czl.module_login.widget.SrcScrollFrameLayout>
 

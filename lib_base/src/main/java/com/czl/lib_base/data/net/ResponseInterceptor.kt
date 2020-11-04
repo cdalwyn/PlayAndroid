@@ -5,6 +5,7 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.blankj.utilcode.util.LogUtils
+import com.czl.lib_base.util.ToastHelper
 import me.goldze.mvvmhabit.utils.ToastUtils
 import okhttp3.Interceptor
 import okhttp3.MediaType
@@ -33,7 +34,7 @@ class ResponseInterceptor : Interceptor {
             val mediaType = responseBody.contentType()
             when (response.code()) {
                 503, 504, 500, 404, 403 -> {
-                    ToastUtils.showShort("服务器出错")
+                   ToastHelper.showErrorToast("服务器出粗，请稍后再试")
                 }
                 200 -> {
                     val source = responseBody.source()

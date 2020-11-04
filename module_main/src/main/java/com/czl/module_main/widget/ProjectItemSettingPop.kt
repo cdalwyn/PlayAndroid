@@ -1,6 +1,9 @@
 package com.czl.module_main.widget
 
 import android.content.Context
+import android.widget.ImageView
+import com.czl.lib_base.extension.loadCircleImage
+import com.czl.lib_base.extension.loadCircleImageRes
 import com.czl.module_main.R
 import com.lxj.xpopup.core.HorizontalAttachPopupView
 
@@ -15,5 +18,6 @@ class ProjectItemSettingPop(context: Context) : HorizontalAttachPopupView(contex
     override fun getImplLayoutId(): Int {
         return R.layout.main_pop_setting_attach
     }
+
 
 }

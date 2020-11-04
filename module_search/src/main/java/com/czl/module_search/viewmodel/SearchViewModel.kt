@@ -4,6 +4,8 @@ import android.view.View
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
+import me.goldze.mvvmhabit.binding.command.BindingAction
+import me.goldze.mvvmhabit.binding.command.BindingCommand
 
 import me.goldze.mvvmhabit.utils.ToastUtils
 
@@ -15,4 +17,7 @@ import me.goldze.mvvmhabit.utils.ToastUtils
 class SearchViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
+    val onSearchLeftCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+        finish()
+    })
 }

@@ -8,6 +8,7 @@ import com.czl.module_search.BR
 import com.czl.module_search.R
 import com.czl.module_search.databinding.SearchFragmentSearchBinding
 import com.czl.module_search.viewmodel.SearchViewModel
+import com.gyf.immersionbar.ImmersionBar
 import com.permissionx.guolindev.callback.RequestCallback
 import me.goldze.mvvmhabit.utils.ToastUtils
 
@@ -27,8 +28,11 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         return BR.viewModel
     }
 
-    override fun initData() {
+    override fun onSupportVisible() {
+        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
+    }
 
+    override fun initData() {
     }
 
     override fun useBaseLayout(): Boolean {

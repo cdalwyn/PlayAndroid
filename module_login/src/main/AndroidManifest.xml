@@ -3,7 +3,8 @@
     package="com.czl.module_login">
 
     <application>
-        <activity android:name="com.czl.module_login.ui.activity.SplashActivity"
+        <activity
+            android:name=".ui.activity.SplashActivity"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -11,9 +12,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.czl.module_login.ui.activity.LoginActivity" />
-
     </application>
-
 
 </manifest>

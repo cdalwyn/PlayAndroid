@@ -16,13 +16,13 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
+import com.czl.lib_base.util.ToastHelper
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.goldze.mvvmhabit.base.AppManager
 import me.goldze.mvvmhabit.base.IBaseView
 import me.goldze.mvvmhabit.bus.Messenger
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils
-import me.goldze.mvvmhabit.utils.ToastUtils
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
@@ -127,8 +127,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         LiveBusCenter.observeTokenExpiredEvent(this) {
             val dataRepository: DataRepository = get()
             dataRepository.clearLoginState()
-            ToastUtils.showLong(it.msg)
-            RouteCenter.navigate(AppConstants.Router.Login.A_LOGIN)
+            ToastHelper.showErrorToast(it.msg)
+            RouteCenter.navigate(AppConstants.Router.Login.F_LOGIN)
             AppManager.getInstance().finishAllActivity()
         }
         //加载对话框显示

@@ -64,6 +64,18 @@ class DataRepository constructor(
         return mHttpDataSource.unCollectArticle(articleId)
     }
 
+    override fun logout(): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.logout()
+    }
+
+    override fun register(
+        username: String,
+        password: String,
+        repassword: String
+    ): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.register(username,password,repassword)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

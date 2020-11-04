@@ -61,4 +61,16 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.unCollectArticle(articleId)
     }
 
+    override fun logout(): Observable<BaseBean<Any?>> {
+        return apiService.logout()
+    }
+
+    override fun register(
+        username: String,
+        password: String,
+        repassword: String
+    ): Observable<BaseBean<Any?>> {
+        return apiService.register(username,password,repassword)
+    }
+
 }

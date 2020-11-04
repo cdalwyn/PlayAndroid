@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException
  */
 class AppViewModelFactory(
     private val mApplication: MyApplication,
-    private val mRepository: DataRepository?
+    private val mRepository: DataRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

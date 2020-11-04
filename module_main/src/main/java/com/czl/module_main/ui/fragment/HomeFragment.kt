@@ -1,26 +1,19 @@
 package com.czl.module_main.ui.fragment
 
 
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.HomeProjectBean
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter
 import com.czl.module_main.databinding.MainFragmentHomeBinding
 import com.czl.module_main.viewmodel.HomeViewModel
-import com.czl.module_main.widget.ProjectItemSettingPop
+import com.czl.module_main.widget.HomeDrawerPop
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
-import com.lxj.xpopup.core.BasePopupView
-import com.lxj.xpopup.interfaces.XPopupCallback
-import com.youth.banner.config.IndicatorConfig
-import com.youth.banner.indicator.CircleIndicator
+import com.youth.banner.transformer.AlphaPageTransformer
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -29,9 +22,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var bannerAdapter: MyBannerAdapter
     private var bannerFlag = false
     private var rvFlag = false
+    private lateinit var homeDrawerPop: HomeDrawerPop
 
-    override fun initParam() {
-        ImmersionBar.hideStatusBar(requireActivity().window)
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
     }
 
     override fun initContentView(): Int {
@@ -47,12 +42,18 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun initData() {
+        if (!this::homeDrawerPop.isInitialized) {
+            homeDrawerPop = HomeDrawerPop(this)
+        }
         binding.refreshLayout.autoRefresh()
         binding.banner.apply {
             addBannerLifecycleObserver(this@HomeFragment)
-            indicator = CircleIndicator(context).apply {
-                indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
-            }
+//            setBannerGalleryMZ(20)
+            setBannerGalleryEffect(18, 10)
+            addPageTransformer(AlphaPageTransformer(0.6f))
+//            indicator = CircleIndicator(context).apply {
+//                indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
+//            }
         }
     }
 
@@ -92,5 +93,12 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 1 -> binding.ryProject.smoothScrollToPosition(0)
             }
         })
+        // 打开抽屉
+        viewModel.uc.drawerOpenEvent.observe(this, Observer {
+            XPopup.Builder(context)
+                .asCustom(homeDrawerPop)
+                .show()
+        })
+
     }
 }

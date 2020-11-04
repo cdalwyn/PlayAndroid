@@ -35,18 +35,59 @@
                 android:background="@color/trans"
                 app:elevation="0dp">
 
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_banner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                    app:layout_scrollFlags="scroll">
 
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:layout_constraintTop_toBottomOf="@id/cardView" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        app:cardCornerRadius="@dimen/dp_10"
+                        app:cardElevation="@dimen/dp_4"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_scrollFlags="scroll|exitUntilCollapsed" />
+                        app:layout_scrollFlags="scroll">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="48dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dp_10"
+                                android:padding="@dimen/dp_10"
+                                app:srcCompat="@drawable/ic_menu"
+                                binding:onClickCommand="@{viewModel.onDrawerClickCommand}"/>
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="start|center_vertical"
+                                android:paddingStart="@dimen/dp_10"
+                                android:paddingEnd="@dimen/dp_20"
+                                android:text="搜你想搜的..."
+                                android:textSize="@dimen/sp_16"
+                                app:drawableEndCompat="@drawable/ic_search"
+                                binding:onClickCommand="@{viewModel.onSearchClickCommand}"/>
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,14 +122,15 @@
                             android:text="@string/main_home_tab_project" />
                     </com.google.android.material.tabs.TabLayout>
 
-                    <ImageView
-                        android:layout_width="@dimen/dp_36"
-                        android:layout_height="@dimen/dp_36"
-                        android:layout_marginEnd="@dimen/dp_28"
-                        android:padding="@dimen/dp_6"
-                        android:src="@drawable/ic_search"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                    <!--                    <ImageView-->
+                    <!--                        android:layout_width="@dimen/dp_36"-->
+                    <!--                        android:layout_height="@dimen/dp_36"-->
+                    <!--                        android:layout_marginEnd="@dimen/dp_28"-->
+                    <!--                        android:padding="@dimen/dp_6"-->
+                    <!--                        android:src="@drawable/ic_search"-->
+                    <!--                        binding:onClickCommand="@{viewModel.onSearchClickCommand}"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent" />-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.AppBarLayout>

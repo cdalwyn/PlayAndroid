@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonItemSettingView">
+        <attr name="mTitle" format="string" />
+        <attr name="mContent" format="string" />
+        <attr name="mIcon" format="reference" />
+        <attr name="mRight" format="boolean" />
+    </declare-styleable>
+</resources>
