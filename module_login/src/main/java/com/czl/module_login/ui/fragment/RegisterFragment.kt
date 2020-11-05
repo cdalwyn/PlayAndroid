@@ -9,6 +9,7 @@ import com.czl.module_login.BR
 import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginFragmentRegisterBinding
 import com.czl.module_login.viewmodel.RegisterViewModel
+
 @Route(path = AppConstants.Router.Login.F_REGISTER)
 class RegisterFragment : BaseFragment<LoginFragmentRegisterBinding, RegisterViewModel>() {
     override fun initContentView(): Int {
@@ -19,4 +20,7 @@ class RegisterFragment : BaseFragment<LoginFragmentRegisterBinding, RegisterView
         return BR.viewModel
     }
 
+    override fun useBaseLayout(): Boolean {
+        return false
+    }
 }

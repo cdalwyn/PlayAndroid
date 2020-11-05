@@ -1,16 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.czl.module_login.viewmodel.RegisterViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.czl.module_login.widget.SrcScrollFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.RegisterFragment">
+        app:maskLayerColor="#80000000"
+        app:scrollOrientation="vertical"
+        app:src="@drawable/ic_login_background">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".mvvm.ui.activity.LoginActivity">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                android:onClick="@{viewModel.onBackClick}"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_20"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+                />
+
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:text="注册"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tlAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginEnd="40dp"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tvLogin">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:hint="账号"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{viewModel.tvAccount}"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:theme="@style/TextInputWhiteStyle"
+                    binding:textChanged="@{viewModel.onAccountChangeCommand}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tlAccount">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:hint="密码"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{viewModel.tvPwd}"
+                    android:textColor="@color/white"
+                    android:theme="@style/TextInputWhiteStyle"
+                    binding:textChanged="@{viewModel.onPwdChangeCommand}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_repassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
+                android:hint=""
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:hint="确认密码"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="@{viewModel.tvRePwd}"
+                    android:textColor="@color/white"
+                    android:theme="@style/TextInputWhiteStyle"
+                    binding:textChanged="@{viewModel.onRePwdChangeCommand}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:background="@drawable/edit_bg_shape"
+                android:text="注册"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_repassword"
+                binding:onClickCommand="@{viewModel.onRegisterClickCommand}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="有账号了？前往登录"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_register"
+                binding:onClickCommand="@{viewModel.onBackToLoginCommand}" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.czl.module_login.widget.SrcScrollFrameLayout>
 </layout>

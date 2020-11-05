@@ -100,7 +100,7 @@ ext {
             'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
             'autosize'                             : "me.jessyan:autosize:1.1.2",
             'xpopup'                               : 'com.lxj:xpopup:2.1.12',
-            'searchview'                               : 'com.github.arimorty:floatingsearchview:2.1.1'
+            'searchview'                           : 'com.github.mancj:MaterialSearchBar:0.8.5'
 
 
     ]

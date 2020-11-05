@@ -71,14 +71,26 @@ interface ApiService {
         @Field("k") keyword: String
     ): Observable<BaseBean<SearchDataBean>>
 
+    /**
+     * 退出登录
+     */
     @GET("user/logout/json")
     fun logout(): Observable<BaseBean<Any?>>
 
+    /**
+     * 注册
+     */
     @POST("user/register")
     @FormUrlEncoded
     fun register(
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String
-    ):Observable<BaseBean<Any?>>
+    ): Observable<BaseBean<Any?>>
+
+    /**
+     * 搜索热词
+     */
+    @GET("hotkey/json")
+    fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>>
 }

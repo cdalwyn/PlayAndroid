@@ -12,6 +12,8 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.data.entity.UserBean
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
+import com.czl.lib_base.util.ToastHelper
+import me.goldze.mvvmhabit.binding.command.BindingConsumer
 import me.goldze.mvvmhabit.utils.ToastUtils
 import me.yokeyword.fragmentation.SupportFragment
 
@@ -27,6 +29,14 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
     var account = ObservableField("cdalwyn")
     var pwd = ObservableField("123456")
 
+    val onAccountChangeCommand:BindingCommand<String> = BindingCommand(BindingConsumer {
+        account.set(it)
+    })
+
+    val onPwdChangeCommand:BindingCommand<String> = BindingCommand(BindingConsumer {
+        pwd.set(it)
+    })
+
     var btnLoginClick: BindingCommand<Any> = BindingCommand(BindingAction {
         loginByPwd()
     })
@@ -37,7 +47,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
 
     private fun loginByPwd() {
         if (account.get().isNullOrBlank() || pwd.get().isNullOrBlank()) {
-            ToastUtils.showShort("账号或密码不能为空")
+            ToastHelper.showNormalToast("账号或密码不能为空")
             return
         }
         model.apply {

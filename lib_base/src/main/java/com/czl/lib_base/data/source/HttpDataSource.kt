@@ -22,4 +22,6 @@ interface HttpDataSource {
     fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>>
     fun logout(): Observable<BaseBean<Any?>>
     fun register(username: String, password: String, repassword: String):Observable<BaseBean<Any?>>
+    fun searchByKeyword(page: String = "0", keyword: String): Observable<BaseBean<SearchDataBean>>
+    fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>>
 }

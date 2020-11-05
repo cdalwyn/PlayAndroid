@@ -54,11 +54,14 @@
                     android:layout_height="wrap_content"
                     android:hint="账号"
                     android:padding="10dp"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="@={viewModel.account}"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:backgroundTint="@color/white"
                     android:theme="@style/TextInputWhiteStyle"
+                    binding:textChanged="@{viewModel.onAccountChangeCommand}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,8 +85,11 @@
                     android:padding="10dp"
                     android:text="@={viewModel.pwd}"
                     android:textColor="@color/white"
+                    android:singleLine="true"
+                    android:maxLines="1"
                     android:backgroundTint="@color/white"
                     android:theme="@style/TextInputWhiteStyle"
+                    binding:textChanged="@{viewModel.onPwdChangeCommand}"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 

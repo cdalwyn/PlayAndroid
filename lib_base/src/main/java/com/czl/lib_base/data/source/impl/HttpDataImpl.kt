@@ -73,4 +73,15 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.register(username,password,repassword)
     }
 
+    override fun searchByKeyword(
+        page: String,
+        keyword: String
+    ): Observable<BaseBean<SearchDataBean>> {
+        return apiService.searchByKeyword(page,keyword)
+    }
+
+    override fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>> {
+        return apiService.getSearchHotKey()
+    }
+
 }

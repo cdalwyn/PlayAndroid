@@ -12,15 +12,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.arlib.floatingsearchview.FloatingSearchView
-            android:id="@+id/floating_search_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:floatingSearch_searchHint="搜你想搜的..."
-            app:floatingSearch_suggestionsListAnimDuration="250"
-            app:floatingSearch_showSearchKey="false"
-            app:floatingSearch_leftActionMode="showHome"
-            app:floatingSearch_close_search_on_keyboard_dismiss="true"
-            binding:onSearchLeftCommand="@{viewModel.onSearchLeftCommand}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

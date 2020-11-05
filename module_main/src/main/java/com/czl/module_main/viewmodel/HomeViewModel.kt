@@ -10,11 +10,8 @@ import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.data.entity.HomeArticleBean
-import com.czl.lib_base.data.entity.HomeBannerBean
-import com.czl.lib_base.data.entity.HomeProjectBean
+import com.czl.lib_base.data.entity.*
 import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
@@ -48,6 +45,9 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val searchSuggestLoadEvent: SingleLiveEvent<List<SearchDataBean.Data>> = SingleLiveEvent()
+        val searchStateEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
+        val searchHotKeyLoadEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -104,6 +104,29 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         uc.drawerOpenEvent.call()
     })
 
+    /*搜索文本改变监听 做了防抖处理 1秒后响应*/
+    val onSearchTextChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
+        if (it.isNotBlank())
+            model.searchByKeyword(keyword = it)
+                .compose(RxThreadHelper.rxSchedulerHelper(this))
+                .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
+                    override fun onResult(t: BaseBean<SearchDataBean>) {
+                        if (0 == t.errorCode) {
+                            uc.searchSuggestLoadEvent.postValue(t.data?.datas)
+                        }
+                    }
+
+                    override fun onFailed(msg: String?) {
+
+                    }
+                })
+    })
+
+    /*搜索框焦点状态*/
+    val onSearchStateCommand: BindingCommand<Boolean> = BindingCommand(BindingConsumer { focused ->
+//        uc.searchStateEvent.postValue(focused)
+    })
+
     /*搜索*/
     val onSearchClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         startContainerActivity(AppConstants.Router.Search.F_SEARCH)
@@ -126,11 +149,13 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         currentArticlePage = 0
         currentProjectPage = 0
         getBanner(model)
+        getSearchHotKey(model)
         when (tabSelectedPosition.get()) {
             0 -> getArticle(model)
             1 -> getProject(model)
         }
     })
+
 
     val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
         when (tabSelectedPosition.get()) {
@@ -229,6 +254,22 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
+
+    /**
+     * 获取搜索热词
+     */
+    private fun getSearchHotKey(model: DataRepository) {
+        model.getSearchHotKey()
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object : ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>() {
+                override fun onResult(t: BaseBean<List<SearchHotKeyBean>>) {
+                    uc.searchHotKeyLoadEvent.postValue(t.data)
+                }
+
+                override fun onFailed(msg: String?) {
+                }
+            })
     }
 
     /**

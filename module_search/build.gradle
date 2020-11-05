@@ -1,4 +1,5 @@
 apply from: "../module.build.gradle"
+
 android {
     defaultConfig {
         //如果是独立模块，则使用当前组件的包名

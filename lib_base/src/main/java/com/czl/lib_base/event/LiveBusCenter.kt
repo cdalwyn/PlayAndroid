@@ -44,4 +44,11 @@ object LiveBusCenter {
     fun observeTokenExpiredEvent(owner: LifecycleOwner, func: (t: TokenExpiredEvent) -> Unit) {
         LiveEventBus.get(TokenExpiredEvent::class.java).observe(owner, Observer(func))
     }
+
+    fun postRegisterSuccessEvent(account: String?,pwd:String?) {
+        LiveEventBus.get(RegisterSuccessEvent::class.java).post(RegisterSuccessEvent(account,pwd))
+    }
+    fun observeRegisterSuccessEvent(owner: LifecycleOwner, func: (t: RegisterSuccessEvent) -> Unit) {
+        LiveEventBus.get(RegisterSuccessEvent::class.java).observe(owner, Observer(func))
+    }
 }
