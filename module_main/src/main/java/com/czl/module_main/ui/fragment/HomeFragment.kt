@@ -1,13 +1,10 @@
 package com.czl.module_main.ui.fragment
 
 
-import android.os.Handler
-import android.os.Looper
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter
@@ -17,15 +14,15 @@ import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.HomeDrawerPop
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
+import com.mancj.materialsearchbar.adapter.DefaultSuggestionsAdapter
 import com.youth.banner.transformer.AlphaPageTransformer
-import java.util.concurrent.TimeUnit
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
 class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     private lateinit var bannerAdapter: MyBannerAdapter
-    private lateinit var suggestAdapter: SearchSuggestAdapter
+    private lateinit var suggestAdapter: DefaultSuggestionsAdapter
     private var bannerFlag = false
     private var rvFlag = false
     private lateinit var homeDrawerPop: HomeDrawerPop
@@ -52,7 +49,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             homeDrawerPop = HomeDrawerPop(this)
         }
         if (!this::suggestAdapter.isInitialized) {
-            suggestAdapter = SearchSuggestAdapter(layoutInflater)
+            suggestAdapter = DefaultSuggestionsAdapter(layoutInflater)
         }
         binding.refreshLayout.autoRefresh()
         binding.banner.apply {
@@ -112,10 +109,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 .asCustom(homeDrawerPop)
                 .show()
         })
-        // 搜索框获取到热词
-        viewModel.uc.searchHotKeyLoadEvent.observe(this, Observer {
-            suggestAdapter.suggestions = it
+        // 确认搜索后关闭焦点
+        viewModel.uc.searchConfirmEvent.observe(this, Observer {
+            binding.searchBar.closeSearch()
         })
-
     }
 }

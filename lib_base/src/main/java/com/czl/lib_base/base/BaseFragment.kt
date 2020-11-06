@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
+import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
 import me.goldze.mvvmhabit.base.IBaseView
 import me.goldze.mvvmhabit.bus.Messenger
@@ -177,6 +178,18 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (dialog != null && dialog!!.isShowing) {
             dialog!!.dismiss()
         }
+    }
+
+    fun showErrorToast(msg: String?) {
+        ToastHelper.showErrorToast(msg)
+    }
+
+    fun showNormalToast(msg: String?) {
+        ToastHelper.showNormalToast(msg)
+    }
+
+    fun showSuccessToast(msg: String?) {
+        ToastHelper.showSuccessToast(msg)
     }
 
     /**

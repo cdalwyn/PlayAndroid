@@ -1,5 +1,6 @@
 package com.czl.module_main.viewmodel
 
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
@@ -38,6 +39,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     var tabSelectedPosition = ObservableField(0)
     var currentArticlePage = 0
     var currentProjectPage = 0
+    private var suggestList: List<SearchHotKeyBean>? = null
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
@@ -45,9 +47,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val searchSuggestLoadEvent: SingleLiveEvent<List<SearchDataBean.Data>> = SingleLiveEvent()
-        val searchStateEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
-        val searchHotKeyLoadEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
+        val searchConfirmEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
     }
 
     // 添加首页热门博文ItemBinding
@@ -104,32 +105,40 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         uc.drawerOpenEvent.call()
     })
 
-    /*搜索文本改变监听 做了防抖处理 1秒后响应*/
-    val onSearchTextChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
-        if (it.isNotBlank())
-            model.searchByKeyword(keyword = it)
-                .compose(RxThreadHelper.rxSchedulerHelper(this))
-                .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
-                    override fun onResult(t: BaseBean<SearchDataBean>) {
-                        if (0 == t.errorCode) {
-                            uc.searchSuggestLoadEvent.postValue(t.data?.datas)
-                        }
-                    }
+//    /*搜索文本改变监听 做了防抖处理 1秒后响应*/
+//    val onSearchTextChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
+//        if (it.isNotBlank())
+//            model.searchByKeyword(keyword = it)
+//                .compose(RxThreadHelper.rxSchedulerHelper(this))
+//                .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
+//                    override fun onResult(t: BaseBean<SearchDataBean>) {
+//                        if (0 == t.errorCode) {
+//                            uc.searchSuggestLoadEvent.postValue(t.data?.datas)
+//                        }
+//                    }
+//
+//                    override fun onFailed(msg: String?) {
+//
+//                    }
+//                })
+//    })
 
-                    override fun onFailed(msg: String?) {
-
-                    }
-                })
+    /*确认搜索*/
+    val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
+        startSearch(it)
     })
 
-    /*搜索框焦点状态*/
-    val onSearchStateCommand: BindingCommand<Boolean> = BindingCommand(BindingConsumer { focused ->
-//        uc.searchStateEvent.postValue(focused)
-    })
+    private fun startSearch(keyword: String?) {
+        uc.searchConfirmEvent.call()
+        val bundle = Bundle()
+        bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, keyword)
+        startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+    }
 
-    /*搜索*/
-    val onSearchClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        startContainerActivity(AppConstants.Router.Search.F_SEARCH)
+    /*搜索的历史记录Item点击事件*/
+    val onSuggestionItemCommand: BindingCommand<Int> = BindingCommand(BindingConsumer { position ->
+        // todo Item点击跳转 以及删除 搜索界面的历史搜索显示和搜索热点显示
+        showNormalToast(position.toString())
     })
 
     /*置顶*/
@@ -149,7 +158,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         currentArticlePage = 0
         currentProjectPage = 0
         getBanner(model)
-        getSearchHotKey(model)
         when (tabSelectedPosition.get()) {
             0 -> getArticle(model)
             1 -> getProject(model)
@@ -216,7 +224,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 override fun onFailed(msg: String?) {
                     uc.refreshCompleteEvent.call()
                     uc.loadCompleteEvent.call()
-                    ToastHelper.showErrorToast(msg)
+                    showErrorToast(msg)
                 }
             })
     }
@@ -239,7 +247,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 }
 
                 override fun onFailed(msg: String?) {
-                    ToastHelper.showErrorToast(msg)
+                    showErrorToast(msg)
                 }
 
             })
@@ -254,22 +262,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
-    }
-
-    /**
-     * 获取搜索热词
-     */
-    private fun getSearchHotKey(model: DataRepository) {
-        model.getSearchHotKey()
-            .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>() {
-                override fun onResult(t: BaseBean<List<SearchHotKeyBean>>) {
-                    uc.searchHotKeyLoadEvent.postValue(t.data)
-                }
-
-                override fun onFailed(msg: String?) {
-                }
-            })
     }
 
     /**
@@ -319,7 +311,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     currentArticlePage -= 1
                     uc.refreshCompleteEvent.call()
                     uc.loadCompleteEvent.call()
-                    ToastHelper.showErrorToast(msg)
+                    showErrorToast(msg)
                 }
             })
     }
@@ -338,7 +330,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
                 override fun onFailed(msg: String?) {
                     uc.bannerCompleteEvent.postValue(null)
-                    ToastHelper.showErrorToast(msg)
+                    showErrorToast(msg)
                 }
             })
     }

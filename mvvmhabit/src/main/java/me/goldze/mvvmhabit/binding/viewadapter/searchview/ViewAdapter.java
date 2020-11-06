@@ -21,11 +21,12 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
  */
 public class ViewAdapter {
 
-    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand","onSearchStateCommand"}, requireAll = false)
-    public static void onSearchDrawerClickCommand(MaterialSearchBar searchBar,
+    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand","onSearchStateCommand","onSuggestionItemCommand"}, requireAll = false)
+    public static void onSearchActionCommand(MaterialSearchBar searchBar,
                                                   BindingCommand<Void> command,
                                                   BindingCommand<String> bindingCommand,
-                                                  BindingCommand<Boolean> booleanCommand) {
+                                                  BindingCommand<Boolean> booleanCommand,
+                                                  BindingCommand<Integer> intCommand) {
         searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -48,15 +49,11 @@ public class ViewAdapter {
                 }
             }
         });
-    }
-
-    @BindingAdapter("onSuggestionItemCommand")
-    public static void onSuggestionClick(MaterialSearchBar searchBar, BindingCommand<Integer> command) {
         searchBar.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
             @Override
             public void OnItemClickListener(int position, View v) {
                 if (command != null) {
-                    command.execute(position);
+                    intCommand.execute(position);
                 }
             }
 
@@ -66,6 +63,7 @@ public class ViewAdapter {
             }
         });
     }
+
 
     @BindingAdapter("onSearchTextChangeCommand")
     public static void onSearchTextChangeCommand(MaterialSearchBar searchBar, BindingCommand<String> command) {

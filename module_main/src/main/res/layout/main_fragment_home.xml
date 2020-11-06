@@ -38,24 +38,20 @@
 
                 <com.mancj.materialsearchbar.MaterialSearchBar
                     android:id="@+id/search_bar"
-                    style="@style/MaterialSearchBarLight"
+                    style="@style/SearchBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_10"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_scrollFlags="scroll"
-                    app:mt_backIconDrawable="@drawable/ic_back_black_24dp"
                     app:mt_backIconUseTint="true"
-                    app:mt_hint="搜你想搜的..."
                     app:mt_maxSuggestionsCount="5"
                     app:mt_navIconEnabled="true"
-                    app:mt_placeholder="搜你想搜的..."
                     app:mt_roundedSearchBarEnabled="false"
                     app:mt_speechMode="false"
-                    app:mt_textCursorTint="@color/md_theme_red"
                     binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
-                    binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
-                    binding:onSearchTextChangeCommand="@{viewModel.onSearchTextChangeCommand}" />
+                    binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
+                    binding:onSuggestionItemCommand="@{viewModel.onSuggestionItemCommand}"/>
 
                 <com.youth.banner.Banner
                     android:id="@+id/banner"

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.czl.lib_base.event.callback.UIChangeLiveData
+import com.czl.lib_base.util.ToastHelper
 import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -134,6 +135,18 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
      */
     fun onBackPressed() {
         uC.onBackPressedEvent.call()
+    }
+
+    fun showErrorToast(msg: String?) {
+        ToastHelper.showErrorToast(msg)
+    }
+
+    fun showNormalToast(msg: String?) {
+        ToastHelper.showNormalToast(msg)
+    }
+
+    fun showSuccessToast(msg: String?) {
+        ToastHelper.showSuccessToast(msg)
     }
 
 

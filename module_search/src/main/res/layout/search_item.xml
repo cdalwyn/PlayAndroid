@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="textUtils"
+            type="android.text.TextUtils" />
+
+        <variable
+            name="viewModel"
+            type="com.czl.module_search.viewmodel.SearchItemViewModel" />
+    </data>
+
+
+    <com.lihang.ShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        app:hl_cornerRadius="@dimen/dp_10"
+        app:hl_shadowColor="@color/gray"
+        app:hl_shadowLimit="@dimen/dp_6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_10"
+            android:background="@color/white">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:src="@drawable/ic_like_on" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:text="@{viewModel.entity.title}"
+                    android:textColor="@color/black"
+                    tools:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题题标题标题标题标题标题标题标题标题" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/item_tv_identity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@{viewModel.entity.author.empty?viewModel.tvShare:viewModel.tvAuthor}"
+                        tools:text="分享者：" />
+
+                    <TextView
+                        android:id="@+id/item_tv_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:ellipsize="end"
+                        android:maxLength="16"
+                        android:maxLines="1"
+                        android:text="@{viewModel.entity.author.isEmpty?viewModel.entity.shareUser:viewModel.entity.author}"
+                        tools:text="cdalwynsssssssssssssssssssssssssssssssssss" />
+
+                    <TextView
+                        android:id="@+id/item_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="分类："
+                        android:textColor="@color/black" />
+
+                    <TextView
+                        android:id="@+id/item_tv_sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.entity.chapterName}" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/item_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:text="@{viewModel.entity.niceShareDate}"
+                    tools:text="2020-11-6" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
+
+    </com.lihang.ShadowLayout>
+
+</layout>

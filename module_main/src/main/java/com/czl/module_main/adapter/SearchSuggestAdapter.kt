@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.czl.lib_base.data.entity.HomeBannerBean
 import com.czl.lib_base.data.entity.SearchDataBean
 import com.czl.lib_base.data.entity.SearchHotKeyBean
+import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
 
@@ -63,6 +64,7 @@ class SearchSuggestAdapter(inflater: LayoutInflater) :
         )
     }
 
+
     override fun getSingleViewHeight(): Int {
         return 40
     }
@@ -73,5 +75,8 @@ class SearchSuggestAdapter(inflater: LayoutInflater) :
         position: Int
     ) {
         holder.title.text = suggestion.name
+        holder.title.setOnClickListener {
+            ToastHelper.showNormalToast(position.toString())
+        }
     }
 }

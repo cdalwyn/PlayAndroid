@@ -51,5 +51,6 @@ interface AppConstants {
     object BundleKey {
         const val MAIN2FIRST = "main2first"
         const val WEB_URL = "web_url"
+        const val MAIN_SEARCH_KEYWORD = "main_search_keyword"
     }
 }

@@ -8,7 +8,6 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.entity.HomeArticleBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
 import me.goldze.mvvmhabit.binding.command.BindingAction
 import me.goldze.mvvmhabit.binding.command.BindingCommand
@@ -50,16 +49,16 @@ class HomeArticleItemVm(homeViewModel: HomeViewModel) :
                     .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
                         override fun onResult(t: BaseBean<*>) {
                             if (t.errorCode == 0) {
-                                ToastHelper.showSuccessToast("收藏成功")
+                                viewModel.showSuccessToast("收藏成功")
                                 data.collect = true
                                 ivCollect.set(R.drawable.ic_like_on)
                             } else {
-                                ToastHelper.showErrorToast(t.errorMsg)
+                                viewModel.showErrorToast(t.errorMsg)
                             }
                         }
 
                         override fun onFailed(msg: String?) {
-                            ToastHelper.showErrorToast(msg)
+                            viewModel.showErrorToast(msg)
                         }
 
                     })
@@ -71,12 +70,12 @@ class HomeArticleItemVm(homeViewModel: HomeViewModel) :
                                 data.collect = false
                                 ivCollect.set(R.drawable.ic_like_off_gray)
                             } else {
-                                ToastHelper.showErrorToast(t.errorMsg)
+                                viewModel.showErrorToast(t.errorMsg)
                             }
                         }
 
                         override fun onFailed(msg: String?) {
-                            ToastHelper.showErrorToast(msg)
+                            viewModel.showErrorToast(msg)
                         }
 
                     })

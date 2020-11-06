@@ -12,7 +12,6 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.data.entity.UserBean
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.lib_base.util.ToastHelper
 import me.goldze.mvvmhabit.binding.command.BindingConsumer
 import me.goldze.mvvmhabit.utils.ToastUtils
 import me.yokeyword.fragmentation.SupportFragment
@@ -47,7 +46,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
 
     private fun loginByPwd() {
         if (account.get().isNullOrBlank() || pwd.get().isNullOrBlank()) {
-            ToastHelper.showNormalToast("账号或密码不能为空")
+            showNormalToast("账号或密码不能为空")
             return
         }
         model.apply {

@@ -8,7 +8,6 @@ import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
@@ -120,7 +119,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
             AppManager.getInstance().AppExit()
         } else {
             touchTime = System.currentTimeMillis()
-            ToastHelper.showNormalToast(getString(R.string.main_press_again))
+            showNormalToast(getString(R.string.main_press_again))
         }
     }
 }

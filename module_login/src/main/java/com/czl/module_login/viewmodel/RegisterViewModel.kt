@@ -14,7 +14,6 @@ import com.czl.lib_base.data.entity.UserBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_login.R
 import me.goldze.mvvmhabit.binding.command.BindingConsumer
 import me.goldze.mvvmhabit.utils.ToastUtils
@@ -57,7 +56,7 @@ class RegisterViewModel(application: MyApplication, model: DataRepository) :
                 override fun onResult(t: BaseBean<*>) {
                     dismissLoading()
                     if (t.errorCode == 0) {
-                        ToastHelper.showSuccessToast(application.getString(R.string.login_register_success))
+                        showSuccessToast(application.getString(R.string.login_register_success))
                         LiveBusCenter.postRegisterSuccessEvent(tvAccount.get(), tvPwd.get())
                         finish()
                     }
@@ -65,7 +64,7 @@ class RegisterViewModel(application: MyApplication, model: DataRepository) :
 
                 override fun onFailed(msg: String?) {
                     dismissLoading()
-                    ToastHelper.showErrorToast(msg)
+                    showErrorToast(msg)
                 }
 
             })

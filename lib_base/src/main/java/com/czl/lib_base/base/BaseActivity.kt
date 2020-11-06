@@ -187,6 +187,18 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
+    fun showErrorToast(msg: String?) {
+        ToastHelper.showErrorToast(msg)
+    }
+
+    fun showNormalToast(msg: String?) {
+        ToastHelper.showNormalToast(msg)
+    }
+
+    fun showSuccessToast(msg: String?) {
+        ToastHelper.showSuccessToast(msg)
+    }
+
     /**
      * 跳转页面
      *

@@ -12,7 +12,6 @@ import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.extension.ImagePopLoader
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
 import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
@@ -78,17 +77,17 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
                                     override fun onResult(t: BaseBean<*>) {
                                         if (t.errorCode == 0) {
                                             entity.get()?.collect = true
-                                            ToastHelper.showSuccessToast("收藏成功")
+                                            viewModel.showSuccessToast("收藏成功")
                                             ivCollect.setImageResource(R.drawable.ic_like_on)
                                             tvCollect.text =
                                                 it.context.getString(R.string.main_cancel_collect)
                                         } else {
-                                            ToastHelper.showErrorToast(t.errorMsg)
+                                            viewModel.showErrorToast(t.errorMsg)
                                         }
                                     }
 
                                     override fun onFailed(msg: String?) {
-                                        ToastHelper.showErrorToast(msg)
+                                        viewModel.showErrorToast(msg)
                                     }
                                 })
                         } else {
@@ -102,12 +101,12 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
                                             tvCollect.text =
                                                 it.context.getString(R.string.main_collect)
                                         } else {
-                                            ToastHelper.showErrorToast(t.errorMsg)
+                                            viewModel.showErrorToast(t.errorMsg)
                                         }
                                     }
 
                                     override fun onFailed(msg: String?) {
-                                        ToastHelper.showErrorToast(msg)
+                                        viewModel.showErrorToast(msg)
                                     }
 
                                 })
