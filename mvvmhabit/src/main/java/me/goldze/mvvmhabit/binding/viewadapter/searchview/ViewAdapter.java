@@ -1,18 +1,17 @@
 package me.goldze.mvvmhabit.binding.viewadapter.searchview;
 
 import android.text.TextUtils;
-import android.view.View;
 
 import androidx.databinding.BindingAdapter;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import me.goldze.mvvmhabit.binding.command.BindingCommand;
+import me.goldze.mvvmhabit.widget.MaterialSearchBar;
 
 /**
  * @author Alwyn
@@ -21,16 +20,15 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
  */
 public class ViewAdapter {
 
-    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand","onSearchStateCommand","onSuggestionItemCommand"}, requireAll = false)
+    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand", "onSearchStateCommand"}, requireAll = false)
     public static void onSearchActionCommand(MaterialSearchBar searchBar,
-                                                  BindingCommand<Void> command,
-                                                  BindingCommand<String> bindingCommand,
-                                                  BindingCommand<Boolean> booleanCommand,
-                                                  BindingCommand<Integer> intCommand) {
+                                             BindingCommand<Void> command,
+                                             BindingCommand<String> bindingCommand,
+                                             BindingCommand<Boolean> booleanCommand) {
         searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
-                if (booleanCommand!=null){
+                if (booleanCommand != null) {
                     booleanCommand.execute(enabled);
                 }
             }
@@ -49,19 +47,12 @@ public class ViewAdapter {
                 }
             }
         });
-        searchBar.setSuggestionsClickListener(new SuggestionsAdapter.OnItemViewClickListener() {
-            @Override
-            public void OnItemClickListener(int position, View v) {
-                if (command != null) {
-                    intCommand.execute(position);
-                }
-            }
 
-            @Override
-            public void OnItemDeleteListener(int position, View v) {
+    }
 
-            }
-        });
+    @BindingAdapter("onSearchItemClick")
+    public static void onSearchItemClick(MaterialSearchBar searchBar, SuggestionsAdapter.OnItemViewClickListener listener) {
+        searchBar.setSuggestionsClickListener(listener);
     }
 
 
@@ -77,5 +68,10 @@ public class ViewAdapter {
                         command.execute(x);
                     }
                 });
+    }
+
+    @BindingAdapter("searchPlaceHolder")
+    public static void setSearchPlaceHolder(MaterialSearchBar bar, String text) {
+        bar.setPlaceHolder(text);
     }
 }

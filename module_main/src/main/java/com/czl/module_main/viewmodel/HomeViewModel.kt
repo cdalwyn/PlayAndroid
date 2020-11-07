@@ -1,6 +1,7 @@
 package com.czl.module_main.viewmodel
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
@@ -14,9 +15,12 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.entity.*
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
+import com.czl.lib_base.util.SpUtils
 import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
+import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
+import com.tencent.mmkv.MMKV
 import io.reactivex.Observable
 import me.goldze.mvvmhabit.base.AppManager
 import me.goldze.mvvmhabit.binding.command.BindingAction
@@ -39,7 +43,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     var tabSelectedPosition = ObservableField(0)
     var currentArticlePage = 0
     var currentProjectPage = 0
-    private var suggestList: List<SearchHotKeyBean>? = null
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
@@ -47,8 +50,9 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val searchConfirmEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-
+        val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
+        val searchItemClickEvent:SingleLiveEvent<Int> = SingleLiveEvent()
+        val searchItemDeleteEvent:SingleLiveEvent<Int> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -124,22 +128,31 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 //    })
 
     /*确认搜索*/
-    val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
-        startSearch(it)
+    val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer { keyword ->
+        if (keyword.isBlank()) {
+            showNormalToast("搜索内容不能为空喔~")
+            return@BindingConsumer
+        }
+        startSearch(keyword)
     })
 
     private fun startSearch(keyword: String?) {
-        uc.searchConfirmEvent.call()
-        val bundle = Bundle()
-        bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, keyword)
-        startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+        uc.searchConfirmEvent.postValue(keyword)
     }
 
     /*搜索的历史记录Item点击事件*/
-    val onSuggestionItemCommand: BindingCommand<Int> = BindingCommand(BindingConsumer { position ->
-        // todo Item点击跳转 以及删除 搜索界面的历史搜索显示和搜索热点显示
-        showNormalToast(position.toString())
-    })
+    val onSearchItemClick: SuggestionsAdapter.OnItemViewClickListener =
+        object : SuggestionsAdapter.OnItemViewClickListener {
+            override fun OnItemDeleteListener(position: Int, v: View?) {
+                uc.searchItemDeleteEvent.postValue(position)
+            }
+
+            override fun OnItemClickListener(position: Int, v: View?) {
+                uc.searchItemClickEvent.postValue(position)
+            }
+
+        }
+
 
     /*置顶*/
     val fabOnClickListener: View.OnClickListener = View.OnClickListener {

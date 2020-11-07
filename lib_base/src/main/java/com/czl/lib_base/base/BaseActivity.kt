@@ -126,9 +126,9 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         // token失效重新登录
         LiveBusCenter.observeTokenExpiredEvent(this) {
             val dataRepository: DataRepository = get()
+            ToastHelper.showErrorToast(if (dataRepository.getUserId() != 0) "登录已失效,请重新登录" else it.msg)
             dataRepository.clearLoginState()
-            ToastHelper.showErrorToast(it.msg)
-            RouteCenter.navigate(AppConstants.Router.Login.F_LOGIN)
+            startContainerActivity(AppConstants.Router.Login.F_LOGIN)
             AppManager.getInstance().finishAllActivity()
         }
         //加载对话框显示
@@ -254,7 +254,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @return
      */
-    protected open fun addParentContentView():Int{
+    protected open fun addParentContentView(): Int {
         return 0
     }
 

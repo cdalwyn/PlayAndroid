@@ -18,7 +18,8 @@ import org.koin.core.get
  * @Description
  */
 @SuppressLint("ViewConstructor")
-class HomeDrawerPop(private val fragment: HomeFragment) : DrawerPopupView(fragment.requireContext()),KoinComponent {
+class HomeDrawerPop(private val fragment: HomeFragment) :
+    DrawerPopupView(fragment.requireContext()), KoinComponent {
 
     override fun getImplLayoutId(): Int {
         return R.layout.main_pop_drawerlayout
@@ -26,11 +27,18 @@ class HomeDrawerPop(private val fragment: HomeFragment) : DrawerPopupView(fragme
 
     override fun onCreate() {
         super.onCreate()
-        val dataResp:DataRepository = get()
         findViewById<ImageView>(R.id.iv_icon).loadCircleImageRes(R.mipmap.ic_launcher)
-        findViewById<TextView>(R.id.tv_name).text = dataResp.getLoginName()
-        findViewById<CommonItemSettingView>(R.id.btn_exit).setOnClickListener {
-            fragment.viewModel.logout()
+        val tvName = findViewById<TextView>(R.id.tv_name)
+        val btnExit = findViewById<CommonItemSettingView>(R.id.btn_exit)
+        val loginName = fragment.viewModel.model.getLoginName()
+        if (loginName.isNullOrBlank()) {
+            tvName.text = "未登录"
+            btnExit.setTitle("前往登录")
+        } else {
+            tvName.text = loginName
+            btnExit.setOnClickListener {
+                fragment.viewModel.logout()
+            }
         }
     }
 

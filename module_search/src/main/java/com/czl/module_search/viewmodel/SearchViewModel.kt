@@ -37,12 +37,25 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val refreshEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
+    /*左边返回按钮的显示*/
     var backVisibility: ObservableField<Boolean> = ObservableField(true)
+
+    /*右边取消按钮的显示*/
     var cancelVisibility: ObservableField<Boolean> = ObservableField(false)
 
-    val searchItemBinding: ItemBinding<SearchItemViewModel> = ItemBinding.of(BR.viewModel, R.layout.search_item)
+    /*搜索框占位内容*/
+    var searchPlaceHolder: ObservableField<String> = ObservableField("")
+
+    /*置顶*/
+    val fabOnClickListener: View.OnClickListener = View.OnClickListener {
+        uc.moveTopEvent.call()
+    }
+
+    val searchItemBinding: ItemBinding<SearchItemViewModel> =
+        ItemBinding.of(BR.viewModel, R.layout.search_item)
     val searchItemList: ObservableList<SearchItemViewModel> = ObservableArrayList()
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -68,13 +81,14 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     }
 
     val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
-        if (!TextUtils.isEmpty(it)){
+        if (!TextUtils.isEmpty(it)) {
+            searchPlaceHolder.set(it)
             keyword = it
             getSearchDataByKeyword(it)
         }
     })
 
-    fun getSearchDataByKeyword(key: String, page: Int = 0) {
+    private fun getSearchDataByKeyword(key: String, page: Int = 0) {
         model.searchByKeyword(page.toString(), key)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .doOnSubscribe { if (page == 0) uc.refreshEvent.call() }

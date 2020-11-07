@@ -62,7 +62,6 @@
         <item name="mt_placeholderColor">@color/searchBarPlaceholderColor</item>
         <item name="mt_backIconDrawable">@drawable/ic_back_black_24dp</item>
         <item name="mt_hint">搜你想搜的...</item>
-        <item name="mt_placeholder">搜你想搜的...</item>
 
     </style>
 </resources>

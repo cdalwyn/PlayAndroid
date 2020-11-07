@@ -1,8 +1,10 @@
 package com.czl.module_main.ui.fragment
 
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.module_main.BR
@@ -22,7 +24,7 @@ import com.youth.banner.transformer.AlphaPageTransformer
 class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     private lateinit var bannerAdapter: MyBannerAdapter
-    private lateinit var suggestAdapter: DefaultSuggestionsAdapter
+    private lateinit var suggestAdapter: SearchSuggestAdapter
     private var bannerFlag = false
     private var rvFlag = false
     private lateinit var homeDrawerPop: HomeDrawerPop
@@ -49,7 +51,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             homeDrawerPop = HomeDrawerPop(this)
         }
         if (!this::suggestAdapter.isInitialized) {
-            suggestAdapter = DefaultSuggestionsAdapter(layoutInflater)
+            suggestAdapter = SearchSuggestAdapter(layoutInflater)
+            suggestAdapter.setListener(viewModel.onSearchItemClick)
+            if (viewModel.model.getSearchHistory().isNotEmpty()) {
+                suggestAdapter.suggestions = viewModel.model.getSearchHistory()
+            }
         }
         binding.refreshLayout.autoRefresh()
         binding.banner.apply {
@@ -111,7 +117,25 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 确认搜索后关闭焦点
         viewModel.uc.searchConfirmEvent.observe(this, Observer {
+            suggestAdapter.addSuggestion(it)
+            viewModel.model.saveSearchHistory(suggestAdapter.suggestions)
             binding.searchBar.closeSearch()
+            val bundle = Bundle()
+            bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, it)
+            startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+        })
+        // 搜索框item点击
+        viewModel.uc.searchItemClickEvent.observe(this, Observer {
+            binding.searchBar.closeSearch()
+            val bundle = Bundle()
+            bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, suggestAdapter.suggestions[it])
+            startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+        })
+        // 搜素框Item删除
+        viewModel.uc.searchItemDeleteEvent.observe(this, Observer {
+            suggestAdapter.deleteSuggestion(it,suggestAdapter.suggestions[it])
+            if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
+            viewModel.model.saveSearchHistory(suggestAdapter.suggestions)
         })
     }
 }

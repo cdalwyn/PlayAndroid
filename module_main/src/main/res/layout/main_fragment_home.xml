@@ -36,23 +36,30 @@
                 android:background="@color/trans"
                 app:elevation="0dp">
 
-                <com.mancj.materialsearchbar.MaterialSearchBar
+                <com.lihang.ShadowLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_10"
+                    app:layout_scrollFlags="scroll"
+                    app:hl_shadowColor="@color/shadow_color"
+                    app:hl_shadowLimit="@dimen/dp_6">
+                <me.goldze.mvvmhabit.widget.MaterialSearchBar
                     android:id="@+id/search_bar"
                     style="@style/SearchBarStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp_10"
+                    android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll"
                     app:mt_backIconUseTint="true"
                     app:mt_maxSuggestionsCount="5"
                     app:mt_navIconEnabled="true"
                     app:mt_roundedSearchBarEnabled="false"
                     app:mt_speechMode="false"
+                    app:mt_placeholder="搜你想搜的..."
                     binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
                     binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                    binding:onSuggestionItemCommand="@{viewModel.onSuggestionItemCommand}"/>
+                    binding:onSearchItemClick="@{viewModel.onSearchItemClick}"/>
 
+                </com.lihang.ShadowLayout>
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"

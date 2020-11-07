@@ -19,7 +19,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * @Description
  */
 fun ImageView.loadImage(url: String) {
-    Glide.with(this).load(url).apply(RequestOptions.placeholderOf(R.drawable.ic_default_bg))
+    Glide.with(this).load(url).apply(RequestOptions.placeholderOf(R.drawable.ic_placeholder))
         .into(this)
 }
 

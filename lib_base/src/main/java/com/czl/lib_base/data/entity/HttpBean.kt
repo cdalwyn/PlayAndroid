@@ -408,7 +408,7 @@ data class SearchDataBean(
         @SerializedName("chapterName")
         val chapterName: String,
         @SerializedName("collect")
-        val collect: Boolean,
+        var collect: Boolean,
         @SerializedName("courseId")
         val courseId: Int,
         @SerializedName("desc")

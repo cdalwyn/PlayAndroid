@@ -1,8 +1,11 @@
 package com.czl.lib_base.data.source.impl
 
+import com.blankj.utilcode.util.GsonUtils
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpUtils
+import com.google.gson.reflect.TypeToken
+import me.goldze.mvvmhabit.utils.ConvertUtils
 
 /**
  * @author Alwyn
@@ -17,7 +20,7 @@ class LocalDataImpl : LocalDataSource {
 
     override fun getLocalData(): String {
 
-        val data:IntRange = 1..50
+        val data: IntRange = 1..50
         val list: MutableList<Int> = mutableListOf()
         for (i in data) {
             list.add(i)
@@ -30,10 +33,27 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun saveLoginName(name: String?) {
-        SpUtils.encode(AppConstants.SpKey.LOGIN_NAME,name)
+        SpUtils.encode(AppConstants.SpKey.LOGIN_NAME, name)
+    }
+
+    override fun saveUserId(id: Int) {
+        SpUtils.encode(AppConstants.SpKey.USER_ID, id)
+    }
+
+    override fun getUserId(): Int {
+        return SpUtils.decodeInt(AppConstants.SpKey.USER_ID)
     }
 
     override fun clearLoginState() {
         SpUtils.clearAll()
+    }
+
+    override fun saveSearchHistory(keyword: List<String>) {
+        SpUtils.encode(AppConstants.SpKey.SEARCH_HISTORY, GsonUtils.toJson(keyword))
+    }
+
+    override fun getSearchHistory(): List<String> {
+        return GsonUtils.fromJson(SpUtils.decodeString(AppConstants.SpKey.SEARCH_HISTORY),
+            object : TypeToken<List<String>>() {}.type)?: emptyList()
     }
 }

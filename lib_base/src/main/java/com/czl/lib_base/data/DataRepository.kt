@@ -99,8 +99,24 @@ class DataRepository constructor(
         mLocalDataSource.saveLoginName(name)
     }
 
+    override fun saveUserId(id: Int) {
+        mLocalDataSource.saveUserId(id)
+    }
+
+    override fun getUserId(): Int {
+        return mLocalDataSource.getUserId()
+    }
+
     override fun clearLoginState() {
         mLocalDataSource.clearLoginState()
+    }
+
+    override fun saveSearchHistory(keyword: List<String>) {
+         mLocalDataSource.saveSearchHistory(keyword)
+    }
+
+    override fun getSearchHistory(): List<String> {
+        return mLocalDataSource.getSearchHistory()
     }
 
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {

@@ -2,21 +2,21 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?actionBarSize"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/dp_10">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_24"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/dp_10"
-        app:srcCompat="@drawable/ic_hot_key" />
+
+        app:srcCompat="@drawable/ic_history" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_20"
         android:textSize="@dimen/sp_16"
         android:gravity="center_vertical"
         android:maxLines="1"
@@ -24,5 +24,11 @@
         android:layout_weight="1"
         android:layout_marginEnd="@dimen/dp_10"
         tools:text="Android"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="@dimen/dp_24"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_delete_32dp"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

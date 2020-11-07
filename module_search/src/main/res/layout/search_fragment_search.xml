@@ -43,12 +43,19 @@
                     binding:isVisible="@{viewModel.backVisibility}"
                     binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
 
-                <com.mancj.materialsearchbar.MaterialSearchBar
-                    android:id="@+id/search_bar"
-                    style="@style/SearchBarStyle"
+                <com.lihang.ShadowLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:padding="@dimen/dp_4"
+                    app:hl_shadowLimit="@dimen/dp_6"
+                    app:hl_shadowColor="@color/shadow_color">
+
+                <me.goldze.mvvmhabit.widget.MaterialSearchBar
+                    android:id="@+id/search_bar"
+                    style="@style/SearchBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:mt_backIconUseTint="true"
                     app:mt_maxSuggestionsCount="5"
@@ -56,7 +63,9 @@
                     app:mt_roundedSearchBarEnabled="false"
                     app:mt_speechMode="false"
                     binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                    binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}" />
+                    binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
+                    binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}"/>
+                </com.lihang.ShadowLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -82,12 +91,25 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/ry_common"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 binding:adapter="@{adapter}"
                 binding:itemBinding="@{viewModel.searchItemBinding}"
                 binding:items="@{viewModel.searchItemList}"
                 binding:layoutManager="@{LayoutManagers.linear}" />
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/dp_20"
+            android:onClick="@{viewModel.fabOnClickListener}"
+            android:src="@drawable/ic_top"
+            app:backgroundTint="@color/white"
+            app:elevation="@dimen/dp_6"
+            app:fabSize="mini"
+            app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+            app:pressedTranslationZ="@dimen/dp_10" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

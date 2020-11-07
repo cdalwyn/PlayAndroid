@@ -38,9 +38,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         val keyword = arguments?.getString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD)
         keyword?.let {
             viewModel.keyword = it
-            binding.searchBar.setPlaceHolder(it)
-            viewModel.getSearchDataByKeyword(it)
+            viewModel.searchPlaceHolder.set(it)
+            binding.smartCommon.autoRefresh()
         }
+        binding.searchBar.isSuggestionsEnabled = false
     }
 
     override fun initViewObservable() {
@@ -48,13 +49,16 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
             binding.searchBar.closeSearch()
         })
         viewModel.uc.refreshEvent.observe(this, Observer {
-            binding.smartCommon.autoRefresh()
+            binding.smartCommon.autoRefreshAnimationOnly()
         })
         viewModel.uc.finishLoadEvent.observe(this, Observer {
             binding.smartCommon.apply {
-                finishRefresh()
+                finishRefresh(1000)
                 finishLoadMore()
             }
+        })
+        viewModel.uc.moveTopEvent.observe(this, Observer {
+            binding.ryCommon.smoothScrollToPosition(0)
         })
     }
 

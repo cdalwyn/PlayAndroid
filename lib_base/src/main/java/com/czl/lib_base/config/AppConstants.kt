@@ -8,6 +8,8 @@ package com.czl.lib_base.config
 interface AppConstants {
     object SpKey {
         const val LOGIN_NAME: String = "login_name"
+        const val USER_ID: String = "user_id"
+        const val SEARCH_HISTORY: String = "search_history"
     }
 
     /**

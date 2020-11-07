@@ -4,12 +4,11 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.czl.lib_base.data.entity.HomeBannerBean
-import com.czl.lib_base.data.entity.SearchDataBean
 import com.czl.lib_base.data.entity.SearchHotKeyBean
 import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
@@ -22,37 +21,26 @@ import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
  * @Description
  */
 class SearchSuggestAdapter(inflater: LayoutInflater) :
-    SuggestionsAdapter<SearchHotKeyBean, SearchSuggestAdapter.SuggestionHolder>(inflater) {
+    SuggestionsAdapter<String, SearchSuggestAdapter.SuggestionHolder>(inflater) {
+    private var listener: OnItemViewClickListener? = null
 
-    open class SuggestionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun setListener(listener: OnItemViewClickListener) {
+        this.listener = listener
+    }
+
+    inner class SuggestionHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById<View>(R.id.tv_title) as TextView
-    }
 
-    private var mDiffer: AsyncListDiffer<SearchHotKeyBean>
-
-    init {
-        val diffCallback: DiffUtil.ItemCallback<SearchHotKeyBean> =
-            object : DiffUtil.ItemCallback<SearchHotKeyBean>() {
-                override fun areItemsTheSame(
-                    oldItem: SearchHotKeyBean,
-                    newItem: SearchHotKeyBean
-                ): Boolean {
-                    return oldItem.id == newItem.id
-                }
-
-                override fun areContentsTheSame(
-                    oldItem: SearchHotKeyBean,
-                    newItem: SearchHotKeyBean
-                ): Boolean {
-                    return TextUtils.equals(oldItem.name, newItem.name)
-                }
+        init {
+            itemView.setOnClickListener {
+                listener?.OnItemClickListener(adapterPosition, it)
             }
-        mDiffer = AsyncListDiffer(this, diffCallback)
+            itemView.findViewById<ImageView>(R.id.iv_delete).setOnClickListener {
+                listener?.OnItemDeleteListener(adapterPosition,it)
+            }
+        }
     }
 
-    private fun submitList(data: List<SearchHotKeyBean>?) {
-        mDiffer.submitList(data)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestionHolder {
         return SuggestionHolder(
@@ -66,17 +54,14 @@ class SearchSuggestAdapter(inflater: LayoutInflater) :
 
 
     override fun getSingleViewHeight(): Int {
-        return 40
+        return 60
     }
 
     override fun onBindSuggestionHolder(
-        suggestion: SearchHotKeyBean,
+        suggestion: String,
         holder: SuggestionHolder,
         position: Int
     ) {
-        holder.title.text = suggestion.name
-        holder.title.setOnClickListener {
-            ToastHelper.showNormalToast(position.toString())
-        }
+        holder.title.text = suggestion
     }
 }
