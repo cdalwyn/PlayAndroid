@@ -1,5 +1,5 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/tran_grey_B4"/>
+    <solid android:color="@color/white"/>
     <!-- 这里是设置为四周 也可以单独设置某个位置为圆角-->
     <corners android:topLeftRadius="10dp"
         android:topRightRadius="10dp"

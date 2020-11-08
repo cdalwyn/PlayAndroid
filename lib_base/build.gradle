@@ -76,6 +76,8 @@ dependencies {
     api rootProject.ext.dependencies["autosize"]
     api rootProject.ext.dependencies["xpopup"]
     api rootProject.ext.dependencies["shadowlayout"]
+    api rootProject.ext.dependencies["skeleton"]
+    api rootProject.ext.dependencies["shimmerlayout"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

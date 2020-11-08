@@ -21,6 +21,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 
+
 /**
  * Created by Alwyn on 2020/10/10.
  */
@@ -32,6 +33,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: MaterialDialog? = null
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initParam()
@@ -57,6 +60,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
+    // 重新加载
+    open fun onDataReload() {}
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -126,9 +131,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private fun registerUIChangeLiveDataCallBack() {
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
-            .observe(this, Observer { title: String? -> showDialog(title) })
+            .observe(this, Observer { title: String? -> showLoading(title) })
         //加载对话框消失
-        viewModel.uC.getDismissDialogEvent().observe(this, Observer { v: Void? -> dismissDialog() })
+        viewModel.uC.getDismissDialogEvent().observe(this, Observer { v: Void? -> dismissLoading() })
         //跳入新页面
         viewModel.uC.getStartActivityEvent().observe(this, Observer { params: Map<String?, Any?> ->
             val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
@@ -163,18 +168,17 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
-    fun showDialog(title: String?) {
+    fun showLoading(title: String?) {
         if (dialog != null) {
             dialog = dialog!!.builder.title(title!!).build()
             dialog!!.show()
         } else {
-            val builder =
-                MaterialDialogUtils.showIndeterminateProgressDialog(activity, title, true)
+            val builder = MaterialDialogUtils.showIndeterminateProgressDialog(activity, title, true)
             dialog = builder.show()
         }
     }
 
-    fun dismissDialog() {
+    fun dismissLoading() {
         if (dialog != null && dialog!!.isShowing) {
             dialog!!.dismiss()
         }

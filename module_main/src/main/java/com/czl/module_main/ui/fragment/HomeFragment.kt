@@ -4,9 +4,9 @@ package com.czl.module_main.ui.fragment
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter
@@ -16,7 +16,6 @@ import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.HomeDrawerPop
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
-import com.mancj.materialsearchbar.adapter.DefaultSuggestionsAdapter
 import com.youth.banner.transformer.AlphaPageTransformer
 
 
@@ -47,6 +46,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun initData() {
+
         if (!this::homeDrawerPop.isInitialized) {
             homeDrawerPop = HomeDrawerPop(this)
         }
@@ -137,5 +137,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
             viewModel.model.saveSearchHistory(suggestAdapter.suggestions)
         })
+    }
+
+    override fun onDataReload() {
+       binding.refreshLayout.autoRefresh()
     }
 }

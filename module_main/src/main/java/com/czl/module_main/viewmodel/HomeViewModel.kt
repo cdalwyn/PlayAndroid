@@ -87,23 +87,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         return observableProjects.indexOf(itemViewModel)
     }
 
-    var projectList: DiffObservableList<HomeProjectBean.Data> =
-        DiffObservableList(object : DiffUtil.ItemCallback<HomeProjectBean.Data>() {
-            override fun areItemsTheSame(
-                oldItem: HomeProjectBean.Data,
-                newItem: HomeProjectBean.Data
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: HomeProjectBean.Data,
-                newItem: HomeProjectBean.Data
-            ): Boolean {
-                return oldItem.title == newItem.title
-            }
-        })
-
     /*打开抽屉*/
     val onDrawerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         uc.drawerOpenEvent.call()

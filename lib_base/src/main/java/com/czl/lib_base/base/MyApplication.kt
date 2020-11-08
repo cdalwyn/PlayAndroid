@@ -1,7 +1,6 @@
 package com.czl.lib_base.base
 
 import android.app.Application
-import android.content.Context
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
@@ -11,9 +10,6 @@ import com.czl.lib_base.di.allModule
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.scwang.smart.refresh.layout.api.RefreshFooter
-import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.DefaultRefreshFooterCreator
 import com.tencent.mmkv.MMKV
 import io.reactivex.plugins.RxJavaPlugins
 import me.goldze.mvvmhabit.base.BaseApplication
@@ -78,6 +74,7 @@ open class MyApplication : Application() {
 //        LauncherIconManager.register(this)
     }
 
+
     companion object {
         init {
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
@@ -94,4 +91,5 @@ open class MyApplication : Application() {
             }
         }
     }
+
 }

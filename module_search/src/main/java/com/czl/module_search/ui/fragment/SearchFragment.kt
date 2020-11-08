@@ -49,11 +49,12 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
             binding.searchBar.closeSearch()
         })
         viewModel.uc.refreshEvent.observe(this, Observer {
-            binding.smartCommon.autoRefreshAnimationOnly()
+            if (!binding.smartCommon.isRefreshing)
+                binding.smartCommon.autoRefreshAnimationOnly()
         })
         viewModel.uc.finishLoadEvent.observe(this, Observer {
             binding.smartCommon.apply {
-                finishRefresh(1000)
+                finishRefresh(600)
                 finishLoadMore()
             }
         })

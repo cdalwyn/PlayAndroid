@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -15,7 +17,6 @@ import com.afollestad.materialdialogs.Theme;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import me.goldze.mvvmhabit.R;
 
 
@@ -101,7 +102,6 @@ public class MaterialDialogUtils {
                 });
         return builder;
     }
-
 
     /***
      * 获取基本对话框

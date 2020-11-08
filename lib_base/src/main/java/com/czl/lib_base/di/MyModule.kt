@@ -30,12 +30,10 @@ val appModule = module {
     single { DataRepository(get(), get()) }
     // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
     single { AppViewModelFactory(androidApplication() as MyApplication, get()) }
-
 }
 
 val viewModelModule = module {
 //    viewModel { TestViewModel(androidApplication(), get()) }
-//    viewModel { MainViewModel(androidApplication(), get()) }
 }
 
 //val factoryModule = module {
@@ -50,4 +48,4 @@ val viewModelModule = module {
 //    }
 //}
 
-val allModule = appModule + viewModelModule
+val allModule = appModule

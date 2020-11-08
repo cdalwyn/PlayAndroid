@@ -85,6 +85,8 @@ dependencies {
     api rootProject.ext.dependencies["refresh"]
     api rootProject.ext.dependencies["searchview"]
 
+
+
 }
 repositories {
     mavenCentral()

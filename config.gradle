@@ -67,8 +67,8 @@ ext {
             "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
             "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
             //recyclerview的databinding套装
-            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.1",
-            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.1",
+            "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0",
+            "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0",
             //Google AAC
             "lifecycle-extensions"                 : "androidx.lifecycle:lifecycle-extensions:2.0.0",
             "lifecycle-compiler"                   : "androidx.lifecycle:lifecycle-compiler:2.0.0",
@@ -101,7 +101,9 @@ ext {
             'autosize'                             : "me.jessyan:autosize:1.1.2",
             'xpopup'                               : 'com.lxj:xpopup:2.1.12',
             'searchview'                           : 'com.github.mancj:MaterialSearchBar:0.8.5',
-            'shadowlayout'                           : 'com.github.lihangleo2:ShadowLayout:3.1.3'
+            'shadowlayout'                         : 'com.github.lihangleo2:ShadowLayout:3.1.3',
+            'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
+            'shimmerlayout'                        : 'io.supercharge:shimmerlayout:2.1.0'
 
 
     ]

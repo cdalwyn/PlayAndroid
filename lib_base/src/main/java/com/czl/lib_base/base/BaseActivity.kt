@@ -15,7 +15,6 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.ToastHelper
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,6 +25,7 @@ import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
 
@@ -41,6 +41,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var viewModelId = 0
     private var dialog: MaterialDialog? = null
     private var rootBinding: ViewDataBinding? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +112,9 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         lifecycle.addObserver(viewModel)
         //注入RxLifecycle生命周期
         viewModel.injectLifecycleProvider(this)
+//        loadService = LoadSir.getDefault().register(binding.root) { // 重新加载逻辑
+//            onDataReload()
+//        }
     }
 
     //刷新布局
@@ -240,7 +244,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     override fun initParam() {
+
     }
+
+    open fun onDataReload(){}
 
     /**
      * @return 是否需要标题栏
