@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.binding.command.BindingAction
+import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.HomeArticleBean
+import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
 import com.czl.module_main.R
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
+
 
 
 /**

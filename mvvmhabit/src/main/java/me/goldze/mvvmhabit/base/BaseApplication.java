@@ -11,9 +11,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.Utils;
 
-/**
- * Created by goldze on 2017/6/15.
- */
+
 
 public class BaseApplication extends Application {
     private static Application sInstance;

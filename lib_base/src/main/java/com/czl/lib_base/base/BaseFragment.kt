@@ -12,12 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
+import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
+import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
-import me.goldze.mvvmhabit.base.IBaseView
-import me.goldze.mvvmhabit.bus.Messenger
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 

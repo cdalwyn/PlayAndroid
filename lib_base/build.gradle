@@ -32,7 +32,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             minifyEnabled false
         }
     }
@@ -47,7 +47,68 @@ android {
 
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
-    api project(path: ":mvvmhabit")
+    //support
+    api rootProject.ext.support["support-v4"]
+    api rootProject.ext.support["recyclerview-v7"]
+    //rxjava
+    api rootProject.ext.dependencies.rxjava
+    api rootProject.ext.dependencies.rxandroid
+    //rx管理View的生命周期
+    api(rootProject.ext.dependencies.rxlifecycle) {
+        exclude group: 'com.android.support'
+    }
+    api(rootProject.ext.dependencies["rxlifecycle-components"]) {
+        exclude group: 'com.android.support'
+    }
+    api rootProject.ext.androidx["design"]
+    //rxbinding
+    api(rootProject.ext.dependencies.rxbinding) {
+        exclude group: 'com.android.support'
+    }
+    //rx权限请求
+//    api(rootProject.ext.dependencies.rxpermissions) {
+//        exclude group: 'com.android.support'
+//    }
+    //network
+    api rootProject.ext.dependencies.okhttp
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    //json解析
+    api rootProject.ext.dependencies.gson
+    //material-dialogs
+    api(rootProject.ext.dependencies["material-dialogs-core"]) {
+        exclude group: 'com.android.support'
+    }
+    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
+        exclude group: 'com.android.support'
+    }
+    //glide图片加载库
+    api(rootProject.ext.dependencies.glide) {
+        exclude group: 'com.android.support'
+    }
+    api rootProject.ext.dependencies["glide-transfer"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    //recyclerview的databinding套装
+    api(rootProject.ext.dependencies.bindingcollectionadapter) {
+        exclude group: 'com.android.support'
+    }
+    api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
+        exclude group: 'com.android.support'
+    }
+    //Google LiveData和ViewModel组件
+    api rootProject.ext.dependencies["lifecycle-extensions"]
+    annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+
+    api rootProject.ext.dependencies["toolbar"]
+    api rootProject.ext.dependencies["viewpager2"]
+    api rootProject.ext.dependencies["navigation"]
+    api rootProject.ext.dependencies["refresh-header"]
+    api rootProject.ext.dependencies["refresh-footer"]
+    api rootProject.ext.dependencies["refresh"]
+    api rootProject.ext.dependencies["searchview"]
+
+//    api project(path: ":mvvmhabit")
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
     api rootProject.ext.androidx["junit"]

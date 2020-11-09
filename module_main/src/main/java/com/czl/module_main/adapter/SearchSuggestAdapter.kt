@@ -1,16 +1,11 @@
 package com.czl.module_main.adapter
 
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.czl.lib_base.data.entity.SearchHotKeyBean
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.R
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
 

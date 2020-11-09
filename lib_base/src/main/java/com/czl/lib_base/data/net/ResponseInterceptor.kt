@@ -6,7 +6,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.util.ToastHelper
-import me.goldze.mvvmhabit.utils.ToastUtils
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Response

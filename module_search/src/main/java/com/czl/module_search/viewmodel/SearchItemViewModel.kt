@@ -4,16 +4,15 @@ import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.binding.command.BindingAction
+import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.HomeProjectBean
-import com.czl.lib_base.data.entity.SearchDataBean
+import com.czl.lib_base.data.bean.SearchDataBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.R
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
 import me.yokeyword.fragmentation.SupportFragment
 
 /**
@@ -41,7 +40,7 @@ class SearchItemViewModel(searchViewModel: SearchViewModel) :
         }
     }
 
-    val searchItemClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+    val searchItemClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.WEB_URL, this.entity.get()?.link)
         viewModel.startFragment(RouteCenter.navigate(AppConstants.Router.Base.F_WEB) as SupportFragment, bundle)

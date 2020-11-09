@@ -6,7 +6,6 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
 import com.czl.module_user.ui.fragment.SecondFragment
 
-import me.goldze.mvvmhabit.utils.ToastUtils
 
 /**
  * @author Alwyn
@@ -21,7 +20,7 @@ class FirstFmViewModel(application: MyApplication, model: DataRepository) :
 
     override fun setToolbarRightClickListener(): () -> Unit {
         return {
-            ToastUtils.showShort("这是FirstFragment标题栏图标点击事件")
+            showNormalToast("这是FirstFragment标题栏图标点击事件")
         }
     }
 }

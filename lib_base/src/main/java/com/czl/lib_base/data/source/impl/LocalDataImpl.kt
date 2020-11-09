@@ -5,7 +5,6 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpUtils
 import com.google.gson.reflect.TypeToken
-import me.goldze.mvvmhabit.utils.ConvertUtils
 
 /**
  * @author Alwyn

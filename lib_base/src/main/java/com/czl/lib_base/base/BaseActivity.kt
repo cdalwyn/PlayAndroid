@@ -11,21 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
+import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
+import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import me.goldze.mvvmhabit.base.AppManager
-import me.goldze.mvvmhabit.base.IBaseView
-import me.goldze.mvvmhabit.bus.Messenger
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
 

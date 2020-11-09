@@ -11,15 +11,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.HomeBannerBean
+import com.czl.lib_base.data.bean.HomeBannerBean
 import com.czl.lib_base.extension.loadImage
-import com.czl.lib_base.extension.loadRoundImage
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter.ImageTitleHolder
 import com.czl.module_main.ui.fragment.HomeFragment
 import com.youth.banner.Banner
 import com.youth.banner.adapter.BannerAdapter
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 
 class MyBannerAdapter(

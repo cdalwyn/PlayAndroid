@@ -4,10 +4,6 @@ import android.view.View
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
-import com.czl.module_user.ui.fragment.SecondFragment
-
-import me.goldze.mvvmhabit.utils.ToastUtils
-
 /**
  * @author Alwyn
  * @Date 2020/10/19

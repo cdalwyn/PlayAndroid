@@ -1,17 +1,12 @@
 package com.czl.module_main.viewmodel
 
-import androidx.fragment.app.Fragment
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
+import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.binding.command.BindingConsumer
+import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.event.callback.UIChangeLiveData
-import com.czl.lib_base.route.RouteCenter
-import me.goldze.mvvmhabit.binding.command.BindingCommand
-import me.goldze.mvvmhabit.binding.command.BindingConsumer
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent
-import me.goldze.mvvmhabit.utils.ToastUtils
-import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author Alwyn

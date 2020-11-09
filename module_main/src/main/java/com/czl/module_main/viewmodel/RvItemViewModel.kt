@@ -1,12 +1,12 @@
 package com.czl.module_main.viewmodel
 
 import androidx.databinding.ObservableField
+import com.czl.lib_base.binding.command.BindingAction
+import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.data.entity.ArticleBean
+import com.czl.lib_base.data.bean.ArticleBean
+import com.czl.lib_base.util.ToastHelper
 
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
-import me.goldze.mvvmhabit.utils.ToastUtils
 
 /**
  * @author Alwyn
@@ -23,7 +23,7 @@ class RvItemViewModel(testViewModel: TestViewModel) : ItemViewModel<TestViewMode
 
     var itemOnClick: BindingCommand<Any?> = BindingCommand(BindingAction {
         viewModel.uc.deleteItemLiveData.value = this
-        ToastUtils.showShort("${entity.get()?.title},下标=${viewModel.getItemPosition(this)}")
+        ToastHelper.showNormalToast("${entity.get()?.title},下标=${viewModel.getItemPosition(this)}")
     })
 
 

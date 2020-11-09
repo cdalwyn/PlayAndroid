@@ -25,9 +25,7 @@ import me.goldze.mvvmhabit.base.RootViewModel.ParameterField;
 import me.goldze.mvvmhabit.bus.Messenger;
 import me.goldze.mvvmhabit.utils.MaterialDialogUtils;
 
-/**
- * Created by goldze on 2017/6/15.
- */
+
 public abstract class RootFragment<V extends ViewDataBinding, VM extends RootViewModel> extends RxFragment implements IBaseView {
     protected V binding;
     protected VM viewModel;

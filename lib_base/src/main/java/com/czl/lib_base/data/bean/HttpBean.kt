@@ -1,4 +1,4 @@
-package com.czl.lib_base.data.entity
+package com.czl.lib_base.data.bean
 
 import com.google.gson.annotations.SerializedName
 

@@ -51,7 +51,6 @@
     <color name="gray_a3">#A3A3A3</color>
     <color name="gray_6c">#6c6c6c</color>
     <color name="gray_63">#636363</color>
-    <color name="gray">#808080</color>
     <color name="gray_82">#645D82</color>
     <color name="gray_DF">#DFDFDF</color>
     <color name="gray_DB">#DBDBDB</color>
@@ -60,7 +59,6 @@
 
     <color name="trans">#00000000</color>
 
-    <color name="white">#FFFFFF</color>
     <color name="white_f8">#F8F8F8</color>
     <color name="white_f4">#F4F4F4</color>
     <color name="white_aa">#AAAAAA</color>
@@ -71,8 +69,6 @@
     <color name="white_df">#DFDFDF</color>
     <color name="white_f7">#F7F7F7</color>
 
-    <color name="green">#808080</color>
-
     <color name="tip_color">#FF5252</color>
     <color name="without_net_bg_color">#F7E8E8</color>
     <color name="tip_dark_color">#FF2525</color>
@@ -80,13 +76,11 @@
     <color name="teal">#00796B</color>
     <color name="brown">#8D6E63</color>
 
-    <color name="blue">#2196F3</color>
     <color name="blue_ed">#2082ED</color>
     <color name="blue_e6">#1473E6</color>
     <color name="blue_ff">#E9F4FF</color>
 
     <color name="grey">#607D8B</color>
-    <color name="orange">#F57C00</color>
     <color name="normal">#555555</color>
 
     <color name="button_text">#343434</color>
@@ -98,5 +92,16 @@
 
     <color name="green_68">#13CE68</color>
 
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#808080</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="green">#008000</color>
+    <color name="blue">#0000FF</color>
+    <color name="orange">#FFA500</color>
+    <array name="in_colors_light">
+        <item>#4B03A9F4</item>
+        <item>#3303A9F4</item>
+        <item>#1903A9F4</item>
+    </array>
 
 </resources>

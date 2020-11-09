@@ -1,10 +1,8 @@
 package com.czl.lib_base.data.source
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.data.entity.*
+import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
-import retrofit2.http.Field
-import retrofit2.http.Path
 
 /**
  * @author Alwyn

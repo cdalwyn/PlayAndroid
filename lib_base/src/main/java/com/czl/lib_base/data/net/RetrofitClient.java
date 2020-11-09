@@ -2,6 +2,10 @@ package com.czl.lib_base.data.net;
 
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.Utils;
+import com.czl.lib_base.data.net.cookie.CookieJarImpl;
+import com.czl.lib_base.data.net.cookie.store.PersistentCookieStore;
+
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -10,10 +14,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import me.goldze.mvvmhabit.http.cookie.CookieJarImpl;
-import me.goldze.mvvmhabit.http.cookie.store.PersistentCookieStore;
-import me.goldze.mvvmhabit.http.interceptor.BaseInterceptor;
-import me.goldze.mvvmhabit.utils.Utils;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -21,7 +21,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by goldze on 2017/5/10.
  * RetrofitClient封装单例类, 实现网络请求
  */
 public class RetrofitClient {
@@ -53,7 +52,7 @@ public class RetrofitClient {
         interceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .cookieJar(new CookieJarImpl(new PersistentCookieStore(Utils.getContext())))
+                .cookieJar(new CookieJarImpl(new PersistentCookieStore(Utils.getApp().getApplicationContext())))
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new RequestDataInterceptor())

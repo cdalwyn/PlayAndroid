@@ -6,8 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.entity.HomeProjectBean
+import com.czl.lib_base.data.bean.HomeProjectBean
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.extension.ImagePopLoader
@@ -17,8 +18,7 @@ import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.XPopupCallback
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
+import com.czl.lib_base.binding.command.BindingCommand
 
 
 /**

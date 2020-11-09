@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
+import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
@@ -12,7 +13,6 @@ import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
 import com.czl.module_main.viewmodel.MainViewModel
-import me.goldze.mvvmhabit.base.AppManager
 import me.yokeyword.fragmentation.SupportFragment
 
 @Route(path = AppConstants.Router.Main.A_MAIN)

@@ -5,6 +5,6 @@ include ':module_square'
 include ':module_search'
 include ':module_project'
 include ':lib_base'
-include ':mvvmhabit'
+//include ':mvvmhabit'
 include ':app'
 rootProject.name = "MvvmComponents"

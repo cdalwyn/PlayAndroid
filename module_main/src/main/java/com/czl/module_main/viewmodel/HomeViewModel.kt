@@ -1,34 +1,29 @@
 package com.czl.module_main.viewmodel
 
-import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableList
-import androidx.recyclerview.widget.DiffUtil
+import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
+import com.czl.lib_base.binding.command.BindingAction
+import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.binding.command.BindingConsumer
+import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.data.entity.*
+import com.czl.lib_base.data.bean.HomeArticleBean
+import com.czl.lib_base.data.bean.HomeBannerBean
+import com.czl.lib_base.data.bean.HomeProjectBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.lib_base.util.SpUtils
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
-import com.tencent.mmkv.MMKV
 import io.reactivex.Observable
-import me.goldze.mvvmhabit.base.AppManager
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
-import me.goldze.mvvmhabit.binding.command.BindingConsumer
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent
 import me.tatarka.bindingcollectionadapter2.ItemBinding
-import me.tatarka.bindingcollectionadapter2.collections.DiffObservableList
 
 
 /**

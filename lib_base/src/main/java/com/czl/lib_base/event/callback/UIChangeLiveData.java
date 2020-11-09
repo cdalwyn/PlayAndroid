@@ -3,9 +3,10 @@ package com.czl.lib_base.event.callback;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
+import com.czl.lib_base.bus.event.SingleLiveEvent;
+
 import java.util.Map;
 
-import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class UIChangeLiveData extends SingleLiveEvent {

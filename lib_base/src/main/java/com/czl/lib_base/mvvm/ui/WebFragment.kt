@@ -7,14 +7,14 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.BR
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseFragment
+import com.czl.lib_base.binding.command.BindingAction
+import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.databinding.FragmentWebBinding
 import com.czl.lib_base.mvvm.viewmodel.WebFmViewModel
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
-import me.goldze.mvvmhabit.binding.command.BindingAction
-import me.goldze.mvvmhabit.binding.command.BindingCommand
 
 @Route(path = AppConstants.Router.Base.F_WEB)
 class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {

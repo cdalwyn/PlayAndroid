@@ -1,11 +1,11 @@
 package com.czl.lib_base.data
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.data.entity.*
+import com.czl.lib_base.base.BaseModel
+import com.czl.lib_base.data.bean.*
 import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
 import io.reactivex.Observable
-import me.goldze.mvvmhabit.base.BaseModel
 
 /**
  * @author Alwyn

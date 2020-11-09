@@ -7,13 +7,13 @@ import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.PermissionUtil
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainLayoutTestBinding
 import com.czl.module_main.viewmodel.TestViewModel
-import me.goldze.mvvmhabit.utils.MaterialDialogUtils
-import me.goldze.mvvmhabit.utils.ToastUtils
+
 
 /**
  * @author Alwyn
@@ -62,12 +62,12 @@ class TestActivity : BaseActivity<MainLayoutTestBinding, TestViewModel>() {
         })
         // 接收通信事件
         LiveBusCenter.observeMainEvent(this) {
-            ToastUtils.showShort("MainActivity收到消息：${it.msg}")
+            showNormalToast("MainActivity收到消息：${it.msg}")
         }
     }
 
     override fun initData() {
-        ToastUtils.showShort(
+        showNormalToast(
             if (viewModel.getLoginUserName().isNullOrBlank())
                 "当前尚未登录" else "当前用户${viewModel.getLoginUserName()}已登录"
         )

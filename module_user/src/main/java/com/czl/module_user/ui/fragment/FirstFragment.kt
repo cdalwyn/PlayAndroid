@@ -9,7 +9,6 @@ import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentFirstBinding
 import com.czl.module_user.viewmodel.FirstFmViewModel
 import com.permissionx.guolindev.callback.RequestCallback
-import me.goldze.mvvmhabit.utils.ToastUtils
 
 /**
  * @author Alwyn
@@ -32,7 +31,7 @@ class FirstFragment : BaseFragment<UserFragmentFirstBinding, FirstFmViewModel>()
     }
 
     override fun initData() {
-        ToastUtils.showShort(arguments?.getString(AppConstants.BundleKey.MAIN2FIRST))
+        showNormalToast(arguments?.getString(AppConstants.BundleKey.MAIN2FIRST))
         viewModel.tvTitle.set("FirstFragment")
         viewModel.ivToolbarIconRes.set(R.drawable.ic_setting)
         PermissionUtil.reqStorage(

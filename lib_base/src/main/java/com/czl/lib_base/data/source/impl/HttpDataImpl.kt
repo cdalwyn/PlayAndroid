@@ -2,7 +2,7 @@ package com.czl.lib_base.data.source.impl
 
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.api.ApiService
-import com.czl.lib_base.data.entity.*
+import com.czl.lib_base.data.bean.*
 import com.czl.lib_base.data.source.HttpDataSource
 import io.reactivex.Observable
 
