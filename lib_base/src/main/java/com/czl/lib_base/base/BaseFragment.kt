@@ -60,9 +60,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
-    // 重新加载
-    open fun onDataReload() {}
-
     override fun onDestroyView() {
         super.onDestroyView()
         ImmersionBar.destroy(this)

@@ -160,8 +160,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tabLayout"
                 binding:adapter="@{adapter}"
-                binding:isVisible="@{viewModel.tabSelectedPosition==0}"
                 binding:itemBinding="@{viewModel.articleItemBinding}"
+                binding:isVisible="@{viewModel.tabSelectedPosition==0}"
                 binding:items="@{viewModel.observableArticles}"
                 binding:layoutManager="@{LayoutManagers.linear}" />
 

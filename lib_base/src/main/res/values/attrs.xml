@@ -6,4 +6,15 @@
         <attr name="mIcon" format="reference" />
         <attr name="mRight" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="SkeletonBlock">
+        <attr name="sb_duration" format="integer"/>
+        <!-- Standard orientation constant. -->
+        <attr name="sb_orientation">
+            <!-- Defines an horizontal widget. -->
+            <enum name="horizontal" value="0" />
+            <!-- Defines a vertical widget. -->
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
 </resources>

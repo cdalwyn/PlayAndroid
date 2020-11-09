@@ -35,7 +35,6 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
 
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val refreshEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
@@ -88,10 +87,9 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
         }
     })
 
-    private fun getSearchDataByKeyword(key: String, page: Int = 0) {
+    fun getSearchDataByKeyword(key: String, page: Int = 0) {
         model.searchByKeyword(page.toString(), key)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .doOnSubscribe { if (page == 0) uc.refreshEvent.call() }
             .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
                 override fun onResult(t: BaseBean<SearchDataBean>) {
                     uc.finishLoadEvent.call()

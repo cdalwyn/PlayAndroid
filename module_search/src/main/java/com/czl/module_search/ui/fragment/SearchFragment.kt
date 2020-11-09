@@ -1,5 +1,8 @@
 package com.czl.module_search.ui.fragment
 
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
@@ -8,6 +11,8 @@ import com.czl.module_search.BR
 import com.czl.module_search.R
 import com.czl.module_search.databinding.SearchFragmentSearchBinding
 import com.czl.module_search.viewmodel.SearchViewModel
+import com.ethanhua.skeleton.Skeleton
+import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 
 /**
@@ -17,6 +22,8 @@ import com.gyf.immersionbar.ImmersionBar
  */
 @Route(path = AppConstants.Router.Search.F_SEARCH)
 class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel>() {
+
+    private lateinit var rySkeletonScreen: SkeletonScreen
 
     override fun initContentView(): Int {
         return R.layout.search_fragment_search
@@ -39,7 +46,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         keyword?.let {
             viewModel.keyword = it
             viewModel.searchPlaceHolder.set(it)
-            binding.smartCommon.autoRefresh()
+            rySkeletonScreen = Skeleton.bind(binding.smartCommon)
+                .load(R.layout.search_item_skeleton)
+                .show()
+            viewModel.getSearchDataByKeyword(it)
         }
         binding.searchBar.isSuggestionsEnabled = false
     }
@@ -48,11 +58,9 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         viewModel.uc.searchCancelEvent.observe(this, Observer {
             binding.searchBar.closeSearch()
         })
-        viewModel.uc.refreshEvent.observe(this, Observer {
-            if (!binding.smartCommon.isRefreshing)
-                binding.smartCommon.autoRefreshAnimationOnly()
-        })
         viewModel.uc.finishLoadEvent.observe(this, Observer {
+            Handler(Looper.getMainLooper())
+                .postDelayed({ rySkeletonScreen.hide() }, 600)
             binding.smartCommon.apply {
                 finishRefresh(600)
                 finishLoadMore()

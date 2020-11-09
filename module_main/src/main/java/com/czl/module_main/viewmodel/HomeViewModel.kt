@@ -46,13 +46,16 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
-        val refreshCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
-        val searchItemClickEvent:SingleLiveEvent<Int> = SingleLiveEvent()
-        val searchItemDeleteEvent:SingleLiveEvent<Int> = SingleLiveEvent()
+        val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val firstLoadProjectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+
+        // 0 刷新完成（成功获取） 1 正在刷新 2刷新完成（无数据）
+        val refreshStateEvent: SingleLiveEvent<Int> = SingleLiveEvent()
     }
 
     // 添加首页热门博文ItemBinding
@@ -92,24 +95,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         uc.drawerOpenEvent.call()
     })
 
-//    /*搜索文本改变监听 做了防抖处理 1秒后响应*/
-//    val onSearchTextChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
-//        if (it.isNotBlank())
-//            model.searchByKeyword(keyword = it)
-//                .compose(RxThreadHelper.rxSchedulerHelper(this))
-//                .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
-//                    override fun onResult(t: BaseBean<SearchDataBean>) {
-//                        if (0 == t.errorCode) {
-//                            uc.searchSuggestLoadEvent.postValue(t.data?.datas)
-//                        }
-//                    }
-//
-//                    override fun onFailed(msg: String?) {
-//
-//                    }
-//                })
-//    })
-
     /*确认搜索*/
     val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer { keyword ->
         if (keyword.isBlank()) {
@@ -146,11 +131,15 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         tabSelectedPosition.set(position)
         when (position) {
             0 -> if (observableArticles.isEmpty()) getArticle(model)
-            1 -> if (observableProjects.isEmpty()) getProject(model)
+            1 -> if (observableProjects.isEmpty()) {
+                uc.firstLoadProjectEvent.call()
+                getProject(model)
+            }
         }
     })
 
     val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.refreshStateEvent.postValue(1)
         currentArticlePage = 0
         currentProjectPage = 0
         getBanner(model)
@@ -182,8 +171,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeProjectBean>>() {
                 override fun onResult(t: BaseBean<HomeProjectBean>) {
-                    uc.refreshCompleteEvent.call()
                     if (t.errorCode == 0) {
+                        uc.refreshStateEvent.postValue(0)
                         t.data?.let {
                             if (currentProjectPage == 0 && observableProjects.isNotEmpty()) {
                                 observableProjects.clear()
@@ -213,12 +202,13 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                         }
                     } else {
                         currentProjectPage -= 1
+                        uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.refreshCompleteEvent.call()
+                    uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.call()
                     showErrorToast(msg)
                 }
@@ -268,8 +258,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
                 override fun onResult(t: BaseBean<HomeArticleBean>) {
-                    uc.refreshCompleteEvent.call()
                     if (t.errorCode == 0) {
+                        uc.refreshStateEvent.postValue(0)
                         t.data?.let {
                             // 刷新
                             if (currentArticlePage == 0 && observableArticles.isNotEmpty()) {
@@ -299,13 +289,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                         }
                     } else {
                         currentArticlePage -= 1
+                        uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     currentArticlePage -= 1
-                    uc.refreshCompleteEvent.call()
+                    uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.call()
                     showErrorToast(msg)
                 }
