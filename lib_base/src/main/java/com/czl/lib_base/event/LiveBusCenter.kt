@@ -51,4 +51,11 @@ object LiveBusCenter {
     fun observeRegisterSuccessEvent(owner: LifecycleOwner, func: (t: RegisterSuccessEvent) -> Unit) {
         LiveEventBus.get(RegisterSuccessEvent::class.java).observe(owner, Observer(func))
     }
+
+    fun postSearchHistoryEvent(){
+        LiveEventBus.get(SearchHistoryEvent::class.java).post(SearchHistoryEvent(0))
+    }
+    fun observeSearchHistoryEvent(owner: LifecycleOwner, func: (t: SearchHistoryEvent) -> Unit) {
+        LiveEventBus.get(SearchHistoryEvent::class.java).observe(owner, Observer(func))
+    }
 }

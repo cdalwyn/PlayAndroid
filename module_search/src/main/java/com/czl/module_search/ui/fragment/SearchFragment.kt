@@ -37,6 +37,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         return false
     }
 
+    override fun enableLazy(): Boolean {
+        return false
+    }
+
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
     }
@@ -60,9 +64,9 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         })
         viewModel.uc.finishLoadEvent.observe(this, Observer {
             Handler(Looper.getMainLooper())
-                .postDelayed({ rySkeletonScreen.hide() }, 600)
+                .postDelayed({ rySkeletonScreen.hide() }, 300)
             binding.smartCommon.apply {
-                finishRefresh(600)
+                finishRefresh(300)
                 finishLoadMore()
             }
         })

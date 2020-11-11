@@ -105,7 +105,8 @@ ext {
             // 骨架屏
             'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
             'shimmerlayout'                        : 'io.supercharge:shimmerlayout:2.1.0',
-            'litepal'                              : 'org.litepal.guolindev:core:3.2.2'
+            'litepal'                              : 'org.litepal.guolindev:core:3.2.2',
+            'adapter-helper'                              : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 
 
     ]

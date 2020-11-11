@@ -47,7 +47,7 @@ interface ApiService {
      * 首页热门项目列表
      */
     @GET("article/listproject/{page}/json")
-    fun getHomeProject(@Path("page") page: String): Observable<BaseBean<HomeProjectBean>>
+    fun getHomeProject(@Path("page") page: String): Observable<BaseBean<ProjectBean>>
 
     /**
      * 收藏
@@ -93,4 +93,13 @@ interface ApiService {
      */
     @GET("hotkey/json")
     fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>>
+
+    /**
+     * 项目分类
+     */
+    @GET("project/tree/json")
+    fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>>
+
+    @GET("project/list/{page}/json")
+    fun getProjectByCid(@Path("page")page: String,@Query("cid")cid:String):Observable<BaseBean<ProjectBean>>
 }

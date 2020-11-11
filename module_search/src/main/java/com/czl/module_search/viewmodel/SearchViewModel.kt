@@ -14,10 +14,13 @@ import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.SearchDataBean
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.BR
 import com.czl.module_search.R
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 /**
@@ -36,7 +39,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     /*左边返回按钮的显示*/
@@ -80,11 +83,20 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     }
 
     val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
-        if (!TextUtils.isEmpty(it)) {
-            searchPlaceHolder.set(it)
-            keyword = it
-            getSearchDataByKeyword(it)
+        if (keyword.isBlank()) {
+            showNormalToast("搜索内容不能为空喔~")
+            return@BindingConsumer
         }
+        addSubscribe(model.saveUserSearchHistory(it)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe { saved ->
+                if (saved) LiveBusCenter.postSearchHistoryEvent()
+            })
+        searchPlaceHolder.set(it)
+        keyword = it
+        getSearchDataByKeyword(it)
+
     })
 
     fun getSearchDataByKeyword(key: String, page: Int = 0) {
@@ -102,12 +114,15 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
                                 searchItemList.add(SearchItemViewModel(this@SearchViewModel, data))
                             }
                         }
+                    } else {
+                        if (currentPage > 0) currentPage -= 1
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     uc.finishLoadEvent.call()
                     showErrorToast(msg)
+                    if (currentPage > 0) currentPage -= 1
                 }
             })
     }

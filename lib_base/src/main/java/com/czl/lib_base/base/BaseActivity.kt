@@ -39,7 +39,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: MaterialDialog? = null
     private var rootBinding: ViewDataBinding? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //页面接受的参数方法

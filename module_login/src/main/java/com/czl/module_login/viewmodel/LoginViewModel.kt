@@ -31,7 +31,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
         account.set(it)
     })
 
-    val onPwdChangeCommand:BindingCommand<String> = BindingCommand(BindingConsumer {
+    val onPwdChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         pwd.set(it)
     })
 
@@ -56,7 +56,9 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
                     override fun onResult(t: BaseBean<UserBean>) {
                         dismissLoading()
                         if (t.errorCode == 0) {
-                            saveLoginName(t.data?.publicName)
+                            t.data?.let {
+                                saveUserData(it)
+                            }
                             RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
                             finish()
                         }

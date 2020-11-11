@@ -49,7 +49,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getHomeArticle(page)
     }
 
-    override fun getHomeProject(page: String): Observable<BaseBean<HomeProjectBean>> {
+    override fun getHomeProject(page: String): Observable<BaseBean<ProjectBean>> {
         return apiService.getHomeProject(page)
     }
 
@@ -82,6 +82,14 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 
     override fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>> {
         return apiService.getSearchHotKey()
+    }
+
+    override fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>> {
+        return apiService.getProjectSort()
+    }
+
+    override fun getProjectByCid(page: String, cid: String): Observable<BaseBean<ProjectBean>> {
+        return apiService.getProjectByCid(page,cid)
     }
 
 }

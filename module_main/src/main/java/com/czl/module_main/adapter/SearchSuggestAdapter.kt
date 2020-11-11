@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.module_main.R
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
 

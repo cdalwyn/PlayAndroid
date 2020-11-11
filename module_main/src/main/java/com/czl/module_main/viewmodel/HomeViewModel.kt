@@ -16,7 +16,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.HomeBannerBean
-import com.czl.lib_base.data.bean.HomeProjectBean
+import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
@@ -48,6 +48,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val firstLoadProjectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
 
         // 0 刷新完成（成功获取） 1 正在刷新 2刷新完成（无数据）
         val refreshStateEvent: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -96,12 +97,10 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             showNormalToast("搜索内容不能为空喔~")
             return@BindingConsumer
         }
-        startSearch(keyword)
-    })
-
-    private fun startSearch(keyword: String?) {
+        // 保存到数据库
+        addSubscribe(model.saveUserSearchHistory(keyword).subscribe())
         uc.searchConfirmEvent.postValue(keyword)
-    }
+    })
 
     /*搜索的历史记录Item点击事件*/
     val onSearchItemClick: SuggestionsAdapter.OnItemViewClickListener =
@@ -124,6 +123,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     val onTabSelectedListener: BindingCommand<Int> = BindingCommand(BindingConsumer { position ->
         tabSelectedPosition.set(position)
+        uc.tabSelectedEvent.postValue(position)
         when (position) {
             0 -> if (observableArticles.isEmpty()) getArticle(model)
             1 -> if (observableProjects.isEmpty()) {
@@ -164,8 +164,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     private fun getProject(model: DataRepository) {
         model.getHomeProject(currentProjectPage.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<HomeProjectBean>>() {
-                override fun onResult(t: BaseBean<HomeProjectBean>) {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
+                override fun onResult(t: BaseBean<ProjectBean>) {
                     if (t.errorCode == 0) {
                         uc.refreshStateEvent.postValue(0)
                         t.data?.let {
@@ -196,13 +196,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
                         }
                     } else {
-                        currentProjectPage -= 1
+                        if (currentProjectPage > 0) currentProjectPage -= 1
                         uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
+                    if (currentProjectPage > 0) currentProjectPage -= 1
                     uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.call()
                     showErrorToast(msg)
@@ -283,14 +284,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
                         }
                     } else {
-                        currentArticlePage -= 1
+                        if (currentArticlePage > 0) currentArticlePage -= 1
                         uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.call()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    currentArticlePage -= 1
+                    if (currentArticlePage > 0) currentArticlePage -= 1
                     uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.call()
                     showErrorToast(msg)
@@ -316,5 +317,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
+
 
 }

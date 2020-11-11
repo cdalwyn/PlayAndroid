@@ -10,3 +10,4 @@ import com.jeremyliao.liveeventbus.core.LiveEvent
 data class MainEvent(val msg: String?):LiveEvent
 data class TokenExpiredEvent(val msg: String?):LiveEvent
 data class RegisterSuccessEvent(val account: String?,val pwd:String?):LiveEvent
+data class SearchHistoryEvent(val code:Int):LiveEvent

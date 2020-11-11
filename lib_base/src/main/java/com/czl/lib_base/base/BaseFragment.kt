@@ -1,6 +1,7 @@
 package com.czl.lib_base.base
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
@@ -44,18 +46,34 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return if (useBaseLayout()) {
+        if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
+            //避免过度绘制策略
+            if (enableSwipeBack()) {
+                rootView.setBackgroundColor(Color.WHITE)
+            }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
-            attachToSwipeBack(rootBinding?.root)
+            //避免不必要的布局层级
+            return if (enableSwipeBack()) {
+                attachToSwipeBack(rootBinding!!.root)
+            } else {
+                rootBinding!!.root
+            }
         } else {
             binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
-            attachToSwipeBack(binding.root)
+            return if (enableSwipeBack()) {
+                //避免过度绘制策略
+                binding.root.setBackgroundColor(Color.WHITE)
+                attachToSwipeBack(binding.root)
+            } else {
+                binding.root
+            }
+
         }
     }
 
@@ -73,16 +91,39 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
+        LogUtils.iTag("life", "onViewCreated")
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding()
-        //私有的ViewModel与View的契约事件回调逻辑
-        registerUIChangeLiveDataCallBack()
-        //页面数据初始化方法
-        initData()
-        //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
-        initViewObservable()
-        //注册RxBus
-//        viewModel.registerRxBus();
+    }
+
+    /**
+     * 正常创建启动Fragment情况 onViewCreated-onLazyInitView-onEnterAnimationEnd
+     * Viewpager创建实例 onViewCreated-onLazyInitView
+     */
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+        LogUtils.iTag("life", "onLazyInitView")
+        if (enableLazy()) {
+            //私有的ViewModel与View的契约事件回调逻辑
+            registerUIChangeLiveDataCallBack()
+            //页面数据初始化方法
+            initData()
+            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
+            initViewObservable()
+        }
+    }
+
+    override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
+        super.onEnterAnimationEnd(savedInstanceState)
+        LogUtils.iTag("life", "onEnterAnimationEnd")
+        if (!enableLazy()) {
+            //私有的ViewModel与View的契约事件回调逻辑
+            registerUIChangeLiveDataCallBack()
+            //页面数据初始化方法
+            initData()
+            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
+            initViewObservable()
+        }
     }
 
     override fun onSupportVisible() {
@@ -129,7 +170,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getShowLoadingEvent()
             .observe(this, Observer { title: String? -> showLoading(title) })
         //加载对话框消失
-        viewModel.uC.getDismissDialogEvent().observe(this, Observer { v: Void? -> dismissLoading() })
+        viewModel.uC.getDismissDialogEvent()
+            .observe(this, Observer { v: Void? -> dismissLoading() })
         //跳入新页面
         viewModel.uC.getStartActivityEvent().observe(this, Observer { params: Map<String?, Any?> ->
             val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
@@ -154,6 +196,24 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getOnBackPressedEvent().observe(
             this, Observer { onBackPressedSupport() }
         )
+    }
+
+    /**
+     * 是否可滑动返回,默认true
+     *
+     * @return
+     */
+    protected open fun enableSwipeBack(): Boolean {
+        return true
+    }
+
+    /**
+     * 是否开启懒加载,默认true
+     *
+     * @return
+     */
+    protected open fun enableLazy(): Boolean {
+        return true
     }
 
     open fun back() {

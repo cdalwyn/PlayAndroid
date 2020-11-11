@@ -21,4 +21,8 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
     override fun useBaseLayout(): Boolean {
         return false
     }
+
+    override fun enableSwipeBack(): Boolean {
+        return false
+    }
 }

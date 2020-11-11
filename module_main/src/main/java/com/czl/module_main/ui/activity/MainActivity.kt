@@ -57,6 +57,8 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     private fun initViewPager() {
+        // 设置不可滑动
+        binding.viewPager2.isUserInputEnabled = false
         val homeFragment = RouteCenter.navigate(AppConstants.Router.Main.F_HOME) as SupportFragment
         val squareFragment =
             RouteCenter.navigate(AppConstants.Router.Square.F_SQUARE) as SupportFragment

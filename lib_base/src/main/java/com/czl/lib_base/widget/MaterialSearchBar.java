@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
     public static final int BUTTON_BACK = 3;
     public static final int VIEW_VISIBLE = 1;
     public static final int VIEW_INVISIBLE = 0;
+
+    private static final long ANIMATE_SUGGESTIONS_DURATION = 400L;
     private CardView searchBarCardView;
     private LinearLayout inputContainer;
     private ImageView navIcon;
@@ -485,13 +488,10 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         findViewById(R.id.mt_divider).setVisibility(to > 0 ? View.VISIBLE : View.GONE);
 
         ValueAnimator animator = ValueAnimator.ofInt(from, to);
-        animator.setDuration(1200);
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                lp.height = (int) animation.getAnimatedValue();
-                suggestionsList.setLayoutParams(lp);
-            }
+        animator.setDuration(ANIMATE_SUGGESTIONS_DURATION);
+        animator.addUpdateListener(animation -> {
+            lp.height = (int) animation.getAnimatedValue();
+            suggestionsList.setLayoutParams(lp);
         });
 //        if (adapter.getItemCount() > 0)
         animator.start();
@@ -970,7 +970,7 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (listenerExists())
             onSearchActionListener.onSearchConfirmed(searchEdit.getText());
-        if (suggestionsVisible)
+        if (suggestionsVisible && !TextUtils.isEmpty(searchEdit.getText()))
             hideSuggestionsList();
         if (adapter instanceof DefaultSuggestionsAdapter)
             adapter.addSuggestion(searchEdit.getText().toString());

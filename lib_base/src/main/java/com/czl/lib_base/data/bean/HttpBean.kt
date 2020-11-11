@@ -288,7 +288,7 @@ data class HomeArticleBean(
         )
     }
 }
-data class HomeProjectBean(
+data class ProjectBean(
     @SerializedName("curPage")
     val curPage: Int,
     @SerializedName("datas")
@@ -480,3 +480,20 @@ data class SearchHotKeyBean(
     @SerializedName("visible")
     val visible: Int
 )
+data class ProjectSortBean(
+    @SerializedName("children")
+    val children: List<Any>,
+    @SerializedName("courseId")
+    val courseId: Int,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("order")
+    val order: Int,
+    @SerializedName("parentChapterId")
+    val parentChapterId: Int,
+    @SerializedName("visible")
+    val visible: Int
+)
+

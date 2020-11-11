@@ -90,6 +90,11 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        agentWeb.webLifeCycle.onResume()
+        if (this::agentWeb.isInitialized)
+            agentWeb.webLifeCycle.onResume()
+    }
+
+    override fun enableLazy(): Boolean {
+        return false
     }
 }

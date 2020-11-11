@@ -9,6 +9,7 @@ import androidx.databinding.ObservableInt;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.czl.lib_base.R;
 
 /**
  * Created by goldze on 2017/6/18.
@@ -20,7 +21,7 @@ public final class ViewAdapter {
             //使用Glide框架加载图片
             Glide.with(imageView.getContext())
                     .load(url)
-                    .apply(new RequestOptions().placeholder(placeholderRes))
+                    .apply(new RequestOptions().placeholder(placeholderRes).error(R.drawable.default_project_img))
                     .into(imageView);
         }
     }

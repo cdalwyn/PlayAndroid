@@ -140,6 +140,7 @@ dependencies {
     api rootProject.ext.dependencies["skeleton"]
     api rootProject.ext.dependencies["shimmerlayout"]
     api rootProject.ext.dependencies["litepal"]
+    api rootProject.ext.dependencies["adapter-helper"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

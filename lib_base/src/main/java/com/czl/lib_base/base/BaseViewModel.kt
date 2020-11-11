@@ -170,7 +170,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
 
     override fun onCleared() {
         super.onCleared()
-        model?.onCleared()
+        model.onCleared()
         //ViewModel销毁时会执行，同时取消所有异步任务
         mCompositeDisposable.clear()
 

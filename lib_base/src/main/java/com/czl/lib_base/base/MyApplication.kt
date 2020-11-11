@@ -103,7 +103,7 @@ open class MyApplication : Application() {
             ActivityLifecycleCallbacks {
             override fun onActivityCreated(
                 activity: Activity,
-                savedInstanceState: Bundle
+                savedInstanceState: Bundle?
             ) {
                 AppManager.getInstance().addActivity(activity)
                 if ("leakcanary.internal.activity.LeakActivity" == activity.javaClass.name) {
@@ -118,7 +118,7 @@ open class MyApplication : Application() {
             override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(
                 activity: Activity,
-                outState: Bundle
+                outState: Bundle?
             ) {
             }
 

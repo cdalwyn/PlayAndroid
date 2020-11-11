@@ -28,6 +28,10 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         return false
     }
 
+    override fun enableSwipeBack(): Boolean {
+        return false
+    }
+
     override fun initData() {
 
     }

@@ -8,7 +8,7 @@ import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.HomeProjectBean
+import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.extension.ImagePopLoader
@@ -28,9 +28,9 @@ import com.czl.lib_base.binding.command.BindingCommand
  */
 class HomeProjectItemVm(homeViewModel: HomeViewModel) :
     ItemViewModel<HomeViewModel>(homeViewModel) {
-    var entity: ObservableField<HomeProjectBean.Data> = ObservableField()
+    var entity: ObservableField<ProjectBean.Data> = ObservableField()
 
-    constructor(homeViewModel: HomeViewModel, data: HomeProjectBean.Data) : this(homeViewModel) {
+    constructor(homeViewModel: HomeViewModel, data: ProjectBean.Data) : this(homeViewModel) {
         entity.set(data)
     }
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+        <import type="com.czl.lib_base.binding.viewadapter.recyclerview.LayoutManagers" />
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
+        <variable
+            name="viewModel"
+            type="com.czl.module_project.viewmodel.ContentViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_common"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            binding:onRefreshCommand="@{viewModel.onRefreshCommand}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/ry_common"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                binding:itemBinding="@{viewModel.projectItemBinding}"
+                binding:adapter="@{adapter}"
+                binding:items="@{viewModel.itemsProject}"
+                />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

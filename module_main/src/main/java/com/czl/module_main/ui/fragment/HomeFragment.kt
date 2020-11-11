@@ -1,6 +1,7 @@
 package com.czl.module_main.ui.fragment
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,10 @@ import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.db.SearchHistoryEntity
+import com.czl.lib_base.data.db.UserEntity
+import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.MyBannerAdapter
@@ -22,6 +27,8 @@ import com.ethanhua.skeleton.ViewSkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.youth.banner.transformer.AlphaPageTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -52,6 +59,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         return false
     }
 
+    override fun enableSwipeBack(): Boolean {
+        return false
+    }
 
     override fun initData() {
         ryArticleSkeleton = Skeleton.bind(binding.ryArticle as View)
@@ -67,9 +77,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         if (!this::suggestAdapter.isInitialized) {
             suggestAdapter = SearchSuggestAdapter(layoutInflater)
             suggestAdapter.setListener(viewModel.onSearchItemClick)
-            if (viewModel.model.getSearchHistory().isNotEmpty()) {
-                suggestAdapter.suggestions = viewModel.model.getSearchHistory()
-            }
+            setSuggestAdapterData()
         }
         binding.refreshLayout.autoRefresh()
         binding.banner.apply {
@@ -104,17 +112,13 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             when (state) {
                 0 -> {
                     binding.refreshLayout.finishRefresh(true)
-                    if (viewModel.tabSelectedPosition.get() == 0) {
-                        Handler(Looper.getMainLooper())
-                            .postDelayed({ ryArticleSkeleton.hide() }, 600)
-                    } else {
-                        Handler(Looper.getMainLooper())
-                            .postDelayed({ ryProjectSkeleton.hide() }, 600)
-                    }
+                    hideSkeletonByTabIndex()
                 }
                 1 -> {
                 }
                 2 -> {
+                    binding.refreshLayout.finishRefresh(false)
+                    hideSkeletonByTabIndex()
                 }
             }
         })
@@ -137,8 +141,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 确认搜索后关闭焦点
         viewModel.uc.searchConfirmEvent.observe(this, Observer {
-            suggestAdapter.addSuggestion(it)
-            viewModel.model.saveSearchHistory(suggestAdapter.suggestions)
+            setSuggestAdapterData()
             binding.searchBar.closeSearch()
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, it)
@@ -156,9 +159,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 搜素框Item删除
         viewModel.uc.searchItemDeleteEvent.observe(this, Observer {
-            suggestAdapter.deleteSuggestion(it, suggestAdapter.suggestions[it])
-            if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
-            viewModel.model.saveSearchHistory(suggestAdapter.suggestions)
+            setSuggestAdapterData()
+            // 数据库同步
+            viewModel.addSubscribe(viewModel.model.deleteSearchHistory(suggestAdapter.suggestions[it]))
         })
         // 第一次加载项目列表展示骨架屏
         viewModel.uc.firstLoadProjectEvent.observe(this, Observer {
@@ -166,6 +169,38 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 .load(R.layout.main_item_project_skeleton)
                 .show()
         })
+        // 注册搜索界面点击搜索的事件
+        LiveBusCenter.observeSearchHistoryEvent(this) {
+            if (it.code == 0) {
+                setSuggestAdapterData()
+            }
+        }
+        viewModel.uc.tabSelectedEvent.observe(this, Observer {
+            if (it == 0) {
+                ryProjectSkeleton.hide()
+            } else {
+                ryArticleSkeleton.hide()
+            }
+        })
     }
 
+    private fun hideSkeletonByTabIndex() {
+        Handler(Looper.getMainLooper())
+            .postDelayed({
+                if (viewModel.tabSelectedPosition.get() == 0) ryArticleSkeleton.hide()
+                else ryProjectSkeleton.hide()
+            }, 300)
+    }
+
+    /**
+     * 刷新搜索记录
+     */
+    private fun setSuggestAdapterData() {
+        viewModel.addSubscribe(viewModel.model.getSearchHistoryByUid()
+            .compose(RxThreadHelper.rxSchedulerHelper())
+            .subscribe {
+                suggestAdapter.suggestions = it.map { x -> x.history }
+                if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
+            })
+    }
 }

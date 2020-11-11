@@ -25,8 +25,8 @@ class HomeArticleItemVm(homeViewModel: HomeViewModel) :
     // 绑定收藏图标
     var ivCollect : ObservableInt = ObservableInt(R.drawable.ic_like_off_gray)
 
-    val tvShare = "分享者："
-    val tvAuthor = "作者："
+    val tvShare = " 分享 "
+    val tvAuthor = " 作者 "
 
     constructor(homeViewModel: HomeViewModel, data: HomeArticleBean.Data) : this(homeViewModel) {
         entity.set(data)

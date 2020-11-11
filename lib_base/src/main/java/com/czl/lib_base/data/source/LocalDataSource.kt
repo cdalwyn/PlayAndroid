@@ -1,5 +1,10 @@
 package com.czl.lib_base.data.source
 
+import com.czl.lib_base.data.bean.UserBean
+import com.czl.lib_base.data.db.SearchHistoryEntity
+import io.reactivex.Flowable
+import io.reactivex.disposables.Disposable
+
 /**
  * @author Alwyn
  * @Date 2020/7/20
@@ -8,10 +13,11 @@ package com.czl.lib_base.data.source
 interface LocalDataSource {
     fun getLocalData(): String
     fun getLoginName(): String?
-    fun saveLoginName(name:String?)
-    fun saveUserId(id:Int)
-    fun getUserId():Int
+    fun saveUserData(userBean: UserBean)
+    fun getUserId(): Int
     fun clearLoginState()
-    fun saveSearchHistory(keyword:List<String>)
-    fun getSearchHistory():List<String>
+    fun saveUserSearchHistory(keyword: String):Flowable<Boolean>
+    fun getSearchHistoryByUid():Flowable<List<SearchHistoryEntity>>
+
+    fun deleteSearchHistory(history: String):Disposable
 }

@@ -3,9 +3,12 @@ package com.czl.lib_base.data
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseModel
 import com.czl.lib_base.data.bean.*
+import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
+import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 
 /**
  * @author Alwyn
@@ -52,7 +55,7 @@ class DataRepository constructor(
         return mHttpDataSource.getHomeArticle(page)
     }
 
-    override fun getHomeProject(page: String): Observable<BaseBean<HomeProjectBean>> {
+    override fun getHomeProject(page: String): Observable<BaseBean<ProjectBean>> {
         return mHttpDataSource.getHomeProject(page)
     }
 
@@ -73,18 +76,26 @@ class DataRepository constructor(
         password: String,
         repassword: String
     ): Observable<BaseBean<Any?>> {
-        return mHttpDataSource.register(username,password,repassword)
+        return mHttpDataSource.register(username, password, repassword)
     }
 
     override fun searchByKeyword(
         page: String,
         keyword: String
     ): Observable<BaseBean<SearchDataBean>> {
-        return mHttpDataSource.searchByKeyword(page,keyword)
+        return mHttpDataSource.searchByKeyword(page, keyword)
     }
 
     override fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>> {
         return mHttpDataSource.getSearchHotKey()
+    }
+
+    override fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>> {
+        return mHttpDataSource.getProjectSort()
+    }
+
+    override fun getProjectByCid(page: String, cid: String): Observable<BaseBean<ProjectBean>> {
+        return mHttpDataSource.getProjectByCid(page,cid)
     }
 
     override fun getLocalData(): String {
@@ -95,12 +106,8 @@ class DataRepository constructor(
         return mLocalDataSource.getLoginName()
     }
 
-    override fun saveLoginName(name: String?) {
-        mLocalDataSource.saveLoginName(name)
-    }
-
-    override fun saveUserId(id: Int) {
-        mLocalDataSource.saveUserId(id)
+    override fun saveUserData(userBean: UserBean) {
+        mLocalDataSource.saveUserData(userBean)
     }
 
     override fun getUserId(): Int {
@@ -111,12 +118,16 @@ class DataRepository constructor(
         mLocalDataSource.clearLoginState()
     }
 
-    override fun saveSearchHistory(keyword: List<String>) {
-         mLocalDataSource.saveSearchHistory(keyword)
+    override fun saveUserSearchHistory(keyword: String): Flowable<Boolean> {
+        return mLocalDataSource.saveUserSearchHistory(keyword)
     }
 
-    override fun getSearchHistory(): List<String> {
-        return mLocalDataSource.getSearchHistory()
+    override fun getSearchHistoryByUid(): Flowable<List<SearchHistoryEntity>> {
+        return mLocalDataSource.getSearchHistoryByUid()
+    }
+
+    override fun deleteSearchHistory(history:String): Disposable {
+        return mLocalDataSource.deleteSearchHistory(history)
     }
 
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {

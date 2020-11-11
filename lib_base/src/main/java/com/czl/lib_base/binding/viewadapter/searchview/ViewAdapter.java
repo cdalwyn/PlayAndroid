@@ -1,7 +1,6 @@
 package com.czl.lib_base.binding.viewadapter.searchview;
 
 import android.annotation.SuppressLint;
-import android.text.TextUtils;
 
 import androidx.databinding.BindingAdapter;
 
@@ -36,8 +35,8 @@ public class ViewAdapter {
 
             @Override
             public void onSearchConfirmed(CharSequence text) {
-                if (bindingCommand != null && !TextUtils.isEmpty(text)) {
-                    bindingCommand.execute(text.toString());
+                if (bindingCommand != null) {
+                    bindingCommand.execute(String.valueOf(text).trim());
                 }
             }
 
