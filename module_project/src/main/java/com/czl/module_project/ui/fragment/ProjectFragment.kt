@@ -57,8 +57,11 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
                             tabTitles.add(data.name)
                             fragments.add(ContentFragment.getInstance(data.id))
                         }
-                        binding.viewpager.adapter =
-                            ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
+                        binding.viewpager.apply {
+                            adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
+                            // 设置该属性后第一次将自动加载所有fragment 不配置该属性则使用viewpager2内部加载机制
+//                            offscreenPageLimit = fragments.size
+                        }
                         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
                             tab.text = tabTitles[position]
                         }.attach()

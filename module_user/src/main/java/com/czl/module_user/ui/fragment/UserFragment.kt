@@ -1,12 +1,17 @@
 package com.czl.module_user.ui.fragment
 
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.GsonUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.bean.UserBean
+import com.czl.lib_base.extension.loadCircleImageRes
+import com.czl.lib_base.util.SpUtils
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentUserBinding
 import com.czl.module_user.viewmodel.UserViewModel
+import com.google.gson.reflect.TypeToken
 
 /**
  * @author Alwyn
@@ -33,7 +38,10 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
     }
 
     override fun initData() {
-
+        binding.userData =
+            GsonUtils.fromJson(SpUtils.decodeString(AppConstants.SpKey.USER_JSON_DATA),
+                object : TypeToken<UserBean>() {}.type)
+        binding.ivAvatar.loadCircleImageRes(R.mipmap.ic_launcher)
     }
 
 }

@@ -25,14 +25,12 @@
         android:paddingEnd="@dimen/dp_16">
 
 
-        <androidx.cardview.widget.CardView
+        <com.lihang.ShadowLayout
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginBottom="@dimen/dp_10"
-            app:cardCornerRadius="@dimen/dp_10"
-            app:cardElevation="5dp"
-            app:cardUseCompatPadding="false"
-            app:contentPadding="0dp">
+            app:hl_shadowColor="@color/shadow_color"
+            app:hl_shadowLimit="@dimen/dp_4"
+            app:hl_cornerRadius="@dimen/dp_10">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_item_works_list"
@@ -43,7 +41,7 @@
                 binding:placeholderRes="@drawable/ic_default_bg"
                 binding:url="@{viewModel.entity.envelopePic}" />
 
-        </androidx.cardview.widget.CardView>
+        </com.lihang.ShadowLayout>
 
 
         <androidx.appcompat.widget.LinearLayoutCompat

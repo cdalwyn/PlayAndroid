@@ -48,9 +48,4 @@
             app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/white_cc" />
 </androidx.appcompat.widget.LinearLayoutCompat>

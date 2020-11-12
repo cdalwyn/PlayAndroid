@@ -14,6 +14,7 @@ import com.czl.lib_base.di.allModule
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.footer.BallPulseFooter
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
@@ -80,6 +81,7 @@ open class MyApplication : Application() {
 
     companion object {
         init {
+            ClassicsFooter.REFRESH_FOOTER_FINISH = ""
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
                 layout.setPrimaryColorsId(R.color.md_theme_red, R.color.white)
                 MaterialHeader(context).setColorSchemeColors(
@@ -90,7 +92,7 @@ open class MyApplication : Application() {
                 )
             }
             SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
-                BallPulseFooter(context)
+                ClassicsFooter(context).setFinishDuration(0)
             }
         }
     }

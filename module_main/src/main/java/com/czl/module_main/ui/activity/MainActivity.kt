@@ -66,8 +66,10 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
             RouteCenter.navigate(AppConstants.Router.Project.F_PROJECT) as SupportFragment
         val userFragment = RouteCenter.navigate(AppConstants.Router.User.F_USER) as SupportFragment
         val fragments = arrayListOf(homeFragment, squareFragment, projectFragment, userFragment)
-        binding.viewPager2.adapter =
-            ViewPagerFmAdapter(supportFragmentManager, lifecycle, fragments)
+        binding.viewPager2.apply {
+            adapter = ViewPagerFmAdapter(supportFragmentManager, lifecycle, fragments)
+            offscreenPageLimit = fragments.size
+        }
     }
 
     private fun initBottomBar() {

@@ -1,5 +1,6 @@
 package com.czl.module_project.viewmodel
 
+import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableList
 import com.czl.lib_base.base.BaseBean
@@ -23,45 +24,48 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
  */
 class ContentViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
-    var currentPage = 0
+    var currentPage = 1
     var cid = 0
 
     val uc = UiChangeEvent()
 
     class UiChangeEvent {
-        val refreshCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val refreshCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
+        val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
-    // 添加首页热门博文ItemBinding
-    val projectItemBinding: ItemBinding<ProjectGridItemVm> =
-        ItemBinding.of(BR.viewModel, R.layout.project_item_grid)
-
-    val itemsProject: ObservableList<ProjectGridItemVm> = ObservableArrayList()
-
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage = 0
-        getProjectDataByCid(cid)
+        currentPage = 1
+        getProjectDataByCid()
     })
 
-    fun getProjectDataByCid(cid: Int) {
-        this.cid = cid
+    val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        currentPage += 1
+        getProjectDataByCid()
+    })
+
+    val moveTopClick = View.OnClickListener {
+        uc.moveTopEvent.call()
+    }
+
+    fun getProjectDataByCid() {
         model.getProjectByCid(currentPage.toString(), cid.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
                 override fun onResult(t: BaseBean<ProjectBean>) {
-                    uc.refreshCompleteEvent.call()
-                    if (t.errorCode == 0) {
-                        if (currentPage == 0) {
-                            itemsProject.clear()
-                        }
-                        for (data in t.data!!.datas) {
-                            itemsProject.add(ProjectGridItemVm(this@ContentViewModel, data))
-                        }
+                    if (t.errorCode != 0 && currentPage > 1) {
+                        currentPage -= 1
                     }
+                    uc.refreshCompleteEvent.postValue(t.data)
+
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.refreshCompleteEvent.call()
+                    showErrorToast(msg)
+                    if (currentPage > 1) {
+                        currentPage -= 1
+                    }
+                    uc.refreshCompleteEvent.postValue(null)
                 }
 
             })

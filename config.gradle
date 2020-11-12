@@ -95,7 +95,8 @@ ext {
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
             'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
             'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
-            'refresh-footer'                       : 'com.scwang.smart:refresh-footer-ball:2.0.1',
+            'refresh-footer-ball'                       : 'com.scwang.smart:refresh-footer-ball:2.0.1',
+            'refresh-footer-classic' :'com.scwang.smart:refresh-footer-classics:2.0.1',
             'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
             'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
             'autosize'                             : "me.jessyan:autosize:1.1.2",
@@ -105,8 +106,10 @@ ext {
             // 骨架屏
             'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
             'shimmerlayout'                        : 'io.supercharge:shimmerlayout:2.1.0',
+//            'shimmer-recyclerView'                        : 'com.github.sharish:ShimmerRecyclerView:v1.3',
             'litepal'                              : 'org.litepal.guolindev:core:3.2.2',
-            'adapter-helper'                              : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+            'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+            'animation'                            : 'com.daimajia.androidanimations:library:2.4@aar'
 
 
     ]

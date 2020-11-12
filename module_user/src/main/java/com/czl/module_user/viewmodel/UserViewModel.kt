@@ -12,4 +12,5 @@ import com.czl.lib_base.base.MyApplication
 class UserViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
+
 }

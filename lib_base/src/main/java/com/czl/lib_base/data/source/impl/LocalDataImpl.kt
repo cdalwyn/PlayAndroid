@@ -1,5 +1,6 @@
 package com.czl.lib_base.data.source.impl
 
+import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.UserBean
@@ -7,6 +8,7 @@ import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.data.db.UserEntity
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpUtils
+import com.google.gson.reflect.TypeToken
 import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -42,6 +44,7 @@ class LocalDataImpl : LocalDataSource {
     override fun saveUserData(userBean: UserBean) {
         SpUtils.encode(AppConstants.SpKey.USER_ID, userBean.id)
         SpUtils.encode(AppConstants.SpKey.LOGIN_NAME, userBean.publicName)
+        SpUtils.encode(AppConstants.SpKey.USER_JSON_DATA,GsonUtils.toJson(userBean,object :TypeToken<UserBean>(){}.type))
     }
 
     override fun getUserId(): Int {

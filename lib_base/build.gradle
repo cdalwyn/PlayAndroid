@@ -104,7 +104,8 @@ dependencies {
     api rootProject.ext.dependencies["viewpager2"]
     api rootProject.ext.dependencies["navigation"]
     api rootProject.ext.dependencies["refresh-header"]
-    api rootProject.ext.dependencies["refresh-footer"]
+    api rootProject.ext.dependencies["refresh-footer-ball"]
+    api rootProject.ext.dependencies["refresh-footer-classic"]
     api rootProject.ext.dependencies["refresh"]
     api rootProject.ext.dependencies["searchview"]
 
@@ -139,8 +140,10 @@ dependencies {
     api rootProject.ext.dependencies["shadowlayout"]
     api rootProject.ext.dependencies["skeleton"]
     api rootProject.ext.dependencies["shimmerlayout"]
+//    api rootProject.ext.dependencies["shimmer-recyclerView"]
     api rootProject.ext.dependencies["litepal"]
     api rootProject.ext.dependencies["adapter-helper"]
+//    api rootProject.ext.dependencies["animation"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }
