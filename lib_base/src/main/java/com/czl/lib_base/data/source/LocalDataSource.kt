@@ -14,6 +14,7 @@ interface LocalDataSource {
     fun getLocalData(): String
     fun getLoginName(): String?
     fun saveUserData(userBean: UserBean)
+    fun getUserData():UserBean?
     fun getUserId(): Int
     fun clearLoginState()
     fun saveUserSearchHistory(keyword: String):Flowable<Boolean>

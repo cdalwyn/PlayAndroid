@@ -1,64 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:attrs="http://schemas.android.com/apk/res-auto"
-    xmlns:binding="http://schemas.android.com/tools"
-    android:id="@+id/ll_drawer"
-    android:layout_width="240dp"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.text.TextUtils"/>
+        <variable
+            name="user"
+            type="com.czl.lib_base.data.bean.UserBean" />
+        <variable
+            name="pop"
+            type="com.czl.module_main.widget.HomeDrawerPop" />
+    </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:orientation="vertical"
-        android:layout_marginBottom="@dimen/dp_36">
+        android:id="@+id/ll_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="60dp"
-            />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/dp_36">
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="60dp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:maxLines="2"
+                android:layout_margin="@dimen/dp_10"
+                android:textSize="@dimen/sp_16"
+                android:gravity="center"
+                android:ellipsize="end"
+                binding:text="@{TextUtils.isEmpty(user.publicName)?`未登录`:user.publicName}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:maxLines="2"
-            android:layout_margin="@dimen/dp_10"
-            android:textSize="@dimen/sp_16"
-            android:gravity="center"
-            android:ellipsize="end"
-            binding:text="cdalwynasdasdasdasdaaaasdasasdaasdasdsdasddsdsssads" />
+            android:padding="@dimen/dp_10"
+            attrs:mIcon="@drawable/ic_favorites"
+            attrs:mRight="true"
+            attrs:mTitle="我的收藏" />
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            attrs:mIcon="@drawable/ic_about"
+            attrs:mRight="true"
+            attrs:mTitle="关于我们" />
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:id="@+id/btn_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            attrs:mIcon="@drawable/ic_exit_login"
+            attrs:mRight="true"
+            attrs:mTitle="退出登录"
+            binding:isVisible="@{!TextUtils.isEmpty(user.publicName)}"
+            binding:onClickCommand="@{pop.onLogoutClickCommand}"
+            />
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    <com.czl.lib_base.widget.CommonItemSettingView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        attrs:mIcon="@drawable/ic_favorites"
-        attrs:mRight="true"
-        attrs:mTitle="我的收藏" />
-
-    <com.czl.lib_base.widget.CommonItemSettingView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        attrs:mIcon="@drawable/ic_about"
-        attrs:mRight="true"
-        attrs:mTitle="关于我们" />
-
-    <com.czl.lib_base.widget.CommonItemSettingView
-        android:id="@+id/btn_exit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/dp_10"
-        attrs:mIcon="@drawable/ic_exit_login"
-        attrs:mRight="true"
-        attrs:mTitle="退出登录"
-        binding:onClickCommand="@{vm.onExitLoginClickCommand}" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

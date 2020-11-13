@@ -44,7 +44,20 @@ class LocalDataImpl : LocalDataSource {
     override fun saveUserData(userBean: UserBean) {
         SpUtils.encode(AppConstants.SpKey.USER_ID, userBean.id)
         SpUtils.encode(AppConstants.SpKey.LOGIN_NAME, userBean.publicName)
-        SpUtils.encode(AppConstants.SpKey.USER_JSON_DATA,GsonUtils.toJson(userBean,object :TypeToken<UserBean>(){}.type))
+        SpUtils.encode(
+            AppConstants.SpKey.USER_JSON_DATA,
+            GsonUtils.toJson(userBean, object : TypeToken<UserBean>() {}.type)
+        )
+    }
+
+    override fun getUserData(): UserBean? {
+        val userJsonData = SpUtils.decodeString(AppConstants.SpKey.USER_JSON_DATA)
+        return if (userJsonData.isNullOrBlank())
+            return null
+        else GsonUtils.fromJson(
+            userJsonData,
+            object : TypeToken<UserBean>() {}.type
+        )
     }
 
     override fun getUserId(): Int {
@@ -81,7 +94,7 @@ class LocalDataImpl : LocalDataSource {
             searchHistoryEntity.userEntity = user
             user.saveOrUpdate("uid =?", user.uid.toString())
             it.onNext(searchHistoryEntity.save())
-        },BackpressureStrategy.BUFFER)
+        }, BackpressureStrategy.BUFFER)
     }
 
     override fun getSearchHistoryByUid(): Flowable<List<SearchHistoryEntity>> {

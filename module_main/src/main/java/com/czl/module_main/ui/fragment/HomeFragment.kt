@@ -1,7 +1,6 @@
 package com.czl.module_main.ui.fragment
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,8 +9,6 @@ import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.db.SearchHistoryEntity
-import com.czl.lib_base.data.db.UserEntity
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
@@ -23,12 +20,9 @@ import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.HomeDrawerPop
 import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
-import com.ethanhua.skeleton.ViewSkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.youth.banner.transformer.AlphaPageTransformer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -37,7 +31,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var bannerAdapter: MyBannerAdapter
     private lateinit var suggestAdapter: SearchSuggestAdapter
 
-    private lateinit var homeDrawerPop: HomeDrawerPop
+    private lateinit var mHomeDrawerPop: HomeDrawerPop
     private lateinit var ryArticleSkeleton: SkeletonScreen
     private lateinit var ryProjectSkeleton: SkeletonScreen
     private lateinit var bannerSkeleton: SkeletonScreen
@@ -71,8 +65,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             .load(R.layout.main_banner_skeleton)
             .show()
 
-        if (!this::homeDrawerPop.isInitialized) {
-            homeDrawerPop = HomeDrawerPop(this)
+        if (!this::mHomeDrawerPop.isInitialized) {
+            mHomeDrawerPop = HomeDrawerPop(this)
         }
         if (!this::suggestAdapter.isInitialized) {
             suggestAdapter = SearchSuggestAdapter(layoutInflater)
@@ -136,7 +130,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         // 打开抽屉
         viewModel.uc.drawerOpenEvent.observe(this, Observer {
             XPopup.Builder(context)
-                .asCustom(homeDrawerPop)
+                .asCustom(mHomeDrawerPop)
                 .show()
         })
         // 确认搜索后关闭焦点
@@ -182,6 +176,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 ryArticleSkeleton.hide()
             }
         })
+        // 退出登录
+        viewModel.uc.logoutSuccessEvent.observe(this, Observer {
+            mHomeDrawerPop.binding?.user = null
+        })
+
     }
 
     private fun hideSkeletonByTabIndex() {

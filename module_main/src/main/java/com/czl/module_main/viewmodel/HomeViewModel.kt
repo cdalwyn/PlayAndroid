@@ -49,6 +49,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val firstLoadProjectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val logoutSuccessEvent:SingleLiveEvent<Void> = SingleLiveEvent()
 
         // 0 刷新完成（成功获取） 1 正在刷新 2刷新完成（无数据）
         val refreshStateEvent: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -217,21 +218,20 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     fun logout() {
         model.logout()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .doOnSubscribe { showLoading("正在退出登录") }
             .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
                 override fun onResult(t: BaseBean<Any?>) {
                     dismissLoading()
                     if (t.errorCode == 0) {
                         model.clearLoginState()
-                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-                        AppManager.getInstance().finishAllActivity()
+                        uc.logoutSuccessEvent.call()
+//                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
+//                        AppManager.getInstance().finishAllActivity()
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     showErrorToast(msg)
                 }
-
             })
     }
 

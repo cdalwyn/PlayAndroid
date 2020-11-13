@@ -110,6 +110,10 @@ class DataRepository constructor(
         mLocalDataSource.saveUserData(userBean)
     }
 
+    override fun getUserData(): UserBean? {
+        return mLocalDataSource.getUserData()
+    }
+
     override fun getUserId(): Int {
         return mLocalDataSource.getUserId()
     }

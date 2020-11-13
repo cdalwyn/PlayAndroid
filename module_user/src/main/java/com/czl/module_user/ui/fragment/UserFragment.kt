@@ -38,10 +38,12 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
     }
 
     override fun initData() {
-        binding.userData =
-            GsonUtils.fromJson(SpUtils.decodeString(AppConstants.SpKey.USER_JSON_DATA),
-                object : TypeToken<UserBean>() {}.type)
+        binding.userData = viewModel.model.getUserData()
         binding.ivAvatar.loadCircleImageRes(R.mipmap.ic_launcher)
+    }
+
+    override fun initViewObservable() {
+        // todo 退出登录绑定User
     }
 
 }
