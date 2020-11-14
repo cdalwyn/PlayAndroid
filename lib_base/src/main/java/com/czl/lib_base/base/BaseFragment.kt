@@ -9,16 +9,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
+import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
+import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
 
@@ -91,7 +91,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        LogUtils.iTag("life", "onViewCreated")
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding()
     }
@@ -102,7 +101,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      */
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
-        LogUtils.iTag("life", "onLazyInitView")
         if (enableLazy()) {
             //私有的ViewModel与View的契约事件回调逻辑
             registerUIChangeLiveDataCallBack()
@@ -115,7 +113,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
         super.onEnterAnimationEnd(savedInstanceState)
-        LogUtils.iTag("life", "onEnterAnimationEnd")
         if (!enableLazy()) {
             //私有的ViewModel与View的契约事件回调逻辑
             registerUIChangeLiveDataCallBack()
@@ -168,33 +165,37 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private fun registerUIChangeLiveDataCallBack() {
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
-            .observe(this, Observer { title: String? -> showLoading(title) })
+            .observe(this, { title: String? -> showLoading(title) })
         //加载对话框消失
         viewModel.uC.getDismissDialogEvent()
-            .observe(this, Observer { v: Void? -> dismissLoading() })
+            .observe(this, { dismissLoading() })
         //跳入新页面
-        viewModel.uC.getStartActivityEvent().observe(this, Observer { params: Map<String?, Any?> ->
+        viewModel.uC.getStartActivityEvent().observe(this, { params: Map<String?, Any?> ->
             val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
             val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
             startActivity(clz, bundle)
         }
         )
-        viewModel.uC.getStartFragmentEvent().observe(this, Observer { start(it) })
+        viewModel.uC.getStartFragmentEvent().observe(this, { map ->
+            val routePath:String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+            val bundle:Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            start(RouteCenter.navigate(routePath,bundle) as SupportFragment)
+        })
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
-            this, Observer { params: Map<String?, Any?> ->
+            this, { params: Map<String?, Any?> ->
                 val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                 startContainerActivity(canonicalName, bundle)
             }
         )
         //关闭界面
-        viewModel.uC.getFinishEvent().observe(this, Observer {
+        viewModel.uC.getFinishEvent().observe(this, {
             back()
         })
         //关闭上一层
         viewModel.uC.getOnBackPressedEvent().observe(
-            this, Observer { onBackPressedSupport() }
+            this, { onBackPressedSupport() }
         )
     }
 
@@ -315,6 +316,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      * @return 布局layout的id
      */
     abstract fun initContentView(): Int
+
 
     /**
      * 初始化ViewModel的id

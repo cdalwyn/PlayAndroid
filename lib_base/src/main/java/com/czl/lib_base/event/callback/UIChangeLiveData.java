@@ -5,15 +5,14 @@ import androidx.lifecycle.Observer;
 
 import com.czl.lib_base.bus.event.SingleLiveEvent;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import me.yokeyword.fragmentation.SupportFragment;
 
 public class UIChangeLiveData extends SingleLiveEvent {
     public SingleLiveEvent<String> showLoadingEvent;
     public SingleLiveEvent<Void> dismissDialogEvent;
     public SingleLiveEvent<Map<String, Object>> startActivityEvent;
-    public SingleLiveEvent<SupportFragment> startFragmentEvent;
+    public SingleLiveEvent<HashMap<String,Object>> startFragmentEvent;
     public SingleLiveEvent<Map<String, Object>> startContainerActivityEvent;
     public SingleLiveEvent<Void> finishEvent;
     public SingleLiveEvent<Void> onBackPressedEvent;
@@ -30,7 +29,7 @@ public class UIChangeLiveData extends SingleLiveEvent {
         return startActivityEvent = createLiveData(startActivityEvent);
     }
 
-    public SingleLiveEvent<SupportFragment> getStartFragmentEvent() {
+    public SingleLiveEvent<HashMap<String,Object>> getStartFragmentEvent() {
         return startFragmentEvent = createLiveData(startFragmentEvent);
     }
 

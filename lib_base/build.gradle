@@ -88,7 +88,7 @@ dependencies {
         exclude group: 'com.android.support'
     }
     api rootProject.ext.dependencies["glide-transfer"]
-    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    kapt rootProject.ext.dependencies["glide-compiler"]
     //recyclerview的databinding套装
     api(rootProject.ext.dependencies.bindingcollectionadapter) {
         exclude group: 'com.android.support'
@@ -98,7 +98,7 @@ dependencies {
     }
     //Google LiveData和ViewModel组件
     api rootProject.ext.dependencies["lifecycle-extensions"]
-    annotationProcessor rootProject.ext.dependencies["lifecycle-compiler"]
+    kapt rootProject.ext.dependencies["lifecycle-compiler"]
 
     api rootProject.ext.dependencies["toolbar"]
     api rootProject.ext.dependencies["viewpager2"]
@@ -143,6 +143,7 @@ dependencies {
 //    api rootProject.ext.dependencies["shimmer-recyclerView"]
     api rootProject.ext.dependencies["litepal"]
     api rootProject.ext.dependencies["adapter-helper"]
+    api rootProject.ext.dependencies["qrcode"]
 //    api rootProject.ext.dependencies["animation"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 

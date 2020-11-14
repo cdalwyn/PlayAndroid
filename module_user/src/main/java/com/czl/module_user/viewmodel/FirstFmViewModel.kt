@@ -15,7 +15,6 @@ import com.czl.module_user.ui.fragment.SecondFragment
 class FirstFmViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
     val startSecFmOnClick: View.OnClickListener = View.OnClickListener {
-        startFragment(SecondFragment.newInstance())
     }
 
     override fun setToolbarRightClickListener(): () -> Unit {

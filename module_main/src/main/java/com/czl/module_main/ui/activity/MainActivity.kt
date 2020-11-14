@@ -33,7 +33,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initViewObservable() {
         viewModel.uc.tabChangeLiveEvent.observe(this, Observer {
-            binding.viewPager2.currentItem = it
+            binding.viewPager2.setCurrentItem(it,false)
 //            viewModel.tvTitle.set(
 //                when (it) {
 //                    0 -> getString(R.string.main_tab_home)
@@ -120,7 +120,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun onBackPressedSupport() {
         if (System.currentTimeMillis() - touchTime < 2000L) {
-            AppManager.getInstance().AppExit()
+            AppManager.instance.appExit()
         } else {
             touchTime = System.currentTimeMillis()
             showNormalToast(getString(R.string.main_press_again))

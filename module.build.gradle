@@ -25,6 +25,11 @@ android {
                 includeCompileClasspath = true
             }
         }
+//        kapt {
+//            arguments {
+//                arg("AROUTER_MODULE_NAME", project.getName())
+//            }
+//        }
     }
     kotlinOptions {
         jvmTarget = "1.8"

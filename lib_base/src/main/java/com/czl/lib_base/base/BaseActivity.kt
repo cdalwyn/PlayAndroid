@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.config.AppConstants
@@ -18,6 +19,9 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
+import com.czl.lib_base.widget.LoginPopView
+import com.lxj.xpopup.XPopup
+import es.dmoral.toasty.Toasty
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
@@ -126,10 +130,16 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         // token失效重新登录
         LiveBusCenter.observeTokenExpiredEvent(this) {
             val dataRepository: DataRepository = get()
-            ToastHelper.showErrorToast(if (dataRepository.getUserId() != 0) "登录已失效,请重新登录" else it.msg)
             dataRepository.clearLoginState()
-            startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-            AppManager.getInstance().finishAllActivity()
+            XPopup.Builder(this)
+                .enableDrag(true)
+                .moveUpToKeyboard(false)
+                .autoOpenSoftInput(true)
+                .isDestroyOnDismiss(true)
+                .asCustom(LoginPopView(this))
+                .show()
+//            startContainerActivity(AppConstants.Router.Login.F_LOGIN)
+//            AppManager.instance.finishAllActivity()
         }
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()

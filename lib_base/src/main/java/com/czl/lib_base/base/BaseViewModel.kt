@@ -9,15 +9,17 @@ import androidx.lifecycle.LifecycleOwner
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.event.callback.UIChangeLiveData
+import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.ToastHelper
 import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import me.yokeyword.fragmentation.SupportFragment
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Created by Alwyn on 2020/10/10.
@@ -89,7 +91,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
      * @param bundle 跳转所携带的信息
      */
     fun startActivity(clz: Class<*>, bundle: Bundle? = null) {
-        val params: MutableMap<String, Any> = HashMap()
+        val params: HashMap<String, Any> = HashMap()
         params[ParameterField.CLASS] = clz
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
@@ -97,11 +99,13 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         uC.startActivityEvent.postValue(params)
     }
 
-    fun startFragment(fragment: SupportFragment, bundle: Bundle? = null) {
+    fun startFragment(routh:String, bundle: Bundle? = null) {
+        val params: HashMap<String, Any> = HashMap()
+        params[ParameterField.ROUTE_PATH] = routh
         if (bundle != null) {
-            fragment.arguments = bundle
+            params[ParameterField.BUNDLE] = bundle
         }
-        uC.startFragmentEvent.postValue(fragment)
+        uC.startFragmentEvent.postValue(params)
     }
 
     /**

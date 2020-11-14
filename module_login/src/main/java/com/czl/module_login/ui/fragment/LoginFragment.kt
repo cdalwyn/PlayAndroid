@@ -1,14 +1,12 @@
 package com.czl.module_login.ui.fragment
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.czl.module_login.BR
-import com.czl.module_login.R
-import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.module_login.BR
+import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginFragmentLoginBinding
-import com.czl.module_login.databinding.LoginFragmentLoginBindingImpl
 import com.czl.module_login.viewmodel.LoginViewModel
 import com.gyf.immersionbar.ImmersionBar
 
@@ -30,6 +28,9 @@ class LoginFragment : BaseFragment<LoginFragmentLoginBinding, LoginViewModel>() 
 
     override fun useBaseLayout(): Boolean {
         return false
+    }
+
+    override fun initViewObservable() {
     }
 
     override fun initData() {

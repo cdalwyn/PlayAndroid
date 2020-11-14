@@ -1,6 +1,8 @@
 package com.czl.module_login.viewmodel
 
+import android.os.Bundle
 import androidx.databinding.ObservableField
+import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.DataRepository
@@ -40,7 +42,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
     })
 
     val registerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        startFragment(RouteCenter.navigate(AppConstants.Router.Login.F_REGISTER) as SupportFragment)
+        startFragment(AppConstants.Router.Login.F_REGISTER)
     })
 
     private fun loginByPwd() {
@@ -60,7 +62,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
                                 saveUserData(it)
                             }
                             RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
-                            finish()
+                            AppManager.instance.finishAllActivity()
                         }
                     }
 

@@ -58,4 +58,10 @@ object LiveBusCenter {
     fun observeSearchHistoryEvent(owner: LifecycleOwner, func: (t: SearchHistoryEvent) -> Unit) {
         LiveEventBus.get(SearchHistoryEvent::class.java).observe(owner, Observer(func))
     }
+    fun postLogoutEvent(){
+        LiveEventBus.get(LogoutEvent::class.java).post(LogoutEvent(0))
+    }
+    fun observeLogoutEvent(owner: LifecycleOwner, func: (t: LogoutEvent) -> Unit) {
+        LiveEventBus.get(LogoutEvent::class.java).observe(owner, Observer(func))
+    }
 }

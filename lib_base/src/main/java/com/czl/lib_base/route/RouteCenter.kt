@@ -15,9 +15,6 @@ import java.io.Serializable
 object RouteCenter {
     fun navigate(path: String, bundle: Bundle? = null): Any? {
         val build = ARouter.getInstance().build(path)
-        bundle?.let {
-            return build.with(it).navigation()
-        }
-        return build.navigation()
+        return if (bundle == null) build.navigation() else build.with(bundle).navigation()
     }
 }

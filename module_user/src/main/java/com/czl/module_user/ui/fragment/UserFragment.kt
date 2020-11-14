@@ -2,9 +2,11 @@ package com.czl.module_user.ui.fragment
 
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.UserBean
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.loadCircleImageRes
 import com.czl.lib_base.util.SpUtils
 import com.czl.module_user.BR
@@ -43,7 +45,8 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
     }
 
     override fun initViewObservable() {
-        // todo 退出登录绑定User
+        LiveBusCenter.observeLogoutEvent(this){
+            binding.userData = null
+        }
     }
-
 }

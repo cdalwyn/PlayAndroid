@@ -5,8 +5,9 @@ import okhttp3.Interceptor
 import okhttp3.RequestBody
 import okhttp3.Response
 import okio.Buffer
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.IOException
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
@@ -16,6 +17,7 @@ import java.nio.charset.StandardCharsets
  * @Date 2020/8/4
  * @Description 请求参数的拦截器
  */
+@KoinApiExtension
 class RequestDataInterceptor : Interceptor, KoinComponent {
     private val dataRepository by inject<DataRepository>()
 

@@ -19,14 +19,13 @@ import com.czl.module_main.R
 import com.czl.module_main.databinding.MainPopDrawerlayoutBinding
 import com.czl.module_main.ui.fragment.HomeFragment
 import com.lxj.xpopup.core.DrawerPopupView
-import org.koin.core.KoinComponent
-import org.koin.core.get
 
 /**
  * @author Alwyn
  * @Date 2020/11/4
  * @Description
  */
+@SuppressLint("ViewConstructor")
 class HomeDrawerPop(private val fragment: HomeFragment) :
     DrawerPopupView(fragment.requireContext()) {
 

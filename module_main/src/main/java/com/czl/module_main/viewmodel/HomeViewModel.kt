@@ -17,6 +17,7 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.HomeBannerBean
 import com.czl.lib_base.data.bean.ProjectBean
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
@@ -49,7 +50,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val firstLoadProjectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-        val logoutSuccessEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+
 
         // 0 刷新完成（成功获取） 1 正在刷新 2刷新完成（无数据）
         val refreshStateEvent: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -222,10 +223,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 override fun onResult(t: BaseBean<Any?>) {
                     dismissLoading()
                     if (t.errorCode == 0) {
-                        model.clearLoginState()
-                        uc.logoutSuccessEvent.call()
-//                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-//                        AppManager.getInstance().finishAllActivity()
+                        LiveBusCenter.postLogoutEvent()
                     }
                 }
 

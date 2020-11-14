@@ -176,12 +176,12 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 ryArticleSkeleton.hide()
             }
         })
-        // 退出登录
-        viewModel.uc.logoutSuccessEvent.observe(this, Observer {
+        LiveBusCenter.observeLogoutEvent(this){
             mHomeDrawerPop.binding?.user = null
-        })
-
+        }
     }
+
+
 
     private fun hideSkeletonByTabIndex() {
         Handler(Looper.getMainLooper())

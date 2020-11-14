@@ -18,11 +18,14 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
+import es.dmoral.toasty.Toasty
 import io.reactivex.plugins.RxJavaPlugins
 import me.jessyan.autosize.AutoSizeConfig
 import me.yokeyword.fragmentation.Fragmentation
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import org.litepal.LitePal
 
 
@@ -67,6 +70,7 @@ open class MyApplication : Application() {
             //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
             .apply()
         startKoin {
+            androidLogger()
             androidContext(this@MyApplication)
             modules(allModule)
         }
@@ -74,6 +78,7 @@ open class MyApplication : Application() {
             ToastHelper.showErrorToast("系统错误")
             it.printStackTrace()
         }
+        Toasty.Config.getInstance().allowQueue(false).apply()
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
     }
@@ -107,7 +112,7 @@ open class MyApplication : Application() {
                 activity: Activity,
                 savedInstanceState: Bundle?
             ) {
-                AppManager.getInstance().addActivity(activity)
+                AppManager.instance.addActivity(activity)
                 if ("leakcanary.internal.activity.LeakActivity" == activity.javaClass.name) {
                     return
                 }
@@ -125,9 +130,14 @@ open class MyApplication : Application() {
             }
 
             override fun onActivityDestroyed(activity: Activity) {
-                AppManager.getInstance().removeActivity(activity)
+                AppManager.instance.removeActivity(activity)
             }
         })
+    }
+
+    override fun onTerminate() {
+        super.onTerminate()
+        ARouter.getInstance().destroy()
     }
 
 }

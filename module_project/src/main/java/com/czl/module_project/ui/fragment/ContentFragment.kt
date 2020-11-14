@@ -106,7 +106,7 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
                 }
             })
         }
-        mAdapter.setOnItemClickListener { adapter, view, position ->
+        mAdapter.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as ProjectBean.Data
             startContainerActivity(
                 AppConstants.Router.Base.F_WEB,

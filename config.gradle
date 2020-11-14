@@ -28,6 +28,7 @@ ext {
     versions = [
             "support-version": "1.0.0",
             "junit-version"  : "4.12",
+            "koin-version"   : "2.2.0"
     ]
     //support配置
     support = [
@@ -76,12 +77,9 @@ ext {
             "MVVMHabit"                            : "com.github.goldze:MVVMHabit:3.1.3",
             "toolbar"                              : "com.gyf.immersionbar:immersionbar:3.0.0",
             'viewpager2'                           : 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-viewpager2:4.0.0',
-            // Koin AndroidX Scope feature
-            'koin_scope'                           : "org.koin:koin-androidx-scope:2.1.6",
-            // Koin AndroidX ViewModel feature
-            'koin_viewmodel'                       : "org.koin:koin-androidx-viewmodel:2.1.6",
-            // Koin AndroidX Fragment Factory (unstable version)
-            'koin_fragment'                        : "org.koin:koin-androidx-fragment:2.1.6",
+            'koin_scope'                           : "org.koin:koin-androidx-scope:${versions["koin-version"]}",
+            'koin_viewmodel'                       : "org.koin:koin-androidx-viewmodel:${versions["koin-version"]}",
+            'koin_fragment'                        : "org.koin:koin-androidx-fragment:${versions["koin-version"]}",
             'utils'                                : 'com.blankj:utilcodex:1.29.0',
             'mmkv'                                 : 'com.tencent:mmkv:1.0.23',
             'livebus'                              : 'com.jeremyliao:live-event-bus-x:1.7.2',
@@ -95,8 +93,8 @@ ext {
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
             'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
             'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
-            'refresh-footer-ball'                       : 'com.scwang.smart:refresh-footer-ball:2.0.1',
-            'refresh-footer-classic' :'com.scwang.smart:refresh-footer-classics:2.0.1',
+            'refresh-footer-ball'                  : 'com.scwang.smart:refresh-footer-ball:2.0.1',
+            'refresh-footer-classic'               : 'com.scwang.smart:refresh-footer-classics:2.0.1',
             'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
             'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
             'autosize'                             : "me.jessyan:autosize:1.1.2",
@@ -109,7 +107,8 @@ ext {
 //            'shimmer-recyclerView'                        : 'com.github.sharish:ShimmerRecyclerView:v1.3',
             'litepal'                              : 'org.litepal.guolindev:core:3.2.2',
             'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
-            'animation'                            : 'com.daimajia.androidanimations:library:2.4@aar'
+            'animation'                            : 'com.daimajia.androidanimations:library:2.4@aar',
+            'qrcode'                               : "cn.bingoogolapple:bga-qrcode-zxing:1.3.7"
 
 
     ]

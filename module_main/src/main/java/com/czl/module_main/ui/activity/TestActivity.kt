@@ -74,7 +74,7 @@ class TestActivity : BaseActivity<MainLayoutTestBinding, TestViewModel>() {
         viewModel.tvTitle.set("首页")
         viewModel.btnBackVisibility.set("0")
         PermissionUtil.reqStorage(
-            this, callback = RequestCallback { allGranted, grantedList, deniedList ->
+            this, callback = RequestCallback { allGranted, _, _ ->
                 if (allGranted) {
                     LogUtils.i("存储权限授予成功")
                 }
