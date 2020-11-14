@@ -98,6 +98,10 @@ class DataRepository constructor(
         return mHttpDataSource.getProjectByCid(page,cid)
     }
 
+    override fun getUserShareData(page: String): Observable<BaseBean<UserShareBean>> {
+        return mHttpDataSource.getUserShareData(page)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

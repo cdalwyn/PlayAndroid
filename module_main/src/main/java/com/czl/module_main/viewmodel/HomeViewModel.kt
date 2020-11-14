@@ -221,8 +221,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
                 override fun onResult(t: BaseBean<Any?>) {
-                    dismissLoading()
                     if (t.errorCode == 0) {
+                        model.clearLoginState()
                         LiveBusCenter.postLogoutEvent()
                     }
                 }

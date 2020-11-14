@@ -101,7 +101,14 @@ interface ApiService {
     fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>>
 
     @GET("project/list/{page}/json")
-    fun getProjectByCid(@Path("page")page: String,@Query("cid")cid:String):Observable<BaseBean<ProjectBean>>
+    fun getProjectByCid(
+        @Path("page") page: String,
+        @Query("cid") cid: String
+    ): Observable<BaseBean<ProjectBean>>
 
+    @GET("lg/coin/userinfo/json")
+    fun getUserScore(): Observable<BaseBean<UserScoreBean>>
 
+    @GET("user/lg/private_articles/{page}/json")
+    fun getUserShareData(@Path("page")page:String):Observable<BaseBean<UserShareBean>>
 }

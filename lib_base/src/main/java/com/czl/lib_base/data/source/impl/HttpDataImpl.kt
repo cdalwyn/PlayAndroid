@@ -92,4 +92,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getProjectByCid(page,cid)
     }
 
+    override fun getUserShareData(page: String): Observable<BaseBean<UserShareBean>> {
+        return apiService.getUserShareData(page)
+    }
+
 }

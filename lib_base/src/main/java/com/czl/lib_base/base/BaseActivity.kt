@@ -27,6 +27,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
+import org.koin.core.component.KoinApiExtension
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +36,7 @@ import java.util.concurrent.TimeUnit
  * 一个拥有DataBinding框架的基Activity
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
+@KoinApiExtension
 abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxActivity(), IBaseView {
     protected lateinit var binding: V
@@ -131,13 +133,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         LiveBusCenter.observeTokenExpiredEvent(this) {
             val dataRepository: DataRepository = get()
             dataRepository.clearLoginState()
-            XPopup.Builder(this)
-                .enableDrag(true)
-                .moveUpToKeyboard(false)
-                .autoOpenSoftInput(true)
-                .isDestroyOnDismiss(true)
-                .asCustom(LoginPopView(this))
-                .show()
+            showLoginPop()
 //            startContainerActivity(AppConstants.Router.Login.F_LOGIN)
 //            AppManager.instance.finishAllActivity()
         }
@@ -171,6 +167,18 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getOnBackPressedEvent().observe(
             this, Observer { onBackPressedSupport() }
         )
+    }
+
+    fun showLoginPop() {
+        val popView = XPopup.Builder(this)
+            .enableDrag(true)
+            .moveUpToKeyboard(false)
+            .autoOpenSoftInput(true)
+            .isDestroyOnDismiss(true)
+            .asCustom(LoginPopView(this))
+        if (!popView.isShow) {
+            popView.show()
+        }
     }
 
     fun showLoading(title: String?) {
@@ -253,7 +261,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     }
 
-    open fun onDataReload(){}
+    open fun onDataReload() {}
 
     /**
      * @return 是否需要标题栏

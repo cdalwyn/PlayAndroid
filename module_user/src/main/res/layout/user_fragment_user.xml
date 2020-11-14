@@ -16,6 +16,7 @@
         <variable
             name="userData"
             type="com.czl.lib_base.data.bean.UserBean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,10 +41,12 @@
             android:text="@{TextUtils.isEmpty(userData.publicName)?`未登录`:userData.publicName}"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_16"
-            android:layout_marginStart="@dimen/dp_20"
+            android:padding="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
             app:layout_constraintBottom_toTopOf="@+id/ll_collect"
             app:layout_constraintStart_toEndOf="@+id/iv_avatar"
             app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+            binding:onClickCommand="@{viewModel.userNameOnClickCommand}"
             tools:text="cdalwyn" />
 
 
@@ -71,12 +74,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:text="@{viewModel.tvScore}"
+                    android:textSize="@dimen/sp_16"
                     tools:text="600" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的积分"
+                    android:text="积分"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -104,12 +109,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    android:text="@{viewModel.tvCollect}"
                     tools:text="600" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的收藏"
+                    android:text="收藏"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -138,12 +145,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:text="@{viewModel.tvShare}"
+                    android:textSize="@dimen/sp_16"
                     tools:text="600" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="我的分享"
+                    android:text="分享"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -212,6 +221,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_share"
+            binding:onClickCommand="@{viewModel.logoutClickCommand}"
             binding:isVisible="@{!TextUtils.isEmpty(userData.publicName)}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

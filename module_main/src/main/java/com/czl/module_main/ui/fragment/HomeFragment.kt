@@ -176,8 +176,13 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 ryArticleSkeleton.hide()
             }
         })
+        // 接收用户注销事件
         LiveBusCenter.observeLogoutEvent(this){
             mHomeDrawerPop.binding?.user = null
+        }
+        // 接收用户登录成功事件
+        LiveBusCenter.observeLoginSuccessEvent(this){
+            mHomeDrawerPop.binding?.user = viewModel.model.getUserData()
         }
     }
 

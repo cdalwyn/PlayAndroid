@@ -25,4 +25,5 @@ interface HttpDataSource {
     fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>>
     fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>>
     fun getProjectByCid(page: String = "1", cid: String): Observable<BaseBean<ProjectBean>>
+    fun getUserShareData(page: String = "1"): Observable<BaseBean<UserShareBean>>
 }

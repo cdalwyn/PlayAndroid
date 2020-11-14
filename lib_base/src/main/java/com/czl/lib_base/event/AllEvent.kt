@@ -12,3 +12,4 @@ data class TokenExpiredEvent(val msg: String?):LiveEvent
 data class RegisterSuccessEvent(val account: String?,val pwd:String?):LiveEvent
 data class SearchHistoryEvent(val code:Int):LiveEvent
 data class LogoutEvent(val code:Int):LiveEvent
+data class LoginSuccessEvent(val code:Int):LiveEvent
