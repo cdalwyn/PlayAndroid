@@ -45,6 +45,11 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
         startFragment(AppConstants.Router.Login.F_REGISTER)
     })
 
+    val touristClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+        RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
+        AppManager.instance.finishAllActivity()
+    })
+
     private fun loginByPwd() {
         if (account.get().isNullOrBlank() || pwd.get().isNullOrBlank()) {
             showNormalToast("账号或密码不能为空")

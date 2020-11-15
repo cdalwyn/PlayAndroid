@@ -144,6 +144,7 @@ dependencies {
     api rootProject.ext.dependencies["litepal"]
     api rootProject.ext.dependencies["adapter-helper"]
     api rootProject.ext.dependencies["qrcode"]
+    api rootProject.ext.dependencies["lottie"]
 //    api rootProject.ext.dependencies["animation"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 

@@ -22,7 +22,11 @@ class SplashViewModel(application: MyApplication, model: DataRepository) :
             Flowable.timer(1500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
+                    if (model.getLoginName().isNullOrBlank()){
+                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
+                    }else{
+                        RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
+                    }
                     finish()
                 })
     }

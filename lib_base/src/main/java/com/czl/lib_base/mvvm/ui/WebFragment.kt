@@ -56,7 +56,10 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
             .ready()
             .go(url)
 
-        viewModel.ivToolbarIconOnClick = BindingCommand(BindingAction {
+    }
+
+    override fun initViewObservable() {
+        viewModel.closeEvent.observe(this, {
             requireActivity().finish()
         })
     }

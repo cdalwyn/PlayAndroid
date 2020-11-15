@@ -69,9 +69,8 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
                 }
 
                 override fun onFailed(msg: String?) {
-
+                    showErrorToast(msg)
                 }
-
             })
     }
 

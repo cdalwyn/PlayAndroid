@@ -11,12 +11,12 @@
             type="com.czl.module_login.viewmodel.RegisterViewModel" />
     </data>
 
-    <com.czl.module_login.widget.SrcScrollFrameLayout
+    <com.czl.lib_base.widget.SrcScrollFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/ic_login_background">
+        app:src="@drawable/login_background">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -152,5 +152,5 @@
                 app:layout_constraintTop_toBottomOf="@id/btn_register"
                 binding:onClickCommand="@{viewModel.onBackToLoginCommand}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.czl.module_login.widget.SrcScrollFrameLayout>
+    </com.czl.lib_base.widget.SrcScrollFrameLayout>
 </layout>

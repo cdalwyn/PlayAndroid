@@ -12,30 +12,39 @@
             type="com.czl.module_login.viewmodel.LoginViewModel" />
     </data>
 
-    <com.czl.module_login.widget.SrcScrollFrameLayout
+    <com.czl.lib_base.widget.SrcScrollFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/ic_login_background">
-
+        app:src="@drawable/login_background">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".mvvm.ui.activity.LoginActivity">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="80dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_fileName="android-logo.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                />
+
             <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:text="登录"
+                android:text="欢迎使用"
                 android:textColor="@color/white"
-                android:textSize="40sp"
+                android:textSize="@dimen/sp_30"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/lottieAnimationView" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlAccount"
@@ -44,26 +53,24 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="40dp"
-                app:hintTextColor="@color/white"
                 android:textColorHint="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/tvLogin"
-                >
+                app:hintTextColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tvLogin">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAccount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:hint="账号"
+                    android:maxLines="1"
                     android:padding="10dp"
                     android:singleLine="true"
-                    android:maxLines="1"
                     android:text="@={viewModel.account}"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
-                    android:backgroundTint="@color/white"
                     android:theme="@style/TextInputWhiteStyle"
-                    binding:textChanged="@{viewModel.onAccountChangeCommand}"
-                    />
+                    binding:textChanged="@{viewModel.onAccountChangeCommand}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -75,23 +82,21 @@
                 android:layout_marginEnd="40dp"
                 android:textColorHint="@color/white"
                 app:hintTextColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/tlAccount"
-                >
+                app:layout_constraintTop_toBottomOf="@id/tlAccount">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPwd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:hint="密码"
+                    android:maxLines="1"
                     android:padding="10dp"
+                    android:singleLine="true"
                     android:text="@={viewModel.pwd}"
                     android:textColor="@color/white"
-                    android:singleLine="true"
-                    android:maxLines="1"
-                    android:backgroundTint="@color/white"
                     android:theme="@style/TextInputWhiteStyle"
-                    binding:textChanged="@{viewModel.onPwdChangeCommand}"
-                    />
+                    binding:textChanged="@{viewModel.onPwdChangeCommand}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -107,19 +112,32 @@
                 binding:onClickCommand="@{viewModel.btnLoginClick}" />
 
             <TextView
+                android:id="@+id/tv_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="注册"
                 android:textColor="@color/white"
-                android:layout_marginTop="@dimen/dp_10"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/btnLogin"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                binding:onClickCommand="@{viewModel.registerClickCommand}"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnLogin"
+                binding:onClickCommand="@{viewModel.registerClickCommand}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="我是游客，只想看看"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_register"
+                binding:onClickCommand="@{viewModel.touristClickCommand}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.czl.module_login.widget.SrcScrollFrameLayout>
+    </com.czl.lib_base.widget.SrcScrollFrameLayout>
 
 </layout>
 

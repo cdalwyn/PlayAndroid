@@ -36,7 +36,6 @@ import java.util.concurrent.TimeUnit
  * 一个拥有DataBinding框架的基Activity
  * 这里根据项目业务可以换成你自己熟悉的BaseActivity, 但是需要继承RxAppCompatActivity,方便LifecycleProvider管理生命周期
  */
-@KoinApiExtension
 abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxActivity(), IBaseView {
     protected lateinit var binding: V
@@ -169,6 +168,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         )
     }
 
+    @KoinApiExtension
     fun showLoginPop() {
         val popView = XPopup.Builder(this)
             .enableDrag(true)

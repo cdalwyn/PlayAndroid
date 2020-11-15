@@ -43,7 +43,7 @@ class SearchItemViewModel(searchViewModel: SearchViewModel) :
     val searchItemClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.WEB_URL, this.entity.get()?.link)
-        viewModel.startFragment(AppConstants.Router.Base.F_WEB, bundle)
+        viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
     })
 
     val collectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

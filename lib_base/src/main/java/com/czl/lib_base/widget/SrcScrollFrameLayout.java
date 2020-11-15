@@ -1,4 +1,4 @@
-package com.czl.module_login.widget;
+package com.czl.lib_base.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,7 +16,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.czl.module_login.R;
+import com.czl.lib_base.R;
 
 /**
  * PackageName : com.ziwenl.library.widgets

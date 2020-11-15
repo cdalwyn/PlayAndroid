@@ -17,9 +17,7 @@ class FirstFmViewModel(application: MyApplication, model: DataRepository) :
     val startSecFmOnClick: View.OnClickListener = View.OnClickListener {
     }
 
-    override fun setToolbarRightClickListener(): () -> Unit {
-        return {
-            showNormalToast("这是FirstFragment标题栏图标点击事件")
-        }
+    override fun setToolbarRightClick() {
+        showNormalToast("这是FirstFragment标题栏图标点击事件")
     }
 }

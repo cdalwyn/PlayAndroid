@@ -9,16 +9,13 @@ import androidx.lifecycle.LifecycleOwner
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.event.callback.UIChangeLiveData
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.ToastHelper
 import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
-import me.yokeyword.fragmentation.SupportFragment
 import org.koin.core.component.KoinComponent
 import java.lang.ref.WeakReference
-import java.util.*
 import kotlin.collections.HashMap
 
 /**
@@ -41,10 +38,9 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     val btnBackVisibility = ObservableField("1")
 
     /**
-     * 标题栏右图标点击事件 可在UI层调用viewModel.ivToolbarIconOnClick重新定义
-     * 或者VM层重写setToolbarRightClickListener()
+     * 标题栏右图标点击事件 VM层重写setToolbarRightClick()
      */
-    var ivToolbarIconOnClick = getToolbarIconClickListener()
+    var ivToolbarIconOnClick = BindingCommand<Void>(BindingAction { setToolbarRightClick() })
 
     //弱引用持有
     private lateinit var lifecycle: WeakReference<LifecycleProvider<*>>
@@ -56,12 +52,10 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         mCompositeDisposable.add(disposable)
     }
 
-    private fun getToolbarIconClickListener(): BindingCommand<Any> {
-        return BindingCommand(BindingAction(setToolbarRightClickListener()))
-    }
-
     // 子类重写
-    open fun setToolbarRightClickListener(): () -> Unit = {}
+    open fun setToolbarRightClick(){
+
+    }
 
     /**
      * 注入RxLifecycle生命周期

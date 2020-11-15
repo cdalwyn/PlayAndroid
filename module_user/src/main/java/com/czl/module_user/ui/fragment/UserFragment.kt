@@ -15,6 +15,7 @@ import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentUserBinding
 import com.czl.module_user.viewmodel.UserViewModel
 import com.google.gson.reflect.TypeToken
+import com.gyf.immersionbar.ImmersionBar
 import org.koin.core.component.KoinApiExtension
 
 /**
@@ -42,9 +43,9 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         return false
     }
 
+
     override fun initData() {
         binding.userData = viewModel.model.getUserData()
-        binding.ivAvatar.loadCircleImageRes(R.mipmap.ic_launcher)
         binding.userData?.apply {
             viewModel.getUserCollectData()
             viewModel.getUserShareData()
