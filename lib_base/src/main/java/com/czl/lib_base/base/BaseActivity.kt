@@ -7,26 +7,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.LoginPopView
+import com.jeremyliao.liveeventbus.LiveEventBus
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import es.dmoral.toasty.Toasty
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinApiExtension
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
@@ -44,6 +51,9 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: MaterialDialog? = null
     private var rootBinding: ViewDataBinding? = null
 
+    val dataRepository: DataRepository by inject()
+
+    @KoinApiExtension
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //页面接受的参数方法
@@ -124,27 +134,23 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     /**
-     * =====================================================================
+     * 注册ViewModel与View的契约UI回调事件
      */
-    //注册ViewModel与View的契约UI回调事件
     private fun registerUIChangeLiveDataCallBack() {
         // token失效重新登录
-        LiveBusCenter.observeTokenExpiredEvent(this) {
-            val dataRepository: DataRepository = get()
-            dataRepository.clearLoginState()
-            showLoginPop()
-//            startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-//            AppManager.instance.finishAllActivity()
-        }
+//        LiveBusCenter.observeTokenExpiredEvent(this, {
+//            dataRepository.clearLoginState()
+//            showLoginPop()
+//        })
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
-            .observe(this, Observer { title: String? -> showLoading(title) })
+            .observe(this, { title: String? -> showLoading(title) })
         //加载对话框消失
         viewModel.uC.getDismissDialogEvent()
-            .observe(this, Observer { v: Void? -> dismissLoading() })
+            .observe(this, { v: Void? -> dismissLoading() })
         //跳入新页面
         viewModel.uC.getStartActivityEvent().observe(
-            this, Observer { params: Map<String?, Any?> ->
+            this, { params: Map<String?, Any?> ->
                 val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                 startActivity(clz, bundle)
@@ -152,32 +158,31 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         )
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
-            this, Observer { params: Map<String?, Any?> ->
+            this, { params: Map<String?, Any?> ->
                 val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                 startContainerActivity(canonicalName, bundle)
             }
         )
         //关闭界面
-        viewModel.uC.getFinishEvent().observe(this, Observer {
+        viewModel.uC.getFinishEvent().observe(this, {
             finish()
         })
         //关闭上一层
         viewModel.uC.getOnBackPressedEvent().observe(
-            this, Observer { onBackPressedSupport() }
+            this, { onBackPressedSupport() }
         )
     }
 
-    @KoinApiExtension
     fun showLoginPop() {
-        val popView = XPopup.Builder(this)
+        val loginPopView = XPopup.Builder(this)
             .enableDrag(true)
             .moveUpToKeyboard(false)
             .autoOpenSoftInput(true)
             .isDestroyOnDismiss(true)
             .asCustom(LoginPopView(this))
-        if (!popView.isShow) {
-            popView.show()
+        if (!loginPopView.isShow) {
+            loginPopView.show()
         }
     }
 

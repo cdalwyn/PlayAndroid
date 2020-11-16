@@ -1,6 +1,7 @@
 package com.czl.module_user.viewmodel
 
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseBean
@@ -10,6 +11,7 @@ import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectArticle
 import com.czl.lib_base.data.bean.UserShareBean
 import com.czl.lib_base.event.LiveBusCenter
@@ -30,8 +32,9 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     var tvCollect = ObservableField("0")
     var tvShare = ObservableField("0")
     val uc = UiChangeEvent()
-    class UiChangeEvent{
-        val showLoginPopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+
+    class UiChangeEvent {
+        val showLoginPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     val logoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -56,6 +59,10 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         if (model.getLoginName().isNullOrBlank()) {
             uc.showLoginPopEvent.call()
         }
+    })
+
+    val btnScoreClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_SCORE)
     })
 
     fun getUserShareData() {

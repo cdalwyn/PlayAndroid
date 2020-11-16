@@ -24,6 +24,7 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BottomPopupView
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.core.component.KoinApiExtension
@@ -36,11 +37,9 @@ import org.koin.core.component.inject
  * @Description
  */
 @SuppressLint("ViewConstructor")
-@KoinApiExtension
-class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity), KoinComponent {
+class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity) {
 
     private var dataBinding: PopLoginBinding? = null
-    private val dataResp: DataRepository by inject()
 
     val registerFlag: ObservableInt = ObservableInt(0)
     val tvLoginAccount = ObservableField("")
@@ -49,7 +48,10 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     // 登录
     val onLoginClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         dataBinding?.let {
-            dataResp.userLogin(it.etAccount.text.toString().trim(), it.etPwd.text.toString().trim())
+            activity.dataRepository.userLogin(
+                it.etAccount.text.toString().trim(),
+                it.etPwd.text.toString().trim()
+            )
                 .compose(RxThreadHelper.rxSchedulerHelper(activity.viewModel))
                 .doOnSubscribe { activity.viewModel.showLoading() }
                 .subscribe(object : ApiSubscriberHelper<BaseBean<UserBean>>() {
@@ -57,7 +59,7 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
                         activity.viewModel.dismissLoading()
                         if (t.errorCode == 0) {
                             t.data?.let { data ->
-                                dataResp.saveUserData(data)
+                                activity.dataRepository.saveUserData(data)
                             }
                             LiveBusCenter.postLoginSuccessEvent()
                             dismiss()
@@ -86,7 +88,7 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     // 注册
     val registerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         dataBinding?.let {
-            dataResp.register(
+            activity.dataRepository.register(
                 it.etRegAccount.text.toString().trim(),
                 it.etRegPwd.text.toString().trim(),
                 it.etRegRePwd.text.toString().trim()
@@ -96,7 +98,7 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
                 .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
                     override fun onResult(t: BaseBean<*>) {
                         activity.viewModel.dismissLoading()
-                        if (t.errorCode==0){
+                        if (t.errorCode == 0) {
                             activity.showSuccessToast("注册成功")
                             tvLoginAccount.set(it.etRegAccount.text.toString().trim())
                             tvLoginPwd.set(it.etRegPwd.text.toString().trim())
@@ -132,4 +134,15 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
         super.onDestroy()
         dataBinding?.unbind()
     }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        ImmersionBar.with(activity).statusBarDarkFont(false).init()
+    }
+
+    override fun onDetachedFromWindow() {
+        ImmersionBar.with(activity).statusBarDarkFont(true).init()
+        super.onDetachedFromWindow()
+    }
+
 }

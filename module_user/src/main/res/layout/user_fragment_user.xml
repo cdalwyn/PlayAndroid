@@ -181,7 +181,8 @@
                 android:layout_margin="@dimen/dp_4"
                 attrs:mIcon="@drawable/ic_iv_score"
                 attrs:mRight="true"
-                attrs:mTitle="我的积分" />
+                attrs:mTitle="我的积分"
+                binding:onClickCommand="@{viewModel.btnScoreClickCommand}"/>
         </com.lihang.ShadowLayout>
 
         <com.lihang.ShadowLayout

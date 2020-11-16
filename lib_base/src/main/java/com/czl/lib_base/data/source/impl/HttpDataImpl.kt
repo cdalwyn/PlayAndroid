@@ -96,4 +96,12 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getUserShareData(page)
     }
 
+    override fun getUserScoreDetail(page: String): Observable<BaseBean<UserScoreDetailBean>> {
+        return apiService.getUserScoreDetail(page)
+    }
+
+    override fun getUserScore(): Observable<BaseBean<UserScoreBean>> {
+        return apiService.getUserScore()
+    }
+
 }

@@ -1,72 +1,77 @@
-package com.czl.lib_base.extension;
+package com.czl.lib_base.extension
 
-import android.annotation.SuppressLint;
-import android.net.ParseException;
-
-import androidx.annotation.Nullable;
-
-import com.blankj.utilcode.util.NetworkUtils;
-import com.czl.lib_base.base.BaseBean;
-import com.czl.lib_base.util.ToastHelper;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSyntaxException;
-
-import org.apache.http.conn.ConnectTimeoutException;
-import org.json.JSONException;
-
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-
-import io.reactivex.observers.DisposableObserver;
-import retrofit2.HttpException;
+import android.annotation.SuppressLint
+import android.net.ParseException
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
+import com.czl.lib_base.base.AppManager
+import com.czl.lib_base.base.BaseActivity
+import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.util.ToastHelper.showErrorToast
+import com.czl.lib_base.widget.LoginPopView
+import com.google.gson.JsonParseException
+import com.google.gson.JsonSyntaxException
+import com.lxj.xpopup.XPopup
+import io.reactivex.observers.DisposableObserver
+import org.apache.http.conn.ConnectTimeoutException
+import org.json.JSONException
+import retrofit2.HttpException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 /**
  * @author Alwyn
  * @Date 2020/10/10
  * @Description RxJava 处理Api异常
  */
-public abstract class ApiSubscriberHelper<T> extends DisposableObserver<T> {
+abstract class ApiSubscriberHelper<T> : DisposableObserver<T>() {
 
-    @Override
-    public void onNext(T t) {
-        if (t instanceof BaseBean && ((BaseBean) t).getErrorCode() != 0) {
-            ToastHelper.INSTANCE.showErrorToast(((BaseBean) t).getErrorMsg());
+    override fun onNext(t: T) {
+        if (t is BaseBean<*> && t.errorCode != 0) {
+            showErrorToast(t.errorMsg)
+            if (t.errorCode == -1001) {
+                LogUtils.e("当前用户未登录或者登录已失效")
+                val loginPopView = XPopup.Builder(AppManager.instance.currentActivity())
+                    .enableDrag(true)
+                    .moveUpToKeyboard(false)
+                    .autoOpenSoftInput(true)
+                    .isDestroyOnDismiss(true)
+                    .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
+                if (!loginPopView.isShow) {
+                    loginPopView.show()
+                }
+            }
         }
-        onResult(t);
+        onResult(t)
     }
 
-
-    @Override
-    public void onComplete() {
-    }
-
+    override fun onComplete() {}
     @SuppressLint("MissingPermission")
-    @Override
-    public void onError(Throwable throwable) {
-        if (!NetworkUtils.isConnected() || throwable instanceof ConnectTimeoutException) {
-            onFailed("连接失败，请检查网络后再试");
-        } else if (throwable instanceof RuntimeException) {
-            onFailed(throwable.getMessage());
-        } else if (throwable instanceof SocketTimeoutException) {
-            onFailed("连接超时，请重试");
-        } else if (throwable instanceof IllegalStateException) {
-            onFailed(throwable.getMessage());
-        } else if (throwable instanceof HttpException) {
-            onFailed("网络异常，请重试");
-        } else if (throwable instanceof JsonParseException
-                || throwable instanceof JSONException
-                || throwable instanceof JsonSyntaxException
-                || throwable instanceof ParseException
+    override fun onError(throwable: Throwable) {
+        if (!NetworkUtils.isConnected() || throwable is ConnectTimeoutException) {
+            onFailed("连接失败，请检查网络后再试")
+        } else if (throwable is RuntimeException) {
+            onFailed(throwable.message)
+        } else if (throwable is SocketTimeoutException) {
+            onFailed("连接超时，请重试")
+        } else if (throwable is IllegalStateException) {
+            onFailed(throwable.message)
+        } else if (throwable is HttpException) {
+            onFailed("网络异常，请重试")
+        } else if (throwable is JsonParseException
+            || throwable is JSONException
+            || throwable is JsonSyntaxException
+            || throwable is ParseException
         ) {
-            onFailed("数据解析异常，请稍候再试");
-        } else if (throwable instanceof UnknownHostException) {
-            onFailed("连接失败，请检查网络后再试");
+            onFailed("数据解析异常，请稍候再试")
+        } else if (throwable is UnknownHostException) {
+            onFailed("连接失败，请检查网络后再试")
         } else {
-            onFailed(throwable.getMessage());
+            onFailed(throwable.message)
         }
     }
 
-    protected abstract void onResult(T t);
-
-    protected abstract void onFailed(@Nullable String msg);
+    protected abstract fun onResult(t: T)
+    protected abstract fun onFailed(msg: String?)
 }

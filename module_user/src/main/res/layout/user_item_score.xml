@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.czl.module_user.viewmodel.ScoreItemVm" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@{viewModel.entity.reason+` 积分+`+viewModel.entity.coinCount}"
+                tools:text="签到积分10+16" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_12"
+                android:text="@{viewModel.entity.desc}"
+                tools:text="2020-11-16 00：00：00" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:padding="@dimen/dp_10"
+            android:gravity="center"
+            android:textColor="@color/md_red_400"
+            android:text="@{`+`+viewModel.entity.coinCount}"
+            tools:text="+36" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

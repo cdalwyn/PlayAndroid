@@ -33,7 +33,7 @@ class ResponseInterceptor : Interceptor {
             val mediaType = responseBody.contentType()
             when (response.code()) {
                 503, 504, 500, 404, 403 -> {
-                   ToastHelper.showErrorToast("服务器出粗，请稍后再试")
+                   ToastHelper.showErrorToast("服务器出错，请稍后再试")
                 }
                 200 -> {
                     val source = responseBody.source()
@@ -51,8 +51,8 @@ class ResponseInterceptor : Interceptor {
 //                        LogUtils.i("Interceptor Response=" + baseBean.toString() + ",code=" + baseBean.errorCode)
                         when (baseBean.errorCode) {
                             -1001 -> {
-                                // 请先登录
-                                LiveBusCenter.postTokenExpiredEvent(baseBean.errorMsg)
+                                // 请先登录 ApiSubscriberHelper 在RxJava网络业务层处理
+                                // LiveBusCenter.postTokenExpiredEvent(baseBean.errorMsg)
                             }
                         }
                         val newRespBody = ResponseBody.create(mediaType, bodyString)

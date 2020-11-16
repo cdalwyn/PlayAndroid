@@ -102,6 +102,14 @@ class DataRepository constructor(
         return mHttpDataSource.getUserShareData(page)
     }
 
+    override fun getUserScoreDetail(page: String): Observable<BaseBean<UserScoreDetailBean>> {
+        return mHttpDataSource.getUserScoreDetail(page)
+    }
+
+    override fun getUserScore(): Observable<BaseBean<UserScoreBean>> {
+        return mHttpDataSource.getUserScore()
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

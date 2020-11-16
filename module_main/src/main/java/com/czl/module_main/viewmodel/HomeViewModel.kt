@@ -42,7 +42,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
-        val loadCompleteEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val loadCompleteEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
@@ -185,7 +185,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                             }
                             // 加载更多
                             if (currentProjectPage != 0) {
-                                uc.loadCompleteEvent.call()
+                                uc.loadCompleteEvent.postValue(it.over)
                             }
                             for (data in it.datas) {
                                 observableProjects.add(
@@ -200,14 +200,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     } else {
                         if (currentProjectPage > 0) currentProjectPage -= 1
                         uc.refreshStateEvent.postValue(2)
-                        uc.loadCompleteEvent.call()
+                        uc.loadCompleteEvent.postValue(false)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     if (currentProjectPage > 0) currentProjectPage -= 1
                     uc.refreshStateEvent.postValue(2)
-                    uc.loadCompleteEvent.call()
+                    uc.loadCompleteEvent.postValue(false)
                     showErrorToast(msg)
                 }
             })
@@ -269,7 +269,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                                 return
                             }
                             if (currentArticlePage != 0) {
-                                uc.loadCompleteEvent.call()
+                                uc.loadCompleteEvent.postValue(it.over)
                             }
                             for (data in it.datas) {
                                 observableArticles.add(
@@ -284,14 +284,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     } else {
                         if (currentArticlePage > 0) currentArticlePage -= 1
                         uc.refreshStateEvent.postValue(2)
-                        uc.loadCompleteEvent.call()
+                        uc.loadCompleteEvent.postValue(false)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     if (currentArticlePage > 0) currentArticlePage -= 1
                     uc.refreshStateEvent.postValue(2)
-                    uc.loadCompleteEvent.call()
+                    uc.loadCompleteEvent.postValue(false)
                     showErrorToast(msg)
                 }
             })

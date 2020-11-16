@@ -38,7 +38,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
 
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val finishLoadEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val finishLoadEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
@@ -104,7 +104,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
                 override fun onResult(t: BaseBean<SearchDataBean>) {
-                    uc.finishLoadEvent.call()
+                    uc.finishLoadEvent.postValue(t.data?.over)
                     if (0 == t.errorCode) {
                         t.data?.let {
                             if (page == 0) {
@@ -120,7 +120,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.finishLoadEvent.call()
+                    uc.finishLoadEvent.postValue(false)
                     showErrorToast(msg)
                     if (currentPage > 0) currentPage -= 1
                 }

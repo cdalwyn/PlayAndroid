@@ -62,12 +62,12 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         viewModel.uc.searchCancelEvent.observe(this, Observer {
             binding.searchBar.closeSearch()
         })
-        viewModel.uc.finishLoadEvent.observe(this, Observer {
+        viewModel.uc.finishLoadEvent.observe(this, Observer { over ->
             Handler(Looper.getMainLooper())
                 .postDelayed({ rySkeletonScreen.hide() }, 300)
             binding.smartCommon.apply {
                 finishRefresh(300)
-                finishLoadMore()
+                if (over) finishLoadMoreWithNoMoreData() else finishLoadMore()
             }
         })
         viewModel.uc.moveTopEvent.observe(this, Observer {

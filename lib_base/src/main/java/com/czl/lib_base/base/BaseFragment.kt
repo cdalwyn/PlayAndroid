@@ -125,7 +125,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     override fun onSupportVisible() {
         super.onSupportVisible()
-        if (useBaseLayout()) {
+        if (isImmersionBarEnabled()) {
             ImmersionBar.with(this).statusBarDarkFont(true).init()
         }
     }
@@ -342,7 +342,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun initViewObservable() {}
 
     open fun isImmersionBarEnabled(): Boolean {
-        return false
+        return useBaseLayout()
     }
 //    open fun <T : ViewModel?> createViewModel(
 //        fragment: Fragment?,

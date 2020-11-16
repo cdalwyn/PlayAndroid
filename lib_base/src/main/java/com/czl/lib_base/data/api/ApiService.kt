@@ -111,4 +111,7 @@ interface ApiService {
 
     @GET("user/lg/private_articles/{page}/json")
     fun getUserShareData(@Path("page")page:String):Observable<BaseBean<UserShareBean>>
+
+    @GET("lg/coin/list/{page}/json")
+    fun getUserScoreDetail(@Path("page")page: String):Observable<BaseBean<UserScoreDetailBean>>
 }
