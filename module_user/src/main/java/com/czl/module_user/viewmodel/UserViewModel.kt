@@ -65,6 +65,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_SCORE)
     })
 
+
     fun getUserShareData() {
         model.getUserShareData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))

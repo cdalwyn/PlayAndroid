@@ -43,12 +43,18 @@
                     app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="48dp"
                     android:gravity="center"
+                    android:layout_weight="1"
                     android:text="我的积分"
                     android:textColor="@color/white" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_10"
+                    app:srcCompat="@drawable/ic_rank"
+                    binding:onClickCommand="@{viewModel.onRankClickCommand}"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
@@ -75,14 +81,15 @@
             binding:onRefreshCommand="@{viewModel.onRefreshCommand}">
 
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/ry_common"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                binding:adapter="@{adapter}"
-                binding:itemBinding="@{viewModel.itemBinding}"
-                binding:items="@{viewModel.scoreList}" />
+                app:shimmer_demo_child_count="10"
+                app:shimmer_demo_layout="@layout/user_item_score_skeleton"
+                app:shimmer_demo_layout_manager_type="linear_vertical"
+                app:shimmer_demo_angle="20"
+                />
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 

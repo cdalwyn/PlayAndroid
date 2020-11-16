@@ -36,28 +36,34 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
 
     class UiChangeEvent {
         val loadCompleteEvent = SingleLiveEvent<Boolean>()
-        val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
-        val getTotalScoreEvent:SingleLiveEvent<Int> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val getTotalScoreEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val loadDataFinishEvent: SingleLiveEvent<List<UserScoreDetailBean.Data>> = SingleLiveEvent()
     }
 
-    val itemBinding: ItemBinding<ScoreItemVm> =
-        ItemBinding.of(BR.viewModel, R.layout.user_item_score)
-
-    val scoreList: ObservableList<ScoreItemVm> = ObservableArrayList()
+//    val itemBinding: ItemBinding<ScoreItemVm> =
+//        ItemBinding.of(BR.viewModel, R.layout.user_item_score)
+//
+//    val scoreList: ObservableList<ScoreItemVm> = ObservableArrayList()
 
     var currentPage = 1
-    val tvTotalScore:ObservableField<String> = ObservableField("0")
+    val tvTotalScore: ObservableField<String> = ObservableField("0")
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         currentPage = 1
         getTotalScore()
     })
 
-    val fabOnClickListener:View.OnClickListener = View.OnClickListener {
+    val fabOnClickListener: View.OnClickListener = View.OnClickListener {
         uc.moveTopEvent.call()
     }
 
-    private fun getTotalScore() {
+    val onRankClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        // todo 积分排行榜
+        showNormalToast("积分排行榜")
+    })
+
+    fun getTotalScore() {
         model.getUserScore()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserScoreBean>>() {
@@ -68,7 +74,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
                             uc.getTotalScoreEvent.postValue(it.coinCount)
                             getScoreDetails()
                         }
-                    }else{
+                    } else {
                         uc.loadCompleteEvent.postValue(false)
                     }
                 }
@@ -94,12 +100,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
                     uc.loadCompleteEvent.postValue(t.data?.over)
                     if (t.errorCode == 0) {
                         t.data?.let {
-                            if (currentPage == 1) {
-                                scoreList.clear()
-                            }
-                            for (data in it.datas) {
-                                scoreList.add(ScoreItemVm(this@UserScoreVm, data))
-                            }
+                            uc.loadDataFinishEvent.postValue(it.datas)
                         }
                     } else {
                         if (currentPage > 1) currentPage -= 1

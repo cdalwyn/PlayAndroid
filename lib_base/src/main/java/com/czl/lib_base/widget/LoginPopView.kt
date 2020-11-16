@@ -113,9 +113,7 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
                         activity.viewModel.dismissLoading()
                         activity.showErrorToast(msg)
                     }
-
                 })
-
         }
     })
 
@@ -135,14 +133,5 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
         dataBinding?.unbind()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        ImmersionBar.with(activity).statusBarDarkFont(false).init()
-    }
-
-    override fun onDetachedFromWindow() {
-        ImmersionBar.with(activity).statusBarDarkFont(true).init()
-        super.onDetachedFromWindow()
-    }
 
 }

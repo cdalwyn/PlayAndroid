@@ -104,7 +104,7 @@ ext {
             // 骨架屏
             'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
             'shimmerlayout'                        : 'io.supercharge:shimmerlayout:2.1.0',
-//            'shimmer-recyclerView'                        : 'com.github.sharish:ShimmerRecyclerView:v1.3',
+            'shimmer-recyclerView'                 : 'com.github.sharish:ShimmerRecyclerView:v1.3',
             'litepal'                              : 'org.litepal.guolindev:core:3.2.2',
             'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
             'animation'                            : 'com.daimajia.androidanimations:library:2.4@aar',

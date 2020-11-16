@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.czl.module_user.viewmodel.ScoreItemVm" />
+            name="data"
+            type="com.czl.lib_base.data.bean.UserScoreDetailBean.Data" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -25,14 +25,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="@{viewModel.entity.reason+` 积分+`+viewModel.entity.coinCount}"
+                android:text="@{data.reason+` 积分+`+data.coinCount}"
                 tools:text="签到积分10+16" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_12"
-                android:text="@{viewModel.entity.desc}"
+                android:text="@{data.desc}"
                 tools:text="2020-11-16 00：00：00" />
         </LinearLayout>
 
@@ -42,7 +42,7 @@
             android:padding="@dimen/dp_10"
             android:gravity="center"
             android:textColor="@color/md_red_400"
-            android:text="@{`+`+viewModel.entity.coinCount}"
+            android:text="@{`+`+data.coinCount}"
             tools:text="+36" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
