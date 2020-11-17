@@ -1,7 +1,5 @@
 package com.czl.module_project.ui.fragment
 
-import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseBean
@@ -10,14 +8,12 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectSortBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.lib_base.util.ToastHelper
 import com.czl.module_project.BR
 import com.czl.module_project.R
 import com.czl.module_project.databinding.ProjectFragmentProjectBinding
 import com.czl.module_project.viewmodel.ProjectViewModel
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.function.Consumer
+import com.gyf.immersionbar.ImmersionBar
 
 
 @Route(path = AppConstants.Router.Project.F_PROJECT)

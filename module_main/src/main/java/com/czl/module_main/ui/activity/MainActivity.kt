@@ -13,6 +13,7 @@ import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
 import com.czl.module_main.viewmodel.MainViewModel
+import com.gyf.immersionbar.ImmersionBar
 import me.yokeyword.fragmentation.SupportFragment
 
 @Route(path = AppConstants.Router.Main.A_MAIN)
@@ -31,19 +32,12 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
         return false
     }
 
+
     override fun initViewObservable() {
-        viewModel.uc.tabChangeLiveEvent.observe(this, Observer {
+        viewModel.uc.tabChangeLiveEvent.observe(this, {
             binding.viewPager2.setCurrentItem(it,false)
-//            viewModel.tvTitle.set(
-//                when (it) {
-//                    0 -> getString(R.string.main_tab_home)
-//                    1 -> getString(R.string.main_tab_square)
-//                    2 -> getString(R.string.main_tab_project)
-//                    else -> getString(R.string.main_tab_me)
-//                }
-//            )
         })
-        viewModel.uc.pageChangeLiveEvent.observe(this, Observer {
+        viewModel.uc.pageChangeLiveEvent.observe(this, {
             binding.bottomBar.selectTab(it)
         })
     }

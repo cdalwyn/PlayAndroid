@@ -1,5 +1,6 @@
 package com.czl.module_user.ui.fragment
 
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
@@ -23,7 +24,6 @@ import org.koin.core.component.KoinApiExtension
  * @Date 2020/10/19
  * @Description
  */
-@KoinApiExtension
 @Route(path = AppConstants.Router.User.F_USER)
 class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
 
@@ -67,7 +67,7 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
             viewModel.getUserShareData()
         }
         viewModel.uc.showLoginPopEvent.observe(this, {
-            (activity as BaseActivity<*,*>).showLoginPop()
+            (activity as BaseActivity<*, *>).showLoginPop()
         })
     }
 }

@@ -7,34 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
-import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.event.LiveBusCenter
-import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.LoginPopView
-import com.jeremyliao.liveeventbus.LiveEventBus
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
-import com.lxj.xpopup.core.BasePopupView
-import es.dmoral.toasty.Toasty
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.core.component.KoinApiExtension
 import java.lang.reflect.ParameterizedType
 import java.util.concurrent.TimeUnit
 
@@ -53,13 +42,14 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     val dataRepository: DataRepository by inject()
 
-    @KoinApiExtension
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //页面接受的参数方法
         initParam()
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding(savedInstanceState)
+        if (isImmersionBarEnabled())
+            initStatusBar()
         //私有的ViewModel与View的契约事件回调逻辑
         registerUIChangeLiveDataCallBack()
         //页面数据初始化方法
@@ -68,6 +58,14 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         initViewObservable()
         //注册RxBus 消息事件分发使用LiveEventBus
 //        viewModel.registerRxBus();
+    }
+
+    open fun initStatusBar() {
+        ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
+    }
+
+    open fun isImmersionBarEnabled(): Boolean {
+        return true
     }
 
     override fun onDestroy() {
@@ -113,6 +111,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         } else {
             binding = DataBindingUtil.setContentView(this, initContentView())
         }
+
         viewModelId = initVariableId()
         viewModel = initViewModel()
         //关联ViewModel
@@ -127,6 +126,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 //            onDataReload()
 //        }
     }
+
 
     //刷新布局
     fun refreshLayout() {
@@ -274,6 +274,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     protected open fun useBaseLayout(): Boolean {
         return true
     }
+
 
     /**
      * 添加根内容布局id（目前在xml内加了标题栏）

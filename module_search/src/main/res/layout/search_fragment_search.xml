@@ -26,8 +26,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
             android:background="@color/trans"
-            android:padding="@dimen/dp_6"
             app:elevation="0dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat

@@ -113,13 +113,14 @@ open class MyApplication : Application() {
                 savedInstanceState: Bundle?
             ) {
                 AppManager.instance.addActivity(activity)
-                if ("leakcanary.internal.activity.LeakActivity" == activity.javaClass.name) {
-                    return
-                }
-                ImmersionBar.with(activity).statusBarDarkFont(true).init()
+//                if ("leakcanary.internal.activity.LeakActivity" == activity.javaClass.name) {
+//                    return
+//                }
             }
 
-            override fun onActivityStarted(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+            }
+
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}

@@ -41,10 +41,6 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         return false
     }
 
-    override fun onSupportVisible() {
-        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
-    }
-
     override fun initData() {
         val keyword = arguments?.getString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD)
         keyword?.let {

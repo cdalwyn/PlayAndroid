@@ -73,7 +73,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             } else {
                 binding.root
             }
-
         }
     }
 
@@ -102,6 +101,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         if (enableLazy()) {
+
             //私有的ViewModel与View的契约事件回调逻辑
             registerUIChangeLiveDataCallBack()
             //页面数据初始化方法
@@ -126,8 +126,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onSupportVisible() {
         super.onSupportVisible()
         if (isImmersionBarEnabled()) {
-            ImmersionBar.with(this).statusBarDarkFont(true).init()
+            initStatusBar()
         }
+    }
+
+    open fun initStatusBar() {
+        ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
     }
 
     /**

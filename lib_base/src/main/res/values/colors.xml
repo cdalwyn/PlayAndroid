@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D32F2F</color>
+    <color name="colorPrimary">#EF5350</color>
     <color name="colorPrimaryDark">#1382DB</color>
     <color name="colorAccent">#2196F3</color>
     <!--Toast bg color-->
@@ -20,7 +20,7 @@
     <color name="blacks_tr">#77000000</color>
     <color name="md_yellow_color">#FF5000</color>
 
-    <color name="md_theme_red">#D32F2F</color>
+    <color name="md_theme_red">#EF5350</color>
     <color name="md_red_500">#B23031</color>
     <color name="md_red_600">#E53935</color>
     <color name="md_red_400">#EF5350</color>

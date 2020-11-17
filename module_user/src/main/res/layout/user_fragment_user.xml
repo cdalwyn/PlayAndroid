@@ -25,36 +25,25 @@
         >
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieAnimationView"
-            android:layout_width="0dp"
-            android:layout_height="140dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="the-waters-rise.json"
-            app:lottie_loop="true" />
-
-        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/iv_avatar"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="60dp"
-            app:layout_constraintBottom_toBottomOf="@+id/lottieAnimationView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ll_score"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/dp_20"
             app:lottie_autoPlay="true"
             app:lottie_fileName="android-logo.json"
             app:lottie_loop="true" />
+
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{TextUtils.isEmpty(userData.publicName)?`未登录`:userData.publicName}"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
+            app:layout_constraintStart_toEndOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar"
             binding:onClickCommand="@{viewModel.userNameOnClickCommand}"
             tools:text="cdalwyn" />
 
@@ -70,7 +59,7 @@
             app:layout_constraintEnd_toStartOf="@id/ll_collect"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
             binding:onClickCommand="@{viewModel.btnScoreClickCommand}">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -83,8 +72,8 @@
                     android:id="@+id/tv_score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:text="@{viewModel.tvScore}"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
                     tools:text="600" />
 
@@ -154,8 +143,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
                     android:text="@{viewModel.tvShare}"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
                     tools:text="600" />
 
@@ -183,7 +172,7 @@
                 attrs:mIcon="@drawable/ic_iv_score"
                 attrs:mRight="true"
                 attrs:mTitle="我的积分"
-                binding:onClickCommand="@{viewModel.btnScoreClickCommand}"/>
+                binding:onClickCommand="@{viewModel.btnScoreClickCommand}" />
         </com.lihang.ShadowLayout>
 
         <com.lihang.ShadowLayout
@@ -232,7 +221,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_share"
-            binding:onClickCommand="@{viewModel.logoutClickCommand}"
-            binding:isVisible="@{!TextUtils.isEmpty(userData.publicName)}"/>
+            binding:isVisible="@{!TextUtils.isEmpty(userData.publicName)}"
+            binding:onClickCommand="@{viewModel.logoutClickCommand}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -22,7 +22,6 @@ class LoginFragment : BaseFragment<LoginFragmentLoginBinding, LoginViewModel>() 
     }
 
     override fun onSupportVisible() {
-        super.onSupportVisible()
         ImmersionBar.with(this).statusBarDarkFont(false).init()
     }
 

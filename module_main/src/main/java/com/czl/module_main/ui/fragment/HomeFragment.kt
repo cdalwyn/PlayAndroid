@@ -37,7 +37,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var bannerSkeleton: SkeletonScreen
 
     override fun onSupportVisible() {
-        super.onSupportVisible()
         ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
     }
 
@@ -177,15 +176,14 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             }
         })
         // 接收用户注销事件
-        LiveBusCenter.observeLogoutEvent(this){
+        LiveBusCenter.observeLogoutEvent(this) {
             mHomeDrawerPop.binding?.user = null
         }
         // 接收用户登录成功事件
-        LiveBusCenter.observeLoginSuccessEvent(this){
+        LiveBusCenter.observeLoginSuccessEvent(this) {
             mHomeDrawerPop.binding?.user = viewModel.model.getUserData()
         }
     }
-
 
 
     private fun hideSkeletonByTabIndex() {

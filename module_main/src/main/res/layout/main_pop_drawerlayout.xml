@@ -42,6 +42,7 @@
                 android:layout_margin="@dimen/dp_10"
                 android:textSize="@dimen/sp_16"
                 android:gravity="center"
+                android:textColor="@color/black"
                 android:ellipsize="end"
                 binding:text="@{TextUtils.isEmpty(user.publicName)?`未登录`:user.publicName}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
