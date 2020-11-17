@@ -104,4 +104,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getUserScore()
     }
 
+    override fun getScoreRank(page: String): Observable<BaseBean<UserRankBean>> {
+        return apiService.getScoreRank(page)
+    }
+
 }

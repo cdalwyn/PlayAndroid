@@ -47,8 +47,8 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         binding.ryCommon.showShimmerAdapter()
         // 接收刷新完成事件
         viewModel.uc.loadCompleteEvent.observe(this, { over ->
-            binding.ryCommon.hideShimmerAdapter()
             if (viewModel.currentPage == 1) {
+                binding.ryCommon.hideShimmerAdapter()
                 binding.smartCommon.finishRefresh()
             }
             if (over) {

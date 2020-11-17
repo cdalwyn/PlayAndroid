@@ -1,6 +1,7 @@
 package com.czl.module_user.viewmodel
 
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
@@ -12,6 +13,7 @@ import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectArticle
 import com.czl.lib_base.data.bean.UserScoreBean
 import com.czl.lib_base.data.bean.UserScoreDetailBean
@@ -48,6 +50,8 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
 
     var currentPage = 1
     val tvTotalScore: ObservableField<String> = ObservableField("0")
+    var userScore: String = ""
+    var userScoreRank = ""
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         currentPage = 1
@@ -59,8 +63,10 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     }
 
     val onRankClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        // todo 积分排行榜
-        showNormalToast("积分排行榜")
+        startFragment(AppConstants.Router.User.F_USER_RANK, Bundle().apply {
+            putString(AppConstants.BundleKey.USER_SCORE, userScore)
+            putString(AppConstants.BundleKey.USER_RANK, userScoreRank)
+        })
     })
 
     fun getTotalScore() {
@@ -71,6 +77,8 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
                     if (t.errorCode == 0) {
                         t.data?.let {
 //                            tvTotalScore.set(it.coinCount.toString())
+                            userScore = it.coinCount.toString()
+                            userScoreRank = it.rank.toString()
                             uc.getTotalScoreEvent.postValue(it.coinCount)
                             getScoreDetails()
                         }

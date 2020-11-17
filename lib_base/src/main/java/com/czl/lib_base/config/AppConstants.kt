@@ -37,6 +37,7 @@ interface AppConstants {
             const val F_FIRST = "/user/FirstFragment"
             const val F_USER = "/user/UserFragment"
             const val F_USER_SCORE = "/user/UserScoreFragment"
+            const val F_USER_RANK = "/user/UserRankFragment"
         }
 
         object Square {
@@ -56,5 +57,7 @@ interface AppConstants {
         const val MAIN2FIRST = "main2first"
         const val WEB_URL = "web_url"
         const val MAIN_SEARCH_KEYWORD = "main_search_keyword"
+        const val USER_SCORE = "user_score"
+        const val USER_RANK = "user_rank"
     }
 }

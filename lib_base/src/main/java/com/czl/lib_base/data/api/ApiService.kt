@@ -100,18 +100,35 @@ interface ApiService {
     @GET("project/tree/json")
     fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>>
 
+    /**
+     * 根据分类id获取项目列表
+     */
     @GET("project/list/{page}/json")
     fun getProjectByCid(
         @Path("page") page: String,
         @Query("cid") cid: String
     ): Observable<BaseBean<ProjectBean>>
 
+    /**
+     * 获取个人积分
+     */
     @GET("lg/coin/userinfo/json")
     fun getUserScore(): Observable<BaseBean<UserScoreBean>>
 
+    /**
+     * 获取个人分享
+     */
     @GET("user/lg/private_articles/{page}/json")
     fun getUserShareData(@Path("page")page:String):Observable<BaseBean<UserShareBean>>
 
+    /**
+     * 获取个人积分详情
+     */
     @GET("lg/coin/list/{page}/json")
     fun getUserScoreDetail(@Path("page")page: String):Observable<BaseBean<UserScoreDetailBean>>
+    /**
+     * 获取积分排行榜
+     */
+    @GET("coin/rank/{page}/json")
+    fun getScoreRank(@Path("page")page: String):Observable<BaseBean<UserRankBean>>
 }

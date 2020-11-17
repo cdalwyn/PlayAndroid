@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.czl.lib_base.data.bean.UserRankBean.Data" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:padding="@dimen/dp_10">
+
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginStart="@dimen/dp_10"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="1" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@{data.username}"
+            android:textColor="@color/black"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="cdalwyn" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:textColor="@color/md_red_400"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="@{data.coinCount+``}"
+            tools:text="123456" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

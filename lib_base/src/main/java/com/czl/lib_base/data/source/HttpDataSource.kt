@@ -26,7 +26,8 @@ interface HttpDataSource {
     fun getProjectSort(): Observable<BaseBean<List<ProjectSortBean>>>
     fun getProjectByCid(page: String = "1", cid: String): Observable<BaseBean<ProjectBean>>
     fun getUserShareData(page: String = "1"): Observable<BaseBean<UserShareBean>>
-    fun getUserScoreDetail(page: String = "1"):Observable<BaseBean<UserScoreDetailBean>>
+    fun getUserScoreDetail(page: String = "1"): Observable<BaseBean<UserScoreDetailBean>>
     fun getUserScore(): Observable<BaseBean<UserScoreBean>>
+    fun getScoreRank(page: String = "1"): Observable<BaseBean<UserRankBean>>
 
 }
