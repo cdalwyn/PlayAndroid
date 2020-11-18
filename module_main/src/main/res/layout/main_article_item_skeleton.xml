@@ -13,13 +13,12 @@
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="80dp"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/dp_10"
+
         android:layout_marginBottom="@dimen/dp_18"
         android:background="@color/light_transparent" />
 
@@ -31,13 +30,11 @@
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="80dp"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_18"
         android:background="@color/light_transparent" />
 
@@ -49,13 +46,11 @@
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="80dp"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_18"
         android:background="@color/light_transparent" />
     <com.czl.lib_base.widget.SkeletonBlock
@@ -66,13 +61,11 @@
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="80dp"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_18"
         android:background="@color/light_transparent" />
     <com.czl.lib_base.widget.SkeletonBlock
@@ -83,13 +76,11 @@
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
         android:layout_width="80dp"
         android:layout_height="20dp"
-        android:layout_marginTop="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_18"
         android:background="@color/light_transparent" />
 

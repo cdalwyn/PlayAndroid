@@ -16,7 +16,11 @@ public class UIChangeLiveData extends SingleLiveEvent {
     public SingleLiveEvent<Map<String, Object>> startContainerActivityEvent;
     public SingleLiveEvent<Void> finishEvent;
     public SingleLiveEvent<Void> onBackPressedEvent;
+    public SingleLiveEvent<Void> scrollTopEvent;
 
+    public SingleLiveEvent<Void> getScrollTopEvent() {
+        return scrollTopEvent = createLiveData(scrollTopEvent);
+    }
     public SingleLiveEvent<String> getShowLoadingEvent() {
         return showLoadingEvent = createLiveData(showLoadingEvent);
     }

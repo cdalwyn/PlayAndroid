@@ -24,7 +24,7 @@ import kotlin.collections.HashMap
  * 所以子类继承构造指定为 application: MyApplication, model: DataRepository 泛型为<DataRepository>。
  */
 open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M) :
-    AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?>, KoinComponent {
+    AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?> {
 
     val uC: UIChangeLiveData = UIChangeLiveData()
 
@@ -53,9 +53,27 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     }
 
     // 子类重写
-    open fun setToolbarRightClick(){
+    open fun setToolbarRightClick() {
 
     }
+
+    val refreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        refreshCommand()
+    })
+    val loadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        loadMoreCommand()
+    })
+    val scrollToTopCommand: BindingCommand<Void> = BindingCommand(BindingAction { uC.scrollTopEvent.call() })
+
+    /**
+     * 通用recyclerview刷新
+     */
+    open fun refreshCommand() {}
+
+    /**
+     * 通用recyclerview加载更多
+     */
+    open fun loadMoreCommand() {}
 
     /**
      * 注入RxLifecycle生命周期
@@ -93,7 +111,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         uC.startActivityEvent.postValue(params)
     }
 
-    fun startFragment(routh:String, bundle: Bundle? = null) {
+    fun startFragment(routh: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
         params[ParameterField.ROUTE_PATH] = routh
         if (bundle != null) {

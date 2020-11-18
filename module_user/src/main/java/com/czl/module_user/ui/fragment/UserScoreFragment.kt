@@ -35,6 +35,10 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         return false
     }
 
+    override fun enableLazy(): Boolean {
+        return false
+    }
+
     override fun onSupportVisible() {
         ImmersionBar.with(this).statusBarDarkFont(false).init()
     }

@@ -1,8 +1,5 @@
 package com.czl.module_user.viewmodel
 
-import android.graphics.BitmapFactory
-import android.os.Bundle
-import android.view.View
 import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
@@ -12,13 +9,11 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.CollectArticle
+import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.data.bean.UserShareBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.util.QRCodeUtil
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.module_user.R
 
 /**
  * @author Alwyn
@@ -65,6 +60,10 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_SCORE)
     })
 
+    val btnCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)
+    })
+
 
     fun getUserShareData() {
         model.getUserShareData()
@@ -89,8 +88,8 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     fun getUserCollectData() {
         model.getCollectArticle()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticle>>() {
-                override fun onResult(t: BaseBean<CollectArticle>) {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticleBean>>() {
+                override fun onResult(t: BaseBean<CollectArticleBean>) {
                     if (t.errorCode == 0) {
                         t.data?.let { data ->
                             tvCollect.set(data.datas.size.toString())

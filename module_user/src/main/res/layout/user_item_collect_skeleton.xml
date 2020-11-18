@@ -8,20 +8,18 @@
 
 
     <com.czl.lib_base.widget.SkeletonBlock
-        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         android:layout_marginTop="@dimen/dp_20"
-        android:layout_width="160dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dp_24"
         android:background="@color/light_transparent" />
 
     <com.czl.lib_base.widget.SkeletonBlock
-        android:layout_width="match_parent"
+        android:layout_width="160dp"
         android:layout_height="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp_20"
+        android:layout_marginEnd="@dimen/dp_20"
         android:background="@color/light_transparent"  />
-
-
-
 
 </androidx.appcompat.widget.LinearLayoutCompat>

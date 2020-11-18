@@ -43,7 +43,7 @@ class DataRepository constructor(
         return mHttpDataSource.getMainArticle(page)
     }
 
-    override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticle>> {
+    override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticleBean>> {
         return mHttpDataSource.getCollectArticle(page)
     }
 
@@ -112,6 +112,10 @@ class DataRepository constructor(
 
     override fun getScoreRank(page: String): Observable<BaseBean<UserRankBean>> {
         return mHttpDataSource.getScoreRank(page)
+    }
+
+    override fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>> {
+        return mHttpDataSource.getUserCollectWebsite()
     }
 
     override fun getLocalData(): String {

@@ -171,7 +171,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                     if (t.errorCode == 0) {
                         uc.refreshStateEvent.postValue(0)
                         t.data?.let {
-                            if (currentProjectPage == 0 && observableProjects.isNotEmpty()) {
+                            if (currentProjectPage == 0) {
                                 observableProjects.clear()
                                 for (data in it.datas) {
                                     observableProjects.add(
@@ -256,7 +256,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                         uc.refreshStateEvent.postValue(0)
                         t.data?.let {
                             // 刷新
-                            if (currentArticlePage == 0 && observableArticles.isNotEmpty()) {
+                            if (currentArticlePage == 0) {
                                 observableArticles.clear()
                                 for (data in it.datas) {
                                     observableArticles.add(

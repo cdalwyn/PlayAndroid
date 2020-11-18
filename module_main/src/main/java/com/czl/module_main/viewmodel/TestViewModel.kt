@@ -13,7 +13,7 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.data.bean.ArticleBean
-import com.czl.lib_base.data.bean.CollectArticle
+import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
@@ -115,8 +115,8 @@ class TestViewModel(application: MyApplication, model: DataRepository) :
         model.getCollectArticle()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .doOnSubscribe { showLoading() }
-            .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticle>>() {
-                override fun onResult(t: BaseBean<CollectArticle>) {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticleBean>>() {
+                override fun onResult(t: BaseBean<CollectArticleBean>) {
                     dismissLoading()
                     if (t.errorCode == 0) {
                         showNormalToast("已收藏数量=${t.data?.total}")

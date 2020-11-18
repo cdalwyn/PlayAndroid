@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.czl.lib_base.base.BaseViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -13,14 +16,27 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/smart_common"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            binding:onRefreshCommand="@{viewModel.refreshCommand}"
+            binding:onLoadMoreCommand="@{viewModel.loadMoreCommand}">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/ry_common"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:shimmer_demo_child_count="10"/>
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/dp_20"
+            android:src="@drawable/ic_top"
+            app:backgroundTint="@color/white"
+            app:elevation="@dimen/dp_6"
+            app:fabSize="mini"
+            app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+            app:pressedTranslationZ="@dimen/dp_10" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

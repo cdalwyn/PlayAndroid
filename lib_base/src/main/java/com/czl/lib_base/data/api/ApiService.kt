@@ -29,7 +29,7 @@ interface ApiService {
      * 我的收藏列表
      */
     @GET("lg/collect/list/{page}/json")
-    fun getCollectArticle(@Path("page") page: String): Observable<BaseBean<CollectArticle>>
+    fun getCollectArticle(@Path("page") page: String): Observable<BaseBean<CollectArticleBean>>
 
     /**
      * 首页轮播图
@@ -131,4 +131,7 @@ interface ApiService {
      */
     @GET("coin/rank/{page}/json")
     fun getScoreRank(@Path("page")page: String):Observable<BaseBean<UserRankBean>>
+
+    @GET("lg/collect/usertools/json")
+    fun getUserCollectWebsite():Observable<BaseBean<List<CollectWebsiteBean>>>
 }

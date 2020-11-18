@@ -1,11 +1,8 @@
 package com.czl.module_user.viewmodel
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableList
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
@@ -14,17 +11,10 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.CollectArticle
 import com.czl.lib_base.data.bean.UserScoreBean
 import com.czl.lib_base.data.bean.UserScoreDetailBean
-import com.czl.lib_base.data.bean.UserShareBean
-import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.util.QRCodeUtil
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.module_user.BR
-import com.czl.module_user.R
-import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 /**
  * @author Alwyn

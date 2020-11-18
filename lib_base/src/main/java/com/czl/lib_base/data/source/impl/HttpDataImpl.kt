@@ -37,7 +37,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getMainArticle(page)
     }
 
-    override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticle>> {
+    override fun getCollectArticle(page: String): Observable<BaseBean<CollectArticleBean>> {
         return apiService.getCollectArticle(page)
     }
 
@@ -106,6 +106,10 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 
     override fun getScoreRank(page: String): Observable<BaseBean<UserRankBean>> {
         return apiService.getScoreRank(page)
+    }
+
+    override fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>> {
+        return apiService.getUserCollectWebsite()
     }
 
 }

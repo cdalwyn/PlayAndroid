@@ -190,7 +190,8 @@
                 android:layout_margin="@dimen/dp_4"
                 attrs:mIcon="@drawable/ic_favorites"
                 attrs:mRight="true"
-                attrs:mTitle="我的收藏" />
+                attrs:mTitle="我的收藏"
+                binding:onClickCommand="@{viewModel.btnCollectClickCommand}"/>
         </com.lihang.ShadowLayout>
 
         <com.lihang.ShadowLayout

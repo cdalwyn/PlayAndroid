@@ -127,7 +127,7 @@ data class ArticleBean(
     }
 }
 
-data class CollectArticle(
+data class CollectArticleBean(
     @SerializedName("curPage")
     val curPage: Int,
     @SerializedName("datas")
@@ -673,5 +673,23 @@ data class UserRankBean(
         val username: String
     )
 }
+data class CollectWebsiteBean(
+    @SerializedName("desc")
+    val desc: String,
+    @SerializedName("icon")
+    val icon: String,
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("link")
+    val link: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("order")
+    val order: Int,
+    @SerializedName("userId")
+    val userId: Int,
+    @SerializedName("visible")
+    val visible: Int
+)
 
 
