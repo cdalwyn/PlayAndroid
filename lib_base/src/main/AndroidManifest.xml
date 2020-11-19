@@ -10,6 +10,7 @@
 
     <application>
         <activity android:name=".mvvm.ui.ContainerFmActivity"/>
+        <activity android:name=".crash.DefaultErrorActivity"/>
     </application>
 
 </manifest>

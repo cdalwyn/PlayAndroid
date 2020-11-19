@@ -21,6 +21,7 @@ class UserCollectAdapter :
         item: CollectArticleBean.Data
     ) {
         holder.dataBinding?.data = item
+
     }
     val diffConfig = object : DiffUtil.ItemCallback<CollectArticleBean.Data>() {
         override fun areItemsTheSame(

@@ -96,7 +96,8 @@
             app:layout_constraintEnd_toStartOf="@id/ll_share"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@id/ll_score"
-            app:layout_constraintTop_toTopOf="@+id/ll_score">
+            app:layout_constraintTop_toTopOf="@+id/ll_score"
+            binding:onClickCommand="@{viewModel.btnCollectClickCommand}">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="80dp"

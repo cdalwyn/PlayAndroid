@@ -40,7 +40,11 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
 
     override fun initData() {
         binding.smartCommon.autoRefresh()
+    }
+
+    override fun initViewObservable() {
         val mAdapter = UserCollectAdapter()
+        mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
@@ -48,6 +52,9 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             showShimmerAdapter()
         }
+        viewModel.uC.getScrollTopEvent().observe(this, {
+            binding.ryCommon.smoothScrollToPosition(0)
+        })
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
             binding.ryCommon.hideShimmerAdapter()
             if (data == null) {
@@ -56,7 +63,6 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
                 return@observe
             }
             if (viewModel.currentPage == 0) {
-                mAdapter.setDiffCallback(mAdapter.diffConfig)
                 mAdapter.setDiffNewData(data.datas as MutableList<CollectArticleBean.Data>)
                 if (data.over) binding.smartCommon.finishRefreshWithNoMoreData()
                 else binding.smartCommon.finishRefresh(true)
@@ -65,12 +71,6 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
             if (data.over) binding.smartCommon.finishLoadMoreWithNoMoreData()
             else binding.smartCommon.finishLoadMore(true)
             mAdapter.addData(data.datas)
-        })
-    }
-
-    override fun initViewObservable() {
-        viewModel.uC.getScrollTopEvent().observe(this, {
-            binding.ryCommon.smoothScrollToPosition(0)
         })
     }
 }

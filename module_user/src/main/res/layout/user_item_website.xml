@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.guanaj.easyswipemenulibrary.State"/>
+        <variable
+            name="data"
+            type="com.czl.lib_base.data.bean.CollectWebsiteBean" />
+        <variable
+            name="menu"
+            type="com.czl.lib_base.widget.EasySwipeMenuLayout" />
+    </data>
+
+    <com.lihang.ShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:hl_cornerRadius="@dimen/dp_10"
+        app:hl_shadowLimit="@dimen/dp_6">
+
+        <com.czl.lib_base.widget.EasySwipeMenuLayout
+            android:id="@+id/menu_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentView="@id/cl_content"
+            app:rightMenuView="@id/ll_menu_right">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_10"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{data.name}"
+                    android:textColor="@color/black"
+                    app:layout_constraintEnd_toStartOf="@id/line"
+                    app:layout_constraintHorizontal_weight="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="这是标题" />
+
+                <TextView
+                    android:id="@+id/tv_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@{data.link}"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="@+id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    tools:text="具体案例" />
+
+                <TextView
+                    android:id="@+id/line"
+                    android:layout_width="0.5dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:background="@color/white_cc"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iv_collect"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_collect"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="@dimen/dp_32"
+                    android:padding="@dimen/dp_4"
+                    android:onClick="@{()->menu.handlerSwipeMenu(State.RIGHTOPEN)}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_sort"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_title"
+                    app:srcCompat="@drawable/ic_setting_more" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_menu_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/tv_menu_copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/md_grey_500"
+                    android:padding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:text="复制链接"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_menu_browser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/green_68"
+                    android:padding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:text="浏览器打开"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_menu_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/md_theme_red"
+                    android:padding="@dimen/dp_10"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_12"
+                    android:text="删除"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </com.czl.lib_base.widget.EasySwipeMenuLayout>
+
+    </com.lihang.ShadowLayout>
+</layout>
