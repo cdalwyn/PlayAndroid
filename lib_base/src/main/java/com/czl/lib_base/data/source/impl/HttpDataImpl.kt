@@ -61,6 +61,10 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.unCollectArticle(articleId)
     }
 
+    override fun unCollectArticle(id: Int, originId: Int): Observable<BaseBean<Any?>> {
+        return apiService.unCollectArticle(id,originId)
+    }
+
     override fun logout(): Observable<BaseBean<Any?>> {
         return apiService.logout()
     }

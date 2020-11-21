@@ -10,7 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme"
+        tools:targetApi="m">
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
         <meta-data
             android:name="design_height_in_dp"
             android:value="720" />

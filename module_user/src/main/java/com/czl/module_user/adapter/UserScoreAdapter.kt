@@ -21,7 +21,7 @@ class UserScoreAdapter :
         item: UserScoreDetailBean.Data
     ) {
         holder.dataBinding?.data = item
-
+        holder.dataBinding?.executePendingBindings()
     }
     val diffConfig = object : DiffUtil.ItemCallback<UserScoreDetailBean.Data>() {
         override fun areItemsTheSame(

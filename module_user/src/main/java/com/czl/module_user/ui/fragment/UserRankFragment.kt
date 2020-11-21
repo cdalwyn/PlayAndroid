@@ -55,23 +55,14 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
         }
 
         viewModel.uc.loadDataEvent.observe(this, { data ->
-            if (data == null) {
-                binding.ryCommon.hideShimmerAdapter()
-                if (viewModel.currentPage == 1) binding.smartCommon.finishRefresh(false)
-                else binding.smartCommon.finishLoadMore(false)
-                return@observe
-            }
-            if (viewModel.currentPage == 1) {
-                binding.ryCommon.hideShimmerAdapter()
-                binding.smartCommon.finishRefresh(true)
-                mAdapter.setDiffCallback(mAdapter.diffConfig)
-                mAdapter.setDiffNewData(data.datas as MutableList<UserRankBean.Data>)
-                if (data.over) binding.smartCommon.finishRefreshWithNoMoreData()
-                return@observe
-            }
-            mAdapter.addData(data.datas)
-            if (data.over) binding.smartCommon.finishLoadMoreWithNoMoreData()
-            else binding.smartCommon.finishLoadMore()
+            handleRecyclerviewData(
+                data == null, data?.datas as MutableList<*>?,
+                mAdapter,
+                binding.ryCommon,
+                binding.smartCommon,
+                viewModel.currentPage,
+                data!!.over, 1
+            )
         })
     }
 }

@@ -67,6 +67,10 @@ class DataRepository constructor(
         return mHttpDataSource.unCollectArticle(articleId)
     }
 
+    override fun unCollectArticle(id: Int, originId: Int): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.unCollectArticle(id,originId)
+    }
+
     override fun logout(): Observable<BaseBean<Any?>> {
         return mHttpDataSource.logout()
     }

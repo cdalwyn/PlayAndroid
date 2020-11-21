@@ -70,4 +70,10 @@ object LiveBusCenter {
     fun observeLoginSuccessEvent(owner: LifecycleOwner, func: (t: LoginSuccessEvent) -> Unit) {
         LiveEventBus.get(LoginSuccessEvent::class.java).observe(owner, Observer(func))
     }
+    fun postRefreshUserFmEvent(){
+        LiveEventBus.get(RefreshUserFmEvent::class.java).post(RefreshUserFmEvent(0))
+    }
+    fun observeRefreshUserFmEvent(owner: LifecycleOwner, func: (t: RefreshUserFmEvent) -> Unit) {
+        LiveEventBus.get(RefreshUserFmEvent::class.java).observe(owner, Observer(func))
+    }
 }

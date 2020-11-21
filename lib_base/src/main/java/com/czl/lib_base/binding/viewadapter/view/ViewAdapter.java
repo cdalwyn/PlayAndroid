@@ -50,7 +50,7 @@ public class ViewAdapter {
      * @param clickCommand 发起点击事件者
      * @param item 业务每个Item数据
      */
-    @BindingAdapter(value = {"onRvItemCommand", "rvItemBean"}, requireAll = false)
+    @BindingAdapter(value = {"onRvItemCommand", "rvItemBean"})
     public static void onClickCommand(View view, final BindingCommand clickCommand, final Object item) {
         RxView.clicks(view)
                 .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次

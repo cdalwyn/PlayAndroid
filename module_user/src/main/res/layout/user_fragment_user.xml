@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            app:hl_cornerRadius="@dimen/dp_10"
+            app:hl_cornerRadius="@dimen/dp_4"
             app:hl_shadowColor="@color/shadow_color"
             app:hl_shadowLimit="@dimen/dp_6"
             app:layout_constraintEnd_toStartOf="@id/ll_collect"
@@ -81,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="积分"
+                    android:textColor="@color/md_grey"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -90,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            app:hl_cornerRadius="@dimen/dp_10"
+            app:hl_cornerRadius="@dimen/dp_4"
             app:hl_shadowColor="@color/shadow_color"
             app:hl_shadowLimit="@dimen/dp_6"
             app:layout_constraintEnd_toStartOf="@id/ll_share"
@@ -117,6 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="收藏"
+                    android:textColor="@color/md_grey"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -126,13 +128,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10"
-            app:hl_cornerRadius="@dimen/dp_10"
+            app:hl_cornerRadius="@dimen/dp_4"
             app:hl_shadowColor="@color/shadow_color"
             app:hl_shadowLimit="@dimen/dp_6"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@id/ll_collect"
-            app:layout_constraintTop_toTopOf="@+id/ll_collect">
+            app:layout_constraintTop_toTopOf="@+id/ll_collect"
+            binding:onClickCommand="@{viewModel.btnShareClickCommand}">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -153,6 +156,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="分享"
+                    android:textColor="@color/md_grey"
                     android:textSize="@dimen/sp_12" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.lihang.ShadowLayout>
@@ -161,9 +165,12 @@
             android:id="@+id/item_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_10"
             app:hl_cornerRadius="@dimen/dp_10"
             app:hl_shadowColor="@color/shadow_color"
-            app:hl_shadowLimit="@dimen/dp_6"
+            app:hl_shadowLimit="@dimen/dp_4"
             app:layout_constraintTop_toBottomOf="@+id/ll_collect">
 
             <com.czl.lib_base.widget.CommonItemSettingView
@@ -180,9 +187,11 @@
             android:id="@+id/item_collect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
             app:hl_cornerRadius="@dimen/dp_10"
             app:hl_shadowColor="@color/shadow_color"
-            app:hl_shadowLimit="@dimen/dp_6"
+            app:hl_shadowLimit="@dimen/dp_4"
             app:layout_constraintTop_toBottomOf="@+id/item_score">
 
             <com.czl.lib_base.widget.CommonItemSettingView
@@ -199,18 +208,21 @@
             android:id="@+id/item_share"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginEnd="@dimen/dp_8"
             app:hl_cornerRadius="@dimen/dp_10"
             app:hl_shadowColor="@color/shadow_color"
-            app:hl_shadowLimit="@dimen/dp_6"
+            app:hl_shadowLimit="@dimen/dp_4"
             app:layout_constraintTop_toBottomOf="@+id/item_collect">
 
             <com.czl.lib_base.widget.CommonItemSettingView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_4"
-                attrs:mIcon="@drawable/ic_iv_share"
+                attrs:mIcon="@drawable/ic_share"
                 attrs:mRight="true"
-                attrs:mTitle="我的分享" />
+                attrs:mTitle="我的分享"
+                binding:onClickCommand="@{viewModel.btnShareClickCommand}"/>
         </com.lihang.ShadowLayout>
 
         <TextView

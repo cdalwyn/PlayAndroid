@@ -8,6 +8,7 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.HomeArticleBean
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
 import com.czl.module_main.R
@@ -50,6 +51,7 @@ class HomeArticleItemVm(homeViewModel: HomeViewModel) :
                     .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
                         override fun onResult(t: BaseBean<*>) {
                             if (t.errorCode == 0) {
+                                LiveBusCenter.postRefreshUserFmEvent()
                                 viewModel.showSuccessToast("收藏成功")
                                 data.collect = true
                                 ivCollect.set(R.drawable.ic_like_on)
@@ -68,6 +70,7 @@ class HomeArticleItemVm(homeViewModel: HomeViewModel) :
                     .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
                         override fun onResult(t: BaseBean<*>) {
                             if (t.errorCode == 0) {
+                                LiveBusCenter.postRefreshUserFmEvent()
                                 data.collect = false
                                 ivCollect.set(R.drawable.ic_like_off_gray)
                             } else {

@@ -66,8 +66,12 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
             viewModel.getUserCollectData()
             viewModel.getUserShareData()
         }
+        LiveBusCenter.observeRefreshUserFmEvent(this){
+            viewModel.getUserCollectData()
+        }
         viewModel.uc.showLoginPopEvent.observe(this, {
             (activity as BaseActivity<*, *>).showLoginPop()
         })
+
     }
 }

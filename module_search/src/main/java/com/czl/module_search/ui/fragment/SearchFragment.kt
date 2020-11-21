@@ -33,6 +33,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         return BR.viewModel
     }
 
+    override fun onSupportVisible() {
+        ImmersionBar.with(this).statusBarDarkFont(false).init()
+    }
+
     override fun useBaseLayout(): Boolean {
         return false
     }

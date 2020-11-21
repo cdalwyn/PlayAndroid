@@ -26,8 +26,8 @@ import me.yokeyword.fragmentation.SupportFragment
 class LoginViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    var account = ObservableField("cdalwyn")
-    var pwd = ObservableField("123456")
+    var account = ObservableField("")
+    var pwd = ObservableField("")
 
     val onAccountChangeCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         account.set(it)

@@ -4,6 +4,7 @@ import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
 import retrofit2.http.Field
+import retrofit2.http.Path
 
 /**
  * @author Alwyn
@@ -29,7 +30,7 @@ interface HttpDataSource {
     fun getUserScoreDetail(page: String = "1"): Observable<BaseBean<UserScoreDetailBean>>
     fun getUserScore(): Observable<BaseBean<UserScoreBean>>
     fun getScoreRank(page: String = "1"): Observable<BaseBean<UserRankBean>>
-    fun getUserCollectWebsite():Observable<BaseBean<List<CollectWebsiteBean>>>
+    fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>>
     fun deleteUserCollectWeb(id: String): Observable<BaseBean<Any?>>
-
+    fun unCollectArticle(id: Int, originId: Int = -1): Observable<BaseBean<Any?>>
 }

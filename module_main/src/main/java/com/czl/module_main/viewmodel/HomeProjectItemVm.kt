@@ -19,6 +19,7 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.XPopupCallback
 import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.event.LiveBusCenter
 
 
 /**
@@ -77,6 +78,7 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
                                     override fun onResult(t: BaseBean<*>) {
                                         if (t.errorCode == 0) {
                                             entity.get()?.collect = true
+                                            LiveBusCenter.postRefreshUserFmEvent()
                                             viewModel.showSuccessToast("收藏成功")
                                             ivCollect.setImageResource(R.drawable.ic_like_on)
                                             tvCollect.text =
@@ -96,6 +98,7 @@ class HomeProjectItemVm(homeViewModel: HomeViewModel) :
                                 .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
                                     override fun onResult(t: BaseBean<*>) {
                                         if (t.errorCode == 0) {
+                                            LiveBusCenter.postRefreshUserFmEvent()
                                             entity.get()?.collect = false
                                             ivCollect.setImageResource(R.drawable.ic_like_off)
                                             tvCollect.text =

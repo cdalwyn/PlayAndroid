@@ -64,6 +64,10 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)
     })
 
+    val btnShareClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_SHARE)
+    })
+
     fun getUserShareData() {
         model.getUserShareData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))

@@ -56,10 +56,20 @@ interface ApiService {
     fun collectArticle(@Path("articleId") articleId: Int): Observable<BaseBean<Any?>>
 
     /**
-     * 取消收藏
+     * 取消收藏-1 文章列表
      */
     @POST("lg/uncollect_originId/{articleId}/json")
     fun unCollectArticle(@Path("articleId") articleId: Int): Observable<BaseBean<Any?>>
+
+    /**
+     * 取消收藏-2 我的收藏
+     */
+    @POST("lg/uncollect/{id}/json")
+    @FormUrlEncoded
+    fun unCollectArticle(
+        @Path("id") id: Int,
+        @Field("originId") originId: Int
+    ): Observable<BaseBean<Any?>>
 
     /**
      * 搜索

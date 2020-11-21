@@ -54,7 +54,8 @@
             android:padding="@dimen/dp_10"
             attrs:mIcon="@drawable/ic_favorites"
             attrs:mRight="true"
-            attrs:mTitle="我的收藏" />
+            attrs:mTitle="我的收藏"
+            binding:onClickCommand="@{pop.onOpenCollectCommand}"/>
 
         <com.czl.lib_base.widget.CommonItemSettingView
             android:layout_width="match_parent"

@@ -33,6 +33,10 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
     val onLogoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         fragment.viewModel.logout()
     })
+    val onOpenCollectCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)
+        dismiss()
+    })
 
     override fun getImplLayoutId(): Int {
         return R.layout.main_pop_drawerlayout

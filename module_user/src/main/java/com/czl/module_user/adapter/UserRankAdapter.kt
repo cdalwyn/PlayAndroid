@@ -68,6 +68,7 @@ class UserRankAdapter :
                 }
             }
         }
+        holder.dataBinding?.executePendingBindings()
     }
 
     val diffConfig = object : DiffUtil.ItemCallback<UserRankBean.Data>() {

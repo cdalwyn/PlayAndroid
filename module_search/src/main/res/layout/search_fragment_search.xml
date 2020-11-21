@@ -26,8 +26,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_24"
-            android:background="@color/trans"
+            android:paddingTop="@dimen/dp_24"
+            android:background="@color/md_theme_red"
             app:elevation="0dp">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -39,22 +39,18 @@
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:padding="@dimen/dp_12"
-                    app:srcCompat="@drawable/ic_back_black_24dp"
+                    app:srcCompat="@drawable/ic_arrow_back_white_24dp"
                     binding:isVisible="@{viewModel.backVisibility}"
                     binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
 
-                <com.lihang.ShadowLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_6">
 
                     <com.czl.lib_base.widget.MaterialSearchBar
+                        android:padding="@dimen/dp_10"
                         android:id="@+id/search_bar"
                         style="@style/SearchBarStyle"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         app:layout_constraintTop_toTopOf="parent"
                         app:mt_backIconUseTint="true"
                         app:mt_maxSuggestionsCount="5"
@@ -64,16 +60,17 @@
                         binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
                         binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
                         binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />
-                </com.lihang.ShadowLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:onClick="@{viewModel.onSearchCancelClick}"
-                    android:padding="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_10"
                     android:text="取消"
                     android:textSize="@dimen/sp_14"
+                    android:textColor="@color/white"
                     binding:isVisible="@{viewModel.cancelVisibility}" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 

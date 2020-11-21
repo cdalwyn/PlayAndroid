@@ -38,7 +38,9 @@
                 android:id="@+id/cl_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10">
+                android:padding="@dimen/dp_10"
+                binding:onRvItemCommand="@{adapter.onItemClickCommand}"
+                binding:rvItemBean="@{data}">
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -108,7 +110,7 @@
                     android:textSize="@dimen/sp_12"
                     android:text="复制链接"
                     android:textColor="@color/white"
-                    binding:onClickCommand="@{adapter.onCopyLinkClickCommand}"
+                    binding:onRvItemCommand="@{adapter.onCopyLinkClickCommand}"
                     binding:rvItemBean="@{data}"
                     />
 

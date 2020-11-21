@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.MaterialDialog
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
@@ -18,6 +20,7 @@ import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
 import java.lang.reflect.ParameterizedType
@@ -181,9 +184,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
         )
         viewModel.uC.getStartFragmentEvent().observe(this, { map ->
-            val routePath:String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
-            val bundle:Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-            start(RouteCenter.navigate(routePath,bundle) as SupportFragment)
+            val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+            val bundle: Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            start(RouteCenter.navigate(routePath, bundle) as SupportFragment)
         })
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
@@ -201,6 +204,36 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getOnBackPressedEvent().observe(
             this, { onBackPressedSupport() }
         )
+    }
+
+    /**
+     * 统一处理列表数据
+     */
+    fun <T> handleRecyclerviewData(
+        nullFlag: Boolean,
+        data: MutableList<*>?,
+        mAdapter: BaseQuickAdapter<T, *>,
+        ryCommon: ShimmerRecyclerView,
+        smartCommon: SmartRefreshLayout,
+        currentPage: Int,
+        over: Boolean,
+        defaultPage: Int = 0
+    ) {
+        ryCommon.hideShimmerAdapter()
+        if (nullFlag) {
+            smartCommon.finishRefresh(false)
+            smartCommon.finishLoadMore(false)
+            return
+        }
+        if (currentPage == defaultPage) {
+            mAdapter.setDiffNewData(data as MutableList<T>)
+            if (over) smartCommon.finishRefreshWithNoMoreData()
+            else smartCommon.finishRefresh(true)
+            return
+        }
+        if (over) smartCommon.finishLoadMoreWithNoMoreData()
+        else smartCommon.finishLoadMore(true)
+        mAdapter.addData(data as MutableList<T>)
     }
 
     /**

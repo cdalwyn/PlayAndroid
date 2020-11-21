@@ -5,12 +5,15 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
+import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectWebsiteBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
@@ -31,11 +34,11 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
         holder: BaseDataBindingHolder<UserItemWebsiteBinding>,
         item: CollectWebsiteBean
     ) {
-
         holder.dataBinding?.apply {
             data = item
             adapter = this@UserCollectWebAdapter
             menu = holder.dataBinding?.menuLayout
+            lifecycleOwner = mFragment.viewLifecycleOwner
             executePendingBindings()
         }
     }
@@ -56,13 +59,21 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
         }
     }
 
+    val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is CollectWebsiteBean) {
+            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB,Bundle().apply {
+                putString(AppConstants.BundleKey.WEB_URL,it.link)
+            })
+        }
+    })
+
     val onCopyLinkClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectWebsiteBean) {
+            mFragment.showSuccessToast("复制成功")
             val clipboardManager = mFragment.requireActivity()
                 .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText("Label", it.link)
             clipboardManager.primaryClip = clipData
-            mFragment.showSuccessToast("复制成功")
         }
     })
 

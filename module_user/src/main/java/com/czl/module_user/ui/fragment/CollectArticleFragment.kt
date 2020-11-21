@@ -43,7 +43,7 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
     }
 
     override fun initViewObservable() {
-        val mAdapter = UserCollectAdapter()
+        val mAdapter = UserCollectAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -56,21 +56,30 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
             binding.ryCommon.smoothScrollToPosition(0)
         })
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
-            binding.ryCommon.hideShimmerAdapter()
-            if (data == null) {
-                binding.smartCommon.finishRefresh(false)
-                binding.smartCommon.finishLoadMore(false)
-                return@observe
-            }
-            if (viewModel.currentPage == 0) {
-                mAdapter.setDiffNewData(data.datas as MutableList<CollectArticleBean.Data>)
-                if (data.over) binding.smartCommon.finishRefreshWithNoMoreData()
-                else binding.smartCommon.finishRefresh(true)
-                return@observe
-            }
-            if (data.over) binding.smartCommon.finishLoadMoreWithNoMoreData()
-            else binding.smartCommon.finishLoadMore(true)
-            mAdapter.addData(data.datas)
+            handleRecyclerviewData(
+                data == null,
+                data?.datas as MutableList<*>?,
+                mAdapter,
+                binding.ryCommon,
+                binding.smartCommon,
+                viewModel.currentPage,
+                data!!.over
+            )
+//            binding.ryCommon.hideShimmerAdapter()
+//            if (data == null) {
+//                binding.smartCommon.finishRefresh(false)
+//                binding.smartCommon.finishLoadMore(false)
+//                return@observe
+//            }
+//            if (viewModel.currentPage == 0) {
+//                mAdapter.setDiffNewData(data.datas as MutableList<CollectArticleBean.Data>)
+//                if (data.over) binding.smartCommon.finishRefreshWithNoMoreData()
+//                else binding.smartCommon.finishRefresh(true)
+//                return@observe
+//            }
+//            if (data.over) binding.smartCommon.finishLoadMoreWithNoMoreData()
+//            else binding.smartCommon.finishLoadMore(true)
+//            mAdapter.addData(data.datas)
         })
     }
 }
