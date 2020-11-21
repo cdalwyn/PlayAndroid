@@ -9,8 +9,6 @@ import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.functions.Consumer;
-
 /**
  * Created by goldze on 2017/6/16.
  */
@@ -29,26 +27,38 @@ public class ViewAdapter {
     public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
         if (isThrottleFirst) {
             RxView.clicks(view)
-                    .subscribe(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object object) throws Exception {
-                            if (clickCommand != null) {
-                                clickCommand.execute();
-                            }
+                    .subscribe(object -> {
+                        if (clickCommand != null) {
+                            clickCommand.execute();
                         }
                     });
         } else {
             RxView.clicks(view)
                     .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
-                    .subscribe(new Consumer<Object>() {
-                        @Override
-                        public void accept(Object object) throws Exception {
-                            if (clickCommand != null) {
-                                clickCommand.execute();
-                            }
+                    .subscribe(object -> {
+                        if (clickCommand != null) {
+                            clickCommand.execute();
                         }
                     });
         }
+    }
+
+    /**
+     * 列表Item点击事件并携带item的数据
+     *
+     * @param view 点击事件相应的view
+     * @param clickCommand 发起点击事件者
+     * @param item 业务每个Item数据
+     */
+    @BindingAdapter(value = {"onRvItemCommand", "rvItemBean"}, requireAll = false)
+    public static void onClickCommand(View view, final BindingCommand clickCommand, final Object item) {
+        RxView.clicks(view)
+                .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+                .subscribe(object -> {
+                    if (clickCommand != null) {
+                        clickCommand.execute(item);
+                    }
+                });
     }
 
     /**
@@ -57,12 +67,9 @@ public class ViewAdapter {
     @BindingAdapter(value = {"onLongClickCommand"}, requireAll = false)
     public static void onLongClickCommand(View view, final BindingCommand clickCommand) {
         RxView.longClicks(view)
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object object) throws Exception {
-                        if (clickCommand != null) {
-                            clickCommand.execute();
-                        }
+                .subscribe(object -> {
+                    if (clickCommand != null) {
+                        clickCommand.execute();
                     }
                 });
     }

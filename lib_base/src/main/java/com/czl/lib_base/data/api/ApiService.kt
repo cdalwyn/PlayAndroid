@@ -119,19 +119,30 @@ interface ApiService {
      * 获取个人分享
      */
     @GET("user/lg/private_articles/{page}/json")
-    fun getUserShareData(@Path("page")page:String):Observable<BaseBean<UserShareBean>>
+    fun getUserShareData(@Path("page") page: String): Observable<BaseBean<UserShareBean>>
 
     /**
      * 获取个人积分详情
      */
     @GET("lg/coin/list/{page}/json")
-    fun getUserScoreDetail(@Path("page")page: String):Observable<BaseBean<UserScoreDetailBean>>
+    fun getUserScoreDetail(@Path("page") page: String): Observable<BaseBean<UserScoreDetailBean>>
+
     /**
      * 获取积分排行榜
      */
     @GET("coin/rank/{page}/json")
-    fun getScoreRank(@Path("page")page: String):Observable<BaseBean<UserRankBean>>
+    fun getScoreRank(@Path("page") page: String): Observable<BaseBean<UserRankBean>>
 
+    /**
+     * 获取用户收藏网站
+     */
     @GET("lg/collect/usertools/json")
-    fun getUserCollectWebsite():Observable<BaseBean<List<CollectWebsiteBean>>>
+    fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>>
+
+    /**
+     * 删除用户收藏网站
+     */
+    @POST("lg/collect/deletetool/json")
+    @FormUrlEncoded
+    fun deleteUserCollectWeb(@Field("id") id: String): Observable<BaseBean<Any?>>
 }

@@ -12,6 +12,9 @@
         <variable
             name="menu"
             type="com.czl.lib_base.widget.EasySwipeMenuLayout" />
+        <variable
+            name="adapter"
+            type="com.czl.module_user.adapter.UserCollectWebAdapter" />
 
     </data>
 
@@ -105,6 +108,8 @@
                     android:textSize="@dimen/sp_12"
                     android:text="复制链接"
                     android:textColor="@color/white"
+                    binding:onClickCommand="@{adapter.onCopyLinkClickCommand}"
+                    binding:rvItemBean="@{data}"
                     />
 
                 <TextView
@@ -116,7 +121,9 @@
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
                     android:text="浏览器打开"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    binding:onRvItemCommand="@{adapter.onOpenBrowserClickCommand}"
+                    binding:rvItemBean="@{data}"/>
 
                 <TextView
                     android:id="@+id/tv_menu_delete"
@@ -127,7 +134,9 @@
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
                     android:text="删除"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    binding:onRvItemCommand="@{adapter.onDeleteClickCommand}"
+                    binding:rvItemBean="@{data}"/>
             </LinearLayout>
         </com.czl.lib_base.widget.EasySwipeMenuLayout>
 

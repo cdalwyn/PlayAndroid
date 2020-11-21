@@ -112,4 +112,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getUserCollectWebsite()
     }
 
+    override fun deleteUserCollectWeb(id: String): Observable<BaseBean<Any?>> {
+        return apiService.deleteUserCollectWeb(id)
+    }
+
 }
