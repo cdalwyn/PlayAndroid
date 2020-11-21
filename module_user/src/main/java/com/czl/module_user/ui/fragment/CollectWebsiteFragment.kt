@@ -2,6 +2,7 @@ package com.czl.module_user.ui.fragment
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.data.bean.CollectWebsiteBean
@@ -42,10 +43,11 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
 
         binding.smartCommon.setEnableLoadMore(false)
         binding.smartCommon.autoRefresh()
+
     }
 
     override fun initViewObservable() {
-        val mAdapter = UserCollectWebAdapter()
+        val mAdapter = UserCollectWebAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

@@ -1,5 +1,8 @@
 package com.czl.module_user.viewmodel
 
+import android.content.ClipboardManager
+import android.content.Context
+import androidx.core.content.ContextCompat.getSystemService
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
@@ -9,6 +12,7 @@ import com.czl.lib_base.data.bean.CollectWebsiteBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 
+
 /**
  * @author Alwyn
  * @Date 2020/11/18
@@ -17,7 +21,7 @@ import com.czl.lib_base.util.RxThreadHelper
 class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    val loadDataCompleteEvent:SingleLiveEvent<List<CollectWebsiteBean>> = SingleLiveEvent()
+    val loadDataCompleteEvent: SingleLiveEvent<List<CollectWebsiteBean>> = SingleLiveEvent()
 
     override fun refreshCommand() {
         getCollectWebsite()
@@ -30,7 +34,7 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
                 override fun onResult(t: BaseBean<List<CollectWebsiteBean>>) {
                     if (t.errorCode == 0) {
                         loadDataCompleteEvent.postValue(t.data)
-                    }else{
+                    } else {
                         loadDataCompleteEvent.postValue(emptyList())
                     }
                 }
@@ -39,7 +43,6 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
                     loadDataCompleteEvent.postValue(emptyList())
                     showErrorToast(msg)
                 }
-
             })
     }
 }
