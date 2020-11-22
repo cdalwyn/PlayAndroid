@@ -110,7 +110,9 @@ ext {
             'animation'                            : 'com.daimajia.androidanimations:library:2.4@aar',
             'qrcode'                               : "cn.bingoogolapple:bga-qrcode-zxing:1.3.7",
             'lottie'                               : 'com.airbnb.android:lottie:3.5.0',
-            'swipe_menu'                               : "com.github.anzaizai:EasySwipeMenuLayout:1.1.4"
+            'swipe_menu'                           : "com.github.anzaizai:EasySwipeMenuLayout:1.1.4",
+            'round_imageview'                           : 'com.makeramen:roundedimageview:2.3.0'
+
 
 
     ]

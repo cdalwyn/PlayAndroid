@@ -26,12 +26,15 @@
             android:orientation="vertical"
             android:layout_marginBottom="@dimen/dp_36">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv_icon"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="60dp" />
+                android:layout_marginTop="60dp"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_launcher"
+                attrs:riv_oval="true"/>
 
             <TextView
                 android:id="@+id/tv_name"

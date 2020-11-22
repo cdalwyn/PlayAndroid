@@ -5,16 +5,13 @@
     <data>
 
     </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="广场" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="广场"
+            android:gravity="center"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

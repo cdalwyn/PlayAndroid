@@ -47,26 +47,8 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
         binding = DataBindingUtil.bind(drawerContentContainer.findViewById(R.id.ll_drawer))
         binding?.apply {
             user = fragment.viewModel.model.getUserData()
-            ivIcon.loadCircleImageRes(R.mipmap.ic_launcher)
             pop = this@HomeDrawerPop
         }
-//        findViewById<ImageView>(R.id.iv_icon).loadCircleImageRes(R.mipmap.ic_launcher)
-//        val tvName = findViewById<TextView>(R.id.tv_name)
-//        val btnExit = findViewById<CommonItemSettingView>(R.id.btn_exit)
-//        val loginName = fragment.viewModel.model.getLoginName()
-//        if (loginName.isNullOrBlank()) {
-//            tvName.text = "未登录"
-//            btnExit.setTitle("前往登录")
-//            btnExit.setOnClickListener {
-//                fragment.startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-//                AppManager.getInstance().finishAllActivity()
-//            }
-//        } else {
-//            tvName.text = loginName
-//            btnExit.setOnClickListener {
-//                fragment.viewModel.logout()
-//            }
-//        }
     }
 
     override fun onDestroy() {

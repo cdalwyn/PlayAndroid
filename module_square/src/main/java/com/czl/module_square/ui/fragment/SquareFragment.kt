@@ -10,7 +10,8 @@ import com.czl.module_square.viewmodel.SquareViewModel
 
 
 @Route(path = AppConstants.Router.Square.F_SQUARE)
-class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel>() {
+class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel>(){
+
     override fun initContentView(): Int {
         return R.layout.square_fragment_square
     }
@@ -18,6 +19,7 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
     override fun initVariableId(): Int {
         return BR.viewModel
     }
+
     override fun useBaseLayout(): Boolean {
         return false
     }
@@ -26,4 +28,7 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
         return false
     }
 
+    override fun initData() {
+
+    }
 }
