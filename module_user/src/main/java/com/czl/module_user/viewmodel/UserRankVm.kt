@@ -46,11 +46,9 @@ class UserRankVm(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserRankBean>>() {
                 override fun onResult(t: BaseBean<UserRankBean>) {
-                    if (t.errorCode == 0) {
-                        uc.loadDataEvent.postValue(t.data)
-                    } else {
-                        if (currentPage > 1) currentPage -= 1
-                        uc.loadDataEvent.postValue(null)
+                    uc.loadDataEvent.postValue(t.data)
+                    if (t.errorCode != 0&&currentPage > 1) {
+                        currentPage -= 1
                     }
                 }
 

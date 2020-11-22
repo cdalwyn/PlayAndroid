@@ -47,13 +47,13 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
 
     override fun initViewObservable() {
         val mAdapter = UserRankAdapter()
+        mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
             showShimmerAdapter()
         }
-
         viewModel.uc.loadDataEvent.observe(this, { data ->
             handleRecyclerviewData(
                 data == null, data?.datas as MutableList<*>?,
