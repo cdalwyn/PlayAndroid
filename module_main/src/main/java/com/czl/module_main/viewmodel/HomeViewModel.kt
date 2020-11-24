@@ -137,8 +137,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
         uc.refreshStateEvent.postValue(1)
-        currentArticlePage = 0
-        currentProjectPage = 0
+        currentArticlePage = -1
+        currentProjectPage = -1
         getBanner(model)
         when (tabSelectedPosition.get()) {
             0 -> getArticle(model)
@@ -150,11 +150,9 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
         when (tabSelectedPosition.get()) {
             0 -> {
-                currentArticlePage += 1
                 getArticle(model)
             }
             1 -> {
-                currentProjectPage += 1
                 getProject(model)
             }
         }
@@ -164,11 +162,12 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
      * 获取热门项目列表
      */
     private fun getProject(model: DataRepository) {
-        model.getHomeProject(currentProjectPage.toString())
+        model.getHomeProject((currentProjectPage+1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
                 override fun onResult(t: BaseBean<ProjectBean>) {
                     if (t.errorCode == 0) {
+                        currentProjectPage++
                         uc.refreshStateEvent.postValue(0)
                         t.data?.let {
                             if (currentProjectPage == 0) {
@@ -195,17 +194,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                                     )
                                 )
                             }
-
                         }
                     } else {
-                        if (currentProjectPage > 0) currentProjectPage -= 1
                         uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.postValue(false)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    if (currentProjectPage > 0) currentProjectPage -= 1
                     uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.postValue(false)
                     showErrorToast(msg)
@@ -248,11 +244,12 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
      * 获取热门博文列表
      */
     private fun getArticle(model: DataRepository) {
-        model.getHomeArticle(currentArticlePage.toString())
+        model.getHomeArticle((currentArticlePage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
                 override fun onResult(t: BaseBean<HomeArticleBean>) {
                     if (t.errorCode == 0) {
+                        currentArticlePage++
                         uc.refreshStateEvent.postValue(0)
                         t.data?.let {
                             // 刷新
@@ -282,14 +279,12 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
                         }
                     } else {
-                        if (currentArticlePage > 0) currentArticlePage -= 1
                         uc.refreshStateEvent.postValue(2)
                         uc.loadCompleteEvent.postValue(false)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    if (currentArticlePage > 0) currentArticlePage -= 1
                     uc.refreshStateEvent.postValue(2)
                     uc.loadCompleteEvent.postValue(false)
                     showErrorToast(msg)
