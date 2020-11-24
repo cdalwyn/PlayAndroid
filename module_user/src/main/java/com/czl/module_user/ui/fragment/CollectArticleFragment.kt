@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
-import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.databinding.CommonRecycleviewBinding
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -63,7 +62,7 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
                 binding.ryCommon,
                 binding.smartCommon,
                 viewModel.currentPage,
-                data!!.over
+                data?.over
             )
 //            binding.ryCommon.hideShimmerAdapter()
 //            if (data == null) {

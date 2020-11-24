@@ -30,7 +30,14 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
 
     class UiChangeEvent {
         val showLoginPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val refreshEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
+
+    val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        getUserCollectData()
+        getUserShareData()
+        uc.refreshEvent.call()
+    })
 
     val logoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         model.logout()
@@ -64,7 +71,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)
     })
 
-    val btnShareClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+    val btnShareClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         startContainerActivity(AppConstants.Router.User.F_USER_SHARE)
     })
 
@@ -84,7 +91,6 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
                 override fun onFailed(msg: String?) {
 
                 }
-
             })
     }
 

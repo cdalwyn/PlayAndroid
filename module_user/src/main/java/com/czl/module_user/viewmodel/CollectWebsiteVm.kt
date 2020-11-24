@@ -21,7 +21,7 @@ import com.czl.lib_base.util.RxThreadHelper
 class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    val loadDataCompleteEvent: SingleLiveEvent<List<CollectWebsiteBean>> = SingleLiveEvent()
+    val loadDataCompleteEvent: SingleLiveEvent<List<CollectWebsiteBean>?> = SingleLiveEvent()
 
     override fun refreshCommand() {
         getCollectWebsite()
@@ -35,12 +35,12 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
                     if (t.errorCode == 0) {
                         loadDataCompleteEvent.postValue(t.data)
                     } else {
-                        loadDataCompleteEvent.postValue(emptyList())
+                        loadDataCompleteEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    loadDataCompleteEvent.postValue(emptyList())
+                    loadDataCompleteEvent.postValue(null)
                     showErrorToast(msg)
                 }
             })

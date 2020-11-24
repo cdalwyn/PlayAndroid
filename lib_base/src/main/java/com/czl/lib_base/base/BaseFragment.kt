@@ -216,7 +216,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         ryCommon: ShimmerRecyclerView,
         smartCommon: SmartRefreshLayout,
         currentPage: Int,
-        over: Boolean,
+        over: Boolean?,
         defaultPage: Int = 0
     ) {
         if (nullFlag) {
@@ -227,10 +227,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
             mAdapter.setDiffNewData(data as MutableList<T>)
-            if (over) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(true)
+            if (over!!) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(true)
             return
         }
-        if (over) smartCommon.finishLoadMoreWithNoMoreData()
+        if (over!!) smartCommon.finishLoadMoreWithNoMoreData()
         else smartCommon.finishLoadMore(true)
         mAdapter.addData(data as MutableList<T>)
     }

@@ -72,6 +72,9 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         viewModel.uc.showLoginPopEvent.observe(this, {
             (activity as BaseActivity<*, *>).showLoginPop()
         })
+        viewModel.uc.refreshEvent.observe(this,{
+            binding.smartCommon.finishRefresh(1500)
+        })
 
     }
 }

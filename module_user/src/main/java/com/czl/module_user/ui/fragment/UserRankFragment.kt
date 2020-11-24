@@ -1,14 +1,10 @@
 package com.czl.module_user.ui.fragment
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.UserRankBean
-import com.czl.lib_base.data.bean.UserScoreBean
 import com.czl.lib_base.extension.loadCircleImageRes
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -61,7 +57,7 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
                 binding.ryCommon,
                 binding.smartCommon,
                 viewModel.currentPage,
-                data!!.over, 1
+                data?.over, 1
             )
         })
     }

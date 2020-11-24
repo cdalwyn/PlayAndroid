@@ -3,17 +3,14 @@ package com.czl.module_user.ui.fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.UserShareBean
 import com.czl.lib_base.databinding.CommonRecycleviewBinding
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserShareAdapter
 import com.czl.module_user.viewmodel.UserShareVm
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
  * @author Alwyn
@@ -52,7 +49,7 @@ class UserShareFragment : BaseFragment<CommonRecycleviewBinding, UserShareVm>() 
                 binding.ryCommon,
                 binding.smartCommon,
                 viewModel.currentPage,
-                data!!.over, 1
+                data?.over, 1
             )
         })
         viewModel.uC.getScrollTopEvent().observe(this, {
