@@ -219,16 +219,15 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         over: Boolean,
         defaultPage: Int = 0
     ) {
-        ryCommon.hideShimmerAdapter()
         if (nullFlag) {
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)
             return
         }
         if (currentPage == defaultPage) {
+            ryCommon.hideShimmerAdapter()
             mAdapter.setDiffNewData(data as MutableList<T>)
-            if (over) smartCommon.finishRefreshWithNoMoreData()
-            else smartCommon.finishRefresh(true)
+            if (over) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(true)
             return
         }
         if (over) smartCommon.finishLoadMoreWithNoMoreData()

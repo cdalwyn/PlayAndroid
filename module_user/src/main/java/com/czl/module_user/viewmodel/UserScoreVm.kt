@@ -44,7 +44,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     var userScoreRank = ""
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage = 1
+        currentPage = 0
         getTotalScore()
     })
 
@@ -86,28 +86,25 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     }
 
     val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage += 1
         getScoreDetails()
     })
 
     fun getScoreDetails() {
-        model.getUserScoreDetail(currentPage.toString())
+        model.getUserScoreDetail((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserScoreDetailBean>>() {
                 override fun onResult(t: BaseBean<UserScoreDetailBean>) {
                     uc.loadCompleteEvent.postValue(t.data?.over)
                     if (t.errorCode == 0) {
+                        currentPage++
                         t.data?.let {
                             uc.loadDataFinishEvent.postValue(it.datas)
                         }
-                    } else {
-                        if (currentPage > 1) currentPage -= 1
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     uc.loadCompleteEvent.postValue(false)
-                    if (currentPage > 1) currentPage -= 1
                     showErrorToast(msg)
                 }
 

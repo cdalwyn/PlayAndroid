@@ -27,30 +27,28 @@ class CollectArticleVm(application: MyApplication, model: DataRepository) :
     }
 
     override fun loadMoreCommand() {
-        currentPage += 1
         getUserCollectData()
     }
 
     override fun refreshCommand() {
-        currentPage = 0
+        currentPage = -1
         getUserCollectData()
     }
 
     fun getUserCollectData() {
-        model.getCollectArticle(currentPage.toString())
+        model.getCollectArticle((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticleBean>>() {
                 override fun onResult(t: BaseBean<CollectArticleBean>) {
                     if (t.errorCode == 0) {
+                        currentPage++
                         uc.refreshCompleteEvent.postValue(t.data)
                     } else {
-                        if (currentPage > 0) currentPage -= 1
                         uc.refreshCompleteEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    if (currentPage > 0) currentPage -= 1
                     showErrorToast(msg)
                     uc.refreshCompleteEvent.postValue(null)
                 }

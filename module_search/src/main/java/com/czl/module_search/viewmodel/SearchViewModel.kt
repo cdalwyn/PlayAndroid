@@ -61,11 +61,10 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     val searchItemList: ObservableList<SearchItemViewModel> = ObservableArrayList()
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        getSearchDataByKeyword(keyword)
+        getSearchDataByKeyword(keyword,-1)
     })
 
     val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage += 1
         getSearchDataByKeyword(keyword, currentPage)
     })
 
@@ -100,12 +99,13 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     })
 
     fun getSearchDataByKeyword(key: String, page: Int = 0) {
-        model.searchByKeyword(page.toString(), key)
+        model.searchByKeyword((page + 1).toString(), key)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
                 override fun onResult(t: BaseBean<SearchDataBean>) {
                     uc.finishLoadEvent.postValue(t.data?.over)
                     if (0 == t.errorCode) {
+                        currentPage++
                         t.data?.let {
                             if (page == 0) {
                                 searchItemList.clear()
@@ -114,15 +114,12 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
                                 searchItemList.add(SearchItemViewModel(this@SearchViewModel, data))
                             }
                         }
-                    } else {
-                        if (currentPage > 0) currentPage -= 1
                     }
                 }
 
                 override fun onFailed(msg: String?) {
                     uc.finishLoadEvent.postValue(false)
                     showErrorToast(msg)
-                    if (currentPage > 0) currentPage -= 1
                 }
             })
     }

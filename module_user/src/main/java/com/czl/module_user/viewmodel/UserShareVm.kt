@@ -28,23 +28,19 @@ class UserShareVm(application: MyApplication, model: DataRepository) :
     }
 
     override fun loadMoreCommand() {
-        currentPage += 1
         getUserShareData()
     }
 
     private fun getUserShareData() {
-        model.getUserShareData(currentPage.toString())
+        model.getUserShareData((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>() {
                 override fun onResult(t: BaseBean<UserShareBean>) {
+                    if (t.errorCode == 0) currentPage++
                     loadDataCompleteEvent.postValue(t.data?.shareArticles)
-                    if (t.errorCode != 0 && currentPage > 1) {
-                        currentPage -= 1
-                    }
                 }
 
                 override fun onFailed(msg: String?) {
-                    if (currentPage > 1) currentPage -= 1
                     showErrorToast(msg)
                     loadDataCompleteEvent.postValue(null)
                 }

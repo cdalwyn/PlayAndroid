@@ -35,12 +35,11 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage = 1
+        currentPage = 0
         getProjectDataByCid()
     })
 
     val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage += 1
         getProjectDataByCid()
     })
 
@@ -49,12 +48,12 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
     }
 
     fun getProjectDataByCid() {
-        model.getProjectByCid(currentPage.toString(), cid.toString())
+        model.getProjectByCid((currentPage+1).toString(), cid.toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
                 override fun onResult(t: BaseBean<ProjectBean>) {
-                    if (t.errorCode != 0 && currentPage > 1) {
-                        currentPage -= 1
+                    if (t.errorCode == 0) {
+                        currentPage++
                     }
                     uc.refreshCompleteEvent.postValue(t.data)
 
@@ -62,9 +61,6 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
 
                 override fun onFailed(msg: String?) {
                     showErrorToast(msg)
-                    if (currentPage > 1) {
-                        currentPage -= 1
-                    }
                     uc.refreshCompleteEvent.postValue(null)
                 }
 

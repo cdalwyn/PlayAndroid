@@ -37,32 +37,28 @@ class UserRankVm(application: MyApplication, model: DataRepository) :
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage = 1
+        currentPage = 0
+        getScoreRank()
+    })
+    val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         getScoreRank()
     })
 
     private fun getScoreRank() {
-        model.getScoreRank(currentPage.toString())
+        model.getScoreRank((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserRankBean>>() {
                 override fun onResult(t: BaseBean<UserRankBean>) {
+                    if (t.errorCode == 0) currentPage++
                     uc.loadDataEvent.postValue(t.data)
-                    if (t.errorCode != 0&&currentPage > 1) {
-                        currentPage -= 1
-                    }
                 }
 
                 override fun onFailed(msg: String?) {
-                    if (currentPage > 1) currentPage -= 1
                     showErrorToast(msg)
                     uc.loadDataEvent.postValue(null)
                 }
             })
     }
 
-    val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage += 1
-        getScoreRank()
-    })
 
 }
