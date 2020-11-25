@@ -1,9 +1,12 @@
 package com.czl.module_project.ui.fragment
 
+import android.annotation.SuppressLint
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.NetworkUtils
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseFragment
+import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectSortBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
@@ -36,7 +39,12 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
         return false
     }
 
+    @SuppressLint("MissingPermission")
     override fun initData() {
+        initTab()
+    }
+
+    override fun reload() {
         initTab()
     }
 
@@ -47,6 +55,7 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
             .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<ProjectSortBean>>>() {
                 override fun onResult(t: BaseBean<List<ProjectSortBean>>) {
+                    loadService.showWithConvertor(t.errorCode)
                     if (t.errorCode == 0) {
                         for (data in t.data!!) {
                             binding.tabLayout.addTab(binding.tabLayout.newTab())
@@ -65,6 +74,7 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
                 }
 
                 override fun onFailed(msg: String?) {
+                    loadService.showWithConvertor(-1)
                     showErrorToast(msg)
                 }
             })

@@ -15,11 +15,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
+import com.czl.lib_base.callback.ErrorCallback
+import com.czl.lib_base.callback.LoadingCallback
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
+import com.kingja.loadsir.callback.Callback
+import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.Convertor
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
@@ -38,6 +45,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
 
+    lateinit var loadService: LoadService<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +57,11 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val loadSir = LoadSir.Builder()
+            .addCallback(ErrorCallback())
+            .addCallback(LoadingCallback())
+            .setDefaultCallback(SuccessCallback::class.java)
+            .build()
         if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
@@ -61,22 +74,44 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
+            loadService = loadSir.register(rootBinding!!.root,
+                Callback.OnReloadListener { reload() }, Convertor<Int> { t ->
+                    when (t) {
+                        0 -> SuccessCallback::class.java
+                        else -> ErrorCallback::class.java
+                    }
+                }) as LoadService<Int>
             //避免不必要的布局层级
             return if (enableSwipeBack()) {
-                attachToSwipeBack(rootBinding!!.root)
+//                attachToSwipeBack(rootBinding!!.root)
+                attachToSwipeBack(loadService.loadLayout)
             } else {
-                rootBinding!!.root
+//                rootBinding!!.root
+                loadService.loadLayout
             }
         } else {
             binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
+            loadService = loadSir.register(binding.root,
+                Callback.OnReloadListener { reload() }, Convertor<Int> { t ->
+                    when (t) {
+                        0 -> SuccessCallback::class.java
+                        else -> ErrorCallback::class.java
+                    }
+                }) as LoadService<Int>
             return if (enableSwipeBack()) {
                 //避免过度绘制策略
                 binding.root.setBackgroundColor(Color.TRANSPARENT)
-                attachToSwipeBack(binding.root)
+//                attachToSwipeBack(binding.root)
+                attachToSwipeBack(loadService.loadLayout)
             } else {
-                binding.root
+//                binding.root
+                loadService.loadLayout
             }
         }
+    }
+
+    open fun reload() {
+        loadService.showCallback(LoadingCallback::class.java)
     }
 
     override fun onDestroyView() {
@@ -227,7 +262,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
             mAdapter.setDiffNewData(data as MutableList<T>)
-            if (over!!) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(true)
+            if (over!!) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(
+                true
+            )
             return
         }
         if (over!!) smartCommon.finishLoadMoreWithNoMoreData()

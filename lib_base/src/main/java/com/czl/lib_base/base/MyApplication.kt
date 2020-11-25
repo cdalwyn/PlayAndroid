@@ -9,10 +9,13 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.czl.lib_base.BuildConfig
 import com.czl.lib_base.R
+import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.crash.CaocConfig
 import com.czl.lib_base.di.allModule
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
+import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.LoadSir
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
@@ -78,6 +81,7 @@ open class MyApplication : Application() {
             ToastHelper.showErrorToast("系统错误")
             it.printStackTrace()
         }
+        // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)

@@ -147,6 +147,8 @@ dependencies {
     api rootProject.ext.dependencies["lottie"]
     api rootProject.ext.dependencies["swipe_menu"]
     api rootProject.ext.dependencies["round_imageview"]
+    api rootProject.ext.dependencies["loadsir"]
+    api rootProject.ext.dependencies["loadingview"]
 //    api rootProject.ext.dependencies["animation"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
