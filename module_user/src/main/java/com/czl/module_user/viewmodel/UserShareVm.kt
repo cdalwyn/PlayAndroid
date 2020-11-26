@@ -31,7 +31,7 @@ class UserShareVm(application: MyApplication, model: DataRepository) :
         getUserShareData()
     }
 
-    private fun getUserShareData() {
+    fun getUserShareData() {
         model.getUserShareData((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>() {

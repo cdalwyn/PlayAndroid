@@ -61,4 +61,9 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
             )
         })
     }
+
+    override fun reload() {
+        super.reload()
+        viewModel.getScoreRank()
+    }
 }

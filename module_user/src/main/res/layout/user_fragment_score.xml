@@ -31,7 +31,6 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="@dimen/dp_20"
                 app:layout_scrollFlags="scroll">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -39,22 +38,23 @@
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:onClick="@{()->viewModel.finish()}"
-                    android:padding="@dimen/dp_10"
+                    android:padding="@dimen/dp_12"
                     app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="我的积分"
                     android:textColor="@color/white" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="48dp"
                     android:layout_height="match_parent"
                     android:padding="@dimen/dp_10"
                     app:srcCompat="@drawable/ic_rank"
-                    binding:onClickCommand="@{viewModel.onRankClickCommand}"/>
+                    binding:onClickCommand="@{viewModel.onRankClickCommand}" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
@@ -85,11 +85,10 @@
                 android:id="@+id/ry_common"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:shimmer_demo_angle="20"
                 app:shimmer_demo_child_count="10"
                 app:shimmer_demo_layout="@layout/user_item_score_skeleton"
-                app:shimmer_demo_layout_manager_type="linear_vertical"
-                app:shimmer_demo_angle="20"
-                />
+                app:shimmer_demo_layout_manager_type="linear_vertical" />
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 

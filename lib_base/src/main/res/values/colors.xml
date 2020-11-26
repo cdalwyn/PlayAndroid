@@ -32,6 +32,7 @@
     <color name="tran_grey_B4">#7EB9B4B4</color>
     <color name="tran_grey_DF">#43E6DFDF</color>
     <color name="tran_grey_CB">#CB000000</color>
+    <color name="tran_grey_1A">#1A000000</color>
     <color name="md_grey_50">#FAFAFA</color>
     <color name="md_grey">#dbdbdb</color>
     <color name="md_grey_bg100">#66BDBDBD</color>

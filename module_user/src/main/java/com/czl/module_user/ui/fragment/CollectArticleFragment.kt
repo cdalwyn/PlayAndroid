@@ -81,4 +81,9 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
 //            mAdapter.addData(data.datas)
         })
     }
+
+    override fun reload() {
+        super.reload()
+        viewModel.getUserCollectData()
+    }
 }

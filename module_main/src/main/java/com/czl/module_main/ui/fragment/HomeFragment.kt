@@ -98,13 +98,13 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             } else {
                 bannerAdapter.setData(binding.banner, it)
             }
-
+            if (it == null) loadService.showWithConvertor(-1) else loadService.showWithConvertor(0)
         })
         // 下拉刷新的状态
         viewModel.uc.refreshStateEvent.observe(this, Observer { state ->
             when (state) {
                 0 -> {
-                    binding.refreshLayout.finishRefresh(true)
+                    binding.refreshLayout.finishRefresh(500)
                     hideSkeletonByTabIndex()
                 }
                 1 -> {
@@ -185,6 +185,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+
+    override fun reload() {
+        super.reload()
+        binding.refreshLayout.autoRefresh()
+    }
 
     private fun hideSkeletonByTabIndex() {
         Handler(Looper.getMainLooper())

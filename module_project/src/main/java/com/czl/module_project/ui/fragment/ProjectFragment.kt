@@ -45,6 +45,7 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
     }
 
     override fun reload() {
+        super.reload()
         initTab()
     }
 

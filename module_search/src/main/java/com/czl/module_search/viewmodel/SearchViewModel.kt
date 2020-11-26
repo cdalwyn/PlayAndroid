@@ -31,14 +31,14 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
 class SearchViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    private var currentPage = 0
+    var currentPage = 0
     var keyword = ""
 
     val uc = UiChangeEvent()
 
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val finishLoadEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
+        val finishLoadEvent: SingleLiveEvent<SearchDataBean?> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
@@ -103,8 +103,8 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
                 override fun onResult(t: BaseBean<SearchDataBean>) {
-                    uc.finishLoadEvent.postValue(t.data?.over)
                     if (0 == t.errorCode) {
+                        uc.finishLoadEvent.postValue(t.data)
                         currentPage++
                         t.data?.let {
                             if (page == 0) {
@@ -114,11 +114,13 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
                                 searchItemList.add(SearchItemViewModel(this@SearchViewModel, data))
                             }
                         }
+                    }else{
+                        uc.finishLoadEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.finishLoadEvent.postValue(false)
+                    uc.finishLoadEvent.postValue(null)
                     showErrorToast(msg)
                 }
             })

@@ -40,10 +40,8 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
     }
 
     override fun initData() {
-
         binding.smartCommon.setEnableLoadMore(false)
         binding.smartCommon.autoRefresh()
-
     }
 
     override fun initViewObservable() {
@@ -62,7 +60,17 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
         viewModel.loadDataCompleteEvent.observe(this, {
             binding.smartCommon.finishRefresh()
             binding.ryCommon.hideShimmerAdapter()
+            if (it == null) {
+                loadService.showWithConvertor(-1)
+                return@observe
+            }
+            loadService.showWithConvertor(0)
             mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
         })
+    }
+
+    override fun reload() {
+        super.reload()
+        viewModel.getCollectWebsite()
     }
 }

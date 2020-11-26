@@ -35,12 +35,17 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         return false
     }
 
+    override fun isThemeRedStatusBar(): Boolean {
+        return true
+    }
+
     override fun enableLazy(): Boolean {
         return false
     }
 
-    override fun onSupportVisible() {
-        ImmersionBar.with(this).statusBarDarkFont(false).init()
+    override fun reload() {
+        super.reload()
+        viewModel.getTotalScore()
     }
 
     override fun initViewObservable() {
@@ -67,7 +72,12 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         })
         // 总积分动画
         viewModel.uc.getTotalScoreEvent.observe(this, {
-            val animator = ValueAnimator.ofInt(0, it)
+            if (it==null){
+                loadService.showWithConvertor(-1)
+                return@observe
+            }
+            loadService.showWithConvertor(0)
+            val animator = ValueAnimator.ofInt(0, it.coinCount)
             animator.duration = 1200L
             animator.addUpdateListener { animation ->
                 binding.tvScore.text = animation.animatedValue.toString()

@@ -29,7 +29,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     class UiChangeEvent {
         val loadCompleteEvent = SingleLiveEvent<Boolean>()
         val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val getTotalScoreEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val getTotalScoreEvent: SingleLiveEvent<UserScoreBean?> = SingleLiveEvent()
         val loadDataFinishEvent: SingleLiveEvent<List<UserScoreDetailBean.Data>> = SingleLiveEvent()
     }
 
@@ -69,15 +69,17 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
 //                            tvTotalScore.set(it.coinCount.toString())
                             userScore = it.coinCount.toString()
                             userScoreRank = it.rank.toString()
-                            uc.getTotalScoreEvent.postValue(it.coinCount)
+                            uc.getTotalScoreEvent.postValue(it)
                             getScoreDetails()
                         }
                     } else {
+                        uc.getTotalScoreEvent.postValue(null)
                         uc.loadCompleteEvent.postValue(false)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
+                    uc.getTotalScoreEvent.postValue(null)
                     showErrorToast(msg)
                     uc.loadCompleteEvent.postValue(false)
                 }

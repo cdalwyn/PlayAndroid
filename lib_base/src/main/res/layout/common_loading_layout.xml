@@ -7,8 +7,14 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:SpinKit_Style="Circle"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintStart_toStartOf="@+id/ll_score"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="loading.json"
+        app:lottie_loop="true" />
 </LinearLayout>

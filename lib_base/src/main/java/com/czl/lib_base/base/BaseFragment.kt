@@ -74,7 +74,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
-            loadService = loadSir.register(rootBinding!!.root,
+            // 有标题栏情况下绑定内容View
+            loadService = loadSir.register(binding.root,
                 Callback.OnReloadListener { reload() }, Convertor<Int> { t ->
                     when (t) {
                         0 -> SuccessCallback::class.java
@@ -84,7 +85,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             //避免不必要的布局层级
             return if (enableSwipeBack()) {
 //                attachToSwipeBack(rootBinding!!.root)
-                attachToSwipeBack(loadService.loadLayout)
+                attachToSwipeBack(rootBinding!!.root)
             } else {
 //                rootBinding!!.root
                 loadService.loadLayout
@@ -110,6 +111,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
+    /**
+     * 子类重写页面重试加载逻辑
+     */
     open fun reload() {
         loadService.showCallback(LoadingCallback::class.java)
     }
@@ -166,10 +170,24 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (isImmersionBarEnabled()) {
             initStatusBar()
         }
+        if (isThemeRedStatusBar()){
+            initFitThemeStatusBar()
+        }
     }
 
     open fun initStatusBar() {
         ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
+    }
+
+    open fun isThemeRedStatusBar(): Boolean {
+        return false
+    }
+
+    open fun initFitThemeStatusBar() {
+        ImmersionBar.with(this)
+            .statusBarDarkFont(false, 0.2f)
+            .statusBarColor(R.color.md_theme_red)
+            .fitsSystemWindows(true).init()
     }
 
     /**
@@ -255,10 +273,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         defaultPage: Int = 0
     ) {
         if (nullFlag) {
+            loadService.showWithConvertor(-1)
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)
             return
         }
+        loadService.showWithConvertor(0)
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
             mAdapter.setDiffNewData(data as MutableList<T>)

@@ -62,17 +62,29 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         viewModel.uc.searchCancelEvent.observe(this, Observer {
             binding.searchBar.closeSearch()
         })
-        viewModel.uc.finishLoadEvent.observe(this, Observer { over ->
+        viewModel.uc.finishLoadEvent.observe(this, Observer { data ->
             Handler(Looper.getMainLooper())
                 .postDelayed({ rySkeletonScreen.hide() }, 300)
+            if (data == null) {
+                binding.smartCommon.finishRefresh(false)
+                binding.smartCommon.finishLoadMore(false)
+                loadService.showWithConvertor(-1)
+                return@Observer
+            }
+            loadService.showWithConvertor(0)
             binding.smartCommon.apply {
                 finishRefresh(300)
-                if (over) finishLoadMoreWithNoMoreData() else finishLoadMore()
+                if (data.over) finishLoadMoreWithNoMoreData() else finishLoadMore()
             }
         })
         viewModel.uc.moveTopEvent.observe(this, Observer {
             binding.ryCommon.smoothScrollToPosition(0)
         })
+    }
+
+    override fun reload() {
+        super.reload()
+        viewModel.getSearchDataByKeyword(viewModel.keyword, viewModel.currentPage)
     }
 
 

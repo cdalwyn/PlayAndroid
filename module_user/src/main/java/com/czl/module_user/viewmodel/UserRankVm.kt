@@ -44,7 +44,7 @@ class UserRankVm(application: MyApplication, model: DataRepository) :
         getScoreRank()
     })
 
-    private fun getScoreRank() {
+    fun getScoreRank() {
         model.getScoreRank((currentPage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<UserRankBean>>() {

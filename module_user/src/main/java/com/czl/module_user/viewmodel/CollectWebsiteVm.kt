@@ -27,7 +27,7 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
         getCollectWebsite()
     }
 
-    private fun getCollectWebsite() {
+    fun getCollectWebsite() {
         model.getUserCollectWebsite()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<CollectWebsiteBean>>>() {

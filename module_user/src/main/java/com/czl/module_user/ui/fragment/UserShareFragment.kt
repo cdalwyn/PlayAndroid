@@ -57,4 +57,8 @@ class UserShareFragment : BaseFragment<CommonRecycleviewBinding, UserShareVm>() 
         })
     }
 
+    override fun reload() {
+        super.reload()
+        viewModel.getUserShareData()
+    }
 }

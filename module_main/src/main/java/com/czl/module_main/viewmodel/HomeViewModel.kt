@@ -297,6 +297,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>() {
                 override fun onResult(t: BaseBean<List<HomeBannerBean>>) {
+
                     if (t.errorCode == 0) {
                         uc.bannerCompleteEvent.postValue(t.data)
                     } else {

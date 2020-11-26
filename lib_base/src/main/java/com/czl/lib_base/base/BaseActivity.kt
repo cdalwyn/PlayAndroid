@@ -122,9 +122,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         lifecycle.addObserver(viewModel)
         //注入RxLifecycle生命周期
         viewModel.injectLifecycleProvider(this)
-//        loadService = LoadSir.getDefault().register(binding.root) { // 重新加载逻辑
-//            onDataReload()
-//        }
     }
 
 

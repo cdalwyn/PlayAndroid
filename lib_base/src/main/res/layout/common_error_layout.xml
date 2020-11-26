@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_empty"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="@dimen/dp_10"
-        android:background="@drawable/ic_load_error"/>
-
+<!--    <ImageView-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="80dp"-->
+<!--        android:layout_marginBottom="@dimen/dp_10"-->
+<!--        android:background="@drawable/ic_load_error"/>-->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/iv_avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="@dimen/dp_6"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="load_error.json"
+        app:lottie_loop="true" />
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="加载失败"
         android:textColor="#333333"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/sp_14"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_12"
         android:text="点击重试"/>
 </LinearLayout>
