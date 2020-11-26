@@ -61,5 +61,7 @@ interface AppConstants {
         const val MAIN_SEARCH_KEYWORD = "main_search_keyword"
         const val USER_SCORE = "user_score"
         const val USER_RANK = "user_rank"
+        const val WEB_URL_COLLECT_FLAG = "web_url_collect_flag"
+        const val WEB_URL_ID = "web_url_id"
     }
 }

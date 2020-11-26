@@ -126,6 +126,10 @@ class DataRepository constructor(
         return mHttpDataSource.deleteUserCollectWeb(id)
     }
 
+    override fun collectWebsite(name: String, link: String): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.collectWebsite(name,link)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

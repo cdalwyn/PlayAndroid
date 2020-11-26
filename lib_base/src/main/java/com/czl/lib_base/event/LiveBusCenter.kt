@@ -76,4 +76,10 @@ object LiveBusCenter {
     fun observeRefreshUserFmEvent(owner: LifecycleOwner, func: (t: RefreshUserFmEvent) -> Unit) {
         LiveEventBus.get(RefreshUserFmEvent::class.java).observe(owner, Observer(func))
     }
+    fun postRefreshWebListEvent(){
+        LiveEventBus.get(RefreshWebListEvent::class.java).post(RefreshWebListEvent(0))
+    }
+    fun observeRefreshWebListEvent(owner: LifecycleOwner, func: (t: RefreshWebListEvent) -> Unit) {
+        LiveEventBus.get(RefreshWebListEvent::class.java).observe(owner, Observer(func))
+    }
 }

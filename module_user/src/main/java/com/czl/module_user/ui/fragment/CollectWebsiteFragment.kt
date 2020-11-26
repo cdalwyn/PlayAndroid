@@ -7,6 +7,7 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.data.bean.CollectWebsiteBean
 import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserCollectWebAdapter
@@ -67,6 +68,9 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
             loadService.showWithConvertor(0)
             mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
         })
+        LiveBusCenter.observeRefreshWebListEvent(this) {
+            viewModel.getCollectWebsite()
+        }
     }
 
     override fun reload() {

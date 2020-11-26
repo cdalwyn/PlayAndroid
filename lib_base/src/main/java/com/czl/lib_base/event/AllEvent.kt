@@ -14,3 +14,4 @@ data class SearchHistoryEvent(val code:Int):LiveEvent
 data class LogoutEvent(val code:Int):LiveEvent
 data class LoginSuccessEvent(val code:Int):LiveEvent
 data class RefreshUserFmEvent(val code:Int):LiveEvent
+data class RefreshWebListEvent(val code:Int):LiveEvent

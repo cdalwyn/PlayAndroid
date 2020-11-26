@@ -72,6 +72,13 @@ interface ApiService {
     ): Observable<BaseBean<Any?>>
 
     /**
+     * 收藏网址
+     */
+    @POST("lg/collect/addtool/json")
+    @FormUrlEncoded
+    fun collectWebsite(@Field("name")name:String,@Field("link")link:String):Observable<BaseBean<Any?>>
+
+    /**
      * 搜索
      */
     @POST("article/query/{page}/json")

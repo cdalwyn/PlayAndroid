@@ -61,8 +61,10 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectWebsiteBean) {
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB,Bundle().apply {
-                putString(AppConstants.BundleKey.WEB_URL,it.link)
+            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, Bundle().apply {
+                putString(AppConstants.BundleKey.WEB_URL, it.link)
+                putBoolean(AppConstants.BundleKey.WEB_URL_COLLECT_FLAG, true)
+                putString(AppConstants.BundleKey.WEB_URL_ID, it.id.toString())
             })
         }
     })

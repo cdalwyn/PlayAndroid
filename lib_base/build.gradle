@@ -108,7 +108,6 @@ dependencies {
     api rootProject.ext.dependencies["refresh-footer-classic"]
     api rootProject.ext.dependencies["refresh"]
     api rootProject.ext.dependencies["searchview"]
-
 //    api project(path: ":mvvmhabit")
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]

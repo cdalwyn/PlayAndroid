@@ -170,7 +170,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (isImmersionBarEnabled()) {
             initStatusBar()
         }
-        if (isThemeRedStatusBar()){
+        if (isThemeRedStatusBar()) {
             initFitThemeStatusBar()
         }
     }
@@ -278,13 +278,18 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             smartCommon.finishLoadMore(false)
             return
         }
+
         loadService.showWithConvertor(0)
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
             mAdapter.setDiffNewData(data as MutableList<T>)
-            if (over!!) smartCommon.finishRefreshWithNoMoreData() else smartCommon.finishRefresh(
-                true
-            )
+            if (over!!) smartCommon.finishRefreshWithNoMoreData()
+            else smartCommon.finishRefresh(true)
+            val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
+            emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
+                smartCommon.autoRefresh()
+            }
+            mAdapter.setEmptyView(emptyView)
             return
         }
         if (over!!) smartCommon.finishLoadMoreWithNoMoreData()
@@ -310,6 +315,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         return true
     }
 
+    /**
+     * 统一处理回退事件
+     */
     open fun back() {
         if (preFragment == null) {
             requireActivity().finish()

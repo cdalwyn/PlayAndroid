@@ -33,4 +33,5 @@ interface HttpDataSource {
     fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>>
     fun deleteUserCollectWeb(id: String): Observable<BaseBean<Any?>>
     fun unCollectArticle(id: Int, originId: Int = -1): Observable<BaseBean<Any?>>
+    fun collectWebsite(name:String,link:String):Observable<BaseBean<Any?>>
 }
