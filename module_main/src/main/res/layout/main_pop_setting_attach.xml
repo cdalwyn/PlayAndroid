@@ -1,62 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="@dimen/dp_36"
-    android:background="@drawable/trans_gray_btn_corner"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="pop"
+            type="com.czl.module_main.widget.ProjectItemSettingPop" />
+
+        <variable
+            name="data"
+            type="com.czl.lib_base.data.bean.ProjectBean.Data" />
+    </data>
 
     <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_36"
+        android:background="@drawable/trans_gray_btn_corner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_collect"
-            android:layout_width="20dp"
+        <LinearLayout
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_10"
-            android:src="@drawable/ic_like_off" />
+            android:gravity="center"
+            binding:onClickCommand="@{pop.onCollectCommand}">
 
-        <TextView
-            android:id="@+id/tv_collect"
-            android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_collect"
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off}" />
+
+            <TextView
+                android:id="@+id/tv_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_6"
+                android:text="@{data.collect?pop.tvUnCollect:pop.tvCollect}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:background="@color/white_cc" />
+
+        <LinearLayout
+            android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_6"
-            android:text="收藏"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
+            android:gravity="center"
+            binding:onClickCommand="@{pop.onFindSameClick}">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="20dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_same" />
+
+            <TextView
+                android:id="@+id/tv_same"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dp_6"
+                android:text="相似"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <View
-        android:layout_width="1dp"
-        android:layout_height="15dp"
-        android:background="@color/white_cc" />
-
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="20dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_10"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_same" />
-
-        <TextView
-            android:id="@+id/tv_same"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:padding="@dimen/dp_6"
-            android:text="相似"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
-    </LinearLayout>
-
-</LinearLayout>
+</layout>

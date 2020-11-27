@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:binding="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import
-            alias="textUtils"
-            type="android.text.TextUtils" />
+        <import type="android.text.TextUtils" />
+
+        <!--        <variable-->
+        <!--            name="viewModel"-->
+        <!--            type="com.czl.module_main.viewmodel.HomeArticleItemVm" />-->
+        <variable
+            name="data"
+            type="com.czl.lib_base.data.bean.HomeArticleBean.Data" />
 
         <variable
-            name="viewModel"
-            type="com.czl.module_main.viewmodel.HomeArticleItemVm" />
+            name="adapter"
+            type="com.czl.module_main.adapter.HomeArticleAdapter" />
+
     </data>
 
     <LinearLayout
@@ -23,8 +28,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_4"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_6"
             android:background="@color/white"
@@ -32,7 +37,8 @@
             app:cardElevation="2dp"
             app:contentPadding="@dimen/dp_10"
             app:layout_constraintTop_toTopOf="parent"
-            binding:onClickCommand="@{viewModel.onArticleItemClick}">
+            binding:onRvItemCommand="@{adapter.onArticleItemClick}"
+            binding:rvItemBean="@{data}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -42,37 +48,39 @@
                     android:id="@+id/item_tv_identity"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
+                    android:background="@{TextUtils.isEmpty(data.author)?@drawable/stroke_green:@drawable/stroke_red}"
                     android:gravity="center_vertical"
-                    android:background="@{textUtils.isEmpty(viewModel.entity.author)?@drawable/stroke_green:@drawable/stroke_red}"
                     android:maxLines="1"
-                    android:text="@{textUtils.isEmpty(viewModel.entity.author)?viewModel.tvShare:viewModel.tvAuthor}"
-                    android:textColor="@{textUtils.isEmpty(viewModel.entity.author)?@color/green_68:@color/md_theme_red}"
+                    android:text="@{TextUtils.isEmpty(data.author)?adapter.tvShare:adapter.tvAuthor}"
+                    android:textColor="@{TextUtils.isEmpty(data.author)?@color/green_68:@color/md_theme_red}"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintEnd_toStartOf="@id/item_tv_author"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@drawable/stroke_green"
                     tools:text=" 作者 "
-                    tools:textColor="@color/green_68"
-                    tools:background="@drawable/stroke_green"/>
+                    tools:textColor="@color/green_68" />
 
                 <TextView
-                    android:layout_marginStart="@dimen/dp_10"
                     android:id="@+id/item_tv_author"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
+                    android:layout_marginStart="@dimen/dp_10"
                     android:maxLines="1"
-                    android:text="@{textUtils.isEmpty(viewModel.entity.author)?viewModel.entity.shareUser:viewModel.entity.author}"
+                    android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
                     app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="扔物线" />
 
                 <ImageView
+                    android:id="@+id/iv_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_24"
+                    android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off_gray}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    binding:onClickCommand="@{viewModel.onCollectClickCommand}"
-                    binding:src="@{viewModel.ivCollect}"
+                    binding:onRvItemCommand="@{adapter.onCollectClickCommand}"
+                    binding:rvItemBean="@{data}"
                     tools:src="@drawable/ic_like_off_gray" />
 
                 <TextView
@@ -82,7 +90,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:text="@{viewModel.entity.title}"
+                    android:text="@{data.title}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
@@ -94,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
                     android:maxLines="1"
-                    android:text="@{viewModel.entity.superChapterName}"
+                    android:text="@{data.superChapterName}"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
@@ -104,8 +112,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:text="@{data.niceShareDate}"
                     android:textSize="@dimen/sp_12"
-                    android:text="@{viewModel.entity.niceShareDate}"
                     app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"

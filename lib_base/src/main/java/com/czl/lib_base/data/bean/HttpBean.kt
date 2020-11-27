@@ -1,5 +1,8 @@
 package com.czl.lib_base.data.bean
 
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import com.czl.lib_base.BR
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -227,8 +230,8 @@ data class HomeArticleBean(
         val chapterId: Int,
         @SerializedName("chapterName")
         val chapterName: String,
-        @SerializedName("collect")
-        var collect: Boolean,
+//        @SerializedName("collect")
+//        var collect: Boolean,
         @SerializedName("courseId")
         val courseId: Int,
         @SerializedName("desc")
@@ -279,7 +282,13 @@ data class HomeArticleBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) {
+    ) :BaseObservable(){
+        @Bindable
+        var collect:Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.collect)
+        }
         data class Tag(
             @SerializedName("name")
             val name: String,
@@ -317,8 +326,8 @@ data class ProjectBean(
         val chapterId: Int,
         @SerializedName("chapterName")
         val chapterName: String,
-        @SerializedName("collect")
-        var collect: Boolean,
+//        @SerializedName("collect")
+//        var collect: Boolean,
         @SerializedName("courseId")
         val courseId: Int,
         @SerializedName("desc")
@@ -369,7 +378,15 @@ data class ProjectBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) {
+    ) :BaseObservable(){
+        @Bindable
+        @SerializedName("collect")
+        var collect:Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.collect)
+        }
+
         data class Tag(
             @SerializedName("name")
             val name: String,

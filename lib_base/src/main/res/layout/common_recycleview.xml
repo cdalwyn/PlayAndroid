@@ -17,16 +17,18 @@
             android:id="@+id/smart_common"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            binding:onRefreshCommand="@{viewModel.refreshCommand}"
-            binding:onLoadMoreCommand="@{viewModel.loadMoreCommand}">
+            binding:onLoadMoreCommand="@{viewModel.loadMoreCommand}"
+            binding:onRefreshCommand="@{viewModel.refreshCommand}">
+
 
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/ry_common"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:shimmer_demo_child_count="10"/>
+                app:shimmer_demo_child_count="10" />
 
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,4 +41,7 @@
             app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
             app:pressedTranslationZ="@dimen/dp_10" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
 </layout>

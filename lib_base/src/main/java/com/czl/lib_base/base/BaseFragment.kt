@@ -282,14 +282,16 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         loadService.showWithConvertor(0)
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
-            mAdapter.setDiffNewData(data as MutableList<T>)
+            if (!mAdapter.hasEmptyView()){
+                val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
+                emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
+                    smartCommon.autoRefresh()
+                }
+                mAdapter.setEmptyView(emptyView)
+            }
+            mAdapter.setDiffNewData(data as MutableList<T>?)
             if (over!!) smartCommon.finishRefreshWithNoMoreData()
             else smartCommon.finishRefresh(true)
-            val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
-            emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
-                smartCommon.autoRefresh()
-            }
-            mAdapter.setEmptyView(emptyView)
             return
         }
         if (over!!) smartCommon.finishLoadMoreWithNoMoreData()

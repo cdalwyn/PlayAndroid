@@ -7,12 +7,14 @@ import android.os.Looper
 import android.view.View
 import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
+import com.czl.module_main.adapter.HomeArticleAdapter
 import com.czl.module_main.adapter.MyBannerAdapter
 import com.czl.module_main.adapter.SearchSuggestAdapter
 import com.czl.module_main.databinding.MainFragmentHomeBinding
@@ -20,9 +22,12 @@ import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.HomeDrawerPop
 import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
+import com.google.android.material.tabs.TabLayoutMediator
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.youth.banner.transformer.AlphaPageTransformer
+import kotlinx.android.synthetic.main.main_fragment_home.*
+import kotlinx.android.synthetic.main.main_layout_test.*
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -32,8 +37,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var suggestAdapter: SearchSuggestAdapter
 
     private lateinit var mHomeDrawerPop: HomeDrawerPop
-    private lateinit var ryArticleSkeleton: SkeletonScreen
-    private lateinit var ryProjectSkeleton: SkeletonScreen
     private lateinit var bannerSkeleton: SkeletonScreen
 
     override fun onSupportVisible() {
@@ -57,40 +60,16 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun initData() {
-        ryArticleSkeleton = Skeleton.bind(binding.ryArticle as View)
-            .load(R.layout.main_article_item_skeleton)
-            .show()
-        bannerSkeleton = Skeleton.bind(binding.banner)
-            .load(R.layout.main_banner_skeleton)
-            .show()
-
-        if (!this::mHomeDrawerPop.isInitialized) {
-            mHomeDrawerPop = HomeDrawerPop(this)
-        }
-        if (!this::suggestAdapter.isInitialized) {
-            suggestAdapter = SearchSuggestAdapter(layoutInflater)
-            suggestAdapter.setListener(viewModel.onSearchItemClick)
-            setSuggestAdapterData()
-        }
-        binding.refreshLayout.autoRefresh()
-        binding.banner.apply {
-            addBannerLifecycleObserver(this@HomeFragment)
-//            setBannerGalleryMZ(20)
-            setBannerGalleryEffect(18, 10)
-            addPageTransformer(AlphaPageTransformer(0.6f))
-//            indicator = CircleIndicator(context).apply {
-//                indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
-//            }
-        }
-        binding.searchBar.apply {
-            setMaxSuggestionCount(5)
-            setCustomSuggestionAdapter(suggestAdapter)
-        }
+        initBanner()
+        initSearchBar()
+        initViewPager()
+        viewModel.getBanner()
     }
+
 
     override fun initViewObservable() {
         // 轮播图数据获取完成
-        viewModel.uc.bannerCompleteEvent.observe(this, Observer {
+        viewModel.uc.bannerCompleteEvent.observe(this, {
             bannerSkeleton.hide()
             if (!this::bannerAdapter.isInitialized) {
                 bannerAdapter = MyBannerAdapter(it, this)
@@ -100,40 +79,14 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             }
             if (it == null) loadService.showWithConvertor(-1) else loadService.showWithConvertor(0)
         })
-        // 下拉刷新的状态
-        viewModel.uc.refreshStateEvent.observe(this, Observer { state ->
-            when (state) {
-                0 -> {
-                    binding.refreshLayout.finishRefresh(500)
-                    hideSkeletonByTabIndex()
-                }
-                1 -> {
-                }
-                2 -> {
-                    binding.refreshLayout.finishRefresh(false)
-                    hideSkeletonByTabIndex()
-                }
-            }
-        })
-        // 列表加载更多完成
-        viewModel.uc.loadCompleteEvent.observe(this, Observer {
-            binding.refreshLayout.finishLoadMore()
-        })
-        // 置顶
-        viewModel.uc.moveTopEvent.observe(this, Observer { tabPosition ->
-            when (tabPosition) {
-                0 -> binding.ryArticle.smoothScrollToPosition(0)
-                1 -> binding.ryProject.smoothScrollToPosition(0)
-            }
-        })
         // 打开抽屉
-        viewModel.uc.drawerOpenEvent.observe(this, Observer {
+        viewModel.uc.drawerOpenEvent.observe(this, {
             XPopup.Builder(context)
                 .asCustom(mHomeDrawerPop)
                 .show()
         })
         // 确认搜索后关闭焦点
-        viewModel.uc.searchConfirmEvent.observe(this, Observer {
+        viewModel.uc.searchConfirmEvent.observe(this, {
             setSuggestAdapterData()
             binding.searchBar.closeSearch()
             val bundle = Bundle()
@@ -141,7 +94,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         })
         // 搜索框item点击
-        viewModel.uc.searchItemClickEvent.observe(this, Observer {
+        viewModel.uc.searchItemClickEvent.observe(this, {
             binding.searchBar.closeSearch()
             val bundle = Bundle()
             bundle.putString(
@@ -151,16 +104,10 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         })
         // 搜素框Item删除
-        viewModel.uc.searchItemDeleteEvent.observe(this, Observer {
+        viewModel.uc.searchItemDeleteEvent.observe(this, {
             setSuggestAdapterData()
             // 数据库同步
             viewModel.addSubscribe(viewModel.model.deleteSearchHistory(suggestAdapter.suggestions[it]))
-        })
-        // 第一次加载项目列表展示骨架屏
-        viewModel.uc.firstLoadProjectEvent.observe(this, Observer {
-            ryProjectSkeleton = Skeleton.bind(binding.ryProject as View)
-                .load(R.layout.main_item_project_skeleton)
-                .show()
         })
         // 注册搜索界面点击搜索的事件
         LiveBusCenter.observeSearchHistoryEvent(this) {
@@ -168,13 +115,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 setSuggestAdapterData()
             }
         }
-        viewModel.uc.tabSelectedEvent.observe(this, Observer {
-            if (it == 0) {
-                ryProjectSkeleton.hide()
-            } else {
-                ryArticleSkeleton.hide()
-            }
-        })
         // 接收用户注销事件
         LiveBusCenter.observeLogoutEvent(this) {
             mHomeDrawerPop.binding?.user = null
@@ -188,15 +128,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     override fun reload() {
         super.reload()
-        binding.refreshLayout.autoRefresh()
-    }
-
-    private fun hideSkeletonByTabIndex() {
-        Handler(Looper.getMainLooper())
-            .postDelayed({
-                if (viewModel.tabSelectedPosition.get() == 0) ryArticleSkeleton.hide()
-                else ryProjectSkeleton.hide()
-            }, 300)
+        viewModel.getBanner()
     }
 
     /**
@@ -209,5 +141,49 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 suggestAdapter.suggestions = it.map { x -> x.history }
                 if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()
             })
+    }
+
+    private fun initSearchBar() {
+        if (!this::mHomeDrawerPop.isInitialized) {
+            mHomeDrawerPop = HomeDrawerPop(this)
+        }
+        if (!this::suggestAdapter.isInitialized) {
+            suggestAdapter = SearchSuggestAdapter(layoutInflater)
+            suggestAdapter.setListener(viewModel.onSearchItemClick)
+            setSuggestAdapterData()
+        }
+        binding.searchBar.apply {
+            setMaxSuggestionCount(5)
+            setCustomSuggestionAdapter(suggestAdapter)
+        }
+    }
+
+    private fun initBanner() {
+        bannerSkeleton = Skeleton.bind(binding.banner)
+            .load(R.layout.main_banner_skeleton)
+            .show()
+        binding.banner.apply {
+            addBannerLifecycleObserver(this@HomeFragment)
+            //            setBannerGalleryMZ(20)
+            setBannerGalleryEffect(18, 10)
+            addPageTransformer(AlphaPageTransformer(0.6f))
+            //            indicator = CircleIndicator(context).apply {
+            //                indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
+            //            }
+        }
+    }
+
+    private fun initViewPager() {
+        val fragments = arrayListOf(HomeArticleFragment(), HomeProjectFragment())
+        binding.viewpager.apply {
+            adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
+            // 设置该属性后第一次将自动加载所有fragment 不配置该属性则使用viewpager2内部加载机制
+            //                            offscreenPageLimit = fragments.size
+        }
+        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
+            if (position == 0) tab.text = "热门博文"
+            else tab.text = "热门项目"
+        }.attach()
+
     }
 }
