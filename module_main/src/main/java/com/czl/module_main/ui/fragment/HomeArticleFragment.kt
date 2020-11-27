@@ -17,7 +17,7 @@ import com.czl.module_main.viewmodel.HomeArticleVm
  */
 class HomeArticleFragment : BaseFragment<CommonRecycleviewBinding, HomeArticleVm>() {
 
-    private lateinit var mAdapter:HomeArticleAdapter
+    private lateinit var mAdapter: HomeArticleAdapter
 
     override fun initContentView(): Int {
         return R.layout.common_recycleview
@@ -40,7 +40,7 @@ class HomeArticleFragment : BaseFragment<CommonRecycleviewBinding, HomeArticleVm
     }
 
     override fun initViewObservable() {
-        mAdapter = HomeArticleAdapter(this)
+//        mAdapter = HomeArticleAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -52,7 +52,7 @@ class HomeArticleFragment : BaseFragment<CommonRecycleviewBinding, HomeArticleVm
         viewModel.uC.getScrollTopEvent().observe(this, {
             binding.ryCommon.smoothScrollToPosition(0)
         })
-        viewModel.loadCompleteEvent.observe(this,{data->
+        viewModel.loadCompleteEvent.observe(this, { data ->
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,

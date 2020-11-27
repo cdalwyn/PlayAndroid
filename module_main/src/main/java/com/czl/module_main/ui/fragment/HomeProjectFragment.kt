@@ -38,7 +38,7 @@ class HomeProjectFragment : BaseFragment<CommonRecycleviewBinding, HomeProjectVm
     }
 
     override fun initViewObservable() {
-        mAdapter = HomeProjectAdapter(this)
+//        mAdapter = HomeProjectAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)

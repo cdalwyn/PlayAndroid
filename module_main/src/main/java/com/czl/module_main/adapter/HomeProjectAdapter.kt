@@ -13,6 +13,7 @@ import com.czl.lib_base.extension.ImagePopLoader
 import com.czl.lib_base.extension.loadImage
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainItemProjectBinding
+import com.czl.module_main.ui.fragment.HomeFragment
 import com.czl.module_main.ui.fragment.HomeProjectFragment
 import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
@@ -22,7 +23,7 @@ import com.lxj.xpopup.XPopup
  * @Date 2020/11/27
  * @Description
  */
-class HomeProjectAdapter(val mFragment: HomeProjectFragment) :
+class HomeProjectAdapter(val mFragment: HomeFragment) :
     BaseQuickAdapter<ProjectBean.Data, BaseDataBindingHolder<MainItemProjectBinding>>(
         R.layout.main_item_project
     ) {

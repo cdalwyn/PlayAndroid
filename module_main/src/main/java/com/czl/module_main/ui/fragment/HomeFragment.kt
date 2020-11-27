@@ -2,12 +2,11 @@ package com.czl.module_main.ui.fragment
 
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.czl.lib_base.adapter.ViewPagerFmAdapter
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
@@ -15,6 +14,7 @@ import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.HomeArticleAdapter
+import com.czl.module_main.adapter.HomeProjectAdapter
 import com.czl.module_main.adapter.MyBannerAdapter
 import com.czl.module_main.adapter.SearchSuggestAdapter
 import com.czl.module_main.databinding.MainFragmentHomeBinding
@@ -22,12 +22,9 @@ import com.czl.module_main.viewmodel.HomeViewModel
 import com.czl.module_main.widget.HomeDrawerPop
 import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
-import com.google.android.material.tabs.TabLayoutMediator
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.youth.banner.transformer.AlphaPageTransformer
-import kotlinx.android.synthetic.main.main_fragment_home.*
-import kotlinx.android.synthetic.main.main_layout_test.*
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -38,6 +35,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     private lateinit var mHomeDrawerPop: HomeDrawerPop
     private lateinit var bannerSkeleton: SkeletonScreen
+    private lateinit var mArticleAdapter: HomeArticleAdapter
+    private lateinit var mProjectAdapter: HomeProjectAdapter
+
 
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
@@ -62,8 +62,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     override fun initData() {
         initBanner()
         initSearchBar()
-        initViewPager()
-        viewModel.getBanner()
+        binding.smartCommon.autoRefresh()
     }
 
 
@@ -78,6 +77,13 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 bannerAdapter.setData(binding.banner, it)
             }
             if (it == null) loadService.showWithConvertor(-1) else loadService.showWithConvertor(0)
+        })
+        // 置顶
+        viewModel.uc.moveTopEvent.observe(this, Observer { tabPosition ->
+            when (tabPosition) {
+                0 -> binding.ryArticle.smoothScrollToPosition(0)
+                1 -> binding.ryProject.smoothScrollToPosition(0)
+            }
         })
         // 打开抽屉
         viewModel.uc.drawerOpenEvent.observe(this, {
@@ -123,6 +129,57 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         LiveBusCenter.observeLoginSuccessEvent(this) {
             mHomeDrawerPop.binding?.user = viewModel.model.getUserData()
         }
+        // 点击项目tab判断数据是否为空(第一次加载)
+        viewModel.uc.tabSelectedEvent.observe(this, {position->
+            if (position == 1 && mProjectAdapter.data.isNullOrEmpty()) {
+                viewModel.currentProjectPage = -1
+                viewModel.getProject()
+            }
+        })
+        mArticleAdapter = HomeArticleAdapter(this)
+        mArticleAdapter.setDiffCallback(mArticleAdapter.diffConfig)
+        binding.ryArticle.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mArticleAdapter
+            setDemoLayoutReference(R.layout.main_article_item_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
+        // 接收文章列表数据
+        viewModel.uc.loadArticleCompleteEvent.observe(this, { data ->
+            binding.ryArticle.hideShimmerAdapter()
+            handleRecyclerviewData(
+                data == null,
+                data?.datas as MutableList<*>?,
+                mArticleAdapter,
+                binding.ryArticle,
+                binding.smartCommon,
+                viewModel.currentArticlePage,
+                data?.over
+            )
+        })
+        // 接收项目列表数据
+        mProjectAdapter = HomeProjectAdapter(this)
+        mProjectAdapter.setDiffCallback(mProjectAdapter.diffConfig)
+        binding.ryProject.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mProjectAdapter
+            setDemoLayoutReference(R.layout.main_item_project_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
+        viewModel.uc.loadProjectCompleteEvent.observe(this, { data ->
+            binding.ryProject.hideShimmerAdapter()
+            handleRecyclerviewData(
+                data == null,
+                data?.datas as MutableList<*>?,
+                mProjectAdapter,
+                binding.ryProject,
+                binding.smartCommon,
+                viewModel.currentProjectPage,
+                data?.over
+            )
+        })
     }
 
 
@@ -173,17 +230,4 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun initViewPager() {
-        val fragments = arrayListOf(HomeArticleFragment(), HomeProjectFragment())
-        binding.viewpager.apply {
-            adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
-            // 设置该属性后第一次将自动加载所有fragment 不配置该属性则使用viewpager2内部加载机制
-            //                            offscreenPageLimit = fragments.size
-        }
-        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
-            if (position == 0) tab.text = "热门博文"
-            else tab.text = "热门项目"
-        }.attach()
-
-    }
 }

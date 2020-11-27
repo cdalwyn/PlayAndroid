@@ -14,13 +14,14 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainItemHomeBinding
 import com.czl.module_main.ui.fragment.HomeArticleFragment
+import com.czl.module_main.ui.fragment.HomeFragment
 
 /**
  * @author Alwyn
  * @Date 2020/11/27
  * @Description
  */
-class HomeArticleAdapter(val mFragment: HomeArticleFragment) :
+class HomeArticleAdapter(val mFragment: HomeFragment) :
     BaseQuickAdapter<HomeArticleBean.Data, BaseDataBindingHolder<MainItemHomeBinding>>(
         R.layout.main_item_home
     ) {

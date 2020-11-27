@@ -16,6 +16,7 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainItemProjectBinding
 import com.czl.module_main.databinding.MainPopSettingAttachBinding
+import com.czl.module_main.ui.fragment.HomeFragment
 import com.czl.module_main.ui.fragment.HomeProjectFragment
 import com.lxj.xpopup.core.HorizontalAttachPopupView
 
@@ -25,7 +26,7 @@ import com.lxj.xpopup.core.HorizontalAttachPopupView
  * @Description
  */
 @SuppressLint("ViewConstructor")
-class ProjectItemSettingPop(val mFragment: HomeProjectFragment, val bean: ProjectBean.Data) :
+class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.Data) :
     HorizontalAttachPopupView(mFragment.requireContext()) {
 
     private var dataBinding: MainPopSettingAttachBinding? = null

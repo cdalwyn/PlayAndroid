@@ -18,178 +18,128 @@
             type="BindingRecyclerViewAdapter" />
     </data>
 
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_common"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        binding:onLoadMoreCommand="@{viewModel.onLoadMoreListener}"
+        binding:onRefreshCommand="@{viewModel.onRefreshListener}">
 
-
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/trans"
-            app:elevation="0dp">
+            android:layout_height="match_parent">
 
-            <com.lihang.ShadowLayout
+
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_4"
-                app:hl_shadowColor="@color/shadow_color"
-                app:hl_shadowLimit="@dimen/dp_6"
-                app:layout_scrollFlags="scroll">
+                android:background="@color/trans"
+                app:elevation="0dp">
 
-                <com.czl.lib_base.widget.MaterialSearchBar
-                    android:id="@+id/search_bar"
-                    style="@style/SearchBarStyle"
+                <com.lihang.ShadowLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    app:hl_shadowColor="@color/shadow_color"
+                    app:hl_shadowLimit="@dimen/dp_6"
+                    app:layout_scrollFlags="scroll">
+
+                    <com.czl.lib_base.widget.MaterialSearchBar
+                        android:id="@+id/search_bar"
+                        style="@style/SearchBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:mt_backIconUseTint="true"
+                        app:mt_maxSuggestionsCount="5"
+                        app:mt_navIconEnabled="true"
+                        app:mt_placeholder="搜你想搜的..."
+                        app:mt_roundedSearchBarEnabled="false"
+                        app:mt_speechMode="false"
+                        binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
+                        binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
+                        binding:onSearchItemClick="@{viewModel.onSearchItemClick}" />
+
+                </com.lihang.ShadowLayout>
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_scrollFlags="scroll" />
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_36"
+                    android:layout_margin="@dimen/dp_10"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:mt_backIconUseTint="true"
-                    app:mt_maxSuggestionsCount="5"
-                    app:mt_navIconEnabled="true"
-                    app:mt_placeholder="搜你想搜的..."
-                    app:mt_roundedSearchBarEnabled="false"
-                    app:mt_speechMode="false"
-                    binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
-                    binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                    binding:onSearchItemClick="@{viewModel.onSearchItemClick}" />
+                    app:tabBackground="@drawable/selector_tab"
+                    app:tabGravity="start"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabIndicatorHeight="0dp"
+                    app:tabRippleColor="@color/trans"
+                    app:tabSelectedTextColor="@color/white"
+                    binding:onTabSelectedCommand="@{viewModel.onTabSelectedCommand}">
 
-            </com.lihang.ShadowLayout>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/main_home_tab_blog" />
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/main_home_tab_project" />
+                </com.google.android.material.tabs.TabLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/ry_article"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                app:layout_scrollFlags="scroll" />
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                app:shimmer_demo_child_count="10"
+                app:shimmer_demo_layout="@layout/main_article_item_skeleton"
+                app:shimmer_demo_layout_manager_type="linear_vertical"
+                binding:isVisible="@{viewModel.tabSelectedPosition==0}" />
 
-            <!--                    <androidx.cardview.widget.CardView-->
-            <!--                        android:id="@+id/cardView"-->
-            <!--                        android:layout_width="match_parent"-->
-            <!--                        android:layout_height="48dp"-->
-            <!--                        android:layout_marginStart="@dimen/dp_10"-->
-            <!--                        android:layout_marginTop="@dimen/dp_10"-->
-            <!--                        android:layout_marginEnd="@dimen/dp_10"-->
-            <!--                        app:cardCornerRadius="@dimen/dp_10"-->
-            <!--                        app:cardElevation="@dimen/dp_4"-->
-            <!--                        app:layout_constraintTop_toTopOf="parent"-->
-            <!--                        app:layout_scrollFlags="scroll">-->
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/ry_project"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="true"
+                android:visibility="gone"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tabLayout"
+                app:shimmer_demo_child_count="10"
+                app:shimmer_demo_layout="@layout/main_item_project_skeleton"
+                app:shimmer_demo_layout_manager_type="linear_vertical"
+                binding:isVisible="@{viewModel.tabSelectedPosition==1}" />
 
-            <!--                        <LinearLayout-->
-            <!--                            android:layout_width="match_parent"-->
-            <!--                            android:layout_height="match_parent"-->
-            <!--                            android:orientation="horizontal">-->
-
-            <!--                            <androidx.appcompat.widget.AppCompatImageView-->
-            <!--                                android:layout_width="48dp"-->
-            <!--                                android:layout_height="match_parent"-->
-            <!--                                android:layout_marginStart="@dimen/dp_10"-->
-            <!--                                android:padding="@dimen/dp_10"-->
-            <!--                                app:srcCompat="@drawable/ic_menu"-->
-            <!--                                binding:onClickCommand="@{viewModel.onDrawerClickCommand}"/>-->
-
-            <!--                            <TextView-->
-            <!--                                android:layout_width="0dp"-->
-            <!--                                android:layout_height="match_parent"-->
-            <!--                                android:layout_weight="1"-->
-            <!--                                android:gravity="start|center_vertical"-->
-            <!--                                android:paddingStart="@dimen/dp_10"-->
-            <!--                                android:paddingEnd="@dimen/dp_20"-->
-            <!--                                android:text="搜你想搜的..."-->
-            <!--                                android:textSize="@dimen/sp_16"-->
-            <!--                                app:drawableEndCompat="@drawable/ic_search"-->
-            <!--                                binding:onClickCommand="@{viewModel.onSearchClickCommand}"/>-->
-            <!--                        </LinearLayout>-->
-
-            <!--                    </androidx.cardview.widget.CardView>-->
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_36"
-                android:layout_margin="@dimen/dp_10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tabBackground="@drawable/selector_tab"
-                app:tabGravity="start"
-                app:tabIndicatorGravity="bottom"
-                app:tabIndicatorHeight="0dp"
-                app:tabRippleColor="@color/trans"
-                app:tabSelectedTextColor="@color/white">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_home_tab_blog" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/main_home_tab_project" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <!--                    <ImageView-->
-            <!--                        android:layout_width="@dimen/dp_36"-->
-            <!--                        android:layout_height="@dimen/dp_36"-->
-            <!--                        android:layout_marginEnd="@dimen/dp_28"-->
-            <!--                        android:padding="@dimen/dp_6"-->
-            <!--                        android:src="@drawable/ic_search"-->
-            <!--                        binding:onClickCommand="@{viewModel.onSearchClickCommand}"-->
-            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--                        app:layout_constraintEnd_toEndOf="parent" />-->
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
-
-        <!--            <com.cooltechworks.views.shimmer.ShimmerRecyclerView-->
-        <!--                android:id="@+id/ry_article"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="@dimen/dp_10"-->
-        <!--                android:nestedScrollingEnabled="true"-->
-        <!--                app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                app:layout_constraintTop_toBottomOf="@id/tabLayout"-->
-        <!--                app:shimmer_demo_child_count="10"-->
-        <!--                app:shimmer_demo_layout_manager_type="linear_vertical"-->
-        <!--                app:shimmer_demo_layout="@layout/main_article_item_skeleton"-->
-        <!--                binding:isVisible="@{viewModel.tabSelectedPosition==0}"-->
-        <!--                />-->
-
-        <!--            <com.cooltechworks.views.shimmer.ShimmerRecyclerView-->
-        <!--                android:id="@+id/ry_project"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginTop="@dimen/dp_10"-->
-        <!--                android:nestedScrollingEnabled="true"-->
-        <!--                android:visibility="gone"-->
-        <!--                app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--                app:layout_constraintTop_toBottomOf="@id/tabLayout"-->
-        <!--                app:shimmer_demo_layout="@layout/main_item_project_skeleton"-->
-        <!--                app:shimmer_demo_child_count="10"-->
-        <!--                app:shimmer_demo_layout_manager_type="linear_vertical"-->
-        <!--                binding:isVisible="@{viewModel.tabSelectedPosition==1}"-->
-        <!--                />-->
-
-        <!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_gravity="end|bottom"-->
-        <!--                android:layout_margin="@dimen/dp_20"-->
-        <!--                android:onClick="@{viewModel.fabOnClickListener}"-->
-        <!--                android:src="@drawable/ic_top"-->
-        <!--                app:backgroundTint="@color/white"-->
-        <!--                app:elevation="@dimen/dp_6"-->
-        <!--                app:fabSize="mini"-->
-        <!--                app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"-->
-        <!--                app:pressedTranslationZ="@dimen/dp_10" />-->
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/dp_20"
+                android:onClick="@{viewModel.fabOnClickListener}"
+                android:src="@drawable/ic_top"
+                app:backgroundTint="@color/white"
+                app:elevation="@dimen/dp_6"
+                app:fabSize="mini"
+                app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+                app:pressedTranslationZ="@dimen/dp_10" />
 
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </layout>

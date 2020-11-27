@@ -1,6 +1,7 @@
 package com.czl.module_main.viewmodel
 
 import android.view.View
+import androidx.databinding.ObservableInt
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
@@ -9,7 +10,9 @@ import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.DataRepository
+import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.HomeBannerBean
+import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
@@ -25,7 +28,12 @@ import io.reactivex.Observable
 class HomeViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
+    var currentArticlePage: Int = 0
+    var currentProjectPage = 0
+
     val uc = UiChangeEvent()
+
+    val tabSelectedPosition: ObservableInt = ObservableInt(0)
 
     inner class UiChangeEvent {
         val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
@@ -33,6 +41,43 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
         val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean> = SingleLiveEvent()
+        val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
+        val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+    }
+
+
+    val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        currentArticlePage = -1
+        currentProjectPage = -1
+        getBanner()
+        when (tabSelectedPosition.get()) {
+            0 -> getArticle()
+            1 -> getProject()
+        }
+    })
+
+
+    val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
+        when (tabSelectedPosition.get()) {
+            0 -> {
+                getArticle()
+            }
+            1 -> {
+                getProject()
+            }
+        }
+    })
+
+    val onTabSelectedCommand: BindingCommand<Int> = BindingCommand(BindingConsumer {
+        tabSelectedPosition.set(it)
+        uc.tabSelectedEvent.postValue(it)
+    })
+
+    /*置顶*/
+    val fabOnClickListener: View.OnClickListener = View.OnClickListener {
+        uc.moveTopEvent.postValue(tabSelectedPosition.get())
     }
 
     /*打开抽屉*/
@@ -93,6 +138,52 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
+
+    /**
+     * 获取热门项目列表
+     */
+    fun getProject() {
+        model.getHomeProject((currentProjectPage + 1).toString())
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
+                override fun onResult(t: BaseBean<ProjectBean>) {
+                    if (t.errorCode == 0) {
+                        currentProjectPage++
+                        uc.loadProjectCompleteEvent.postValue(t.data)
+                    } else {
+                        uc.loadProjectCompleteEvent.postValue(null)
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+                    uc.loadProjectCompleteEvent.postValue(null)
+                    showErrorToast(msg)
+                }
+            })
+    }
+
+    /**
+     * 获取热门博文列表
+     */
+    private fun getArticle() {
+        model.getHomeArticle((currentArticlePage + 1).toString())
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
+                override fun onResult(t: BaseBean<HomeArticleBean>) {
+                    if (t.errorCode == 0) {
+                        currentArticlePage++
+                        uc.loadArticleCompleteEvent.postValue(t.data)
+                    } else {
+                        uc.loadArticleCompleteEvent.postValue(null)
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+                    uc.loadArticleCompleteEvent.postValue(null)
+                    showErrorToast(msg)
+                }
+            })
     }
 
 
