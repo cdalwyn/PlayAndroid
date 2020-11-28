@@ -74,4 +74,9 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
         }
     }
 
+    override fun reload() {
+        super.reload()
+        binding.smartCommon.autoRefresh()
+    }
+
 }

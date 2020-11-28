@@ -198,7 +198,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     override fun reload() {
         super.reload()
-        viewModel.getBanner()
+        binding.smartCommon.autoRefresh()
     }
 
     /**
