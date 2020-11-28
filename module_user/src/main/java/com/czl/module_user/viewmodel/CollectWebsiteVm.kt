@@ -33,7 +33,7 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<CollectWebsiteBean>>>() {
                 override fun onResult(t: BaseBean<List<CollectWebsiteBean>>) {
                     if (t.errorCode == 0) {
-                        loadDataCompleteEvent.postValue(t.data?.reversed())
+                        loadDataCompleteEvent.postValue(t.data)
                     } else {
                         loadDataCompleteEvent.postValue(null)
                     }

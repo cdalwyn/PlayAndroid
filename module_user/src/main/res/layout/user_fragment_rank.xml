@@ -18,14 +18,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="100dp"
             android:background="@color/md_red_400"
             app:layout_constraintTop_toTopOf="parent"/>
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="@dimen/dp_20"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -55,6 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/ll_toolbar"
             android:layout_marginStart="@dimen/dp_40"
             android:layout_marginEnd="@dimen/dp_40"
+            app:hl_cornerRadius="@dimen/dp_4"
             app:hl_shadowLimit="@dimen/dp_6">
 
             <androidx.constraintlayout.widget.ConstraintLayout

@@ -3,6 +3,7 @@ package com.czl.lib_base.data.source
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
+import retrofit2.http.Path
 
 /**
  * @author Alwyn
@@ -32,4 +33,6 @@ interface HttpDataSource {
     fun deleteUserCollectWeb(id: String): Observable<BaseBean<Any?>>
     fun unCollectArticle(id: Int, originId: Int = -1): Observable<BaseBean<Any?>>
     fun collectWebsite(name:String,link:String):Observable<BaseBean<Any?>>
+    fun getSquareList(page: Int = 0):Observable<BaseBean<SquareListBean>>
+
 }

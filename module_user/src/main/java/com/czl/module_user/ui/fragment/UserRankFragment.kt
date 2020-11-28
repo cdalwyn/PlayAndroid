@@ -31,6 +31,10 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
         return false
     }
 
+    override fun isThemeRedStatusBar(): Boolean {
+        return true
+    }
+
     override fun initData() {
         binding.ivAvatar.loadCircleImageRes(R.mipmap.ic_launcher)
         binding.tvUser.text = viewModel.model.getLoginName()

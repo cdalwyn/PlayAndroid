@@ -82,4 +82,12 @@ object LiveBusCenter {
     fun observeRefreshWebListEvent(owner: LifecycleOwner, func: (t: RefreshWebListEvent) -> Unit) {
         LiveEventBus.get(RefreshWebListEvent::class.java).observe(owner, Observer(func))
     }
+
+    fun postCollectStateEvent(originId:Int){
+        LiveEventBus.get(RefreshCollectStateEvent::class.java).post(RefreshCollectStateEvent(originId))
+    }
+    fun observeCollectStateEvent(owner: LifecycleOwner, func: (t: RefreshCollectStateEvent) -> Unit) {
+        LiveEventBus.get(RefreshCollectStateEvent::class.java).observe(owner, Observer(func))
+    }
+
 }

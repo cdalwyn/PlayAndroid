@@ -1,12 +1,15 @@
 package com.czl.lib_base.mvvm.ui
 
 import android.graphics.Bitmap
+import android.os.Build
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BR
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseFragment
@@ -29,10 +32,10 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
     private var errorFlag = false
 
     // 当前web标题
-    private var title: String? = null
+    private var currentTitle: String? = null
 
     // 当前web链接
-    private var link: String? = null
+    private var currentLink: String? = null
 
     override fun initContentView(): Int {
         return R.layout.fragment_web
@@ -59,7 +62,11 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
             requireActivity().finish()
         })
         viewModel.uc.collectEvent.observe(this, {
-            if (!viewModel.collectFlag.get()!!) viewModel.collectWebsite(title, link)
+            if (errorFlag) {
+                showNormalToast("当前页面加载错误,收藏失败")
+                return@observe
+            }
+            if (!viewModel.collectFlag.get()!!) viewModel.collectWebsite(currentTitle, currentLink)
             else viewModel.unCollectWebsite(arguments?.getString(AppConstants.BundleKey.WEB_URL_ID))
         })
         viewModel.uc.goForwardEvent.observe(this, {
@@ -73,7 +80,6 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
         lp.behavior = AppBarLayout.ScrollingViewBehavior()
         val url = arguments?.getString(AppConstants.BundleKey.WEB_URL)
         viewModel.collectFlag.set(arguments?.getBoolean(AppConstants.BundleKey.WEB_URL_COLLECT_FLAG))
-//        viewModel.getCollectWebsite(url)
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(binding.clWebRoot, 1, lp)
             .useDefaultIndicator(ContextCompat.getColor(requireContext(), R.color.md_theme_red), 1)
@@ -85,33 +91,61 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
                     errorFlag = false
                 }
 
+
                 override fun onReceivedError(
                     view: WebView?,
-                    request: WebResourceRequest?,
-                    error: WebResourceError?
+                    request: WebResourceRequest,
+                    error: WebResourceError
                 ) {
                     super.onReceivedError(view, request, error)
+                    if (request.isForMainFrame) {
+                        errorFlag = true
+                        loadService.showWithConvertor(-1)
+                    }
+                }
+
+                override fun onReceivedError(
+                    view: WebView?,
+                    errorCode: Int,
+                    description: String?,
+                    failingUrl: String?
+                ) {
+                    super.onReceivedError(view, errorCode, description, failingUrl)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        return
+                    }
                     errorFlag = true
                     loadService.showWithConvertor(-1)
                 }
 
+                override fun onReceivedHttpError(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                    errorResponse: WebResourceResponse?
+                ) {
+                    super.onReceivedHttpError(view, request, errorResponse)
+                    val statusCode = errorResponse?.statusCode
+                    if (404 == statusCode || 500 == statusCode) {
+                        errorFlag = true
+                        loadService.showWithConvertor(-1)
+                    }
+                }
+
                 override fun onPageFinished(view: WebView, url: String?) {
                     super.onPageFinished(view, url)
+                    currentLink = url
                     if (!errorFlag) {
                         loadService.showWithConvertor(0)
-                        link = url
                     }
                     viewModel.canGoBackFlag.set(view.canGoBack())
                     viewModel.canForwardFlag.set(view.canGoForward())
                 }
             })
             .setWebChromeClient(object : WebChromeClient() {
-                override fun onReceivedTitle(view: WebView?, title: String?) {
+                override fun onReceivedTitle(view: WebView?, title: String) {
                     super.onReceivedTitle(view, title)
                     viewModel.tvTitle.set(title)
-                    if (!errorFlag) {
-                        this@WebFragment.title = title
-                    }
+                    this@WebFragment.currentTitle = title
                 }
             })
             .createAgentWeb()

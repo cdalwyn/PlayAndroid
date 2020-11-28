@@ -53,14 +53,13 @@
                     android:text="@{data.name}"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toStartOf="@id/line"
-                    app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="这是标题" />
 
                 <TextView
                     android:id="@+id/tv_sort"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/dp_10"
                     android:ellipsize="end"
@@ -69,6 +68,7 @@
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:layout_constraintEnd_toStartOf="@id/line"
                     tools:text="具体案例" />
 
                 <TextView

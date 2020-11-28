@@ -1,5 +1,7 @@
 package com.czl.module_user.ui.fragment
 
+import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -66,6 +68,13 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
                 return@observe
             }
             loadService.showWithConvertor(0)
+            if (!mAdapter.hasEmptyView()){
+                val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
+                emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
+                    binding.smartCommon.autoRefresh()
+                }
+                mAdapter.setEmptyView(emptyView)
+            }
             mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
         })
         LiveBusCenter.observeRefreshWebListEvent(this) {

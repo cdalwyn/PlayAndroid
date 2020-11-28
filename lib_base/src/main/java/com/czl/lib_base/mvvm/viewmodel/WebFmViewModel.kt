@@ -24,9 +24,9 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
     val uc = UiChangeEvent()
-    val collectFlag = ObservableField(false)
-    val canForwardFlag = ObservableField(false)
-    val canGoBackFlag = ObservableField(false)
+    var collectFlag = ObservableField(false)
+    var canForwardFlag = ObservableField(false)
+    var canGoBackFlag = ObservableField(false)
 
     class UiChangeEvent {
         val closeEvent: SingleLiveEvent<Void> = SingleLiveEvent()

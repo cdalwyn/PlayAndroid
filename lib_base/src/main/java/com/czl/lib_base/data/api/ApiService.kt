@@ -162,4 +162,10 @@ interface ApiService {
     @POST("lg/collect/deletetool/json")
     @FormUrlEncoded
     fun deleteUserCollectWeb(@Field("id") id: String): Observable<BaseBean<Any?>>
+
+    /**
+     * 获取广场列表
+     */
+    @GET("user_article/list/{page}/json")
+    fun getSquareList(@Path("page")page: Int):Observable<BaseBean<SquareListBean>>
 }

@@ -33,7 +33,6 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
     val tvCollect = "收藏"
     val tvUnCollect = "取消收藏"
 
-
     override fun getImplLayoutId(): Int {
         return R.layout.main_pop_setting_attach
     }
@@ -63,6 +62,10 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
                             LiveBusCenter.postRefreshUserFmEvent()
                             mFragment.showSuccessToast("收藏成功")
                             bean.collect = true
+                            // 同步热门文章列表的Item
+                            val list =
+                                mFragment.mArticleAdapter.data.filter { x -> x.id == bean.id }
+                            if (list.isNotEmpty()) list[0].collect = true
                         } else {
                             mFragment.showErrorToast(t.errorMsg)
                         }
@@ -79,6 +82,10 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
                         if (t.errorCode == 0) {
                             LiveBusCenter.postRefreshUserFmEvent()
                             bean.collect = false
+                            // 同步热门文章列表的Item
+                            val list =
+                                mFragment.mArticleAdapter.data.filter { x -> x.id == bean.id }
+                            if (list.isNotEmpty()) list[0].collect = false
                         } else {
                             mFragment.showErrorToast(t.errorMsg)
                         }

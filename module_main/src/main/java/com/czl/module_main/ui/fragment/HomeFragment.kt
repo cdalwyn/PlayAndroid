@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -35,8 +36,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     private lateinit var mHomeDrawerPop: HomeDrawerPop
     private lateinit var bannerSkeleton: SkeletonScreen
-    private lateinit var mArticleAdapter: HomeArticleAdapter
-    private lateinit var mProjectAdapter: HomeProjectAdapter
+    lateinit var mArticleAdapter: HomeArticleAdapter
+    lateinit var mProjectAdapter: HomeProjectAdapter
 
 
     override fun onSupportVisible() {
@@ -62,9 +63,10 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     override fun initData() {
         initBanner()
         initSearchBar()
+        initArticleAdapter()
+        initProjectAdapter()
         binding.smartCommon.autoRefresh()
     }
-
 
     override fun initViewObservable() {
         // 轮播图数据获取完成
@@ -130,24 +132,14 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             mHomeDrawerPop.binding?.user = viewModel.model.getUserData()
         }
         // 点击项目tab判断数据是否为空(第一次加载)
-        viewModel.uc.tabSelectedEvent.observe(this, {position->
+        viewModel.uc.tabSelectedEvent.observe(this, { position ->
             if (position == 1 && mProjectAdapter.data.isNullOrEmpty()) {
                 viewModel.currentProjectPage = -1
                 viewModel.getProject()
             }
         })
-        mArticleAdapter = HomeArticleAdapter(this)
-        mArticleAdapter.setDiffCallback(mArticleAdapter.diffConfig)
-        binding.ryArticle.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            adapter = mArticleAdapter
-            setDemoLayoutReference(R.layout.main_article_item_skeleton)
-            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
-            showShimmerAdapter()
-        }
         // 接收文章列表数据
         viewModel.uc.loadArticleCompleteEvent.observe(this, { data ->
-            binding.ryArticle.hideShimmerAdapter()
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -159,17 +151,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             )
         })
         // 接收项目列表数据
-        mProjectAdapter = HomeProjectAdapter(this)
-        mProjectAdapter.setDiffCallback(mProjectAdapter.diffConfig)
-        binding.ryProject.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            adapter = mProjectAdapter
-            setDemoLayoutReference(R.layout.main_item_project_skeleton)
-            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
-            showShimmerAdapter()
-        }
         viewModel.uc.loadProjectCompleteEvent.observe(this, { data ->
-            binding.ryProject.hideShimmerAdapter()
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -180,6 +162,37 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 data?.over
             )
         })
+        // 接收收藏夹取消收藏事件
+        LiveBusCenter.observeCollectStateEvent(this) { event ->
+            val list = mArticleAdapter.data.filter { it.id == event.originId }
+            if (list.isNotEmpty()) list[0].collect = false
+            val filterList = mProjectAdapter.data.filter { it.id==event.originId }
+            if (filterList.isNotEmpty()) filterList[0].collect = false
+        }
+    }
+
+    private fun initProjectAdapter() {
+        mProjectAdapter = HomeProjectAdapter(this)
+        mProjectAdapter.setDiffCallback(mProjectAdapter.diffConfig)
+        binding.ryProject.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mProjectAdapter
+            setDemoLayoutReference(R.layout.main_item_project_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
+    }
+
+    private fun initArticleAdapter() {
+        mArticleAdapter = HomeArticleAdapter(this)
+        mArticleAdapter.setDiffCallback(mArticleAdapter.diffConfig)
+        binding.ryArticle.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mArticleAdapter
+            setDemoLayoutReference(R.layout.main_article_item_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
     }
 
 

@@ -64,21 +64,6 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
                 viewModel.currentPage,
                 data?.over
             )
-//            binding.ryCommon.hideShimmerAdapter()
-//            if (data == null) {
-//                binding.smartCommon.finishRefresh(false)
-//                binding.smartCommon.finishLoadMore(false)
-//                return@observe
-//            }
-//            if (viewModel.currentPage == 0) {
-//                mAdapter.setDiffNewData(data.datas as MutableList<CollectArticleBean.Data>)
-//                if (data.over) binding.smartCommon.finishRefreshWithNoMoreData()
-//                else binding.smartCommon.finishRefresh(true)
-//                return@observe
-//            }
-//            if (data.over) binding.smartCommon.finishLoadMoreWithNoMoreData()
-//            else binding.smartCommon.finishLoadMore(true)
-//            mAdapter.addData(data.datas)
         })
     }
 

@@ -124,4 +124,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.collectWebsite(name,link)
     }
 
+    override fun getSquareList(page: Int): Observable<BaseBean<SquareListBean>> {
+        return apiService.getSquareList(page)
+    }
+
 }

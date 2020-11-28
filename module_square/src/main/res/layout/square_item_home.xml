@@ -2,24 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/tools"
-    >
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
-
         <import type="android.text.TextUtils" />
-
-        <!--        <variable-->
-        <!--            name="viewModel"-->
-        <!--            type="com.czl.module_main.viewmodel.HomeArticleItemVm" />-->
         <variable
             name="data"
-            type="com.czl.lib_base.data.bean.HomeArticleBean.Data" />
-
+            type="com.czl.lib_base.data.bean.SquareListBean.Data" />
         <variable
             name="adapter"
-            type="com.czl.module_main.adapter.HomeArticleAdapter" />
-
+            type="com.czl.module_square.adapter.SquareHomeAdapter" />
     </data>
 
     <LinearLayout
@@ -38,7 +30,7 @@
             app:cardElevation="2dp"
             app:contentPadding="@dimen/dp_10"
             app:layout_constraintTop_toTopOf="parent"
-            binding:onRvItemCommand="@{adapter.onArticleItemClick}"
+            binding:onRvItemCommand="@{adapter.onItemClickCommand}"
             binding:rvItemBean="@{data}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,5 +115,4 @@
 
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-
 </layout>

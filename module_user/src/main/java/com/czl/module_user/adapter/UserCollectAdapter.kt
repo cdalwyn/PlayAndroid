@@ -10,6 +10,7 @@ import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectArticleBean
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.R
@@ -48,13 +49,15 @@ class UserCollectAdapter(val mFragment: CollectArticleFragment) :
     val onDisCollectCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectArticleBean.Data) {
             mFragment.viewModel.model.unCollectArticle(
-                it.id,
-                if (it.originId == 0) -1 else it.originId
-            )
+                it.id, if (it.originId == 0) -1 else it.originId)
                 .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
                 .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
                     override fun onResult(t: BaseBean<Any?>) {
                         if (t.errorCode == 0) {
+                            // 刷新首页相同Item的收藏状态
+                            LiveBusCenter.postCollectStateEvent(it.originId)
+                            // 刷新个人界面的收藏数
+                            LiveBusCenter.postRefreshUserFmEvent()
                             remove(it)
                         }
                     }

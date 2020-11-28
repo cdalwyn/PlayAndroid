@@ -2,6 +2,7 @@ package com.czl.module_main.adapter
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
@@ -89,6 +90,9 @@ class HomeArticleAdapter(val mFragment: HomeFragment) :
                                 LiveBusCenter.postRefreshUserFmEvent()
                                 mFragment.showSuccessToast("收藏成功")
                                 it.collect = true
+                                // 同步热门项目列表的相同item
+                                val list = mFragment.mProjectAdapter.data.filter { x->x.id==it.id }
+                                if (list.isNotEmpty()) list[0].collect = true
                             } else {
                                 mFragment.showErrorToast(t.errorMsg)
                             }
@@ -97,7 +101,6 @@ class HomeArticleAdapter(val mFragment: HomeFragment) :
                         override fun onFailed(msg: String?) {
                             mFragment.showErrorToast(msg)
                         }
-
                     })
             } else {
                 mFragment.viewModel.unCollectArticle(it.id)
@@ -106,6 +109,9 @@ class HomeArticleAdapter(val mFragment: HomeFragment) :
                             if (t.errorCode == 0) {
                                 LiveBusCenter.postRefreshUserFmEvent()
                                 it.collect = false
+                                // 同步热门项目列表的相同item
+                                val list = mFragment.mProjectAdapter.data.filter { x->x.id==it.id }
+                                if (list.isNotEmpty()) list[0].collect = false
                             } else {
                                 mFragment.showErrorToast(t.errorMsg)
                             }

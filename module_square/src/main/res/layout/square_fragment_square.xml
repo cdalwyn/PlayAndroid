@@ -1,17 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.czl.module_square.viewmodel.SquareViewModel" />
     </data>
-    <androidx.appcompat.widget.LinearLayoutCompat
+
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_common"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
+        android:layout_height="match_parent"
+        binding:onLoadMoreCommand="@{viewModel.onLoadMoreListener}"
+        binding:onRefreshCommand="@{viewModel.onRefreshListener}">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="广场"
-            android:gravity="center"/>
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans"
+                app:elevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_scrollFlags="scroll|enterAlways">
+
+                    <com.lihang.ShadowLayout
+                        android:id="@+id/btn_setup"
+                        android:layout_width="140dp"
+                        android:layout_height="68dp"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:hl_cornerRadius="@dimen/dp_6"
+                        app:hl_endColor="@color/white"
+                        app:hl_layoutBackground="@color/md_theme_red"
+                        app:hl_shadowColor="@color/md_theme_red"
+                        app:hl_shadowLimit="@dimen/dp_10"
+                        app:hl_startColor="@color/md_theme_red"
+                        app:layout_constraintEnd_toStartOf="@id/btn_navigate"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingEnd="@dimen/dp_10"
+                            android:text="体系"
+                            android:textColor="@color/white"
+                            app:drawableEndCompat="@drawable/ic_setup" />
+                    </com.lihang.ShadowLayout>
+
+                    <com.lihang.ShadowLayout
+                        android:id="@+id/btn_navigate"
+                        android:layout_width="140dp"
+                        android:layout_height="68dp"
+                        app:hl_cornerRadius="@dimen/dp_6"
+                        app:hl_endColor="@color/white"
+                        app:hl_layoutBackground="@color/md_theme_red"
+                        app:hl_shadowColor="@color/md_theme_red"
+                        app:hl_shadowLimit="@dimen/dp_10"
+                        app:hl_startColor="@color/md_theme_red"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btn_setup"
+                        app:layout_constraintTop_toTopOf="@+id/btn_setup">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingEnd="@dimen/dp_14"
+                            android:text="导航"
+                            android:textColor="@color/white"
+                            app:drawableEndCompat="@drawable/ic_navigate" />
+                    </com.lihang.ShadowLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_6"
+                    android:padding="@dimen/dp_6"
+                    android:text="近期分享"
+                    android:textColor="@color/blacks"
+                    android:textSize="@dimen/sp_16"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_setup" />
+
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/ry_common"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="@dimen/dp_20"
+                android:nestedScrollingEnabled="true"
+                android:onClick="@{viewModel.fabOnClickListener}"
+                android:src="@drawable/ic_top"
+                app:backgroundTint="@color/white"
+                app:elevation="@dimen/dp_6"
+                app:fabSize="mini"
+                app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+                app:pressedTranslationZ="@dimen/dp_10" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </layout>

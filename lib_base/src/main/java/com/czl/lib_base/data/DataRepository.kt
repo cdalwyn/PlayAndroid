@@ -130,6 +130,10 @@ class DataRepository constructor(
         return mHttpDataSource.collectWebsite(name,link)
     }
 
+    override fun getSquareList(page: Int): Observable<BaseBean<SquareListBean>> {
+        return mHttpDataSource.getSquareList(page)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }
