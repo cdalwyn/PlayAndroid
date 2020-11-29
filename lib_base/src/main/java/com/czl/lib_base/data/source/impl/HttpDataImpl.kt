@@ -128,4 +128,12 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getSquareList(page)
     }
 
+    override fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>> {
+        return apiService.getSystemTreeData()
+    }
+
+    override fun getNavData(): Observable<BaseBean<NavigationBean>> {
+        return apiService.getNavData()
+    }
+
 }

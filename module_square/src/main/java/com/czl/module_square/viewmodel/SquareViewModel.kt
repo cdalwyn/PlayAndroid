@@ -7,6 +7,7 @@ import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.SquareListBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
@@ -40,6 +41,15 @@ class SquareViewModel(application: MyApplication, model: DataRepository) :
     val fabOnClickListener: View.OnClickListener = View.OnClickListener {
         uc.scrollTopEvent.call()
     }
+
+    val onSystemTreeClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.Square.F_SYSTEM)
+    })
+
+    val onNavClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.Square.F_NAV)
+    })
+
     /**
      * 收藏
      */
@@ -50,7 +60,8 @@ class SquareViewModel(application: MyApplication, model: DataRepository) :
     fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
     }
-    fun getSquareList() {
+
+    private fun getSquareList() {
         model.getSquareList(currentPage + 1)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<SquareListBean>>() {

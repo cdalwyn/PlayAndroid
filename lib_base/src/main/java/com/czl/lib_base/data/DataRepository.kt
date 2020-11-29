@@ -68,7 +68,7 @@ class DataRepository constructor(
     }
 
     override fun unCollectArticle(id: Int, originId: Int): Observable<BaseBean<Any?>> {
-        return mHttpDataSource.unCollectArticle(id,originId)
+        return mHttpDataSource.unCollectArticle(id, originId)
     }
 
     override fun logout(): Observable<BaseBean<Any?>> {
@@ -99,7 +99,7 @@ class DataRepository constructor(
     }
 
     override fun getProjectByCid(page: String, cid: String): Observable<BaseBean<ProjectBean>> {
-        return mHttpDataSource.getProjectByCid(page,cid)
+        return mHttpDataSource.getProjectByCid(page, cid)
     }
 
     override fun getUserShareData(page: String): Observable<BaseBean<UserShareBean>> {
@@ -127,11 +127,19 @@ class DataRepository constructor(
     }
 
     override fun collectWebsite(name: String, link: String): Observable<BaseBean<Any?>> {
-        return mHttpDataSource.collectWebsite(name,link)
+        return mHttpDataSource.collectWebsite(name, link)
     }
 
     override fun getSquareList(page: Int): Observable<BaseBean<SquareListBean>> {
         return mHttpDataSource.getSquareList(page)
+    }
+
+    override fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>> {
+        return mHttpDataSource.getSystemTreeData()
+    }
+
+    override fun getNavData(): Observable<BaseBean<NavigationBean>> {
+        return mHttpDataSource.getNavData()
     }
 
     override fun getLocalData(): String {
@@ -166,7 +174,7 @@ class DataRepository constructor(
         return mLocalDataSource.getSearchHistoryByUid()
     }
 
-    override fun deleteSearchHistory(history:String): Disposable {
+    override fun deleteSearchHistory(history: String): Disposable {
         return mLocalDataSource.deleteSearchHistory(history)
     }
 

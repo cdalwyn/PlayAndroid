@@ -76,7 +76,10 @@ interface ApiService {
      */
     @POST("lg/collect/addtool/json")
     @FormUrlEncoded
-    fun collectWebsite(@Field("name")name:String,@Field("link")link:String):Observable<BaseBean<Any?>>
+    fun collectWebsite(
+        @Field("name") name: String,
+        @Field("link") link: String
+    ): Observable<BaseBean<Any?>>
 
     /**
      * 搜索
@@ -167,5 +170,17 @@ interface ApiService {
      * 获取广场列表
      */
     @GET("user_article/list/{page}/json")
-    fun getSquareList(@Path("page")page: Int):Observable<BaseBean<SquareListBean>>
+    fun getSquareList(@Path("page") page: Int): Observable<BaseBean<SquareListBean>>
+
+    /**
+     * 获取体系列表
+     */
+    @GET("tree/json")
+    fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>>
+
+    /**
+     * 获取导航列表
+     */
+    @GET("navi/json")
+    fun getNavData(): Observable<BaseBean<NavigationBean>>
 }

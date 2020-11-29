@@ -44,6 +44,8 @@ interface AppConstants {
 
         object Square {
             const val F_SQUARE = "/square/SquareFragment"
+            const val F_NAV = "/square/NavigateFragment"
+            const val F_SYSTEM = "/square/SystemTreeFragment"
         }
 
         object Project {

@@ -34,5 +34,6 @@ interface HttpDataSource {
     fun unCollectArticle(id: Int, originId: Int = -1): Observable<BaseBean<Any?>>
     fun collectWebsite(name:String,link:String):Observable<BaseBean<Any?>>
     fun getSquareList(page: Int = 0):Observable<BaseBean<SquareListBean>>
-
+    fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>>
+    fun getNavData(): Observable<BaseBean<NavigationBean>>
 }
