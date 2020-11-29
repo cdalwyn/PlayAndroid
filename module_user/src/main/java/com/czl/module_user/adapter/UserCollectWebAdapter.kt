@@ -75,7 +75,7 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
             val clipboardManager = mFragment.requireActivity()
                 .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clipData = ClipData.newPlainText("Label", it.link)
-            clipboardManager.primaryClip = clipData
+            clipboardManager.setPrimaryClip(clipData)
         }
     })
 

@@ -1,7 +1,7 @@
 ext {
     //android开发版本配置
     android = [
-            compileSdkVersion: 28,
+            compileSdkVersion: 29,
             buildToolsVersion: "30.0.0",
             applicationId    : "com.czl.mvvmcomponents",
             minSdkVersion    : 21,
@@ -65,8 +65,8 @@ ext {
             //json解析
             "gson"                                 : "com.google.code.gson:gson:2.8.5",
             //material-dialogs
-            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
-            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
+            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.6.0",
+            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.6.0",
             //recyclerview的databinding套装
             "bindingcollectionadapter"             : "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:4.0.0",
             "bindingcollectionadapter-recyclerview": "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:4.0.0",
@@ -98,7 +98,7 @@ ext {
             'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
             'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
             'autosize'                             : "me.jessyan:autosize:1.1.2",
-            'xpopup'                               : 'com.lxj:xpopup:2.1.12',
+            'xpopup'                               : 'com.lxj:xpopup:2.2.5',
             'searchview'                           : 'com.github.mancj:MaterialSearchBar:0.8.5',
             'shadowlayout'                         : 'com.github.lihangleo2:ShadowLayout:3.1.3',
             // 骨架屏
