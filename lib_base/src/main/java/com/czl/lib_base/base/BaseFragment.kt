@@ -143,7 +143,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         if (enableLazy()) {
-
             //私有的ViewModel与View的契约事件回调逻辑
             registerUIChangeLiveDataCallBack()
             //页面数据初始化方法

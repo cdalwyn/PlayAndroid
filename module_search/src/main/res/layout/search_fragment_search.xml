@@ -26,7 +26,6 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dp_24"
             android:background="@color/md_theme_red"
             app:elevation="0dp">
 
@@ -36,26 +35,28 @@
                 >
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="48dp"
+                    android:layout_width="40dp"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/dp_12"
+                    android:paddingStart="@dimen/dp_14"
+                    android:paddingTop="@dimen/dp_14"
+                    android:paddingBottom="@dimen/dp_14"
                     app:srcCompat="@drawable/ic_arrow_back_white_24dp"
                     binding:isVisible="@{viewModel.backVisibility}"
                     binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
 
 
                     <com.czl.lib_base.widget.MaterialSearchBar
-                        android:padding="@dimen/dp_10"
                         android:id="@+id/search_bar"
+                        android:padding="@dimen/dp_6"
                         style="@style/SearchBarStyle"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:layout_constraintTop_toTopOf="parent"
                         app:mt_backIconUseTint="true"
                         app:mt_maxSuggestionsCount="5"
                         app:mt_navIconEnabled="false"
-                        app:mt_roundedSearchBarEnabled="false"
+                        app:mt_roundedSearchBarEnabled="true"
                         app:mt_speechMode="false"
                         binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
                         binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"

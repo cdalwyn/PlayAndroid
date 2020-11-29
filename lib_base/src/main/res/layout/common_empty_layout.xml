@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -12,10 +13,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/iv_avatar"
             android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="@drawable/ic_empty" />
+            android:layout_height="60dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="load_empty.json"
+            app:lottie_loop="true" />
 
         <TextView
             android:id="@+id/tv_empty"
@@ -23,11 +27,12 @@
             android:layout_height="wrap_content"
             android:text="空数据"
             android:textColor="#333333"
-            android:textSize="18sp" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_12"
             android:text="点击重试" />
     </LinearLayout>
 </layout>

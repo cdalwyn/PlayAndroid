@@ -22,7 +22,6 @@ import com.gyf.immersionbar.ImmersionBar
 @Route(path = AppConstants.Router.Project.F_PROJECT)
 class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewModel>() {
 
-
     override fun initContentView(): Int {
         return R.layout.project_fragment_project
     }
@@ -61,12 +60,12 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
                         for (data in t.data!!) {
                             binding.tabLayout.addTab(binding.tabLayout.newTab())
                             tabTitles.add(data.name)
-                            fragments.add(ContentFragment.getInstance(data.id))
+                            fragments.add(ContentFragment.getInstance(data.id.toString()))
                         }
                         binding.viewpager.apply {
                             adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
                             // 设置该属性后第一次将自动加载所有fragment 不配置该属性则使用viewpager2内部加载机制
-//                            offscreenPageLimit = fragments.size
+                            offscreenPageLimit = fragments.size
                         }
                         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
                             tab.text = tabTitles[position]

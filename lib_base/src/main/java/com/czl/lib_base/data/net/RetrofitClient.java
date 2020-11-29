@@ -61,7 +61,7 @@ public class RetrofitClient {
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 // 这里你可以根据自己的机型设置同时连接的个数和时间，我这里8个，和每个保持时间为10s
-                .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS))
+                .connectionPool(new ConnectionPool(15, 10, TimeUnit.SECONDS))
                 .build();
         retrofit = new Retrofit.Builder()
                 .client(okHttpClient)

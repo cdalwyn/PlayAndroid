@@ -16,7 +16,6 @@
         android:id="@+id/iv_avatar"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="@dimen/dp_6"
         app:lottie_autoPlay="true"
         app:lottie_fileName="load_error.json"
         app:lottie_loop="true" />

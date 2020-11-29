@@ -94,8 +94,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
             })
         searchPlaceHolder.set(it)
         keyword = it
-        getSearchDataByKeyword(it)
-
+        getSearchDataByKeyword(it,-1)
     })
 
     fun getSearchDataByKeyword(key: String, page: Int = 0) {

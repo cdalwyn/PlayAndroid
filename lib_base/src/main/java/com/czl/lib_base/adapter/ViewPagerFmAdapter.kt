@@ -19,4 +19,5 @@ class ViewPagerFmAdapter(
     override fun createFragment(position: Int): Fragment {
         return mFragments[position]
     }
+
 }

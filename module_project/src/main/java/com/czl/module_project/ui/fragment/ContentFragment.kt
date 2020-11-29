@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectBean
@@ -22,12 +23,13 @@ import com.czl.module_project.viewmodel.ContentViewModel
 class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewModel>() {
 
     private lateinit var mAdapter: ProjectItemGridAdapter
-
+    private var firstLoad = true
+    private var sortId:String? = null
     companion object {
         const val SORT_ID = "sort_id"
-        fun getInstance(id: Int): ContentFragment {
+        fun getInstance(id: String): ContentFragment {
             val bundle = Bundle()
-            bundle.putInt(SORT_ID, id)
+            bundle.putString(SORT_ID, id)
             val contentFragment = ContentFragment()
             contentFragment.arguments = bundle
             return contentFragment
@@ -50,12 +52,23 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
         return false
     }
 
-    override fun initData() {
-        val sortId = arguments?.getInt(SORT_ID, 0)
+    override fun onResume() {
+        super.onResume()
+        // 懒加载
+        if (firstLoad) {
+            sortId = arguments?.getString(SORT_ID)
+            sortId?.let {
+                viewModel.cid = it
+                binding.smartCommon.autoRefresh()
+            }
+        }
+    }
+
+    override fun reload() {
+        super.reload()
         sortId?.let {
-            binding.smartCommon.autoRefreshAnimationOnly()
             viewModel.cid = it
-            viewModel.getProjectDataByCid()
+            binding.smartCommon.autoRefresh()
         }
     }
 
@@ -66,8 +79,12 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
             if (it == null) {
                 binding.smartCommon.finishRefresh(500)
                 binding.smartCommon.finishLoadMore(false)
+                loadService.showWithConvertor(-1)
                 return@Observer
             }
+            // 成功加载数据后关闭懒加载开关
+            firstLoad = false
+            loadService.showWithConvertor(0)
             binding.smartCommon.finishRefresh(500)
             if (it.over) {
                 binding.smartCommon.finishLoadMoreWithNoMoreData()

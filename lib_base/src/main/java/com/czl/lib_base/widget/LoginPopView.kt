@@ -1,35 +1,20 @@
 package com.czl.lib_base.widget
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.widget.ViewPager2
 import com.czl.lib_base.R
-import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.base.BaseRxActivity
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.UserBean
 import com.czl.lib_base.databinding.PopLoginBinding
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
-import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BottomPopupView
-import me.yokeyword.fragmentation.SupportFragment
-import org.koin.core.component.KoinApiExtension
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 /**
  * @author Alwyn

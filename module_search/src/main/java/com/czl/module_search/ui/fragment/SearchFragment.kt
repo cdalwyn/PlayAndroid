@@ -33,8 +33,8 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
         return BR.viewModel
     }
 
-    override fun onSupportVisible() {
-        ImmersionBar.with(this).statusBarDarkFont(false).init()
+    override fun isThemeRedStatusBar(): Boolean {
+        return true
     }
 
     override fun useBaseLayout(): Boolean {
@@ -53,7 +53,7 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
             rySkeletonScreen = Skeleton.bind(binding.smartCommon)
                 .load(R.layout.search_item_skeleton)
                 .show()
-            viewModel.getSearchDataByKeyword(it)
+            viewModel.getSearchDataByKeyword(it,-1)
         }
         binding.searchBar.isSuggestionsEnabled = false
     }

@@ -8,7 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -50,7 +53,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -92,7 +98,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -134,7 +143,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -176,7 +188,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -218,7 +233,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_6"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
         android:layout_marginBottom="@dimen/dp_10">
 
         <View
@@ -234,21 +252,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
+            <com.czl.lib_base.widget.SkeletonBlock
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:background="@color/light_transparent" />
 
 
-            <View
+            <com.czl.lib_base.widget.SkeletonBlock
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginEnd="60dp"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:background="@color/light_transparent" />
 
-            <View
+            <com.czl.lib_base.widget.SkeletonBlock
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@color/light_transparent" />

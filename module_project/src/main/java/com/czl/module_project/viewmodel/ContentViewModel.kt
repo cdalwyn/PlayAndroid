@@ -1,8 +1,6 @@
 package com.czl.module_project.viewmodel
 
 import android.view.View
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
@@ -13,9 +11,6 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.module_project.BR
-import com.czl.module_project.R
-import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 /**
  * @author Alwyn
@@ -25,12 +20,12 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
 class ContentViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
     var currentPage = 1
-    var cid = 0
+    var cid:String? = null
 
     val uc = UiChangeEvent()
 
     class UiChangeEvent {
-        val refreshCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
+        val refreshCompleteEvent: SingleLiveEvent<ProjectBean?> = SingleLiveEvent()
         val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
@@ -47,23 +42,28 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
         uc.moveTopEvent.call()
     }
 
-    fun getProjectDataByCid() {
-        model.getProjectByCid((currentPage+1).toString(), cid.toString())
-            .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
-                override fun onResult(t: BaseBean<ProjectBean>) {
-                    if (t.errorCode == 0) {
-                        currentPage++
+    private fun getProjectDataByCid() {
+        cid?.let {
+            model.getProjectByCid((currentPage+1).toString(), it)
+                .compose(RxThreadHelper.rxSchedulerHelper(this))
+                .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
+                    override fun onResult(t: BaseBean<ProjectBean>) {
+                        if (t.errorCode == 0) {
+                            currentPage++
+                            uc.refreshCompleteEvent.postValue(t.data)
+                        }else{
+                            uc.refreshCompleteEvent.postValue(null)
+                        }
+
+
                     }
-                    uc.refreshCompleteEvent.postValue(t.data)
 
-                }
+                    override fun onFailed(msg: String?) {
+                        showErrorToast(msg)
+                        uc.refreshCompleteEvent.postValue(null)
+                    }
 
-                override fun onFailed(msg: String?) {
-                    showErrorToast(msg)
-                    uc.refreshCompleteEvent.postValue(null)
-                }
-
-            })
+                })
+        }
     }
 }
