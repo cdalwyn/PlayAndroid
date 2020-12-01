@@ -14,10 +14,12 @@ import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.util.MaterialDialogUtils
+import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.LoginPopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
@@ -37,7 +39,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     protected lateinit var binding: V
     lateinit var viewModel: VM
     private var viewModelId = 0
-    private var dialog: MaterialDialog? = null
+    private var dialog: BasePopupView? = null
     private var rootBinding: ViewDataBinding? = null
 
     val dataRepository: DataRepository by inject()
@@ -184,27 +186,29 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     fun showLoading(title: String?) {
-        if (dialog != null) {
-            dialog = dialog!!.builder.title(title!!).build()
-            dialog!!.show()
-        } else {
-            val builder =
-                MaterialDialogUtils.showIndeterminateProgressDialog(this, title, true)
-            dialog = builder.show()
-        }
+        dialog = PopDialogUtils.showLoadingDialog(this, title)
+//        if (dialog != null) {
+//            dialog = dialog!!.builder.title(title!!).build()
+//            dialog!!.show()
+//        } else {
+//            val builder =
+//                MaterialDialogUtils.showIndeterminateProgressDialog(this, title, true)
+//            dialog = builder.show()
+//        }
     }
 
     fun dismissLoading() {
-        if (dialog != null && dialog!!.isShowing) {
-            // 避免闪屏
-            viewModel.addSubscribe(Flowable.timer(200, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    dialog!!.dismiss()
-                }) {
-                    dialog!!.dismiss()
-                })
-        }
+        dialog?.smartDismiss()
+//        if (dialog != null && dialog!!.isShowing) {
+//            // 避免闪屏
+//            viewModel.addSubscribe(Flowable.timer(200, TimeUnit.MILLISECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    dialog!!.dismiss()
+//                }) {
+//                    dialog!!.dismiss()
+//                })
+//        }
     }
 
     fun showErrorToast(msg: String?) {

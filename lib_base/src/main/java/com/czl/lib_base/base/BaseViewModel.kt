@@ -89,7 +89,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         get() = lifecycle.get()
 
 
-    fun showLoading(title: String? = "请稍后...") {
+    fun showLoading(title: String?="加载中") {
         uC.showLoadingEvent.postValue(title)
     }
 

@@ -20,6 +20,7 @@ import com.czl.lib_base.callback.LoadingCallback
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.MaterialDialogUtils
+import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.Callback
@@ -27,6 +28,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.Convertor
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
+import com.lxj.xpopup.core.BasePopupView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
@@ -41,7 +43,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     protected lateinit var binding: V
     lateinit var viewModel: VM
     private var viewModelId = 0
-    private var dialog: MaterialDialog? = null
+    private var dialog: BasePopupView? = null
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
 
@@ -328,19 +330,21 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     fun showLoading(title: String?) {
-        if (dialog != null) {
-            dialog = dialog!!.builder.title(title!!).build()
-            dialog!!.show()
-        } else {
-            val builder = MaterialDialogUtils.showIndeterminateProgressDialog(activity, title, true)
-            dialog = builder.show()
-        }
+        dialog = PopDialogUtils.showLoadingDialog(requireContext(),title)
+//        if (dialog != null) {
+//            dialog = dialog!!.builder.title(title!!).build()
+//            dialog!!.show()
+//        } else {
+//            val builder = MaterialDialogUtils.showIndeterminateProgressDialog(activity, title, true)
+//            dialog = builder.show()
+//        }
     }
 
     fun dismissLoading() {
-        if (dialog != null && dialog!!.isShowing) {
-            dialog!!.dismiss()
-        }
+        dialog?.smartDismiss()
+//        if (dialog != null && dialog!!.isShowing) {
+//            dialog!!.dismiss()
+//        }
     }
 
     fun showErrorToast(msg: String?) {

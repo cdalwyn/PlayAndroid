@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#EF5350</color>
-    <color name="colorPrimaryDark">#1382DB</color>
-    <color name="colorAccent">#2196F3</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#EF5350</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="errorColor">#D50000</color>
