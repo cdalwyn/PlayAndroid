@@ -47,9 +47,6 @@ class HomeProjectFragment : BaseFragment<CommonRecycleviewBinding, HomeProjectVm
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             showShimmerAdapter()
         }
-        viewModel.uC.getScrollTopEvent().observe(this, {
-            binding.ryCommon.smoothScrollToPosition(0)
-        })
         viewModel.loadCompleteEvent.observe(this, { data ->
             handleRecyclerviewData(
                 data == null,

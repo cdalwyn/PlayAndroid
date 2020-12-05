@@ -147,7 +147,8 @@ dependencies {
     api rootProject.ext.dependencies["swipe_menu"]
     api rootProject.ext.dependencies["round_imageview"]
     api rootProject.ext.dependencies["loadsir"]
-    api rootProject.ext.dependencies["ConsecutiveScroller"]
+    api rootProject.ext.dependencies["flexbox"]
+    api rootProject.ext.dependencies["linkage-recyclerview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 
 }

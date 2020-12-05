@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lihang.ShadowLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_36"
+    android:layout_marginStart="@dimen/dp_10"
+    android:layout_marginTop="@dimen/dp_5"
+    android:layout_marginEnd="@dimen/dp_10"
+    android:layout_marginBottom="@dimen/dp_5"
+    android:id="@+id/btn_item"
+    app:hl_bindTextView="@id/tv_desc"
+    app:hl_cornerRadius="@dimen/dp_5"
+    app:hl_layoutBackground="@color/white_ee"
+    app:hl_layoutBackground_true="@color/md_theme_red"
+    app:hl_shapeMode="ripple"
+    app:hl_textColor="@color/black"
+    app:hl_textColor_true="@color/black">
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxLines="1"
+        android:textSize="@dimen/sp_12"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingStart="14dp"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingEnd="@dimen/dp_14"
+        android:paddingBottom="@dimen/dp_4"
+        tools:text="Google" />
+</com.lihang.ShadowLayout>

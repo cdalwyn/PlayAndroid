@@ -52,9 +52,6 @@ class UserShareFragment : BaseFragment<CommonRecycleviewBinding, UserShareVm>() 
                 data?.over, 1
             )
         })
-        viewModel.uC.getScrollTopEvent().observe(this, {
-            binding.ryCommon.smoothScrollToPosition(0)
-        })
     }
 
     override fun reload() {

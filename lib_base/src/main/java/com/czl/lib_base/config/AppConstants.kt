@@ -46,6 +46,7 @@ interface AppConstants {
             const val F_SQUARE = "/square/SquareFragment"
             const val F_NAV = "/square/NavigateFragment"
             const val F_SYSTEM = "/square/SystemTreeFragment"
+            const val F_SYS_DETAIL = "/square/SystemDetailFragment"
         }
 
         object Project {
@@ -65,5 +66,7 @@ interface AppConstants {
         const val USER_RANK = "user_rank"
         const val WEB_URL_COLLECT_FLAG = "web_url_collect_flag"
         const val WEB_URL_ID = "web_url_id"
+        const val SYSTEM_DETAIL = "system_detail"
+        const val SYSTEM_DETAIL_POSITION = "system_detail_position"
     }
 }

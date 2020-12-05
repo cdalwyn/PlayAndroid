@@ -39,7 +39,8 @@
             app:elevation="@dimen/dp_6"
             app:fabSize="mini"
             app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
-            app:pressedTranslationZ="@dimen/dp_10" />
+            app:pressedTranslationZ="@dimen/dp_10"
+            binding:onClickCommand="@{viewModel.scrollToTopCommand}"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

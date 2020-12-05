@@ -3,6 +3,7 @@ package com.czl.lib_base.data.source
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
+import retrofit2.http.Field
 import retrofit2.http.Path
 
 /**
@@ -32,8 +33,9 @@ interface HttpDataSource {
     fun getUserCollectWebsite(): Observable<BaseBean<List<CollectWebsiteBean>>>
     fun deleteUserCollectWeb(id: String): Observable<BaseBean<Any?>>
     fun unCollectArticle(id: Int, originId: Int = -1): Observable<BaseBean<Any?>>
-    fun collectWebsite(name:String,link:String):Observable<BaseBean<Any?>>
-    fun getSquareList(page: Int = 0):Observable<BaseBean<SquareListBean>>
-    fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>>
-    fun getNavData(): Observable<BaseBean<NavigationBean>>
+    fun collectWebsite(name: String, link: String): Observable<BaseBean<Any?>>
+    fun getSquareList(page: Int = 0): Observable<BaseBean<SquareListBean>>
+    fun getSystemTreeData(): Observable<BaseBean<List<SystemTreeBean>>>
+    fun getNavData(): Observable<BaseBean<List<NavigationBean>>>
+    fun getArticlesByCid(page: Int = 0, cid: String): Observable<BaseBean<SystemDetailBean>>
 }

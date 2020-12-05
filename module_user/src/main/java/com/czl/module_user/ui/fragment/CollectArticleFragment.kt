@@ -51,9 +51,7 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             showShimmerAdapter()
         }
-        viewModel.uC.getScrollTopEvent().observe(this, {
-            binding.ryCommon.smoothScrollToPosition(0)
-        })
+
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
             handleRecyclerviewData(
                 data == null,

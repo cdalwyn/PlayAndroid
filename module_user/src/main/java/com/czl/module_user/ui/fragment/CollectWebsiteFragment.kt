@@ -57,9 +57,6 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             showShimmerAdapter()
         }
-        viewModel.uC.getScrollTopEvent().observe(this, {
-            binding.ryCommon.smoothScrollToPosition(0)
-        })
         viewModel.loadDataCompleteEvent.observe(this, {
             binding.smartCommon.finishRefresh()
             binding.ryCommon.hideShimmerAdapter()

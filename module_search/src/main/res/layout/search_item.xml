@@ -6,14 +6,13 @@
     >
 
     <data>
-
+        <import type="android.text.TextUtils"/>
         <variable
-            name="textUtils"
-            type="android.text.TextUtils" />
-
+            name="data"
+            type="com.czl.lib_base.data.bean.SearchDataBean.Data" />
         <variable
-            name="viewModel"
-            type="com.czl.module_search.viewmodel.SearchItemViewModel" />
+            name="adapter"
+            type="com.czl.module_search.adapter.SearchAdapter" />
     </data>
 
 
@@ -39,9 +38,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_marginEnd="@dimen/dp_10"
+                android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off_gray}"
                 tools:src="@drawable/ic_like_off_gray"
-                binding:src="@{viewModel.ivCollect}"
-                binding:onClickCommand="@{viewModel.collectClickCommand}"/>
+                binding:onRvItemCommand="@{adapter.onCollectClick}"
+                binding:rvItemBean="@{data}"
+                />
 
             <ImageView
                 android:layout_width="0.5dp"
@@ -53,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                binding:onClickCommand="@{viewModel.searchItemClickCommand}">
+                >
 
                 <TextView
                     android:id="@+id/tv_title"
@@ -63,7 +64,7 @@
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:textSize="@dimen/sp_12"
-                    android:text="@{viewModel.entity.title}"
+                    android:text="@{data.title}"
                     android:textColor="@color/black"
                     tools:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题题标题标题标题标题标题标题标题标题" />
 
@@ -76,45 +77,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_12"
-                        android:text="@{viewModel.entity.author.empty?viewModel.tvShare:viewModel.tvAuthor}"
-                        tools:text="分享者：" />
+                        android:background="@{TextUtils.isEmpty(data.author)?@drawable/stroke_green:@drawable/stroke_red}"
+                        android:text="@{TextUtils.isEmpty(data.author)?adapter.tvShare:adapter.tvAuthor}"
+                        android:textColor="@{TextUtils.isEmpty(data.author)?@color/green_68:@color/md_theme_red}"
+                        tools:text="分享" />
 
                     <TextView
+                        android:layout_marginStart="@dimen/dp_10"
                         android:id="@+id/item_tv_author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/black"
                         android:layout_marginEnd="@dimen/dp_10"
                         android:ellipsize="end"
                         android:maxLength="16"
                         android:maxLines="1"
                         android:textSize="@dimen/sp_12"
-                        android:text="@{viewModel.entity.author.isEmpty?viewModel.entity.shareUser:viewModel.entity.author}"
+                        android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
                         tools:text="cdalwynsssssssssssssssssssssssssssssssssss" />
 
-                    <TextView
-                        android:id="@+id/item_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="分类："
-                        android:textSize="@dimen/sp_12"
-                        />
-
-                    <TextView
-                        android:id="@+id/item_tv_sort"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_12"
-                        android:text="@{viewModel.entity.chapterName}" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/item_tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/dp_10"
-                    android:textSize="@dimen/sp_12"
-                    android:text="@{viewModel.entity.niceShareDate}"
-                    tools:text="2020-11-6" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_12"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:text="@{data.chapterName}"
+                        tools:text="2020:11:23"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:textSize="@dimen/sp_12"
+                        android:text="@{data.niceShareDate}"
+                        tools:text="广场" />
+                </RelativeLayout>
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 

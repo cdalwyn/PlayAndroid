@@ -5,112 +5,69 @@
 
     <data>
 
-        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
-
-        <import type="com.czl.lib_base.binding.viewadapter.recyclerview.LayoutManagers" />
-
         <variable
             name="viewModel"
             type="com.czl.module_search.viewmodel.SearchViewModel" />
 
-        <variable
-            name="adapter"
-            type="BindingRecyclerViewAdapter" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_theme_red"
-            app:elevation="0dp">
+            android:background="@color/md_theme_red">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/dp_14"
-                    android:paddingTop="@dimen/dp_14"
-                    android:paddingBottom="@dimen/dp_14"
-                    app:srcCompat="@drawable/ic_arrow_back_white_24dp"
-                    binding:isVisible="@{viewModel.backVisibility}"
-                    binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
-
-
-                    <com.czl.lib_base.widget.MaterialSearchBar
-                        android:id="@+id/search_bar"
-                        android:padding="@dimen/dp_6"
-                        style="@style/SearchBarStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:mt_backIconUseTint="true"
-                        app:mt_maxSuggestionsCount="5"
-                        app:mt_navIconEnabled="false"
-                        app:mt_roundedSearchBarEnabled="true"
-                        app:mt_speechMode="false"
-                        binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                        binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
-                        binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:onClick="@{viewModel.onSearchCancelClick}"
-                    android:paddingEnd="@dimen/dp_10"
-                    android:text="取消"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="@color/white"
-                    binding:isVisible="@{viewModel.cancelVisibility}" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:id="@+id/smart_common"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"
-            binding:onRefreshCommand="@{viewModel.onRefreshCommand}">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ry_common"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
-                binding:adapter="@{adapter}"
-                binding:itemBinding="@{viewModel.searchItemBinding}"
-                binding:items="@{viewModel.searchItemList}"
-                binding:layoutManager="@{LayoutManagers.linear}" />
+                android:paddingStart="@dimen/dp_14"
+                android:paddingTop="@dimen/dp_14"
+                android:paddingBottom="@dimen/dp_14"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+                binding:isVisible="@{viewModel.backVisibility}"
+                binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
 
 
-        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+            <com.czl.lib_base.widget.MaterialSearchBar
+                android:id="@+id/search_bar"
+                style="@style/SearchBarStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:mt_backIconUseTint="true"
+                app:mt_maxSuggestionsCount="5"
+                app:mt_navIconEnabled="false"
+                app:mt_roundedSearchBarEnabled="true"
+                app:mt_speechMode="false"
+                binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
+                binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
+                binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="@dimen/dp_20"
-            android:onClick="@{viewModel.fabOnClickListener}"
-            android:src="@drawable/ic_top"
-            app:backgroundTint="@color/white"
-            app:elevation="@dimen/dp_6"
-            app:fabSize="mini"
-            app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
-            app:pressedTranslationZ="@dimen/dp_10" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:onClick="@{viewModel.onSearchCancelClick}"
+                android:paddingEnd="@dimen/dp_10"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                binding:isVisible="@{viewModel.cancelVisibility}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <include
+            android:id="@+id/include_ry"
+            layout="@layout/common_recycleview"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:viewModel="@{viewModel}" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </layout>

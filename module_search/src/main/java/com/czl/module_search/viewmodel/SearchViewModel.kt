@@ -19,6 +19,7 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.BR
 import com.czl.module_search.R
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -39,7 +40,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<SearchDataBean?> = SingleLiveEvent()
-        val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val searchConfirmEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     /*左边返回按钮的显示*/
@@ -51,22 +52,14 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     /*搜索框占位内容*/
     var searchPlaceHolder: ObservableField<String> = ObservableField("")
 
-    /*置顶*/
-    val fabOnClickListener: View.OnClickListener = View.OnClickListener {
-        uc.moveTopEvent.call()
+    override fun refreshCommand() {
+        currentPage = -1
+        getSearchDataByKeyword()
     }
 
-    val searchItemBinding: ItemBinding<SearchItemViewModel> =
-        ItemBinding.of(BR.viewModel, R.layout.search_item)
-    val searchItemList: ObservableList<SearchItemViewModel> = ObservableArrayList()
-
-    val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        getSearchDataByKeyword(keyword,-1)
-    })
-
-    val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        getSearchDataByKeyword(keyword, currentPage)
-    })
+    override fun loadMoreCommand() {
+        getSearchDataByKeyword()
+    }
 
     val onSearchLeftCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         finish()
@@ -83,7 +76,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
 
     val onSearchConfirmCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         if (keyword.isBlank()) {
-            showNormalToast("搜索内容不能为空喔~")
+            uc.searchCancelEvent.call()
             return@BindingConsumer
         }
         addSubscribe(model.saveUserSearchHistory(it)
@@ -94,26 +87,18 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
             })
         searchPlaceHolder.set(it)
         keyword = it
-        getSearchDataByKeyword(it,-1)
+        uc.searchConfirmEvent.call()
     })
 
-    fun getSearchDataByKeyword(key: String, page: Int = 0) {
-        model.searchByKeyword((page + 1).toString(), key)
+    fun getSearchDataByKeyword() {
+        model.searchByKeyword((currentPage + 1).toString(), keyword)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<SearchDataBean>>() {
                 override fun onResult(t: BaseBean<SearchDataBean>) {
                     if (0 == t.errorCode) {
-                        uc.finishLoadEvent.postValue(t.data)
                         currentPage++
-                        t.data?.let {
-                            if (page == 0) {
-                                searchItemList.clear()
-                            }
-                            for (data in it.datas) {
-                                searchItemList.add(SearchItemViewModel(this@SearchViewModel, data))
-                            }
-                        }
-                    }else{
+                        uc.finishLoadEvent.postValue(t.data)
+                    } else {
                         uc.finishLoadEvent.postValue(null)
                     }
                 }
@@ -124,6 +109,15 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
+    /**
+     * 收藏
+     */
+    fun collectArticle(id: Int): Observable<BaseBean<Any?>> {
+        return model.collectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
 
+    fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
+        return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
 
 }

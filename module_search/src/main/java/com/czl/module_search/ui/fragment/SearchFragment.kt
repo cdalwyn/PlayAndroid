@@ -4,11 +4,15 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.module_search.BR
 import com.czl.module_search.R
+import com.czl.module_search.adapter.SearchAdapter
 import com.czl.module_search.databinding.SearchFragmentSearchBinding
 import com.czl.module_search.viewmodel.SearchViewModel
 import com.ethanhua.skeleton.Skeleton
@@ -22,9 +26,7 @@ import com.gyf.immersionbar.ImmersionBar
  */
 @Route(path = AppConstants.Router.Search.F_SEARCH)
 class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel>() {
-
-    private lateinit var rySkeletonScreen: SkeletonScreen
-
+    private lateinit var mAdapter:SearchAdapter
     override fun initContentView(): Int {
         return R.layout.search_fragment_search
     }
@@ -46,16 +48,26 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
     }
 
     override fun initData() {
+        initAdapter()
         val keyword = arguments?.getString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD)
         keyword?.let {
             viewModel.keyword = it
             viewModel.searchPlaceHolder.set(it)
-            rySkeletonScreen = Skeleton.bind(binding.smartCommon)
-                .load(R.layout.search_item_skeleton)
-                .show()
-            viewModel.getSearchDataByKeyword(it,-1)
+            binding.includeRy.smartCommon.autoRefresh()
         }
         binding.searchBar.isSuggestionsEnabled = false
+    }
+
+    private fun initAdapter() {
+        mAdapter = SearchAdapter(this)
+        mAdapter.setDiffCallback(mAdapter.diffConfig)
+        binding.includeRy.ryCommon.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mAdapter
+            setDemoLayoutReference(R.layout.search_item_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
     }
 
     override fun initViewObservable() {
@@ -63,28 +75,25 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
             binding.searchBar.closeSearch()
         })
         viewModel.uc.finishLoadEvent.observe(this, Observer { data ->
-            Handler(Looper.getMainLooper())
-                .postDelayed({ rySkeletonScreen.hide() }, 300)
-            if (data == null) {
-                binding.smartCommon.finishRefresh(false)
-                binding.smartCommon.finishLoadMore(false)
-                loadService.showWithConvertor(-1)
-                return@Observer
-            }
-            loadService.showWithConvertor(0)
-            binding.smartCommon.apply {
-                finishRefresh(300)
-                if (data.over) finishLoadMoreWithNoMoreData() else finishLoadMore()
-            }
+            handleRecyclerviewData(
+                data == null,
+                data?.datas as MutableList<*>?,
+                mAdapter,
+                binding.includeRy.ryCommon,
+                binding.includeRy.smartCommon,
+                viewModel.currentPage,
+                data?.over
+            )
         })
-        viewModel.uc.moveTopEvent.observe(this, Observer {
-            binding.ryCommon.smoothScrollToPosition(0)
+        viewModel.uc.searchConfirmEvent.observe(this,{
+            binding.includeRy.smartCommon.autoRefresh()
         })
+
     }
 
     override fun reload() {
         super.reload()
-        viewModel.getSearchDataByKeyword(viewModel.keyword, viewModel.currentPage)
+        viewModel.getSearchDataByKeyword()
     }
 
 

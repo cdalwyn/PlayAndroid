@@ -11,7 +11,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:fontFamily">sans-serif</item>
         <!--取消水波纹效果-->
-<!--        <item name="android:colorControlHighlight">@android:color/transparent</item>-->
+        <!--        <item name="android:colorControlHighlight">@android:color/transparent</item>-->
     </style>
 
     <!--Toolbar-->
@@ -38,6 +38,7 @@
         <!-- 退出一个Activity的时候，B返回到A B退出动画 -->
         <item name="android:activityCloseExitAnimation">@anim/v_fragment_exit</item>
     </style>
+
     <style name="TextInputWhiteStyle" parent="AppTheme">
         <!--输入框提示字体色-->
         <item name="android:textColorHint">@color/white</item>
@@ -62,7 +63,10 @@
         <item name="mt_placeholderColor">@color/searchBarPlaceholderColor</item>
         <item name="mt_backIconDrawable">@drawable/ic_back_black_24dp</item>
         <item name="mt_hint">搜你想搜的...</item>
-
     </style>
 
+    <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="textAllCaps">false</item>
+    </style>
 </resources>

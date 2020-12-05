@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
@@ -46,7 +47,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: BasePopupView? = null
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
-
+    private var ryCommon:RecyclerView? = null
     lateinit var loadService: LoadService<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -258,6 +259,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getOnBackPressedEvent().observe(
             this, { onBackPressedSupport() }
         )
+        viewModel.uC.getScrollTopEvent().observe(this, {
+            ryCommon?.smoothScrollToPosition(0)
+        })
     }
 
     /**
@@ -273,13 +277,13 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         over: Boolean?,
         defaultPage: Int = 0
     ) {
+        this.ryCommon = ryCommon
         if (nullFlag) {
             loadService.showWithConvertor(-1)
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)
             return
         }
-
         loadService.showWithConvertor(0)
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()

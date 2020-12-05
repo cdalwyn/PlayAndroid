@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.czl.module_square.viewmodel.SystemTreeVm" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_common"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlEnableLoadMore="false"
+        binding:onRefreshCommand="@{viewModel.onRefreshCommand}">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.kunminx.linkage.LinkageRecyclerView
+                android:id="@+id/ry_link"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
 </layout>

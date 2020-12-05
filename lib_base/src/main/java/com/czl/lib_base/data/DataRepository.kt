@@ -134,12 +134,16 @@ class DataRepository constructor(
         return mHttpDataSource.getSquareList(page)
     }
 
-    override fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>> {
+    override fun getSystemTreeData(): Observable<BaseBean<List<SystemTreeBean>>> {
         return mHttpDataSource.getSystemTreeData()
     }
 
-    override fun getNavData(): Observable<BaseBean<NavigationBean>> {
+    override fun getNavData(): Observable<BaseBean<List<NavigationBean>>> {
         return mHttpDataSource.getNavData()
+    }
+
+    override fun getArticlesByCid(page: Int, cid: String): Observable<BaseBean<SystemDetailBean>> {
+        return mHttpDataSource.getArticlesByCid(page,cid)
     }
 
     override fun getLocalData(): String {

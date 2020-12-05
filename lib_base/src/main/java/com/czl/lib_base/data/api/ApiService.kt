@@ -176,11 +176,17 @@ interface ApiService {
      * 获取体系列表
      */
     @GET("tree/json")
-    fun getSystemTreeData(): Observable<BaseBean<SystemTreeBean>>
+    fun getSystemTreeData(): Observable<BaseBean<List<SystemTreeBean>>>
 
     /**
      * 获取导航列表
      */
     @GET("navi/json")
-    fun getNavData(): Observable<BaseBean<NavigationBean>>
+    fun getNavData(): Observable<BaseBean<List<NavigationBean>>>
+
+    /**
+     * 根据体系Cid查找所有文章
+     */
+    @GET("article/list/{page}/json")
+    fun getArticlesByCid(@Path("page") page: Int, @Query("cid") cid: String):Observable<BaseBean<SystemDetailBean>>
 }
