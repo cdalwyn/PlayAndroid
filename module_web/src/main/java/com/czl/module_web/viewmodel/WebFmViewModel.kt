@@ -1,4 +1,4 @@
-package com.czl.lib_base.mvvm.viewmodel
+package com.czl.module_web.viewmodel
 
 import android.text.TextUtils
 import android.view.View
@@ -32,6 +32,7 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
         val closeEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val collectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val goForwardEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val showMenuEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     override fun setToolbarRightClick() {
@@ -42,7 +43,7 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
         uc.collectEvent.call()
     })
     val onMenuClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        showNormalToast("菜单")
+        uc.showMenuEvent.call()
     })
 
     val onGoForwardClick: View.OnClickListener = View.OnClickListener {

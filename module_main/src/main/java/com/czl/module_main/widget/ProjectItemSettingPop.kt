@@ -6,18 +6,14 @@ import androidx.databinding.DataBindingUtil
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.module_main.R
-import com.czl.module_main.databinding.MainItemProjectBinding
 import com.czl.module_main.databinding.MainPopSettingAttachBinding
 import com.czl.module_main.ui.fragment.HomeFragment
-import com.czl.module_main.ui.fragment.HomeProjectFragment
 import com.lxj.xpopup.core.HorizontalAttachPopupView
 
 /**
@@ -104,7 +100,7 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
             AppConstants.BundleKey.WEB_URL,
             RetrofitClient.baseUrl + bean.tags[0].url
         )
-        mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
+        mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
         dismiss()
     })
 

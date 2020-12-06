@@ -1,7 +1,6 @@
 package com.czl.module_user.adapter
 
 import android.os.Bundle
-import androidx.databinding.ObservableInt
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
@@ -41,7 +40,7 @@ class UserCollectAdapter(val mFragment: CollectArticleFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectArticleBean.Data)
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, Bundle().apply {
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL, it.link)
             })
     })

@@ -11,10 +11,8 @@ import com.czl.lib_base.data.bean.SearchDataBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.mvvm.viewmodel.ItemViewModel
-import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.R
-import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * @author Alwyn
@@ -44,7 +42,7 @@ class SearchItemViewModel(searchViewModel: SearchViewModel) :
     val searchItemClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.WEB_URL, this.entity.get()?.link)
-        viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
+        viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
     })
 
     val collectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

@@ -8,7 +8,6 @@ import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.data.bean.SystemDetailBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
@@ -45,7 +44,7 @@ class SysContentAdapter(val mFragment: SysContentFragment) :
         if (it is SystemDetailBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            (mFragment.parentFragment as SystemDetailFragment).viewModel.startFragment(AppConstants.Router.Base.F_WEB, bundle)
+            (mFragment.parentFragment as SystemDetailFragment).viewModel.startFragment(AppConstants.Router.Web.F_WEB, bundle)
         }
     })
 

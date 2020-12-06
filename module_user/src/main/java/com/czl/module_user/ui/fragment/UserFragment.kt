@@ -10,6 +10,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.UserBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.loadCircleImageRes
+import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.SpUtils
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -74,6 +75,11 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         })
         viewModel.uc.refreshEvent.observe(this,{
             binding.smartCommon.finishRefresh(1500)
+        })
+        viewModel.uc.confirmLogoutEvent.observe(this,{
+            PopDialogUtils.showBaseDialog(requireContext(),"注销","是否确定退出登录？"){
+                viewModel.logout()
+            }
         })
 
     }

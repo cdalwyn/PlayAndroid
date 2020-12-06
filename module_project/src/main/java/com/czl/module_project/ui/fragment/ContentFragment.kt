@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectBean
@@ -125,7 +124,7 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
         }
         mAdapter.setOnItemClickListener { adapter, _, position ->
             val item = adapter.getItem(position) as ProjectBean.Data
-            startContainerActivity(AppConstants.Router.Base.F_WEB,
+            startContainerActivity(AppConstants.Router.Web.F_WEB,
                 Bundle().apply { putString(AppConstants.BundleKey.WEB_URL, item.link) })
         }
     }

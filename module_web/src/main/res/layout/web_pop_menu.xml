@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pop"
+            type="com.czl.module_web.widget.WebMenuPop" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_6"
+            android:background="@drawable/gray_btn_corner_10dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:gravity="center"
+            android:text="网页由XXX提供"
+            android:textColor="@color/white_cc"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <GridLayout
+            android:id="@+id/gl_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:columnCount="4"
+            android:orientation="horizontal"
+            android:rowCount="2"
+            app:layout_constraintTop_toBottomOf="@id/tv_title">
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:text="回到首页"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:padding="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawableTop="@drawable/ic_home_menu"
+                binding:onClickCommand="@{pop.onBackHomeClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:padding="@dimen/dp_10"
+                android:text="分享到广场"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawableTop="@drawable/ic_menu_share_square"
+                binding:onClickCommand="@{pop.onShareSquareClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:text="刷新"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/ic_menu_refresh"
+                binding:onClickCommand="@{pop.onRefreshClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:text="设置"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawableTop="@drawable/ic_menu_setting"
+                binding:onClickCommand="@{pop.onSettingClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:padding="@dimen/dp_10"
+                android:text="收藏记录"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/ic_menu_collect"
+                binding:onClickCommand="@{pop.onOpenCollectClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:padding="@dimen/dp_10"
+                android:text="历史浏览"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:textSize="@dimen/sp_12"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/ic_menu_history"
+                binding:onClickCommand="@{pop.onHistoryClickCommand}"/>
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:padding="@dimen/dp_10"
+                android:text="分享"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/ic_menu_share"
+                binding:onClickCommand="@{pop.onShareOtherClickCommand}"/>
+
+            <TextView
+                android:layout_rowWeight="1"
+                android:layout_columnSpan="1"
+                android:padding="@dimen/dp_10"
+                android:layout_gravity="fill"
+                android:text="退出"
+                android:textSize="@dimen/sp_12"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/ic_menu_exit"
+                binding:onClickCommand="@{pop.onExitClickCommand}"/>
+        </GridLayout>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/white_ee"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/gl_menu" />
+
+
+        <ImageView
+            android:id="@+id/btn_dismiss"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_delete_32dp"
+            android:onClick="@{()->pop.dismiss()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -19,8 +19,8 @@ interface AppConstants {
      *     F_ : Fragment
      */
     interface Router {
-        object Base {
-            const val F_WEB = "/base/WebFragment"
+        object Web {
+            const val F_WEB = "/web/WebFragment"
         }
         object Main {
             const val A_TEST = "/main/TestActivity"

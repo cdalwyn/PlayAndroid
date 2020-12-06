@@ -81,5 +81,6 @@ dependencies {
         implementation project(path: ':module_search')
         implementation project(path: ':module_square')
         implementation project(path: ':module_project')
+        implementation project(path: ':module_web')
     }
 }

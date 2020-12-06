@@ -1,4 +1,4 @@
-package com.czl.lib_base.mvvm.ui
+package com.czl.module_web.ui.fragment
 
 import android.graphics.Bitmap
 import android.os.Build
@@ -9,24 +9,25 @@ import android.webkit.WebView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BR
-import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.databinding.FragmentWebBinding
-import com.czl.lib_base.mvvm.viewmodel.WebFmViewModel
+import com.czl.module_web.viewmodel.WebFmViewModel
+import com.czl.module_web.R
+import com.czl.module_web.databinding.WebFragmentWebBinding
+import com.czl.module_web.widget.WebMenuPop
 import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.NestedScrollAgentWebView
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
+import com.lxj.xpopup.XPopup
 
 
-@Route(path = AppConstants.Router.Base.F_WEB)
-class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
+@Route(path = AppConstants.Router.Web.F_WEB)
+class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
-    private lateinit var agentWeb: AgentWeb
+    lateinit var agentWeb: AgentWeb
 
     // 是否加载失败
     private var errorFlag = false
@@ -37,8 +38,10 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
     // 当前web链接
     private var currentLink: String? = null
 
+    var homeUrl: String? = null
+
     override fun initContentView(): Int {
-        return R.layout.fragment_web
+        return R.layout.web_fragment_web
     }
 
     override fun initVariableId(): Int {
@@ -72,13 +75,19 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
         viewModel.uc.goForwardEvent.observe(this, {
             if (viewModel.canForwardFlag.get()!!) agentWeb.webCreator.webView.goForward()
         })
+        viewModel.uc.showMenuEvent.observe(this, {
+            XPopup.Builder(context)
+                .enableDrag(true)
+                .asCustom(WebMenuPop(this))
+                .show()
+        })
     }
 
     private fun initWebView() {
         val webView = NestedScrollAgentWebView(context)
         val lp = CoordinatorLayout.LayoutParams(-1, -1)
         lp.behavior = AppBarLayout.ScrollingViewBehavior()
-        val url = arguments?.getString(AppConstants.BundleKey.WEB_URL)
+        homeUrl = arguments?.getString(AppConstants.BundleKey.WEB_URL)
         viewModel.collectFlag.set(arguments?.getBoolean(AppConstants.BundleKey.WEB_URL_COLLECT_FLAG))
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(binding.clWebRoot, 1, lp)
@@ -137,7 +146,11 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
                     if (!errorFlag) {
                         loadService.showWithConvertor(0)
                     }
-                    viewModel.canGoBackFlag.set(view.canGoBack())
+                    if (currentLink == homeUrl) {
+                        viewModel.canGoBackFlag.set(false)
+                    }else{
+                        viewModel.canGoBackFlag.set(view.canGoBack())
+                    }
                     viewModel.canForwardFlag.set(view.canGoForward())
                 }
             })
@@ -150,7 +163,7 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
             })
             .createAgentWeb()
             .ready()
-            .go(url)
+            .go(homeUrl)
     }
 
     override fun reload() {
@@ -160,9 +173,10 @@ class WebFragment : BaseFragment<FragmentWebBinding, WebFmViewModel>() {
 
 
     override fun back() {
-        if (agentWeb.webCreator.webView.canGoBack()) {
+        if (!viewModel.canGoBackFlag.get()!!){
+            requireActivity().finish()
+        }else{
             agentWeb.back()
-            return
         }
         super.back()
     }

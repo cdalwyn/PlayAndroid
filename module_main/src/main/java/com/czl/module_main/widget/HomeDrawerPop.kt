@@ -14,6 +14,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.extension.loadCircleImage
 import com.czl.lib_base.extension.loadCircleImageRes
+import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.widget.CommonItemSettingView
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainPopDrawerlayoutBinding
@@ -31,7 +32,9 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
 
     var binding: MainPopDrawerlayoutBinding? = null
     val onLogoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        fragment.viewModel.logout()
+        PopDialogUtils.showBaseDialog(context,"注销","是否确定退出登录？"){
+            fragment.viewModel.logout()
+        }
     })
     val onOpenCollectCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         fragment.startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)

@@ -8,3 +8,4 @@ include ':lib_base'
 //include ':mvvmhabit'
 include ':app'
 rootProject.name = "MvvmComponents"
+include ':module_web'

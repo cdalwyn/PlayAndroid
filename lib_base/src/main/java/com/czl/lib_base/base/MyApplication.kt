@@ -16,6 +16,7 @@ import com.czl.lib_base.util.ToastHelper
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
+import com.lxj.xpopup.XPopup
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
@@ -83,10 +84,10 @@ open class MyApplication : Application() {
         }
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
+        XPopup.setPrimaryColor(ContextCompat.getColor(this,R.color.md_theme_red))
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
     }
-
 
     companion object {
         init {

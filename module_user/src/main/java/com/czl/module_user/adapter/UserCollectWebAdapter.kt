@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
@@ -61,7 +60,7 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectWebsiteBean) {
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, Bundle().apply {
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL, it.link)
                 putBoolean(AppConstants.BundleKey.WEB_URL_COLLECT_FLAG, true)
                 putString(AppConstants.BundleKey.WEB_URL_ID, it.id.toString())

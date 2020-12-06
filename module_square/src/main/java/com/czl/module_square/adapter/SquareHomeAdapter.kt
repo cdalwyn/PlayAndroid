@@ -8,7 +8,6 @@ import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.data.bean.SquareListBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
@@ -40,7 +39,7 @@ class SquareHomeAdapter(val mFragment: SquareFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is SquareListBean.Data) {
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, Bundle().apply {
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL, it.link)
             })
         }

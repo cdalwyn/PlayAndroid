@@ -30,7 +30,7 @@ class NavChildAdapter(val mFragment: NavigateFragment) :BaseQuickAdapter<Navigat
     }
     val onItemClickCommand:BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is NavigationBean.Article){
-            mFragment.viewModel.startFragment(AppConstants.Router.Base.F_WEB, Bundle().apply {
+            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL,it.link)
             })
         }

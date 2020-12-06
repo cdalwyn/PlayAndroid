@@ -66,7 +66,7 @@ class MyBannerAdapter(
         holder.imageView.setOnClickListener {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, data.url)
-            homeFragment.viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB,bundle)
+            homeFragment.viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB,bundle)
         }
     }
 

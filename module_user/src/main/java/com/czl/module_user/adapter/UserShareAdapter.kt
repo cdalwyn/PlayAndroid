@@ -33,7 +33,7 @@ class UserShareAdapter(val mFragment: UserShareFragment) :
 
     val onItemClickCommand:BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is UserShareBean.ShareArticles.Data){
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, Bundle().apply {
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL,it.link)
             })
         }

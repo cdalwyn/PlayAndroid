@@ -10,11 +10,9 @@ import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectBean
 import com.czl.lib_base.extension.ImagePopLoader
-import com.czl.lib_base.extension.loadImage
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainItemProjectBinding
 import com.czl.module_main.ui.fragment.HomeFragment
-import com.czl.module_main.ui.fragment.HomeProjectFragment
 import com.czl.module_main.widget.ProjectItemSettingPop
 import com.lxj.xpopup.XPopup
 
@@ -44,7 +42,7 @@ class HomeProjectAdapter(val mFragment: HomeFragment) :
         if (it is ProjectBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            mFragment.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
         }
     })
 

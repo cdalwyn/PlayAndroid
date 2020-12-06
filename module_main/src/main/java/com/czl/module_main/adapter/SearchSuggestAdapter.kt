@@ -29,10 +29,10 @@ class SearchSuggestAdapter(inflater: LayoutInflater) :
 
         init {
             itemView.setOnClickListener {
-                listener?.OnItemClickListener(adapterPosition, it)
+                listener?.OnItemClickListener(bindingAdapterPosition, it)
             }
             itemView.findViewById<ImageView>(R.id.iv_delete).setOnClickListener {
-                listener?.OnItemDeleteListener(adapterPosition,it)
+                listener?.OnItemDeleteListener(bindingAdapterPosition,it)
             }
         }
     }
@@ -48,9 +48,8 @@ class SearchSuggestAdapter(inflater: LayoutInflater) :
         )
     }
 
-
     override fun getSingleViewHeight(): Int {
-        return 60
+        return 40
     }
 
     override fun onBindSuggestionHolder(

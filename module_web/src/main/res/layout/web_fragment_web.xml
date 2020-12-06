@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.czl.lib_base.mvvm.viewmodel.WebFmViewModel" />
+            type="com.czl.module_web.viewmodel.WebFmViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

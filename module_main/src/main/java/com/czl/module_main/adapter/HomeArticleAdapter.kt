@@ -2,7 +2,6 @@ package com.czl.module_main.adapter
 
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
-import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
@@ -14,7 +13,6 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainItemHomeBinding
-import com.czl.module_main.ui.fragment.HomeArticleFragment
 import com.czl.module_main.ui.fragment.HomeFragment
 
 /**
@@ -60,7 +58,7 @@ class HomeArticleAdapter(val mFragment: HomeFragment) :
         if (it is HomeArticleBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            mFragment.viewModel.startContainerActivity(AppConstants.Router.Base.F_WEB, bundle)
+            mFragment.viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
         }
     })
 
