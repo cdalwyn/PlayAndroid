@@ -70,7 +70,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 .findViewById(R.id.activity_root)
             //避免过度绘制策略
             if (enableSwipeBack()) {
-                rootView.setBackgroundColor(Color.TRANSPARENT)
+//                rootView.setBackgroundColor(Color.TRANSPARENT)
             }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
@@ -104,7 +104,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 }) as LoadService<Int>
             return if (enableSwipeBack()) {
                 //避免过度绘制策略
-                binding.root.setBackgroundColor(Color.TRANSPARENT)
+//                binding.root.setBackgroundColor(Color.TRANSPARENT)
 //                attachToSwipeBack(binding.root)
                 attachToSwipeBack(loadService.loadLayout)
             } else {

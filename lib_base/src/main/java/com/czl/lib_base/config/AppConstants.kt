@@ -68,5 +68,6 @@ interface AppConstants {
         const val WEB_URL_ID = "web_url_id"
         const val SYSTEM_DETAIL = "system_detail"
         const val SYSTEM_DETAIL_POSITION = "system_detail_position"
+        const val WEB_MENU_KEY = "web_menu_key"
     }
 }

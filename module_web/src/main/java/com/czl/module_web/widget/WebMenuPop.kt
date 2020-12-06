@@ -1,10 +1,12 @@
 package com.czl.module_web.widget
 
 import android.content.Context
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.config.AppConstants
 import com.czl.module_web.R
 import com.czl.module_web.databinding.WebPopMenuBinding
 import com.czl.module_web.ui.fragment.WebFragment
@@ -53,7 +55,10 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
 
     })
     val onOpenCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-
+        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {
+            putString(AppConstants.BundleKey.WEB_MENU_KEY,"collect")
+        })
+        dismiss()
     })
     val onHistoryClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
 

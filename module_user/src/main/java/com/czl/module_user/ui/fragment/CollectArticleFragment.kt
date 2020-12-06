@@ -17,6 +17,9 @@ import com.czl.module_user.viewmodel.CollectArticleVm
  */
 class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArticleVm>() {
 
+    private var firstLoad = true
+    private lateinit var mAdapter: UserCollectAdapter
+
     companion object {
         fun getInstance(): CollectArticleFragment = CollectArticleFragment()
     }
@@ -37,22 +40,23 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
         return false
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (firstLoad) {
+            binding.ryCommon.showShimmerAdapter()
+            binding.smartCommon.autoRefresh()
+        }
+    }
+
     override fun initData() {
-        binding.smartCommon.autoRefresh()
+        initAdapter()
     }
 
     override fun initViewObservable() {
-        val mAdapter = UserCollectAdapter(this)
-        mAdapter.setDiffCallback(mAdapter.diffConfig)
-        binding.ryCommon.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            adapter = mAdapter
-            setDemoLayoutReference(R.layout.user_item_collect_skeleton)
-            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
-            showShimmerAdapter()
-        }
-
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
+            if (data != null) {
+                firstLoad = false
+            }
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -63,6 +67,18 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
                 data?.over
             )
         })
+    }
+
+    private fun initAdapter() {
+        if (!this::mAdapter.isInitialized) mAdapter = UserCollectAdapter(this)
+        mAdapter.setDiffCallback(mAdapter.diffConfig)
+        binding.ryCommon.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = mAdapter
+            setDemoLayoutReference(R.layout.user_item_collect_skeleton)
+            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+            showShimmerAdapter()
+        }
     }
 
     override fun reload() {

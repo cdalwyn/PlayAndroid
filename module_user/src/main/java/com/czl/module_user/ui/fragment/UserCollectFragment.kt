@@ -1,5 +1,6 @@
 package com.czl.module_user.ui.fragment
 
+import android.text.TextUtils
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseFragment
@@ -47,5 +48,8 @@ class UserCollectFragment : BaseFragment<UserFragmentCollectBinding, UserCollect
                 tab.text = "网站"
             }
         }.attach()
+        if (!TextUtils.isEmpty(arguments?.getString(AppConstants.BundleKey.WEB_MENU_KEY))){
+            binding.viewpager.currentItem = 1
+        }
     }
 }
