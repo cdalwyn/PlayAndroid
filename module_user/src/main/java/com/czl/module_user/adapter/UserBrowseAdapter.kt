@@ -16,7 +16,7 @@ import com.czl.module_user.ui.fragment.UserBrowseFragment
  * @Date 2020/12/7
  * @Description
  */
-class UserBrowseAdapter(private val mFragment:UserBrowseFragment) :
+class UserBrowseAdapter(private val mFragment: UserBrowseFragment) :
     BaseQuickAdapter<WebHistoryEntity, BaseDataBindingHolder<UserItemBrowseBinding>>(
         R.layout.user_item_browse
     ) {
@@ -33,8 +33,8 @@ class UserBrowseAdapter(private val mFragment:UserBrowseFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is WebHistoryEntity) {
-            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB,Bundle().apply {
-                putString(AppConstants.BundleKey.WEB_URL,it.webLink)
+            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB, Bundle().apply {
+                putString(AppConstants.BundleKey.WEB_URL, it.webLink)
             })
         }
     })

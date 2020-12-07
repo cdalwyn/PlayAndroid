@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:binding="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -23,89 +22,78 @@
         android:layout_height="wrap_content"
         app:layout_scrollFlags="scroll|enterAlways">
 
-<!--            <View-->
-<!--                android:id="@+id/toolbarShadow"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="0.5dp"-->
-<!--                android:layout_gravity="top"-->
-<!--                android:layout_marginTop="?android:actionBarSize"-->
-<!--                android:background="@drawable/toolbar_shad" />-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
                 android:layout_height="?actionBarSize"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:onClick="@{(x)->viewModel.finish()}"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                app:srcCompat="@drawable/ic_back_black_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
-                <RelativeLayout
-                    android:id="@+id/back_btn_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:onClick="@{(x)->viewModel.finish()}"
-                    android:visibility="@{viewModel.btnBackVisibility.equals(`0`)?view.INVISIBLE:view.VISIBLE}">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/iv_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/dp_16"
-                        android:layout_marginEnd="@dimen/dp_16"
-                        app:srcCompat="@drawable/ic_back_black_24dp" />
-                </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbar_contentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLength="10"
+                android:paddingStart="@dimen/dp_20"
+                android:paddingEnd="@dimen/dp_20"
+                android:singleLine="true"
+                android:text="@{viewModel.tvTitle}"
+                android:textColor="@color/md_grey_900"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="这是标题这是标题这是标题这是标题这是标题" />
 
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/back_btn_layout"
-                    android:layout_weight="1">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/toolbar_contentTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerHorizontal="true"
-                        android:ellipsize="marquee"
-                        android:gravity="center"
-                        android:singleLine="true"
-                        android:text="@{viewModel.tvTitle}"
-                        android:textColor="@color/md_grey_900"
-                        android:textSize="@dimen/sp_16"
-                        tools:text="鉴真啊实打阿斯顿撒阿斯顿撒阿斯顿实大大" />
-                </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/toolbar_right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/dp_10"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                binding:onClickCommand="@{viewModel.ivToolbarIconOnClick}"
+                binding:src="@{viewModel.ivToolbarIconRes}"
+                tools:src="@drawable/ic_setting" />
 
-                <RelativeLayout
-                    android:id="@+id/btn_toolbar_right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbar_right_text"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="设置" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/toolbar_right_img"
-                        android:layout_width="@dimen/dp_24"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="@dimen/dp_16"
-                        android:layout_marginEnd="@dimen/dp_16"
-                        binding:onClickCommand="@{viewModel.ivToolbarIconOnClick}"
-                        binding:src="@{viewModel.ivToolbarIconRes}" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/toolbar_right_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:minWidth="@dimen/dp_24"
-                        android:paddingEnd="@dimen/dp_10"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14"
-                        android:visibility="invisible" />
-                </RelativeLayout>
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
+            <View
+                android:id="@+id/toolbarShadow"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@drawable/toolbar_shad"
+                app:layout_constraintTop_toBottomOf="@id/toolbar_contentTitle" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
 </layout>

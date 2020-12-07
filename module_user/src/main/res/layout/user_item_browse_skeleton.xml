@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_20"
+    android:paddingEnd="@dimen/dp_20"
+    android:paddingTop="@dimen/dp_5"
+    android:paddingBottom="@dimen/dp_5">
+
+    <com.czl.lib_base.widget.SkeletonBlock
+        android:layout_width="260dp"
+        android:layout_height="@dimen/dp_24"
+        android:background="@color/light_transparent"/>
+    <com.czl.lib_base.widget.SkeletonBlock
+        android:layout_width="140dp"
+        android:layout_height="@dimen/dp_24"
+        android:background="@color/light_transparent"/>
+</androidx.appcompat.widget.LinearLayoutCompat>

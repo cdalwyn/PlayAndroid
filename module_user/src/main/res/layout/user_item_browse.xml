@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/tools">
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="org.apache.commons.lang3.time.DateFormatUtils"/>
@@ -13,15 +14,23 @@
             type="com.czl.module_user.adapter.UserBrowseAdapter" />
     </data>
 
+    <com.lihang.ShadowLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:hl_shadowLimit="@dimen/dp_5"
+        app:hl_cornerRadius="@dimen/dp_5">
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingStart="@dimen/dp_16"
-        android:paddingTop="@dimen/dp_6"
+        android:paddingTop="@dimen/dp_10"
         android:paddingEnd="@dimen/dp_16"
-        android:paddingBottom="@dimen/dp_4"
-        binding:onRvItemCommand="@{}"
+        android:paddingBottom="@dimen/dp_10"
+        binding:onRvItemCommand="@{adapter.onItemClickCommand}"
         binding:rvItemBean="@{data}">
 
         <TextView
@@ -37,8 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+
             android:text="@{DateFormatUtils.format(data.browseDate,`yyyy-MM-dd HH:mm:ss`)}"
             android:textSize="@dimen/sp_12"
             tools:text="2020-12-12" />
     </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.lihang.ShadowLayout>
+
 </layout>

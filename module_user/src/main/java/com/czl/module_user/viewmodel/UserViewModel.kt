@@ -32,7 +32,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     class UiChangeEvent {
         val showLoginPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val refreshEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val confirmLogoutEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val confirmLogoutEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -45,7 +45,11 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         uc.confirmLogoutEvent.call()
     })
 
-     fun logout() {
+    val onSettingClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
+    })
+
+    fun logout() {
         model.logout()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
@@ -78,6 +82,10 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
 
     val btnShareClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         startContainerActivity(AppConstants.Router.User.F_USER_SHARE)
+    })
+
+    val btnHistoryClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_BROWSE)
     })
 
     fun getUserShareData() {

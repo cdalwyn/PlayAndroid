@@ -92,8 +92,20 @@ open class MyApplication : Application() {
     companion object {
         init {
             ClassicsFooter.REFRESH_FOOTER_FINISH = ""
+            SmartRefreshLayout.setDefaultRefreshInitializer { context, layout ->
+                layout.apply {
+                    setEnableOverScrollDrag(true)
+                    setEnableScrollContentWhenLoaded(true)
+                    setEnableNestedScroll(true)
+                    setEnableAutoLoadMore(true)
+                    setEnableOverScrollBounce(true)
+                    setFooterHeight(60f)
+                }
+            }
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-                layout.setPrimaryColorsId(R.color.md_theme_red, R.color.white)
+                layout.apply {
+                    setPrimaryColorsId(R.color.md_theme_red, R.color.white)
+                }
                 MaterialHeader(context).setColorSchemeColors(
                     ContextCompat.getColor(
                         context,

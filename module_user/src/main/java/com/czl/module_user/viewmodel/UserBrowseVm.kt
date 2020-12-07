@@ -14,12 +14,15 @@ import com.czl.lib_base.util.RxThreadHelper
  */
 class UserBrowseVm(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
-    val loadComplete:SingleLiveEvent<List<WebHistoryEntity>> = SingleLiveEvent()
-    fun getUserBrowseHistory() {
+    val loadCompleteEvent:SingleLiveEvent<List<WebHistoryEntity>> = SingleLiveEvent()
+    override fun refreshCommand() {
+        getUserBrowseHistory()
+    }
+    private fun getUserBrowseHistory() {
         addSubscribe(model.getUserBrowseHistoryByUid()
             .compose(RxThreadHelper.rxSchedulerHelper())
             .subscribe {
-                loadComplete.postValue(it)
+                loadCompleteEvent.postValue(it)
             })
     }
 }

@@ -18,10 +18,7 @@ import com.czl.module_web.R
 import com.czl.module_web.databinding.WebFragmentWebBinding
 import com.czl.module_web.widget.WebMenuPop
 import com.google.android.material.appbar.AppBarLayout
-import com.just.agentweb.AgentWeb
-import com.just.agentweb.NestedScrollAgentWebView
-import com.just.agentweb.WebChromeClient
-import com.just.agentweb.WebViewClient
+import com.just.agentweb.*
 import com.lxj.xpopup.XPopup
 
 
@@ -176,14 +173,17 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             .createAgentWeb()
             .ready()
             .go(homeUrl)
-
+        val settings = webView.settings
+        settings.apply {
+            useWideViewPort = true
+            loadWithOverviewMode = true
+        }
     }
 
     override fun reload() {
         super.reload()
         agentWeb.urlLoader.reload()
     }
-
 
     override fun back() {
         if (!viewModel.canGoBackFlag.get()!!) {
