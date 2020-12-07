@@ -32,7 +32,7 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
         val closeEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val collectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val goForwardEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val showMenuEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val showMenuEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     override fun setToolbarRightClick() {
@@ -113,5 +113,9 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
 
                 }
             })
+    }
+
+    fun saveBrowseHistory(title: String, link: String) {
+        model.saveUserBrowseHistory(title,link)
     }
 }

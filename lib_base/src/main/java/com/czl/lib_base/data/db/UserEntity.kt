@@ -16,9 +16,10 @@ data class UserEntity(
     @Column(unique = true)
     var uid: Int,
     var username: String?,
-    var historyEntities: ArrayList<SearchHistoryEntity> = ArrayList()
+    var historyEntities: ArrayList<SearchHistoryEntity> = ArrayList(),
+    var browseEntities: ArrayList<WebHistoryEntity> = ArrayList()
 ) : LitePalSupport() {
-    private var id: Long = 0
+    var id: Long = 0
     fun getRecentHistory(): List<SearchHistoryEntity> {
         val allHistory = LitePal.select("history").where("userentity_id =?", id.toString())
             .find<SearchHistoryEntity>().reversed()
@@ -28,5 +29,9 @@ data class UserEntity(
 
     fun getAllHistory(): List<SearchHistoryEntity> {
         return LitePal.where("userentity_id =?", id.toString()).find()
+    }
+
+    fun getAllWebHistory(): List<WebHistoryEntity> {
+        return LitePal.where("userentity_id=?", id.toString()).order("browseDate desc").find()
     }
 }

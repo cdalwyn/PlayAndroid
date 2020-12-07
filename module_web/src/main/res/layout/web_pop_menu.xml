@@ -4,6 +4,7 @@
     xmlns:binding="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="pop"
             type="com.czl.module_web.widget.WebMenuPop" />
@@ -48,117 +49,117 @@
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
                 android:text="回到首页"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:padding="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:drawableTop="@drawable/ic_home_menu"
-                binding:onClickCommand="@{pop.onBackHomeClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_home_menu"
+                binding:onClickCommand="@{pop.onBackHomeClickCommand}" />
 
             <TextView
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="分享到广场"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:drawableTop="@drawable/ic_menu_share_square"
-                binding:onClickCommand="@{pop.onShareSquareClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_menu_share_square"
+                binding:onClickCommand="@{pop.onShareSquareClickCommand}" />
 
             <TextView
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_marginBottom="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
-                android:textColor="@color/black"
                 android:text="刷新"
-                android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:drawableTop="@drawable/ic_menu_refresh"
-                binding:onClickCommand="@{pop.onRefreshClickCommand}"/>
-
-            <TextView
-                android:layout_columnSpan="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:padding="@dimen/dp_10"
                 android:textColor="@color/black"
-                android:text="设置"
                 android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:layout_marginBottom="@dimen/dp_10"
-                android:drawableTop="@drawable/ic_menu_setting"
-                binding:onClickCommand="@{pop.onSettingClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_menu_refresh"
+                binding:onClickCommand="@{pop.onRefreshClickCommand}" />
 
             <TextView
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="设置"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                app:drawableTopCompat="@drawable/ic_menu_setting"
+                binding:onClickCommand="@{pop.onSettingClickCommand}" />
+
+            <TextView
+                android:layout_columnSpan="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="收藏记录"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:drawableTop="@drawable/ic_menu_collect"
-                binding:onClickCommand="@{pop.onOpenCollectClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_menu_collect"
+                binding:onClickCommand="@{pop.onOpenCollectClickCommand}" />
 
             <TextView
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
-                android:text="历史浏览"
+                android:text="阅读历史"
                 android:textColor="@color/black"
-                android:gravity="center"
                 android:textSize="@dimen/sp_12"
-                android:drawablePadding="@dimen/dp_6"
-                android:drawableTop="@drawable/ic_menu_history"
-                binding:onClickCommand="@{pop.onHistoryClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_menu_history"
+                binding:onClickCommand="@{pop.onHistoryClickCommand}" />
 
             <TextView
                 android:layout_columnSpan="1"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
+                android:drawablePadding="@dimen/dp_6"
+                android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="分享"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:drawablePadding="@dimen/dp_6"
-                android:drawableTop="@drawable/ic_menu_share"
-                binding:onClickCommand="@{pop.onShareOtherClickCommand}"/>
+                app:drawableTopCompat="@drawable/ic_menu_share"
+                binding:onClickCommand="@{pop.onShareOtherClickCommand}" />
 
             <TextView
                 android:layout_rowWeight="1"
                 android:layout_columnSpan="1"
-                android:padding="@dimen/dp_10"
                 android:layout_gravity="fill"
-                android:text="退出"
-                android:textSize="@dimen/sp_12"
-                android:gravity="center"
-                android:textColor="@color/black"
                 android:drawablePadding="@dimen/dp_6"
-                android:drawableTop="@drawable/ic_menu_exit"
-                binding:onClickCommand="@{pop.onExitClickCommand}"/>
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="退出"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                app:drawableTopCompat="@drawable/ic_menu_exit"
+                binding:onClickCommand="@{pop.onExitClickCommand}" />
         </GridLayout>
 
         <View
             android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/white_ee"
             android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white_ee"
             app:layout_constraintTop_toBottomOf="@id/gl_menu" />
 
 
@@ -166,9 +167,9 @@
             android:id="@+id/btn_dismiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->pop.dismiss()}"
             android:padding="@dimen/dp_10"
             android:src="@drawable/ic_delete_32dp"
-            android:onClick="@{()->pop.dismiss()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

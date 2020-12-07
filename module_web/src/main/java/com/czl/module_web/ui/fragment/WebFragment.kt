@@ -2,6 +2,7 @@ package com.czl.module_web.ui.fragment
 
 import android.graphics.Bitmap
 import android.os.Build
+import android.text.TextUtils
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
@@ -33,12 +34,16 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
     private var errorFlag = false
 
     // 当前web标题
-    private var currentTitle: String? = null
+    var currentTitle: String? = null
 
     // 当前web链接
-    private var currentLink: String? = null
+    var currentLink: String? = null
 
+    // 首页链接
     var homeUrl: String? = null
+
+    // 首页标题
+    var homeTitle: String? = null
 
     override fun initContentView(): Int {
         return R.layout.web_fragment_web
@@ -98,6 +103,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
                     errorFlag = false
+                    currentLink = url
                 }
 
 
@@ -142,28 +148,35 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
                 override fun onPageFinished(view: WebView, url: String?) {
                     super.onPageFinished(view, url)
-                    currentLink = url
                     if (!errorFlag) {
                         loadService.showWithConvertor(0)
                     }
-                    if (currentLink == homeUrl) {
-                        viewModel.canGoBackFlag.set(false)
-                    }else{
-                        viewModel.canGoBackFlag.set(view.canGoBack())
-                    }
                     viewModel.canForwardFlag.set(view.canGoForward())
+                    if (currentLink == homeUrl && !view.canGoBack()) {
+                        viewModel.canGoBackFlag.set(false)
+                        return
+                    }
+                    viewModel.canGoBackFlag.set(view.canGoBack())
                 }
             })
             .setWebChromeClient(object : WebChromeClient() {
-                override fun onReceivedTitle(view: WebView?, title: String) {
+                override fun onReceivedTitle(view: WebView, title: String) {
                     super.onReceivedTitle(view, title)
                     viewModel.tvTitle.set(title)
+                    if (currentLink == homeUrl && !view.canGoBack() && !errorFlag) {
+                        this@WebFragment.homeTitle = title
+                        // 保存到本地
+                        if (!TextUtils.isEmpty(homeUrl) && !TextUtils.isEmpty(homeTitle)) {
+                            viewModel.saveBrowseHistory(homeTitle!!, homeUrl!!)
+                        }
+                    }
                     this@WebFragment.currentTitle = title
                 }
             })
             .createAgentWeb()
             .ready()
             .go(homeUrl)
+
     }
 
     override fun reload() {
@@ -173,12 +186,11 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
 
     override fun back() {
-        if (!viewModel.canGoBackFlag.get()!!){
-            requireActivity().finish()
-        }else{
+        if (!viewModel.canGoBackFlag.get()!!) {
+            super.back()
+        } else {
             agentWeb.back()
         }
-        super.back()
     }
 
     override fun onBackPressedSupport(): Boolean {

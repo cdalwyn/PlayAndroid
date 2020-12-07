@@ -40,6 +40,7 @@ interface AppConstants {
             const val F_USER_RANK = "/user/UserRankFragment"
             const val F_USER_COLLECT = "/user/UserCollectFragment"
             const val F_USER_SHARE = "/user/UserShareFragment"
+            const val F_USER_BROWSE = "/user/UserBrowseFragment"
         }
 
         object Square {

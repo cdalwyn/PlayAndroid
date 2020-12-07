@@ -37,7 +37,8 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            applicationIdSuffix '.debug' //增加包名后缀 （debug包与release包共存）
+            minifyEnabled false
+//            applicationIdSuffix '.debug' //增加包名后缀 （debug包与release包共存）
         }
     }
 

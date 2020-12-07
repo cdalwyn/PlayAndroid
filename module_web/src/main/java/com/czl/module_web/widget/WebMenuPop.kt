@@ -1,6 +1,8 @@
 package com.czl.module_web.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -18,6 +20,7 @@ import com.lxj.xpopup.util.XPopupUtils
  * @Date 2020/12/6
  * @Description
  */
+@SuppressLint("ViewConstructor")
 class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment.requireContext()) {
     private var dataBinding: WebPopMenuBinding? = null
     override fun getImplLayoutId(): Int {
@@ -56,15 +59,21 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
     })
     val onOpenCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {
-            putString(AppConstants.BundleKey.WEB_MENU_KEY,"collect")
+            putString(AppConstants.BundleKey.WEB_MENU_KEY, "collect")
         })
         dismiss()
     })
     val onHistoryClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-
+        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_BROWSE)
+        dismiss()
     })
     val onShareOtherClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, mFragment.currentLink)
+        intent.putExtra(Intent.EXTRA_TITLE, mFragment.currentTitle)
+        mFragment.startActivity(Intent.createChooser(intent, "分享到"))
+        dismiss()
     })
     val onExitClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         mFragment.requireActivity().finish()

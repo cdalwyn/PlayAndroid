@@ -4,6 +4,7 @@ import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseModel
 import com.czl.lib_base.data.bean.*
 import com.czl.lib_base.data.db.SearchHistoryEntity
+import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
 import io.reactivex.Flowable
@@ -180,6 +181,14 @@ class DataRepository constructor(
 
     override fun deleteSearchHistory(history: String): Disposable {
         return mLocalDataSource.deleteSearchHistory(history)
+    }
+
+    override fun saveUserBrowseHistory(title: String, link: String) {
+        return mLocalDataSource.saveUserBrowseHistory(title,link)
+    }
+
+    override fun getUserBrowseHistoryByUid(): Flowable<List<WebHistoryEntity>> {
+        return mLocalDataSource.getUserBrowseHistoryByUid()
     }
 
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {

@@ -2,6 +2,7 @@ package com.czl.module_main.ui.fragment
 
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,8 @@ import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
+import com.youth.banner.config.IndicatorConfig
+import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.AlphaPageTransformer
 
 
@@ -74,14 +77,18 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             bannerSkeleton.hide()
             if (!this::bannerAdapter.isInitialized) {
                 bannerAdapter = MyBannerAdapter(it, this)
-                binding.banner.setAdapter(bannerAdapter)
+                binding.banner.adapter = bannerAdapter
+//                binding.banner.indicator = CircleIndicator(context).apply {
+//                    indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
+//                    indicatorConfig.selectedColor = ContextCompat.getColor(context,R.color.md_theme_red)
+//                }
             } else {
                 bannerAdapter.setData(binding.banner, it)
             }
             if (it == null) loadService.showWithConvertor(-1) else loadService.showWithConvertor(0)
         })
         // 置顶
-        viewModel.uc.moveTopEvent.observe(this, Observer { tabPosition ->
+        viewModel.uc.moveTopEvent.observe(this, { tabPosition ->
             when (tabPosition) {
                 0 -> binding.ryArticle.smoothScrollToPosition(0)
                 1 -> binding.ryProject.smoothScrollToPosition(0)
@@ -166,7 +173,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         LiveBusCenter.observeCollectStateEvent(this) { event ->
             val list = mArticleAdapter.data.filter { it.id == event.originId }
             if (list.isNotEmpty()) list[0].collect = false
-            val filterList = mProjectAdapter.data.filter { it.id==event.originId }
+            val filterList = mProjectAdapter.data.filter { it.id == event.originId }
             if (filterList.isNotEmpty()) filterList[0].collect = false
         }
     }
@@ -237,9 +244,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             //            setBannerGalleryMZ(20)
             setBannerGalleryEffect(18, 10)
             addPageTransformer(AlphaPageTransformer(0.6f))
-            //            indicator = CircleIndicator(context).apply {
-            //                indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
-            //            }
         }
     }
 
