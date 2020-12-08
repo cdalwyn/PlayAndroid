@@ -1,6 +1,5 @@
 package com.czl.module_main.ui.fragment
 
-
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -29,6 +28,11 @@ import com.lxj.xpopup.XPopup
 import com.youth.banner.config.IndicatorConfig
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.AlphaPageTransformer
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random.Default.nextInt
 
 
 @Route(path = AppConstants.Router.Main.F_HOME)
@@ -108,7 +112,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, it)
             startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         })
-        // 搜索框item点击
+        // 搜索历史记录item点击
         viewModel.uc.searchItemClickEvent.observe(this, {
             binding.searchBar.closeSearch()
             val bundle = Bundle()
@@ -118,7 +122,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             )
             startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         })
-        // 搜素框Item删除
+        // 搜素框历史记录Item删除
         viewModel.uc.searchItemDeleteEvent.observe(this, {
             setSuggestAdapterData()
             // 数据库同步
@@ -176,6 +180,31 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             val filterList = mProjectAdapter.data.filter { it.id == event.originId }
             if (filterList.isNotEmpty()) filterList[0].collect = false
         }
+        // 接收搜索热词
+        viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
+            if (list.isNotEmpty()) {
+                // 发布定时任务更换搜索框关键字
+                viewModel.addSubscribe(Flowable.interval(0, 30, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        val hotKeyword = list[Random().nextInt(list.size)].name
+                        binding.searchBar.setPlaceHolder(hotKeyword)
+                    }) {
+                        it.printStackTrace()
+                        LogUtils.e("定时更换搜索热词失败")
+                    })
+            }
+        })
+        // 搜索框右边图标点击事件
+        viewModel.uc.searchIconClickEvent.observe(this, {
+            if (getString(R.string.main_default_search_placeholder) == binding.searchBar.placeHolderText) {
+                binding.searchBar.openSearch()
+            } else {
+                val bundle = Bundle()
+                bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, binding.searchBar.placeHolderText.toString())
+                startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+            }
+        })
     }
 
     private fun initProjectAdapter() {

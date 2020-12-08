@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:paddingStart="@dimen/dp_14"
+                android:paddingStart="@dimen/dp_10"
                 android:paddingTop="@dimen/dp_14"
                 android:paddingBottom="@dimen/dp_14"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp"
@@ -39,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="@dimen/dp_6"
-                app:layout_constraintTop_toTopOf="parent"
                 app:mt_backIconUseTint="true"
                 app:mt_maxSuggestionsCount="5"
                 app:mt_navIconEnabled="false"
@@ -65,7 +64,6 @@
         <include
             android:id="@+id/include_ry"
             layout="@layout/common_recycleview"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:viewModel="@{viewModel}" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -11,4 +11,5 @@
     <string name="main_collect"> 收藏 </string>
     <string name="main_cancel_collect">取消收藏</string>
     <string name="main_same">相似</string>
+    <string name="main_default_search_placeholder">搜索关键词...</string>
 </resources>

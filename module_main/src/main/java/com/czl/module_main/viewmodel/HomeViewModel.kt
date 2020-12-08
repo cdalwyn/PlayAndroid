@@ -13,6 +13,7 @@ import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.HomeBannerBean
 import com.czl.lib_base.data.bean.ProjectBean
+import com.czl.lib_base.data.bean.SearchHotKeyBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
@@ -45,6 +46,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean> = SingleLiveEvent()
         val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
+        val loadSearchHotKeyEvent:SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
+        val searchIconClickEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
 
@@ -52,6 +55,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         currentArticlePage = -1
         currentProjectPage = -1
         getBanner()
+        getSearchHotKeyword()
         when (tabSelectedPosition.get()) {
             0 -> getArticle()
             1 -> getProject()
@@ -96,6 +100,10 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         uc.searchConfirmEvent.postValue(keyword)
     })
 
+    val onSearchIconCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.searchIconClickEvent.call()
+    })
+
     /*搜索的历史记录Item点击事件*/
     val onSearchItemClick: SuggestionsAdapter.OnItemViewClickListener =
         object : SuggestionsAdapter.OnItemViewClickListener {
@@ -138,6 +146,23 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
 
     fun unCollectArticle(id: Int): Observable<BaseBean<Any?>> {
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
+    }
+
+    private fun getSearchHotKeyword(){
+        model.getSearchHotKey()
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object :ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>(){
+                override fun onResult(t: BaseBean<List<SearchHotKeyBean>>) {
+                    if (t.errorCode==0){
+                        uc.loadSearchHotKeyEvent.postValue(t.data)
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+
+                }
+
+            })
     }
 
     /**
@@ -187,7 +212,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     }
 
 
-    fun getBanner() {
+    private fun getBanner() {
         model.getBannerData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>() {

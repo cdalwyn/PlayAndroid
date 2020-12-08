@@ -20,11 +20,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  */
 public class ViewAdapter {
 
-    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand", "onSearchStateCommand"}, requireAll = false)
+    @BindingAdapter(value = {"onNavigationCommand", "onSearchConfirmCommand", "onSearchStateCommand", "onSearchIconCommand"}, requireAll = false)
     public static void onSearchActionCommand(MaterialSearchBar searchBar,
                                              BindingCommand<Void> command,
                                              BindingCommand<String> bindingCommand,
-                                             BindingCommand<Boolean> booleanCommand) {
+                                             BindingCommand<Boolean> booleanCommand,
+                                             BindingCommand<Void> iconCommand) {
         searchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
             public void onSearchStateChanged(boolean enabled) {
@@ -44,6 +45,9 @@ public class ViewAdapter {
             public void onButtonClicked(int buttonCode) {
                 if (MaterialSearchBar.BUTTON_NAVIGATION == buttonCode && command != null) {
                     command.execute();
+                }
+                if (MaterialSearchBar.BUTTON_SPEECH == buttonCode && iconCommand != null) {
+                    iconCommand.execute();
                 }
             }
         });

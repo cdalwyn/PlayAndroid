@@ -129,7 +129,7 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
     }
 
     private void init(AttributeSet attrs) {
-        inflate(getContext(), R.layout.searchbar, this);
+        inflate(getContext(), R.layout.common_searchbar, this);
 
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.MaterialSearchBar);
 
@@ -193,7 +193,9 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         inputContainer = findViewById(R.id.inputContainer);
         navIcon = findViewById(R.id.mt_nav);
         findViewById(R.id.mt_clear).setOnClickListener(this);
-
+//        placeHolder.getPaint().setFakeBoldText(false);
+//        placeHolder.setTextSize(14f);
+//        searchEdit.setTextSize(14f);
         //Listeners
         setOnClickListener(this);
         arrowIcon.setOnClickListener(this);
@@ -670,7 +672,8 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
             searchIcon.setClickable(true);
         } else {
             searchIcon.setImageResource(searchIconRes);
-            searchIcon.setClickable(false);
+            // cd modify 原 false
+            searchIcon.setClickable(true);
         }
     }
 

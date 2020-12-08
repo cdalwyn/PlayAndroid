@@ -53,12 +53,13 @@
                         app:mt_backIconUseTint="true"
                         app:mt_maxSuggestionsCount="5"
                         app:mt_navIconEnabled="true"
-                        app:mt_placeholder="搜你想搜的..."
+                        app:mt_placeholder="@string/main_default_search_placeholder"
                         app:mt_roundedSearchBarEnabled="false"
                         app:mt_speechMode="false"
                         binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
                         binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                        binding:onSearchItemClick="@{viewModel.onSearchItemClick}" />
+                        binding:onSearchItemClick="@{viewModel.onSearchItemClick}"
+                        binding:onSearchIconCommand="@{viewModel.onSearchIconCommand}"/>
 
                 </com.lihang.ShadowLayout>
 
