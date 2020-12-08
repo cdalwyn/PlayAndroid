@@ -117,6 +117,7 @@
                 android:nestedScrollingEnabled="true"
                 android:onClick="@{viewModel.fabOnClickListener}"
                 android:src="@drawable/ic_top"
+                android:visibility="invisible"
                 app:backgroundTint="@color/white"
                 app:elevation="@dimen/dp_6"
                 app:fabSize="mini"
