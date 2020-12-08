@@ -35,6 +35,7 @@
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/dp_20"
             android:src="@drawable/ic_top"
+            android:visibility="invisible"
             app:backgroundTint="@color/white"
             app:elevation="@dimen/dp_6"
             app:fabSize="mini"
