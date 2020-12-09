@@ -50,6 +50,17 @@
         <item name="colorControlHighlight">@color/white</item>
     </style>
 
+    <style name="TextInputThemeStyle" parent="AppTheme">
+        <!--输入框提示字体色-->
+        <!--        <item name="android:textColorHint">@color/white</item>-->
+        <!--输入框下划线默认颜色-->
+        <item name="colorControlNormal">@color/md_theme_red</item>
+        <!--输入框下划线选中状态色-->
+        <item name="colorControlActivated">@color/md_theme_red</item>
+        <!--输入框光标颜色-->
+        <item name="colorControlHighlight">@color/md_theme_red</item>
+    </style>
+
     <style name="SearchBarStyle" parent="AppTheme">
         <item name="mt_searchBarColor">@color/searchBarPrimaryColor</item>
         <item name="mt_dividerColor">@color/searchBarDividerColor</item>

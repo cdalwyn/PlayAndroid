@@ -3,8 +3,10 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#EF5350</color>
+    <color name="color_default_bg">#fff3f3f3</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
+    <color name="color_line">#dbdbdb</color>
     <color name="errorColor">#D50000</color>
     <color name="infoColor">#757575</color>
     <color name="successColor">#388E3C</color>

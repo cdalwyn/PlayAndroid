@@ -5,37 +5,42 @@
     xmlns:binding="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="adapter"
             type="com.czl.module_user.adapter.UserShareAdapter" />
+
         <variable
             name="data"
             type="com.czl.lib_base.data.bean.UserShareBean.ShareArticles.Data" />
     </data>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_6"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_4"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
+        <com.czl.lib_base.widget.EasySwipeMenuLayout
+            android:id="@+id/menu_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_4"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:layout_marginBottom="@dimen/dp_6"
-            android:background="@color/white"
-            app:cardCornerRadius="@dimen/dp_10"
-            app:cardElevation="2dp"
-            app:contentPadding="@dimen/dp_10"
-            app:layout_constraintTop_toTopOf="parent"
-            binding:onRvItemCommand="@{adapter.onItemClickCommand}"
-            binding:rvItemBean="@{data}"
-            >
+            android:layout_height="match_parent"
+            app:contentView="@id/cl_content"
+            app:rightMenuView="@id/tv_menu_delete">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10"
+                binding:onRvItemCommand="@{adapter.onItemClickCommand}"
+                binding:rvItemBean="@{data}">
 
                 <TextView
                     android:id="@+id/item_tv_author"
@@ -76,14 +81,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:textSize="@dimen/sp_12"
                     android:text="@{data.niceShareDate}"
+                    android:textSize="@dimen/sp_12"
                     app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
                     tools:text="1天前" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_menu_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/md_theme_red"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                binding:onRvItemCommand="@{adapter.onDeleteClickCommand}"
+                binding:rvItemBean="@{data}" />
+        </com.czl.lib_base.widget.EasySwipeMenuLayout>
+    </androidx.cardview.widget.CardView>
+
 </layout>

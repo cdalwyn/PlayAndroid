@@ -17,6 +17,7 @@ import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.LoginPopView
+import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -171,6 +172,15 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getOnBackPressedEvent().observe(
             this, { onBackPressedSupport() }
         )
+        // 弹出分享文章窗口
+        viewModel.uC.sharePopEvent.observe(this,{
+            XPopup.Builder(this)
+                .enableDrag(true)
+                .moveUpToKeyboard(true)
+                .autoOpenSoftInput(true)
+                .asCustom(ShareArticlePopView(this))
+                .show()
+        })
     }
 
     fun showLoginPop() {

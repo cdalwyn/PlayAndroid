@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.UserShareBean
+import com.czl.lib_base.extension.ApiSubscriberHelper
+import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserItemShareBinding
 import com.czl.module_user.ui.fragment.UserShareFragment
@@ -31,11 +34,30 @@ class UserShareAdapter(val mFragment: UserShareFragment) :
         }
     }
 
-    val onItemClickCommand:BindingCommand<Any> = BindingCommand(BindingConsumer {
-        if (it is UserShareBean.ShareArticles.Data){
+    val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is UserShareBean.ShareArticles.Data) {
             mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
-                putString(AppConstants.BundleKey.WEB_URL,it.link)
+                putString(AppConstants.BundleKey.WEB_URL, it.link)
             })
+        }
+    })
+
+    val onDeleteClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is UserShareBean.ShareArticles.Data) {
+            mFragment.viewModel.model.deleteArticleById(it.id)
+                .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
+                .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
+                    override fun onResult(t: BaseBean<Any?>) {
+                        if (t.errorCode == 0) {
+                            remove(it)
+                            mFragment.showSuccessToast("删除成功")
+                        }
+                    }
+
+                    override fun onFailed(msg: String?) {
+                        mFragment.showErrorToast(msg)
+                    }
+                })
         }
     })
 

@@ -3,37 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.czl.mvvmcomponents">
 
-    <application
-        android:name=".App"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_logo"
-        android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_logo"
-        android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme"
-        tools:targetApi="m">
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-        <meta-data
-            android:name="design_height_in_dp"
-            android:value="720" />
-        <meta-data
-            android:name="design_width_in_dp"
-            android:value="375" />
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.4" /> <!-- 适配刘海屏、水滴屏 Android O 小米 -->
-        <meta-data
-            android:name="notch.config"
-            android:value="portrait|landscape" /> <!-- 适配刘海屏、水滴屏 Android O 华为 -->
-        <meta-data
-            android:name="android.notch_support"
-            android:value="true" /> <!-- 适配刘海屏、水滴屏 Android P -->
-        <meta-data
-            android:name="android.vendor.full_screen"
-            android:value="true" />
-    </application>
+
 
 </manifest>

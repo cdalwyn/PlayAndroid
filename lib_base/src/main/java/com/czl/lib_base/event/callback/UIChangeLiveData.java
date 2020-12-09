@@ -17,7 +17,10 @@ public class UIChangeLiveData extends SingleLiveEvent {
     public SingleLiveEvent<Void> finishEvent;
     public SingleLiveEvent<Void> onBackPressedEvent;
     public SingleLiveEvent<Void> scrollTopEvent;
-
+    public SingleLiveEvent<Void> showSharePopEvent;
+    public SingleLiveEvent<Void> getSharePopEvent() {
+        return showSharePopEvent = createLiveData(showSharePopEvent);
+    }
     public SingleLiveEvent<Void> getScrollTopEvent() {
         return scrollTopEvent = createLiveData(scrollTopEvent);
     }

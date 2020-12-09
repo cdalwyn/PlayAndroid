@@ -147,6 +147,14 @@ class DataRepository constructor(
         return mHttpDataSource.getArticlesByCid(page,cid)
     }
 
+    override fun shareArticleToSquare(title: String, link: String): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.shareArticleToSquare(title,link)
+    }
+
+    override fun deleteArticleById(id: Int): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.deleteArticleById(id)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

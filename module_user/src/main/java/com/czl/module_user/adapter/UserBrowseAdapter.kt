@@ -38,4 +38,10 @@ class UserBrowseAdapter(private val mFragment: UserBrowseFragment) :
             })
         }
     })
+
+    val onDeleteClickCommand:BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is WebHistoryEntity) {
+            mFragment.showNormalToast("删除")
+        }
+    })
 }

@@ -140,4 +140,12 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getArticlesByCid(page,cid)
     }
 
+    override fun shareArticleToSquare(title: String, link: String): Observable<BaseBean<Any?>> {
+        return apiService.shareArticleToSquare(title,link)
+    }
+
+    override fun deleteArticleById(id: Int): Observable<BaseBean<Any?>> {
+        return apiService.deleteArticleById(id)
+    }
+
 }

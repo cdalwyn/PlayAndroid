@@ -8,6 +8,7 @@
         <variable
             name="pop"
             type="com.czl.module_web.widget.WebMenuPop" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,23 +17,13 @@
         android:layout_height="wrap_content">
 
         <View
+            android:id="@+id/tv_title"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_10"
             android:background="@drawable/gray_btn_corner_10dp"
-            app:layout_constraintBottom_toTopOf="@id/tv_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_20"
-            android:gravity="center"
-            android:text="网页由XXX提供"
-            android:textColor="@color/white_cc"
-            android:textSize="@dimen/sp_12"
             app:layout_constraintTop_toTopOf="parent" />
 
         <GridLayout

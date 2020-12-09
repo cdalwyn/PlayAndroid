@@ -21,7 +21,7 @@ import com.czl.module_user.viewmodel.UserBrowseVm
  */
 @Route(path = AppConstants.Router.User.F_USER_BROWSE)
 class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>() {
-    private lateinit var mAdapter:UserBrowseAdapter
+    private lateinit var mAdapter: UserBrowseAdapter
     override fun initContentView(): Int {
         return R.layout.common_recycleview
     }
@@ -37,14 +37,16 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompleteEvent.observe(this,{
+        viewModel.loadCompleteEvent.observe(this, {
             binding.smartCommon.finishRefreshWithNoMoreData()
             binding.ryCommon.hideShimmerAdapter()
-            if (!mAdapter.hasEmptyView()){
-                val emptyView = View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)
-                emptyView.findViewById<ViewGroup>(com.czl.lib_base.R.id.ll_empty).setOnClickListener {
-                    binding.smartCommon.autoRefresh()
-                }
+            if (!mAdapter.hasEmptyView()) {
+                val emptyView =
+                    View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)
+                emptyView.findViewById<ViewGroup>(com.czl.lib_base.R.id.ll_empty)
+                    .setOnClickListener {
+                        binding.smartCommon.autoRefresh()
+                    }
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setList(it)
@@ -54,8 +56,9 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
     private fun initAdapter() {
         mAdapter = UserBrowseAdapter(this)
         binding.ryCommon.apply {
-            layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
+            setDemoChildCount(20)
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             setDemoLayoutReference(R.layout.user_item_browse_skeleton)
             showShimmerAdapter()

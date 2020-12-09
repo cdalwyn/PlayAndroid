@@ -188,5 +188,24 @@ interface ApiService {
      * 根据体系Cid查找所有文章
      */
     @GET("article/list/{page}/json")
-    fun getArticlesByCid(@Path("page") page: Int, @Query("cid") cid: String):Observable<BaseBean<SystemDetailBean>>
+    fun getArticlesByCid(
+        @Path("page") page: Int,
+        @Query("cid") cid: String
+    ): Observable<BaseBean<SystemDetailBean>>
+
+    /**
+     * 分享文章
+     */
+    @POST("lg/user_article/add/json")
+    @FormUrlEncoded
+    fun shareArticleToSquare(
+        @Field("title") title: String,
+        @Field("link") link: String
+    ): Observable<BaseBean<Any?>>
+
+    /**
+     * 删除文章
+     */
+    @POST("lg/user_article/delete/{id}/json")
+    fun deleteArticleById(@Path("id") id: Int):Observable<BaseBean<Any?>>
 }
