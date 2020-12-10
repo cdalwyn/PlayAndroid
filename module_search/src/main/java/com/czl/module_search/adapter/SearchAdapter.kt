@@ -1,11 +1,13 @@
 package com.czl.module_search.adapter
 
+import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.data.bean.SearchDataBean
 import com.czl.lib_base.event.LiveBusCenter
@@ -19,23 +21,25 @@ import com.czl.module_search.ui.fragment.SearchFragment
  * @Date 2020/12/5
  * @Description
  */
-class SearchAdapter(val mFragment:SearchFragment) :BaseQuickAdapter<SearchDataBean.Data,BaseDataBindingHolder<SearchItemBinding>>(
-    R.layout.search_item) {
+class SearchAdapter(val mFragment: SearchFragment) :
+    BaseQuickAdapter<SearchDataBean.Data, BaseDataBindingHolder<SearchItemBinding>>(
+        R.layout.search_item
+    ) {
     val tvShare = " 分享 "
     val tvAuthor = " 作者 "
     override fun convert(
         holder: BaseDataBindingHolder<SearchItemBinding>,
         item: SearchDataBean.Data
     ) {
-        holder.dataBinding?.apply { 
+        holder.dataBinding?.apply {
             data = item
             adapter = this@SearchAdapter
             executePendingBindings()
         }
     }
 
-    val onCollectClick:BindingCommand<Any> = BindingCommand(BindingConsumer {
-        if (it is SearchDataBean.Data){
+    val onCollectClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is SearchDataBean.Data) {
             if (!it.collect) {
                 mFragment.viewModel.collectArticle(it.id)
                     .subscribe(object : ApiSubscriberHelper<BaseBean<*>>() {
@@ -74,19 +78,27 @@ class SearchAdapter(val mFragment:SearchFragment) :BaseQuickAdapter<SearchDataBe
         }
     })
 
+    val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is SearchDataBean.Data) {
+            val bundle = Bundle()
+            bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
+            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB, bundle)
+        }
+    })
+
     val diffConfig = object : DiffUtil.ItemCallback<SearchDataBean.Data>() {
         override fun areItemsTheSame(
             oldItem: SearchDataBean.Data,
             newItem: SearchDataBean.Data
         ): Boolean {
-            return oldItem.userId == newItem.userId
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
             oldItem: SearchDataBean.Data,
             newItem: SearchDataBean.Data
         ): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem == newItem
         }
 
     }

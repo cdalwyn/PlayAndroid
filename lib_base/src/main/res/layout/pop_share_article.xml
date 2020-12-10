@@ -64,9 +64,11 @@
                 android:background="@null"
                 android:hint="请输入100字以内的标题吧~"
                 android:imeOptions="actionNext"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
                 android:maxLength="100"
                 android:padding="@dimen/dp_10"
+                android:text="@{pop.tvObservableTitle}"
                 android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -91,7 +93,9 @@
             android:textColor="@color/md_theme_red"
             android:textSize="@dimen/sp_12"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_link" />
+            app:layout_constraintTop_toTopOf="@+id/tv_link"
+            binding:isVisible="@{pop.tvOpenFlag}"
+            binding:onClickCommand="@{pop.onOpenLinkClick}"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tl_link"
@@ -115,8 +119,8 @@
                 android:inputType="textMultiLine"
                 android:singleLine="false"
                 android:padding="@dimen/dp_10"
-                android:textColor="@color/black"
-                />
+                android:text="@{pop.tvObservableLink}"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.lihang.ShadowLayout
@@ -141,7 +145,7 @@
                 android:padding="@dimen/dp_10"
                 android:text="分享"
                 android:textColor="@color/md_theme_red"
-                binding:onClickCommand="@{pop.onBtnShareClickCommand}"/>
+                binding:onClickCommand="@{pop.onBtnShareClickCommand}" />
         </com.lihang.ShadowLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

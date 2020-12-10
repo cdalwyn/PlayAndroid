@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.afollestad.materialdialogs.MaterialDialog
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
@@ -20,15 +19,16 @@ import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.callback.LoadingCallback
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
-import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.ToastHelper
+import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.Callback
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.Convertor
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
+import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
@@ -47,7 +47,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: BasePopupView? = null
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
-    private var ryCommon:RecyclerView? = null
+    private var ryCommon: RecyclerView? = null
     lateinit var loadService: LoadService<Int>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +70,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 .findViewById(R.id.activity_root)
             //避免过度绘制策略
             if (enableSwipeBack()) {
-//                rootView.setBackgroundColor(Color.TRANSPARENT)
+                rootView.setBackgroundColor(Color.WHITE)
             }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
@@ -104,7 +104,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 }) as LoadService<Int>
             return if (enableSwipeBack()) {
                 //避免过度绘制策略
-//                binding.root.setBackgroundColor(Color.TRANSPARENT)
+                binding.root.setBackgroundColor(Color.WHITE)
 //                attachToSwipeBack(binding.root)
                 attachToSwipeBack(loadService.loadLayout)
             } else {
@@ -262,6 +262,14 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getScrollTopEvent().observe(this, {
             ryCommon?.smoothScrollToPosition(0)
         })
+        viewModel.uC.getShowSharePopEvent().observe(this, {
+            XPopup.Builder(context)
+                .enableDrag(true)
+                .moveUpToKeyboard(true)
+                .autoOpenSoftInput(true)
+                .asCustom(ShareArticlePopView(requireActivity() as BaseActivity<*, *>,it))
+                .show()
+        })
     }
 
     /**
@@ -287,7 +295,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         loadService.showWithConvertor(0)
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
-            if (!mAdapter.hasEmptyView()){
+            if (!mAdapter.hasEmptyView()) {
                 val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
                 emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
                     smartCommon.autoRefresh()
@@ -334,7 +342,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     fun showLoading(title: String?) {
-        dialog = PopDialogUtils.showLoadingDialog(requireContext(),title)
+        dialog = PopDialogUtils.showLoadingDialog(requireContext(), title)
 //        if (dialog != null) {
 //            dialog = dialog!!.builder.title(title!!).build()
 //            dialog!!.show()

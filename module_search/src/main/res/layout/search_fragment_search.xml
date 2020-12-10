@@ -23,10 +23,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/dp_10"
+                android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp_14"
                 android:paddingBottom="@dimen/dp_14"
+                android:paddingStart="@dimen/dp_8"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp"
                 binding:isVisible="@{viewModel.backVisibility}"
                 binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
@@ -49,16 +49,6 @@
                 binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:onClick="@{viewModel.onSearchCancelClick}"
-                android:paddingEnd="@dimen/dp_10"
-                android:text="取消"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_14"
-                binding:isVisible="@{viewModel.cancelVisibility}" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <include

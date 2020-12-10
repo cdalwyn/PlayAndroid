@@ -1,17 +1,25 @@
 package com.czl.lib_base.widget
 
 import android.annotation.SuppressLint
+import android.os.Bundle
+import android.util.SparseArray
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableBoolean
+import androidx.databinding.ObservableField
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.RegexUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.databinding.PopShareArticleBinding
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.lxj.xpopup.core.BottomPopupView
+import com.lxj.xpopup.util.KeyboardUtils
 import com.lxj.xpopup.util.XPopupUtils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -22,8 +30,14 @@ import io.reactivex.subjects.PublishSubject
  * @Description
  */
 @SuppressLint("ViewConstructor")
-class ShareArticlePopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity) {
+class ShareArticlePopView(
+    val activity: BaseActivity<*, *>,
+    private val webDataArray: SparseArray<String>? = null
+) : BottomPopupView(activity) {
     private var dataBinding: PopShareArticleBinding? = null
+    val tvObservableTitle: ObservableField<String> = ObservableField("")
+    val tvObservableLink: ObservableField<String> = ObservableField("")
+    val tvOpenFlag: ObservableBoolean = ObservableBoolean(true)
     override fun getImplLayoutId(): Int {
         return R.layout.pop_share_article
     }
@@ -41,8 +55,14 @@ class ShareArticlePopView(val activity: BaseActivity<*, *>) : BottomPopupView(ac
                 0f
             )
             initInputState()
+            if (webDataArray != null) {
+                tvObservableTitle.set(webDataArray[0])
+                tvObservableLink.set(webDataArray[1])
+            }
+            tvOpenFlag.set(webDataArray == null)
             executePendingBindings()
         }
+        dataBinding?.etTitle?.setSelection(webDataArray?.get(0)?.length ?: 0)
     }
 
     private fun PopShareArticleBinding.initInputState() {
@@ -50,6 +70,8 @@ class ShareArticlePopView(val activity: BaseActivity<*, *>) : BottomPopupView(ac
         val pwdSubject = PublishSubject.create<String>()
         etTitle.addTextChangedListener(EditTextMonitor(accountSubject))
         etLink.addTextChangedListener(EditTextMonitor(pwdSubject))
+        btnShare.isEnabled = false
+        btnShare.isClickable = false
         activity.viewModel.addSubscribe(
             Observable.combineLatest(
                 accountSubject,
@@ -69,6 +91,7 @@ class ShareArticlePopView(val activity: BaseActivity<*, *>) : BottomPopupView(ac
                         )
                     )
                     btnShare.isEnabled = flag
+                    btnShare.isClickable = flag
                 })
     }
 
@@ -95,4 +118,25 @@ class ShareArticlePopView(val activity: BaseActivity<*, *>) : BottomPopupView(ac
                 })
         }
     })
+
+    val onOpenLinkClick: BindingCommand<Void> = BindingCommand(BindingAction {
+        KeyboardUtils.hideSoftInput(this)
+        dataBinding?.apply {
+            val link = etLink.text.toString().trim()
+            if (RegexUtils.getMatches(AppConstants.Constants.REGEX_URL,link).isNotEmpty()) {
+                activity.viewModel.startContainerActivity(
+                    AppConstants.Router.Web.F_WEB,
+                    Bundle().apply {
+                        putString(AppConstants.BundleKey.WEB_URL, link)
+                    })
+            } else {
+                activity.showNormalToast("链接格式不正确，请重新输入")
+            }
+        }
+    })
+
+    override fun onDestroy() {
+        dataBinding?.unbind()
+        super.onDestroy()
+    }
 }

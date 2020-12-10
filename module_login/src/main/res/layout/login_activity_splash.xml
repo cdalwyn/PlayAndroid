@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/login_background"
+        android:src="@drawable/bg_login"
         android:scaleType="centerCrop"
         tools:context=".mvvm.ui.activity.SplashActivity">
 

@@ -106,21 +106,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 确认搜索后关闭焦点
         viewModel.uc.searchConfirmEvent.observe(this, {
-            setSuggestAdapterData()
-            binding.searchBar.closeSearch()
-            val bundle = Bundle()
-            bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, it)
-            startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+            startSearch(it)
         })
         // 搜索历史记录item点击
         viewModel.uc.searchItemClickEvent.observe(this, {
-            binding.searchBar.closeSearch()
-            val bundle = Bundle()
-            bundle.putString(
-                AppConstants.BundleKey.MAIN_SEARCH_KEYWORD,
-                suggestAdapter.suggestions[it]
-            )
-            startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+            startSearch(suggestAdapter.suggestions[it])
         })
         // 搜素框历史记录Item删除
         viewModel.uc.searchItemDeleteEvent.observe(this, {
@@ -128,7 +118,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             // 数据库同步
             viewModel.addSubscribe(viewModel.model.deleteSearchHistory(suggestAdapter.suggestions[it]))
         })
-        // 注册搜索界面点击搜索的事件
+        // 接收搜索界面点击搜索的事件
         LiveBusCenter.observeSearchHistoryEvent(this) {
             if (it.code == 0) {
                 setSuggestAdapterData()
@@ -175,6 +165,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 接收收藏夹取消收藏事件
         LiveBusCenter.observeCollectStateEvent(this) { event ->
+            // 同步两个列表存在相同文章的收藏状态
             val list = mArticleAdapter.data.filter { it.id == event.originId }
             if (list.isNotEmpty()) list[0].collect = false
             val filterList = mProjectAdapter.data.filter { it.id == event.originId }
@@ -184,7 +175,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
             if (list.isNotEmpty()) {
                 // 发布定时任务更换搜索框关键字
-                viewModel.addSubscribe(Flowable.interval(0, 30, TimeUnit.SECONDS)
+                viewModel.addSubscribe(Flowable.interval(0, 20, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         val hotKeyword = list[Random().nextInt(list.size)].name
@@ -200,9 +191,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             if (getString(R.string.main_default_search_placeholder) == binding.searchBar.placeHolderText) {
                 binding.searchBar.openSearch()
             } else {
-                val bundle = Bundle()
-                bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, binding.searchBar.placeHolderText.toString())
-                startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+//                suggestAdapter.addSuggestion(binding.searchBar.placeHolderText.toString())
+                startSearch(binding.searchBar.placeHolderText.toString())
             }
         })
     }
@@ -231,6 +221,15 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         }
     }
 
+    private fun startSearch(keyword:String){
+        // 保存到数据库
+        viewModel.addSubscribe(viewModel.model.saveUserSearchHistory(keyword).subscribe())
+        if (binding.searchBar.isSearchOpened) binding.searchBar.closeSearch()
+        val bundle = Bundle()
+        bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, keyword)
+        startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
+        setSuggestAdapterData()
+    }
 
     override fun reload() {
         super.reload()

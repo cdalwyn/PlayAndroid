@@ -2,7 +2,6 @@ package com.czl.lib_base.extension
 
 import android.annotation.SuppressLint
 import android.net.ParseException
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.czl.lib_base.base.AppManager
@@ -26,27 +25,25 @@ import java.net.UnknownHostException
  * @Description RxJava 处理Api异常
  */
 abstract class ApiSubscriberHelper<T> : DisposableObserver<T>() {
-
     override fun onNext(t: T) {
         if (t is BaseBean<*> && t.errorCode != 0) {
             showErrorToast(t.errorMsg)
             if (t.errorCode == -1001) {
                 LogUtils.e("当前用户未登录或者登录已失效")
-                val loginPopView = XPopup.Builder(AppManager.instance.currentActivity())
+                XPopup.Builder(AppManager.instance.currentActivity())
                     .enableDrag(true)
                     .moveUpToKeyboard(false)
                     .autoOpenSoftInput(true)
                     .isDestroyOnDismiss(true)
                     .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
-                if (!loginPopView.isShow) {
-                    loginPopView.show()
-                }
+                    .show()
             }
         }
         onResult(t)
     }
 
     override fun onComplete() {}
+
     @SuppressLint("MissingPermission")
     override fun onError(throwable: Throwable) {
         if (!NetworkUtils.isConnected() || throwable is ConnectTimeoutException) {

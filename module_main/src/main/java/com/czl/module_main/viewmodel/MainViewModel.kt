@@ -30,7 +30,4 @@ class MainViewModel(application: MyApplication, model: DataRepository) :
         uc.pageChangeLiveEvent.postValue(it)
     })
 
-    override fun setToolbarRightClick() {
-        startContainerActivity(AppConstants.Router.Search.F_SEARCH)
-    }
 }

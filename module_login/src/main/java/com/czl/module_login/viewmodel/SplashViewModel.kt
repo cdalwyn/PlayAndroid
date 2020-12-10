@@ -17,17 +17,4 @@ import java.util.concurrent.TimeUnit
 class SplashViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    fun goToMain() {
-        addSubscribe(
-            Flowable.timer(1500L, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (model.getLoginName().isNullOrBlank()){
-                        startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-                    }else{
-                        RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
-                    }
-                    finish()
-                })
-    }
 }

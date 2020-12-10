@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/login_background">
+        app:src="@drawable/bg_login">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +25,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginStart="@dimen/dp_6"
                 android:onClick="@{()->pop.dismiss()}"
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +97,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="@color/white"
+                app:passwordToggleEnabled="true"
                 app:hintTextColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/tlAccount">
 
@@ -107,6 +109,7 @@
                     android:hint="密码"
                     android:maxLines="1"
                     android:padding="10dp"
+                    android:inputType="textPassword"
                     android:singleLine="true"
                     android:text="@{pop.tvLoginPwd}"
                     android:textColor="@color/white"
@@ -179,6 +182,7 @@
                 android:layout_marginEnd="40dp"
                 android:textColorHint="@color/white"
                 app:hintTextColor="@color/white"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/tlRegAccount">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -189,6 +193,7 @@
                     android:hint="密码"
                     android:maxLines="1"
                     android:padding="10dp"
+                    android:inputType="textPassword"
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:theme="@style/TextInputWhiteStyle" />
@@ -204,6 +209,7 @@
                 android:hint=""
                 android:textColorHint="@color/white"
                 app:hintTextColor="@color/white"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/tlRegPwd">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -213,6 +219,7 @@
                     android:backgroundTint="@color/white"
                     android:hint="确认密码"
                     android:maxLines="1"
+                    android:inputType="textPassword"
                     android:padding="10dp"
                     android:singleLine="true"
                     android:textColor="@color/white"

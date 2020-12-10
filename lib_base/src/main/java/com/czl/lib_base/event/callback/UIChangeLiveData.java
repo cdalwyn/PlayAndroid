@@ -1,5 +1,7 @@
 package com.czl.lib_base.event.callback;
 
+import android.util.SparseArray;
+
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
@@ -17,8 +19,8 @@ public class UIChangeLiveData extends SingleLiveEvent {
     public SingleLiveEvent<Void> finishEvent;
     public SingleLiveEvent<Void> onBackPressedEvent;
     public SingleLiveEvent<Void> scrollTopEvent;
-    public SingleLiveEvent<Void> showSharePopEvent;
-    public SingleLiveEvent<Void> getSharePopEvent() {
+    public SingleLiveEvent<SparseArray<String>> showSharePopEvent;
+    public SingleLiveEvent<SparseArray<String>> getShowSharePopEvent() {
         return showSharePopEvent = createLiveData(showSharePopEvent);
     }
     public SingleLiveEvent<Void> getScrollTopEvent() {

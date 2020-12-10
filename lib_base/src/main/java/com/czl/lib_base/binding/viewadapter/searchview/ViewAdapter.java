@@ -37,7 +37,7 @@ public class ViewAdapter {
             @Override
             public void onSearchConfirmed(CharSequence text) {
                 if (bindingCommand != null) {
-                    bindingCommand.execute(String.valueOf(text).trim());
+                    bindingCommand.execute(text.toString().trim());
                 }
             }
 

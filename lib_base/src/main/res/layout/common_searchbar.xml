@@ -68,7 +68,7 @@
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"
-                    android:padding="12dp"
+                    android:padding="@dimen/dp_8"
                     android:src="@drawable/ic_arrow_left_black_48dp"
                     android:visibility="visible" />
 
@@ -140,7 +140,7 @@
                 android:layout_height="@dimen/dp_40"
                 android:background="?selectableItemBackgroundBorderless"
                 android:clickable="false"
-                android:padding="@dimen/dp_8"
+                android:padding="@dimen/dp_10"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_magnify_black_48dp"
                 android:visibility="visible"

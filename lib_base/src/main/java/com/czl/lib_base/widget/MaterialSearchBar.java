@@ -36,12 +36,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.czl.lib_base.R;
+import com.jakewharton.rxbinding2.view.RxView;
 import com.mancj.materialsearchbar.adapter.DefaultSuggestionsAdapter;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static android.content.ContentValues.TAG;
 
@@ -199,7 +201,13 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         //Listeners
         setOnClickListener(this);
         arrowIcon.setOnClickListener(this);
-        searchIcon.setOnClickListener(this);
+//        searchIcon.setOnClickListener(this);
+        RxView.clicks(searchIcon)
+                .throttleFirst(1, TimeUnit.SECONDS)
+                .subscribe(x->{
+                    if (listenerExists())
+                        onSearchActionListener.onButtonClicked(BUTTON_SPEECH);
+                });
         searchEdit.setOnFocusChangeListener(this);
         searchEdit.setOnEditorActionListener(this);
         navIcon.setOnClickListener(this);
@@ -920,8 +928,8 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         } else if (id == R.id.mt_arrow) {
             closeSearch();
         } else if (id == R.id.mt_search) {
-            if (listenerExists())
-                onSearchActionListener.onButtonClicked(BUTTON_SPEECH);
+//            if (listenerExists())
+//                onSearchActionListener.onButtonClicked(BUTTON_SPEECH);
         } else if (id == R.id.mt_clear) {
             searchEdit.setText("");
         } else if (id == R.id.mt_menu) {

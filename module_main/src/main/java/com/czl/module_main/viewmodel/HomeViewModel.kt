@@ -95,8 +95,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             showNormalToast("搜索内容不能为空喔~")
             return@BindingConsumer
         }
-        // 保存到数据库
-        addSubscribe(model.saveUserSearchHistory(keyword).subscribe())
         uc.searchConfirmEvent.postValue(keyword)
     })
 

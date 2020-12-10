@@ -1,22 +1,19 @@
 package com.czl.module_web.widget
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
+import android.util.SparseArray
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.widget.ShareArticlePopView
 import com.czl.module_web.R
 import com.czl.module_web.databinding.WebPopMenuBinding
 import com.czl.module_web.ui.fragment.WebFragment
-import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BottomPopupView
 import com.lxj.xpopup.util.XPopupUtils
 
@@ -28,6 +25,7 @@ import com.lxj.xpopup.util.XPopupUtils
 @SuppressLint("ViewConstructor")
 class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment.requireContext()) {
     private var dataBinding: WebPopMenuBinding? = null
+
     override fun getImplLayoutId(): Int {
         return R.layout.web_pop_menu
     }
@@ -54,7 +52,10 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
     })
     val onShareSquareClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         dismiss()
-        mFragment.viewModel.uC.call()
+        mFragment.viewModel.uC.showSharePopEvent.postValue(SparseArray<String>(2).apply {
+            put(0, mFragment.currentTitle)
+            put(1, mFragment.currentLink)
+        })
     })
     val onRefreshClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         mFragment.agentWeb.urlLoader.reload()

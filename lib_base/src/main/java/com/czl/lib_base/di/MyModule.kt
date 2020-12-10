@@ -1,8 +1,10 @@
 package com.czl.lib_base.di
 
+import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.base.AppViewModelFactory
+import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.api.ApiService
 import com.czl.lib_base.data.source.HttpDataSource
@@ -10,7 +12,9 @@ import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.data.source.impl.HttpDataImpl
 import com.czl.lib_base.data.source.impl.LocalDataImpl
 import com.czl.lib_base.widget.LoginPopView
+import com.lxj.xpopup.XPopup
 import org.koin.android.ext.koin.androidApplication
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 /**
@@ -19,7 +23,7 @@ import org.koin.dsl.module
  * @Description 注入的module
  */
 val appModule = module {
-    single { androidApplication() as MyApplication}
+    single { androidApplication() as MyApplication }
     // single->单例式  factory->每次都创建不同实例  viewModel->VM注入
     // androidApplication()->获取当前Application , androidContext() -> 获取context
     // 1 . 获取api实例
@@ -33,6 +37,13 @@ val appModule = module {
     // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
     single { AppViewModelFactory(get(), get()) }
 
+    factory (named("login")) {
+        XPopup.Builder(AppManager.instance.currentActivity())
+            .enableDrag(true)
+            .moveUpToKeyboard(false)
+            .autoOpenSoftInput(true)
+            .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
+    }
 }
 
 val viewModelModule = module {

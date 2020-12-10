@@ -50,6 +50,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="@{data.name}"
+                    android:paddingBottom="@dimen/dp_5"
                     android:textColor="@color/black"
                     app:layout_constraintEnd_toStartOf="@id/line"
                     app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +69,7 @@
                     app:layout_constraintStart_toStartOf="@+id/tv_title"
                     app:layout_constraintTop_toBottomOf="@id/tv_title"
                     app:layout_constraintEnd_toStartOf="@id/line"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     tools:text="具体案例" />
 
                 <TextView

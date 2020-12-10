@@ -29,6 +29,7 @@ class UserShareFragment : BaseFragment<CommonRecycleviewBinding, UserShareVm>() 
 
     override fun initData() {
         viewModel.tvTitle.set("我的分享")
+        viewModel.ivToolbarIconRes.set(R.drawable.ic_add)
         binding.smartCommon.autoRefresh()
     }
 

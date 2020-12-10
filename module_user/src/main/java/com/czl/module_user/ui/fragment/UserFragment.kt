@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
+import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -12,13 +13,20 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.loadCircleImageRes
 import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.SpUtils
+import com.czl.lib_base.widget.LoginPopView
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentUserBinding
 import com.czl.module_user.viewmodel.UserViewModel
 import com.google.gson.reflect.TypeToken
 import com.gyf.immersionbar.ImmersionBar
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import org.koin.android.ext.android.inject
 import org.koin.core.component.KoinApiExtension
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
+import org.koin.core.qualifier.named
 
 /**
  * @author Alwyn
@@ -53,6 +61,8 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         }
     }
 
+    private val loginPopView: BasePopupView by inject(named("login"))
+
     override fun initViewObservable() {
         LiveBusCenter.observeLogoutEvent(this) {
             binding.userData = null
@@ -71,7 +81,7 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
             viewModel.getUserCollectData()
         }
         viewModel.uc.showLoginPopEvent.observe(this, {
-            (activity as BaseActivity<*, *>).showLoginPop()
+            loginPopView.show()
         })
         viewModel.uc.refreshEvent.observe(this,{
             binding.smartCommon.finishRefresh(1500)

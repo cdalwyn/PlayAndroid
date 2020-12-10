@@ -60,6 +60,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun initData() {
         initWebView()
+        // todo h5 输入框选中显示链接地址并在下方弹出pop 复制链接 用浏览器打开 收藏链接
     }
 
     override fun initViewObservable() {

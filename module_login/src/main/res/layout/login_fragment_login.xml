@@ -2,11 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.czl.module_login.viewmodel.LoginViewModel" />
@@ -17,7 +15,7 @@
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/login_background">
+        app:src="@drawable/bg_login">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -81,6 +79,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="@color/white"
+                app:passwordToggleEnabled="true"
                 app:hintTextColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/tlAccount">
 
@@ -93,6 +92,7 @@
                     android:maxLines="1"
                     android:padding="10dp"
                     android:singleLine="true"
+                    android:inputType="textPassword"
                     android:text="@={viewModel.pwd}"
                     android:textColor="@color/white"
                     android:theme="@style/TextInputWhiteStyle"

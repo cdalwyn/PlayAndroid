@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:binding="http://schemas.android.com/tools"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <data>
 
@@ -33,8 +34,11 @@
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:gravity="center"
+                    android:padding="2dp"
                     android:src="@{viewModel.collectFlag?@drawable/ic_like_on:@drawable/ic_like_off_20dp}"
                     binding:onClickCommand="@{viewModel.onCollectClickCommand}"
+                    tools:src="@drawable/ic_like_off"
                     />
 
                 <com.google.android.material.textfield.TextInputLayout

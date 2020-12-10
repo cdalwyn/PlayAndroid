@@ -22,6 +22,7 @@ interface AppConstants {
         object Web {
             const val F_WEB = "/web/WebFragment"
         }
+
         object Main {
             const val A_TEST = "/main/TestActivity"
             const val A_MAIN = "/main/MainActivity"
@@ -55,7 +56,7 @@ interface AppConstants {
             const val F_PROJECT = "/project/ProjectFragment"
         }
 
-        object Search{
+        object Search {
             const val F_SEARCH = "/search/SearchFragment"
         }
     }
@@ -71,5 +72,10 @@ interface AppConstants {
         const val SYSTEM_DETAIL = "system_detail"
         const val SYSTEM_DETAIL_POSITION = "system_detail_position"
         const val WEB_MENU_KEY = "web_menu_key"
+    }
+
+    object Constants {
+        const val REGEX_URL =
+            "^((http|https):\\/\\/)(([A-Za-z0-9]+-[A-Za-z0-9]+|[A-Za-z0-9]+)\\.)+([A-Za-z]+)[/\\?\\:]?.*\$"
     }
 }

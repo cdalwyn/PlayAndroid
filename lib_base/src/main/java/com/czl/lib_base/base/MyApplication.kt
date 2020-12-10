@@ -13,6 +13,8 @@ import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.crash.CaocConfig
 import com.czl.lib_base.di.allModule
 import com.czl.lib_base.util.ToastHelper
+import com.didichuxing.doraemonkit.DoraemonKit
+import com.didichuxing.doraemonkit.DoraemonKitReal
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadSir
@@ -45,6 +47,11 @@ open class MyApplication : Application() {
         if (BuildConfig.DEBUG) {
             ARouter.openLog()
             ARouter.openDebug()
+        }
+        DoraemonKit.apply {
+            setDebug(BuildConfig.DEBUG)
+            setAwaysShowMainIcon(BuildConfig.DEBUG)
+            install(this@MyApplication)
         }
         ARouter.init(this)
         setApplication(this)
@@ -84,7 +91,7 @@ open class MyApplication : Application() {
         }
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
-        XPopup.setPrimaryColor(ContextCompat.getColor(this,R.color.md_theme_red))
+        XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
     }

@@ -71,10 +71,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
     }
 
     override fun initViewObservable() {
-        viewModel.uc.searchCancelEvent.observe(this, Observer {
+        viewModel.uc.searchCancelEvent.observe(this, {
             binding.searchBar.closeSearch()
         })
-        viewModel.uc.finishLoadEvent.observe(this, Observer { data ->
+        viewModel.uc.finishLoadEvent.observe(this, { data ->
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,

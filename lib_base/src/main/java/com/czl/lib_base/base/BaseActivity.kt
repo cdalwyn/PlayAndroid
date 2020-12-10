@@ -8,27 +8,23 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.afollestad.materialdialogs.MaterialDialog
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
-import com.czl.lib_base.util.MaterialDialogUtils
+import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.PopDialogUtils
 import com.czl.lib_base.util.ToastHelper
-import com.czl.lib_base.widget.LoginPopView
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import me.yokeyword.fragmentation.SupportFragment
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import java.lang.reflect.ParameterizedType
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by Alwyn on 2020/10/10.
@@ -156,6 +152,11 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 startActivity(clz, bundle)
             }
         )
+        viewModel.uC.getStartFragmentEvent().observe(this, { map ->
+            val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+            val bundle: Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            start(RouteCenter.navigate(routePath, bundle) as SupportFragment)
+        })
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
             this, { params: Map<String?, Any?> ->
@@ -173,52 +174,22 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
             this, { onBackPressedSupport() }
         )
         // 弹出分享文章窗口
-        viewModel.uC.sharePopEvent.observe(this,{
+        viewModel.uC.getShowSharePopEvent().observe(this,{
             XPopup.Builder(this)
                 .enableDrag(true)
                 .moveUpToKeyboard(true)
                 .autoOpenSoftInput(true)
-                .asCustom(ShareArticlePopView(this))
+                .asCustom(ShareArticlePopView(this, it))
                 .show()
         })
     }
 
-    fun showLoginPop() {
-        val loginPopView = XPopup.Builder(this)
-            .enableDrag(true)
-            .moveUpToKeyboard(false)
-            .autoOpenSoftInput(true)
-            .isDestroyOnDismiss(true)
-            .asCustom(LoginPopView(this))
-        if (!loginPopView.isShow) {
-            loginPopView.show()
-        }
-    }
-
     fun showLoading(title: String?) {
         dialog = PopDialogUtils.showLoadingDialog(this, title)
-//        if (dialog != null) {
-//            dialog = dialog!!.builder.title(title!!).build()
-//            dialog!!.show()
-//        } else {
-//            val builder =
-//                MaterialDialogUtils.showIndeterminateProgressDialog(this, title, true)
-//            dialog = builder.show()
-//        }
     }
 
     fun dismissLoading() {
         dialog?.smartDismiss()
-//        if (dialog != null && dialog!!.isShowing) {
-//            // 避免闪屏
-//            viewModel.addSubscribe(Flowable.timer(200, TimeUnit.MILLISECONDS)
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    dialog!!.dismiss()
-//                }) {
-//                    dialog!!.dismiss()
-//                })
-//        }
     }
 
     fun showErrorToast(msg: String?) {

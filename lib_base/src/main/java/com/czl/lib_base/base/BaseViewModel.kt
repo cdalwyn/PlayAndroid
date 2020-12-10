@@ -15,6 +15,8 @@ import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
+import org.koin.core.Koin
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import java.lang.ref.WeakReference
 import kotlin.collections.HashMap
@@ -22,7 +24,7 @@ import kotlin.collections.HashMap
 /**
  * Created by Alwyn on 2020/10/10.
  * 由于ViewModel工厂通过反射动态实例化，无需再手动构造实例
- * 所以子类继承构造指定为 application: MyApplication, model: DataRepository 泛型为<DataRepository>。
+ * 子类继承构造指定为 application: MyApplication, model: DataRepository 泛型为<DataRepository>。
  */
 open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M) :
     AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?> {

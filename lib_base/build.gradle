@@ -2,48 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
-android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        //阿里路由框架配置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-                includeCompileClasspath = true
-            }
-        }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    dataBinding {
-        enabled true
-    }
-}
+apply from: "../module.build.gradle"
 
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
@@ -65,10 +24,6 @@ dependencies {
     api(rootProject.ext.dependencies.rxbinding) {
         exclude group: 'com.android.support'
     }
-    //rx权限请求
-//    api(rootProject.ext.dependencies.rxpermissions) {
-//        exclude group: 'com.android.support'
-//    }
     //network
     api rootProject.ext.dependencies.okhttp
     api rootProject.ext.dependencies.retrofit
@@ -150,5 +105,6 @@ dependencies {
     api rootProject.ext.dependencies["flexbox"]
     api rootProject.ext.dependencies["linkage-recyclerview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
+    debugApi rootProject.ext.dependencies["dokitx"]
 
 }
