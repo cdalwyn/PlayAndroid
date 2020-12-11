@@ -1,25 +1,32 @@
 package com.czl.module_web.ui.fragment
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
+import android.webkit.*
+import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.ClipboardUtils
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BR
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.module_web.viewmodel.WebFmViewModel
 import com.czl.module_web.R
 import com.czl.module_web.databinding.WebFragmentWebBinding
+import com.czl.module_web.viewmodel.WebFmViewModel
 import com.czl.module_web.widget.WebMenuPop
 import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.*
+import com.just.agentweb.WebChromeClient
+import com.just.agentweb.WebViewClient
 import com.lxj.xpopup.XPopup
+import java.lang.reflect.InvocationTargetException
+import java.lang.reflect.Method
 
 
 @Route(path = AppConstants.Router.Web.F_WEB)
@@ -60,7 +67,11 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun initData() {
         initWebView()
-        // todo h5 输入框选中显示链接地址并在下方弹出pop 复制链接 用浏览器打开 收藏链接
+        initWebLinkPop()
+    }
+
+    private fun initWebLinkPop() {
+
     }
 
     override fun initViewObservable() {
@@ -84,8 +95,18 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                 .asCustom(WebMenuPop(this))
                 .show()
         })
+        viewModel.uc.openBrowserEvent.observe(this, {
+            val uri = Uri.parse(currentLink)
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        })
+        viewModel.uc.copyCurrentLinkEvent.observe(this, {
+            ClipboardUtils.copyText(currentLink)
+            showSuccessToast("复制成功")
+        })
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         val webView = NestedScrollAgentWebView(context)
         val lp = CoordinatorLayout.LayoutParams(-1, -1)
@@ -97,66 +118,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             .useDefaultIndicator(ContextCompat.getColor(requireContext(), R.color.md_theme_red), 1)
             .setWebView(webView)
             .interceptUnkownUrl()
-            .setWebViewClient(object : WebViewClient() {
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    super.onPageStarted(view, url, favicon)
-                    errorFlag = false
-                    currentLink = url
-                }
-
-
-                override fun onReceivedError(
-                    view: WebView?,
-                    request: WebResourceRequest,
-                    error: WebResourceError
-                ) {
-                    super.onReceivedError(view, request, error)
-                    if (request.isForMainFrame) {
-                        errorFlag = true
-                        loadService.showWithConvertor(-1)
-                    }
-                }
-
-                override fun onReceivedError(
-                    view: WebView?,
-                    errorCode: Int,
-                    description: String?,
-                    failingUrl: String?
-                ) {
-                    super.onReceivedError(view, errorCode, description, failingUrl)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        return
-                    }
-                    errorFlag = true
-                    loadService.showWithConvertor(-1)
-                }
-
-                override fun onReceivedHttpError(
-                    view: WebView?,
-                    request: WebResourceRequest?,
-                    errorResponse: WebResourceResponse?
-                ) {
-                    super.onReceivedHttpError(view, request, errorResponse)
-                    val statusCode = errorResponse?.statusCode
-                    if (404 == statusCode || 500 == statusCode) {
-                        errorFlag = true
-                        loadService.showWithConvertor(-1)
-                    }
-                }
-
-                override fun onPageFinished(view: WebView, url: String?) {
-                    super.onPageFinished(view, url)
-                    if (!errorFlag) {
-                        loadService.showWithConvertor(0)
-                    }
-                    viewModel.canForwardFlag.set(view.canGoForward())
-                    if (currentLink == homeUrl && !view.canGoBack()) {
-                        viewModel.canGoBackFlag.set(false)
-                        return
-                    }
-                    viewModel.canGoBackFlag.set(view.canGoBack())
-                }
-            })
+            .setWebViewClient(mWebClient)
             .setWebChromeClient(object : WebChromeClient() {
                 override fun onReceivedTitle(view: WebView, title: String) {
                     super.onReceivedTitle(view, title)
@@ -174,10 +136,36 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             .createAgentWeb()
             .ready()
             .go(homeUrl)
+
         val settings = webView.settings
         settings.apply {
             useWideViewPort = true
             loadWithOverviewMode = true
+            javaScriptEnabled = true
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(true)
+            setRenderPriority(WebSettings.RenderPriority.HIGH)
+            allowFileAccess = true
+
+            try {
+                val clazz: Class<*> = webView.settings::class.java
+                val method: Method = clazz.getMethod(
+                    "setAllowUniversalAccessFromFileURLs",
+                    Boolean::class.javaPrimitiveType
+                )
+                method.invoke(webView.settings, true)
+            } catch (e: NoSuchMethodException) {
+                e.printStackTrace()
+            } catch (e: IllegalAccessException) {
+                e.printStackTrace()
+            } catch (e: InvocationTargetException) {
+                e.printStackTrace()
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                //target 23 default false, so manual set true
+                CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            }
         }
     }
 
@@ -221,5 +209,96 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun enableLazy(): Boolean {
         return false
+    }
+
+    private val mWebClient = object : WebViewClient() {
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
+            errorFlag = false
+            currentLink = url
+        }
+
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            try {
+                if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                }
+                return true
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return super.shouldOverrideUrlLoading(view, url)
+        }
+
+
+        override fun shouldOverrideUrlLoading(
+            view: WebView,
+            request: WebResourceRequest
+        ): Boolean {
+            val url = request.url.toString()
+            try {
+                if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")
+                ) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    return true
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return super.shouldOverrideUrlLoading(view, request)
+        }
+
+
+        @RequiresApi(Build.VERSION_CODES.M)
+        override fun onReceivedError(
+            view: WebView?,
+            request: WebResourceRequest,
+            error: WebResourceError
+        ) {
+            super.onReceivedError(view, request, error)
+            if (request.isForMainFrame) {
+                errorFlag = true
+            }
+        }
+
+        override fun onReceivedError(
+            view: WebView?,
+            errorCode: Int,
+            description: String?,
+            failingUrl: String?
+        ) {
+            super.onReceivedError(view, errorCode, description, failingUrl)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return
+            }
+            errorFlag = true
+        }
+
+        override fun onReceivedHttpError(
+            view: WebView?,
+            request: WebResourceRequest?,
+            errorResponse: WebResourceResponse?
+        ) {
+            super.onReceivedHttpError(view, request, errorResponse)
+            val statusCode = errorResponse?.statusCode
+            if (404 == statusCode || 500 == statusCode) {
+                errorFlag = true
+                loadService.showWithConvertor(-1)
+            }
+        }
+
+        override fun onPageFinished(view: WebView, url: String?) {
+            super.onPageFinished(view, url)
+            if (!errorFlag) {
+                loadService.showWithConvertor(0)
+            }
+            viewModel.canForwardFlag.set(view.canGoForward())
+            if (currentLink == homeUrl && !view.canGoBack()) {
+                viewModel.canGoBackFlag.set(false)
+                return
+            }
+            viewModel.canGoBackFlag.set(view.canGoBack())
+        }
     }
 }

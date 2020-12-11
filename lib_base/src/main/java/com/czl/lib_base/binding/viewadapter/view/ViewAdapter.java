@@ -105,12 +105,9 @@ public class ViewAdapter {
      */
     @BindingAdapter({"onFocusChangeCommand"})
     public static void onFocusChangeCommand(View view, final BindingCommand<Boolean> onFocusChangeCommand) {
-        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (onFocusChangeCommand != null) {
-                    onFocusChangeCommand.execute(hasFocus);
-                }
+        view.setOnFocusChangeListener((v, hasFocus) -> {
+            if (onFocusChangeCommand != null) {
+                onFocusChangeCommand.execute(hasFocus);
             }
         });
     }

@@ -1,13 +1,17 @@
 package com.czl.module_web.viewmodel
 
+import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import androidx.databinding.ObservableField
+import com.blankj.utilcode.util.ClipboardUtils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.CollectWebsiteBean
@@ -26,6 +30,7 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
     val uc = UiChangeEvent()
     var collectFlag = ObservableField(false)
     var canForwardFlag = ObservableField(false)
+    val showWebLinkMenuFlag = ObservableField(false)
     var canGoBackFlag = ObservableField(false)
 
     class UiChangeEvent {
@@ -33,6 +38,8 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
         val collectEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val goForwardEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val showMenuEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val openBrowserEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val copyCurrentLinkEvent:SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     override fun setToolbarRightClick() {
@@ -49,6 +56,18 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
     val onGoForwardClick: View.OnClickListener = View.OnClickListener {
         uc.goForwardEvent.call()
     }
+
+    val onWebLinkFocusCommand: BindingCommand<Boolean> = BindingCommand(BindingConsumer {focus->
+        showWebLinkMenuFlag.set(focus)
+    })
+
+    val copyLinkClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.copyCurrentLinkEvent.call()
+    })
+
+    val openOnBrowserClick: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.openBrowserEvent.call()
+    })
 
     /**
      * 获取当前用户所有收藏的网站来判断当前url是否已收藏
@@ -116,6 +135,6 @@ class WebFmViewModel(application: MyApplication, model: DataRepository) :
     }
 
     fun saveBrowseHistory(title: String, link: String) {
-        model.saveUserBrowseHistory(title,link)
+        model.saveUserBrowseHistory(title, link)
     }
 }

@@ -6,10 +6,10 @@
     >
 
     <data>
-
         <variable
             name="viewModel"
             type="com.czl.module_web.viewmodel.WebFmViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -18,6 +18,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/md_theme_red">
@@ -35,6 +36,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dp_10"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:padding="2dp"
                     android:src="@{viewModel.collectFlag?@drawable/ic_like_on:@drawable/ic_like_off_20dp}"
                     binding:onClickCommand="@{viewModel.onCollectClickCommand}"
@@ -45,7 +47,6 @@
                     android:id="@+id/tl_web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/dp_36"
                     app:hintEnabled="false"
                     app:passwordToggleEnabled="false">
 
@@ -63,11 +64,14 @@
                         android:maxLines="1"
                         android:padding="@dimen/dp_10"
                         android:text="@{viewModel.tvTitle}"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        binding:onFocusChangeCommand="@{viewModel.onWebLinkFocusCommand}"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </com.lihang.ShadowLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
+        <include layout="@layout/web_pop_link"
+            app:viewModel="@{viewModel}"/>
         <!--        <com.just.agentweb.NestedScrollAgentWebView-->
         <!--            android:id="@+id/ll_web"-->
         <!--            android:layout_width="match_parent"-->

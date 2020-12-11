@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
+import com.blankj.utilcode.util.ClipboardUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.base.BaseBean
@@ -70,11 +71,8 @@ class UserCollectWebAdapter(val mFragment: CollectWebsiteFragment) :
 
     val onCopyLinkClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is CollectWebsiteBean) {
+            ClipboardUtils.copyText(it.link)
             mFragment.showSuccessToast("复制成功")
-            val clipboardManager = mFragment.requireActivity()
-                .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText("Label", it.link)
-            clipboardManager.setPrimaryClip(clipData)
         }
     })
 
