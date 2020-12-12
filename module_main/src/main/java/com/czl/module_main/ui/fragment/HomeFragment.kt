@@ -1,5 +1,6 @@
 package com.czl.module_main.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -48,7 +49,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
 
     override fun onSupportVisible() {
-        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(true).init()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES).init()
     }
 
     override fun initContentView(): Int {

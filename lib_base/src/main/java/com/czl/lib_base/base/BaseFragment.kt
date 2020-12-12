@@ -1,16 +1,20 @@
 package com.czl.lib_base.base
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.Utils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
@@ -70,7 +74,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 .findViewById(R.id.activity_root)
             //避免过度绘制策略
             if (enableSwipeBack()) {
-                rootView.setBackgroundColor(Color.WHITE)
+                rootView.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_default_container_bg))
             }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
@@ -104,7 +108,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 }) as LoadService<Int>
             return if (enableSwipeBack()) {
                 //避免过度绘制策略
-                binding.root.setBackgroundColor(Color.WHITE)
+                binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_default_container_bg))
 //                attachToSwipeBack(binding.root)
                 attachToSwipeBack(loadService.loadLayout)
             } else {
@@ -178,7 +182,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initStatusBar() {
-        ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        ImmersionBar.with(this).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES, 0.2f).init()
     }
 
     open fun isThemeRedStatusBar(): Boolean {
@@ -186,10 +191,20 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initFitThemeStatusBar() {
-        ImmersionBar.with(this)
-            .statusBarDarkFont(false, 0.2f)
-            .statusBarColor(R.color.md_theme_red)
-            .fitsSystemWindows(true).init()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (mode != Configuration.UI_MODE_NIGHT_YES){
+            ImmersionBar.with(this)
+                .statusBarDarkFont(false, 0.2f)
+                .statusBarColor(R.color.md_theme_red)
+                .fitsSystemWindows(true)
+                .init()
+        }else{
+            ImmersionBar.with(this)
+                .statusBarDarkFont(false, 0.2f)
+                .fitsSystemWindows(true)
+                .init()
+        }
+
     }
 
     /**

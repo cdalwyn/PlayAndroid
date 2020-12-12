@@ -21,7 +21,7 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/md_theme_red">
+            android:background="@color/md_red_350">
 
             <com.lihang.ShadowLayout
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                         android:maxLines="1"
                         android:padding="@dimen/dp_10"
                         android:text="@{viewModel.tvTitle}"
-                        android:textColor="@color/white"
+                        android:textColor="#ffffff"
                         binding:onFocusChangeCommand="@{viewModel.onWebLinkFocusCommand}"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </com.lihang.ShadowLayout>
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:background="@color/md_theme_red"
+            android:background="@color/md_red_350"
             android:gravity="center_vertical"
             android:weightSum="3"
             app:layout_behavior="com.czl.lib_base.widget.BottomNavigationViewBehavior">

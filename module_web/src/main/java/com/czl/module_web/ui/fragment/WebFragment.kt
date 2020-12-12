@@ -137,31 +137,30 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         settings.apply {
             useWideViewPort = true
             loadWithOverviewMode = true
-            javaScriptEnabled = true
-            javaScriptCanOpenWindowsAutomatically = true
-            setSupportMultipleWindows(true)
-            setRenderPriority(WebSettings.RenderPriority.HIGH)
-            allowFileAccess = true
-
-            try {
-                val clazz: Class<*> = webView.settings::class.java
-                val method: Method = clazz.getMethod(
-                    "setAllowUniversalAccessFromFileURLs",
-                    Boolean::class.javaPrimitiveType
-                )
-                method.invoke(webView.settings, true)
-            } catch (e: NoSuchMethodException) {
-                e.printStackTrace()
-            } catch (e: IllegalAccessException) {
-                e.printStackTrace()
-            } catch (e: InvocationTargetException) {
-                e.printStackTrace()
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //target 23 default false, so manual set true
-                CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-            }
+//            javaScriptEnabled = true
+//            javaScriptCanOpenWindowsAutomatically = true
+//            setSupportMultipleWindows(true)
+//            setRenderPriority(WebSettings.RenderPriority.HIGH)
+//            allowFileAccess = true
+//            try {
+//                val clazz: Class<*> = webView.settings::class.java
+//                val method: Method = clazz.getMethod(
+//                    "setAllowUniversalAccessFromFileURLs",
+//                    Boolean::class.javaPrimitiveType
+//                )
+//                method.invoke(webView.settings, true)
+//            } catch (e: NoSuchMethodException) {
+//                e.printStackTrace()
+//            } catch (e: IllegalAccessException) {
+//                e.printStackTrace()
+//            } catch (e: InvocationTargetException) {
+//                e.printStackTrace()
+//            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                //target 23 default false, so manual set true
+//                CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+//                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+//            }
         }
     }
 
@@ -215,15 +214,15 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            try {
-                if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")) {
+
+            if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")) {
+                try {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
                 return true
-            } catch (e: Exception) {
-                e.printStackTrace()
             }
-
             return super.shouldOverrideUrlLoading(view, url)
         }
 
@@ -233,15 +232,17 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             request: WebResourceRequest
         ): Boolean {
             val url = request.url.toString()
-            try {
-                if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")
-                ) {
+
+            if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")
+            ) {
+                try {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                    return true
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
+                return true
             }
+
             return super.shouldOverrideUrlLoading(view, request)
         }
 

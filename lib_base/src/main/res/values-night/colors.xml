@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#EF5350</color>
     <color name="color_default_bg">#424242</color>
+    <color name="color_default_container_bg">#303030</color>
+
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="color_line">#dbdbdb</color>
@@ -12,6 +14,7 @@
     <color name="successColor">#388E3C</color>
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#353A3E</color>
+    <color name="searchPlaceholderColor">#BDBDBD</color>
 
     <color name="shadow_color">#424242</color>
 
@@ -25,7 +28,7 @@
     <color name="md_theme_red">#EF5350</color>
     <color name="md_red_500">#B23031</color>
     <color name="md_red_600">#E53935</color>
-    <color name="md_red_350">#424242</color>
+    <color name="md_red_350">#303030</color>
     <color name="md_red_300">#BF1B21</color>
     <color name="red">#C30D23</color>
     <color name="red_3F">#D7373F</color>
@@ -61,13 +64,13 @@
     <color name="gray_BB">#BBBBBB</color>
 
     <color name="trans">#00000000</color>
-    <color name="white_tran_cc">#CC303030</color>
+    <color name="white_tran_cc">#303030</color>
     <color name="white_f8">#F8F8F8</color>
     <color name="white_f4">#F4F4F4</color>
     <color name="white_aa">#AAAAAA</color>
     <color name="white_cc">#CCCCCC</color>
     <color name="white_dd">#DDDDDD</color>
-    <color name="white_ee">#EEEEEE</color>
+    <color name="white_ee">#424242</color>
     <color name="white_e9">#EBE9E9E9</color>
     <color name="white_df">#DFDFDF</color>
     <color name="white_f7">#F7F7F7</color>

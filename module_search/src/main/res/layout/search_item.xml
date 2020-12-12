@@ -22,6 +22,7 @@
         android:padding="@dimen/dp_10"
         android:layout_marginStart="@dimen/dp_6"
         android:layout_marginEnd="@dimen/dp_6"
+        app:hl_layoutBackground="@color/white"
         app:hl_cornerRadius="@dimen/dp_10"
         app:hl_shadowColor="@color/gray"
         app:hl_shadowLimit="@dimen/dp_6">

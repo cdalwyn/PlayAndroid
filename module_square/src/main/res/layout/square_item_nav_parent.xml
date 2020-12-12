@@ -11,8 +11,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="ResourceName">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_title"
@@ -21,6 +20,7 @@
             android:paddingStart="@dimen/dp_14"
             android:paddingBottom="@dimen/dp_4"
             android:paddingEnd="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_4"
             android:text="@{data.name}"
             tools:text="常用网站" />
 

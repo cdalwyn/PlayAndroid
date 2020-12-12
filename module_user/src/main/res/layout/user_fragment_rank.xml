@@ -32,7 +32,7 @@
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.finish()}"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp_12"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
@@ -107,7 +107,7 @@
             android:id="@+id/smart_common"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/color_default_container_bg"
             app:layout_constraintVertical_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/user_shadowlayout"

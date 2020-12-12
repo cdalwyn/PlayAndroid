@@ -33,7 +33,7 @@
                 android:layout_width="48dp"
                 android:layout_height="match_parent"
                 android:onClick="@{()->viewModel.finish()}"
-                android:padding="@dimen/dp_10"
+                android:padding="@dimen/dp_12"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
@@ -51,7 +51,6 @@
             android:id="@+id/user_shadowlayout"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintTop_toBottomOf="@+id/ll_toolbar"
             android:layout_marginStart="@dimen/dp_40"
             android:layout_marginEnd="@dimen/dp_40"

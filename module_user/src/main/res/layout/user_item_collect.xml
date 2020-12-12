@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
         android:layout_marginEnd="@dimen/dp_10"
-        app:hl_shadowLimit="@dimen/dp_6"
+        app:hl_layoutBackground="@color/white"
+        app:hl_shadowLimit="@dimen/dp_4"
         app:hl_cornerRadius="@dimen/dp_10">
 
         <androidx.constraintlayout.widget.ConstraintLayout

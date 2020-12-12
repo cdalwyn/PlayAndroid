@@ -1,6 +1,7 @@
 package com.czl.lib_base.widget;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -130,10 +131,10 @@ public class MaterialSearchBar extends FrameLayout implements View.OnClickListen
         init(attrs);
     }
 
+    @SuppressLint("CheckResult")
     private void init(AttributeSet attrs) {
         inflate(getContext(), R.layout.common_searchbar, this);
-
-        TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.MaterialSearchBar);
+        TypedArray array = getContext().obtainStyledAttributes(attrs,R.styleable.MaterialSearchBar);
 
         //Base Attributes
         speechMode = array.getBoolean(R.styleable.MaterialSearchBar_mt_speechMode, false);

@@ -9,7 +9,6 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/dp_24"
         android:layout_height="match_parent"
-
         app:srcCompat="@drawable/ic_history" />
 
     <TextView

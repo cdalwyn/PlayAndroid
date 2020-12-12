@@ -36,32 +36,27 @@
                 android:background="@color/trans"
                 app:elevation="0dp">
 
-                <com.lihang.ShadowLayout
+
+                <com.czl.lib_base.widget.MaterialSearchBar
+                    android:id="@+id/search_bar"
+                    style="@style/SearchBarStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp_4"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_6"
-                    app:layout_scrollFlags="scroll">
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/dp_10"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_scrollFlags="scroll"
+                    app:mt_backIconUseTint="true"
+                    app:mt_hint="@string/main_default_search_placeholder"
+                    app:mt_maxSuggestionsCount="5"
+                    app:mt_navIconEnabled="true"
+                    app:mt_placeholder="@string/main_default_search_placeholder"
+                    app:mt_roundedSearchBarEnabled="false"
+                    app:mt_speechMode="false"
+                    binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
+                    binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
+                    binding:onSearchIconCommand="@{viewModel.onSearchIconCommand}"
+                    binding:onSearchItemClick="@{viewModel.onSearchItemClick}" />
 
-                    <com.czl.lib_base.widget.MaterialSearchBar
-                        android:id="@+id/search_bar"
-                        style="@style/SearchBarStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:mt_backIconUseTint="true"
-                        app:mt_maxSuggestionsCount="5"
-                        app:mt_navIconEnabled="true"
-                        app:mt_placeholder="@string/main_default_search_placeholder"
-                        app:mt_roundedSearchBarEnabled="false"
-                        app:mt_speechMode="false"
-                        binding:onNavigationCommand="@{viewModel.onDrawerClickCommand}"
-                        binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
-                        binding:onSearchItemClick="@{viewModel.onSearchItemClick}"
-                        binding:onSearchIconCommand="@{viewModel.onSearchIconCommand}"/>
-
-                </com.lihang.ShadowLayout>
 
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
@@ -82,7 +77,7 @@
                     app:tabIndicatorGravity="bottom"
                     app:tabIndicatorHeight="0dp"
                     app:tabRippleColor="@color/trans"
-                    app:tabSelectedTextColor="@color/white"
+                    app:tabSelectedTextColor="#ffffff"
                     binding:onTabSelectedCommand="@{viewModel.onTabSelectedCommand}">
 
                     <com.google.android.material.tabs.TabItem

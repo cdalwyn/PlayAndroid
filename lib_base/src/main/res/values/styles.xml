@@ -61,17 +61,17 @@
         <item name="colorControlHighlight">@color/md_theme_red</item>
     </style>
 
-    <style name="SearchBarStyle" parent="AppTheme">
-        <item name="mt_searchBarColor">@color/searchBarPrimaryColor</item>
+    <style name="SearchBarStyle" parent="MaterialSearchBarLight">
+        <item name="mt_searchBarColor">@color/color_default_bg</item>
         <item name="mt_dividerColor">@color/searchBarDividerColor</item>
-        <item name="mt_navIconTint">@color/searchBarNavIconTintColor</item>
-        <item name="mt_searchIconTint">@color/searchBarSearchIconTintColor</item>
-        <item name="mt_clearIconTint">@color/searchBarClearIconTintColor</item>
+        <item name="mt_navIconTint">@color/black</item>
+        <item name="mt_searchIconTint">@color/black</item>
+        <item name="mt_clearIconTint">@color/black</item>
         <item name="mt_menuIconTint">@color/searchBarMenuIconTintColor</item>
-        <item name="mt_backIconTint">@color/searchBarBackIconTintColor</item>
-        <item name="mt_textColor">@color/searchBarTextColor</item>
+        <item name="mt_backIconTint">@color/black</item>
+        <item name="mt_textColor">@color/black</item>
         <item name="mt_hintColor">@color/searchBarHintColor</item>
-        <item name="mt_placeholderColor">@color/searchBarPlaceholderColor</item>
+        <item name="mt_placeholderColor">@color/searchPlaceholderColor</item>
         <item name="mt_backIconDrawable">@drawable/ic_back_black_24dp</item>
         <item name="mt_hint">搜索关键词...</item>
     </style>

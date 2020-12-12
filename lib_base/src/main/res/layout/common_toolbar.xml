@@ -24,7 +24,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/color_default_container_bg">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
@@ -52,9 +53,8 @@
                 android:paddingEnd="@dimen/dp_20"
                 android:singleLine="true"
                 android:text="@{viewModel.tvTitle}"
-                android:textColor="@color/md_grey_900"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_16"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

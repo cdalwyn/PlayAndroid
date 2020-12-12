@@ -42,7 +42,7 @@
             android:layout_height="60dp"
             android:padding="@dimen/dp_10"
             android:gravity="center"
-            android:textColor="@color/md_red_350"
+            android:textColor="@color/md_theme_red"
             android:text="@{`+`+data.coinCount}"
             tools:text="+36" />
 

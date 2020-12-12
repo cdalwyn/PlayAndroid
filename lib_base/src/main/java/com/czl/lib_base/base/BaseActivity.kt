@@ -1,6 +1,7 @@
 package com.czl.lib_base.base
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,7 +61,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initStatusBar() {
-        ImmersionBar.with(this).statusBarDarkFont(true, 0.2f).init()
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        ImmersionBar.with(this).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES, 0.2f).init()
     }
 
     open fun isImmersionBarEnabled(): Boolean {

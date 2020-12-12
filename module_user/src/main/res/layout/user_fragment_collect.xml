@@ -15,9 +15,11 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabBackground="@color/white"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/md_theme_red"
             app:tabIndicatorColor="@color/md_theme_red"
+            app:tabTextColor="@color/black"
             app:tabIndicatorFullWidth="true"
             app:tabRippleColor="@color/trans">
 

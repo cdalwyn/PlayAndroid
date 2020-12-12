@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@color/md_theme_red">
+            android:background="@color/md_red_350">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
@@ -33,7 +33,7 @@
                 android:gravity="center"
                 android:layout_marginEnd="48dp"
                 android:text="@{viewModel.tvToolbarTitle}"
-                android:textColor="@color/white" />
+                android:textColor="#ffffff" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -41,12 +41,10 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            android:background="@color/md_theme_red"
-            app:tabBackground="@color/md_theme_red"
+            app:tabBackground="@color/md_red_350"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextColor="#ffffff"
             app:tabIndicatorColor="@color/md_theme_red"
-            app:tabTextColor="@color/white_dd"
             app:tabIndicatorFullWidth="false"
             app:tabRippleColor="@color/trans"
             app:tabTextAppearance="@style/TabLayoutTextStyle"
