@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#424242</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#EF5350</color>
-    <color name="color_default_bg">#fff3f3f3</color>
-    <color name="color_default_dark">#424242</color>
+    <color name="color_default_bg">#424242</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="color_line">#dbdbdb</color>
@@ -14,19 +13,19 @@
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#353A3E</color>
 
-    <color name="shadow_color">#9E9E9E</color>
+    <color name="shadow_color">#424242</color>
 
     <color name="yellow_color_FF">#FFBA19</color>
 
     <color name="blacks">#B3000000</color>
-    <color name="black">#000000</color>
+    <color name="black">#FFFFFF</color>
     <color name="blacks_tr">#77000000</color>
     <color name="md_yellow_color">#FF5000</color>
 
     <color name="md_theme_red">#EF5350</color>
     <color name="md_red_500">#B23031</color>
     <color name="md_red_600">#E53935</color>
-    <color name="md_red_350">#EF5350</color>
+    <color name="md_red_350">#424242</color>
     <color name="md_red_300">#BF1B21</color>
     <color name="red">#C30D23</color>
     <color name="red_3F">#D7373F</color>
@@ -62,8 +61,7 @@
     <color name="gray_BB">#BBBBBB</color>
 
     <color name="trans">#00000000</color>
-
-    <color name="white_tran_cc">#FFFFFF</color>
+    <color name="white_tran_cc">#CC303030</color>
     <color name="white_f8">#F8F8F8</color>
     <color name="white_f4">#F4F4F4</color>
     <color name="white_aa">#AAAAAA</color>
@@ -97,7 +95,7 @@
 
     <color name="green_68">#13CE68</color>
 
-    <color name="white">#FFFFFF</color>
+    <color name="white">#424242</color>
     <color name="gray">#808080</color>
     <color name="yellow">#FFFF00</color>
     <color name="green">#008000</color>

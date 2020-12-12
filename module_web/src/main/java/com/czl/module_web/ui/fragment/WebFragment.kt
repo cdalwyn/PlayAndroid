@@ -67,10 +67,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun initData() {
         initWebView()
-        initWebLinkPop()
-    }
-
-    private fun initWebLinkPop() {
 
     }
 

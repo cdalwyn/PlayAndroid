@@ -35,9 +35,9 @@ dependencies {
     api(rootProject.ext.dependencies["material-dialogs-core"]) {
         exclude group: 'com.android.support'
     }
-    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
-        exclude group: 'com.android.support'
-    }
+//    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
+//        exclude group: 'com.android.support'
+//    }
     //glide图片加载库
     api(rootProject.ext.dependencies.glide) {
         exclude group: 'com.android.support'
@@ -93,7 +93,6 @@ dependencies {
     api rootProject.ext.dependencies["xpopup"]
     api rootProject.ext.dependencies["shadowlayout"]
     api rootProject.ext.dependencies["skeleton"]
-    api rootProject.ext.dependencies["shimmerlayout"]
     api rootProject.ext.dependencies["shimmer-recyclerView"]
     api rootProject.ext.dependencies["litepal"]
     api rootProject.ext.dependencies["adapter-helper"]

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:hl_cornerRadius="@dimen/dp_10"
         app:hl_shadowColor="@color/shadow_color"
+        app:hl_layoutBackground="@color/white"
         app:hl_shadowLimit="@dimen/dp_6">
 
         <androidx.appcompat.widget.LinearLayoutCompat

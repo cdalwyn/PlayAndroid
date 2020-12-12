@@ -82,6 +82,7 @@
                 app:hl_cornerRadius="@dimen/dp_4"
                 app:hl_shadowColor="@color/shadow_color"
                 app:hl_shadowLimit="@dimen/dp_4"
+                app:hl_layoutBackground="@color/white"
                 app:layout_constraintEnd_toStartOf="@id/ll_collect"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,6 +93,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -118,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_4"
                 app:hl_cornerRadius="@dimen/dp_4"
+                app:hl_layoutBackground="@color/white"
                 app:hl_shadowColor="@color/shadow_color"
                 app:hl_shadowLimit="@dimen/dp_4"
                 app:layout_constraintEnd_toStartOf="@id/ll_share"
@@ -130,6 +133,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -155,6 +159,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_4"
                 app:hl_cornerRadius="@dimen/dp_4"
+                app:hl_layoutBackground="@color/white"
                 app:hl_shadowColor="@color/shadow_color"
                 app:hl_shadowLimit="@dimen/dp_4"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -168,6 +173,7 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_10"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <TextView
@@ -205,6 +211,7 @@
                     android:layout_marginStart="@dimen/dp_8"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_8"
+                    app:hl_layoutBackground="@color/white"
                     app:hl_cornerRadius="@dimen/dp_10"
                     app:hl_shadowColor="@color/shadow_color"
                     app:hl_shadowLimit="@dimen/dp_4"
@@ -227,6 +234,7 @@
                     android:layout_marginStart="@dimen/dp_8"
                     android:layout_marginEnd="@dimen/dp_8"
                     app:hl_cornerRadius="@dimen/dp_10"
+                    app:hl_layoutBackground="@color/white"
                     app:hl_shadowColor="@color/shadow_color"
                     app:hl_shadowLimit="@dimen/dp_4"
                     app:layout_constraintTop_toBottomOf="@+id/item_score">
@@ -250,6 +258,7 @@
                     app:hl_cornerRadius="@dimen/dp_10"
                     app:hl_shadowColor="@color/shadow_color"
                     app:hl_shadowLimit="@dimen/dp_4"
+                    app:hl_layoutBackground="@color/white"
                     app:layout_constraintTop_toBottomOf="@+id/item_collect">
 
                     <com.czl.lib_base.widget.CommonItemSettingView
@@ -271,6 +280,7 @@
                     app:hl_cornerRadius="@dimen/dp_10"
                     app:hl_shadowColor="@color/shadow_color"
                     app:hl_shadowLimit="@dimen/dp_4"
+                    app:hl_layoutBackground="@color/white"
                     app:layout_constraintTop_toBottomOf="@+id/item_share">
 
                     <com.czl.lib_base.widget.CommonItemSettingView

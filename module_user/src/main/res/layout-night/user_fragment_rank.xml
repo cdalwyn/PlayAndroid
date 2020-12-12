@@ -18,9 +18,10 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
             android:background="@color/md_red_350"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="@+id/user_shadowlayout"
+            app:layout_constraintTop_toTopOf="parent" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_toolbar"
             android:layout_width="match_parent"

@@ -1,5 +1,8 @@
 package com.czl.module_user.ui.fragment
 
+import android.content.res.Configuration
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route

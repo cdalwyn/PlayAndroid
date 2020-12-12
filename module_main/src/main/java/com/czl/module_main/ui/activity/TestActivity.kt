@@ -7,7 +7,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
-import com.czl.lib_base.util.MaterialDialogUtils
 import com.czl.lib_base.util.PermissionUtil
 import com.czl.module_main.BR
 import com.czl.module_main.R
@@ -50,15 +49,6 @@ class TestActivity : BaseActivity<MainLayoutTestBinding, TestViewModel>() {
         // 列表item点击事件的观察者
         viewModel.uc.deleteItemLiveData.observe(this, Observer {
             val index = viewModel.getItemPosition(it)
-            MaterialDialogUtils.showBasicDialog(this, "是否删除下标$index")
-                .onNegative { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .onPositive { dialog, _ ->
-                    viewModel.deleteItem(it)
-                    dialog.dismiss()
-                }
-                .show()
         })
         // 接收通信事件
         LiveBusCenter.observeMainEvent(this) {

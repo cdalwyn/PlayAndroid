@@ -26,7 +26,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="240dp"
-            android:background="@color/md_red_400">
+            android:background="@color/md_red_350">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="我的积分"
-                    android:textColor="@color/white" />
+                    android:textColor="#ffffff" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="48dp"
@@ -65,7 +65,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="@{viewModel.tvTotalScore}"
-                android:textColor="@color/white"
+                android:textColor="#ffffff"
                 android:textSize="46sp"
                 android:textStyle="bold"
                 app:layout_scrollFlags="scroll"
@@ -76,6 +76,7 @@
             android:id="@+id/smart_common"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             binding:onLoadMoreCommand="@{viewModel.onLoadMoreCommand}"
             binding:onRefreshCommand="@{viewModel.onRefreshCommand}">

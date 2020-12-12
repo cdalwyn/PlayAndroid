@@ -2,7 +2,9 @@ package com.czl.lib_base.base
 
 import android.app.Activity
 import android.app.Application
+import android.content.res.Configuration
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
@@ -92,6 +94,12 @@ open class MyApplication : Application() {
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
+        // 跟随系统切换黑夜模式
+        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        AppCompatDelegate.setDefaultNightMode(
+            if (mode == Configuration.UI_MODE_NIGHT_YES) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
     }

@@ -11,7 +11,6 @@
             type="com.czl.module_main.viewmodel.MainViewModel" />
     </data>
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,6 +29,7 @@
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            app:bnbBackgroundColor="@color/white_tran_cc"
             app:bnbAutoHideEnabled="false"
             binding:onTabChangeCommand="@{viewModel.onTabSelectedListener}">
 

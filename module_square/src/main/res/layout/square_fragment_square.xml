@@ -38,7 +38,7 @@
                         android:layout_height="68dp"
                         android:layout_marginTop="@dimen/dp_10"
                         app:hl_cornerRadius="@dimen/dp_6"
-                        app:hl_endColor="@color/white"
+                        app:hl_endColor="#ffffff"
                         app:hl_layoutBackground="@color/md_theme_red"
                         app:hl_shadowColor="@color/md_theme_red"
                         app:hl_shadowLimit="@dimen/dp_10"
@@ -53,7 +53,7 @@
                             android:gravity="center"
                             android:paddingEnd="@dimen/dp_10"
                             android:text="体系"
-                            android:textColor="@color/white"
+                            android:textColor="#ffffff"
                             app:drawableEndCompat="@drawable/ic_setup"
                             binding:onClickCommand="@{viewModel.onSystemTreeClickCommand}"/>
                     </com.lihang.ShadowLayout>
@@ -63,7 +63,7 @@
                         android:layout_width="140dp"
                         android:layout_height="68dp"
                         app:hl_cornerRadius="@dimen/dp_6"
-                        app:hl_endColor="@color/white"
+                        app:hl_endColor="#ffffff"
                         app:hl_layoutBackground="@color/md_theme_red"
                         app:hl_shadowColor="@color/md_theme_red"
                         app:hl_shadowLimit="@dimen/dp_10"
@@ -78,7 +78,7 @@
                             android:gravity="center"
                             android:paddingEnd="@dimen/dp_14"
                             android:text="导航"
-                            android:textColor="@color/white"
+                            android:textColor="#ffffff"
                             app:drawableEndCompat="@drawable/ic_navigate"
                             binding:onClickCommand="@{viewModel.onNavClickCommand}"/>
                     </com.lihang.ShadowLayout>
@@ -92,7 +92,7 @@
                     android:layout_marginStart="@dimen/dp_6"
                     android:padding="@dimen/dp_6"
                     android:text="近期分享"
-                    android:textColor="@color/blacks"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"

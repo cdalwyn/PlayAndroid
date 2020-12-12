@@ -11,7 +11,8 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -41,7 +42,7 @@
             android:layout_height="60dp"
             android:padding="@dimen/dp_10"
             android:gravity="center"
-            android:textColor="@color/md_red_400"
+            android:textColor="@color/md_red_350"
             android:text="@{`+`+data.coinCount}"
             tools:text="+36" />
 
