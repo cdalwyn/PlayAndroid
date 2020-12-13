@@ -50,6 +50,10 @@ class SquareViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.Square.F_NAV)
     })
 
+    val onEditShareClick: BindingCommand<Void> = BindingCommand(BindingAction {
+        uC.showSharePopEvent.call()
+    })
+
     /**
      * 收藏
      */

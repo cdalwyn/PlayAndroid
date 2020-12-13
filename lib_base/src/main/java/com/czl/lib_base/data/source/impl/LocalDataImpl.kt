@@ -16,8 +16,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.litepal.LitePal
 import org.litepal.extension.findFirst
-import java.text.DateFormat
-import java.util.*
 
 /**
  * @author Alwyn
@@ -173,5 +171,24 @@ class LocalDataImpl : LocalDataSource {
             }
             it.onNext(entity.getAllWebHistory())
         }, BackpressureStrategy.BUFFER)
+    }
+
+    override fun deleteBrowseHistory(title: String, link: String): Observable<Int> {
+        return Observable.create { emitter ->
+            val entity =
+                LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
+            emitter.onNext(
+                entity?.getAllWebHistory()?.find { it.webLink == link && it.webTitle == title }
+                    ?.delete() ?: 0
+            )
+        }
+    }
+
+    override fun deleteAllWebHistory(): Observable<Int> {
+        return Observable.create { emitter->
+            val entity =
+                LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
+            emitter.onNext(LitePal.deleteAll(WebHistoryEntity::class.java,"userentity_id=?",entity?.id.toString()))
+        }
     }
 }

@@ -2,7 +2,6 @@ package com.czl.lib_base.base
 
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +12,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.AppUtils
-import com.blankj.utilcode.util.Utils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
@@ -23,7 +20,7 @@ import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.callback.LoadingCallback
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
-import com.czl.lib_base.util.PopDialogUtils
+import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
@@ -357,7 +354,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     fun showLoading(title: String?) {
-        dialog = PopDialogUtils.showLoadingDialog(requireContext(), title)
+        dialog = DialogHelper.showLoadingDialog(requireContext(), title)
 //        if (dialog != null) {
 //            dialog = dialog!!.builder.title(title!!).build()
 //            dialog!!.show()

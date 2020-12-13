@@ -14,7 +14,7 @@ import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
-import com.czl.lib_base.util.PopDialogUtils
+import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
@@ -187,7 +187,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     fun showLoading(title: String?) {
-        dialog = PopDialogUtils.showLoadingDialog(this, title)
+        dialog = DialogHelper.showLoadingDialog(this, title)
     }
 
     fun dismissLoading() {

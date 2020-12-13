@@ -18,6 +18,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.databinding.PopShareArticleBinding
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BottomPopupView
 import com.lxj.xpopup.util.KeyboardUtils
 import com.lxj.xpopup.util.XPopupUtils

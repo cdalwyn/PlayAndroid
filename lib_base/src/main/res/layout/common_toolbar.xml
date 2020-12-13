@@ -83,6 +83,8 @@
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/black"
                 android:visibility="visible"
+                android:text="@{viewModel.toolbarRightText}"
+                binding:onClickCommand="@{viewModel.ivToolbarIconOnClick}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="设置" />

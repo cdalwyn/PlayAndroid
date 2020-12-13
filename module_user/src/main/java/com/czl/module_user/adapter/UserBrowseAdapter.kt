@@ -7,6 +7,7 @@ import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.db.WebHistoryEntity
+import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserItemBrowseBinding
 import com.czl.module_user.ui.fragment.UserBrowseFragment
@@ -39,9 +40,15 @@ class UserBrowseAdapter(private val mFragment: UserBrowseFragment) :
         }
     })
 
-    val onDeleteClickCommand:BindingCommand<Any> = BindingCommand(BindingConsumer {
+    val onDeleteClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is WebHistoryEntity) {
-            mFragment.showNormalToast("删除")
+            mFragment.viewModel.model.deleteBrowseHistory(it.webTitle, it.webLink)
+                .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
+                .subscribe { num ->
+                    if (num > 0) {
+                        remove(it)
+                    }
+                }
         }
     })
 }

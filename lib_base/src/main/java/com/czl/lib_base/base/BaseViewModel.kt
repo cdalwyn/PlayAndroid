@@ -34,6 +34,8 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     // 标题栏标题
     val tvTitle = ObservableField("")
 
+    val toolbarRightText = ObservableField("")
+
     // 标题栏右图标id
     val ivToolbarIconRes = ObservableInt(0)
 
@@ -66,7 +68,8 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     val loadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         loadMoreCommand()
     })
-    val scrollToTopCommand: BindingCommand<Void> = BindingCommand(BindingAction { uC.scrollTopEvent.call() })
+    val scrollToTopCommand: BindingCommand<Void> =
+        BindingCommand(BindingAction { uC.scrollTopEvent.call() })
 
     /**
      * 通用recyclerview刷新
@@ -91,7 +94,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         get() = lifecycle.get()
 
 
-    fun showLoading(title: String?="加载中") {
+    fun showLoading(title: String? = "加载中") {
         uC.showLoadingEvent.postValue(title)
     }
 

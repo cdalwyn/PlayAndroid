@@ -47,7 +47,8 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:ellipsize="end"
-                binding:text="@{TextUtils.isEmpty(user.publicName)?`未登录`:user.publicName}" />
+                binding:text="@{TextUtils.isEmpty(user.publicName)?`未登录`:user.publicName}"
+                binding:onClickCommand="@{pop.onShowLoginPopClick}"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 

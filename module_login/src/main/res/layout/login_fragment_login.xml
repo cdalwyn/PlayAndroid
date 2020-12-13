@@ -20,7 +20,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".mvvm.ui.activity.LoginActivity">
+            tools:context=".mvvm.ui.activity.LoginActivity"
+            tools:background="@color/black">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationView"
@@ -131,7 +132,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
-                android:text="我是游客，只想看看"
+                android:textSize="@dimen/sp_12"
+                android:text="我是游客，随便看看\n(不保存任何记录)"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

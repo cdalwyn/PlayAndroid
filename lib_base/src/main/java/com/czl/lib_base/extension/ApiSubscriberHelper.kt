@@ -12,6 +12,8 @@ import com.czl.lib_base.widget.LoginPopView
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.interfaces.SimpleCallback
 import io.reactivex.observers.DisposableObserver
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
@@ -32,9 +34,8 @@ abstract class ApiSubscriberHelper<T> : DisposableObserver<T>() {
                 LogUtils.e("当前用户未登录或者登录已失效")
                 XPopup.Builder(AppManager.instance.currentActivity())
                     .enableDrag(true)
-                    .moveUpToKeyboard(false)
+                    .moveUpToKeyboard(true)
                     .autoOpenSoftInput(true)
-                    .isDestroyOnDismiss(true)
                     .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
                     .show()
             }

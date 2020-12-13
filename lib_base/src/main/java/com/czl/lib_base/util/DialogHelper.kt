@@ -11,7 +11,7 @@ import com.lxj.xpopup.interfaces.OnConfirmListener
  * @Date 2020/12/1
  * @Description
  */
-object PopDialogUtils {
+object DialogHelper {
     fun showBaseDialog(
         context: Context,
         title: String,

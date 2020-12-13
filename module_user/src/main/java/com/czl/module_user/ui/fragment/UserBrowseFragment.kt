@@ -9,15 +9,18 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.util.DialogHelper
+import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserBrowseAdapter
 import com.czl.module_user.viewmodel.UserBrowseVm
+import com.gyf.immersionbar.ImmersionBar
 
 /**
  * @author Alwyn
  * @Date 2020/12/7
- * @Description
+ * @Description 阅读历史
  */
 @Route(path = AppConstants.Router.User.F_USER_BROWSE)
 class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>() {
@@ -32,6 +35,7 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
 
     override fun initData() {
         viewModel.tvTitle.set("阅读历史")
+        viewModel.toolbarRightText.set("清空")
         initAdapter()
         binding.smartCommon.autoRefresh()
     }
@@ -50,6 +54,15 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setList(it)
+        })
+        viewModel.clearAllEvent.observe(this,{
+            DialogHelper.showBaseDialog(requireContext(),"提示","确定清空所有历史记录吗？"){
+                viewModel.model.deleteAllWebHistory()
+                    .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
+                    .subscribe {
+                        mAdapter.setList(null)
+                    }
+            }
         })
     }
 

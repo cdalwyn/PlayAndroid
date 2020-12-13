@@ -1,6 +1,7 @@
 package com.czl.lib_base.widget
 
 import android.annotation.SuppressLint
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
@@ -14,7 +15,9 @@ import com.czl.lib_base.databinding.PopLoginBinding
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
+import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BottomPopupView
+import com.lxj.xpopup.util.XPopupUtils
 
 /**
  * @author Alwyn
@@ -45,9 +48,11 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
                         if (t.errorCode == 0) {
                             t.data?.let { data ->
                                 activity.dataRepository.saveUserData(data)
+                                tvLoginPwd.set("")
+                                tvLoginPwd.set("")
+                                LiveBusCenter.postLoginSuccessEvent()
+                                dismiss()
                             }
-                            LiveBusCenter.postLoginSuccessEvent()
-                            dismiss()
                         }
                     }
 
@@ -60,6 +65,10 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
         }
     })
 
+    override fun doAfterShow() {
+        super.doAfterShow()
+        registerFlag.set(0)
+    }
     // 切换注册UI
     val onRegisterClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         registerFlag.set(1)
@@ -109,8 +118,10 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     override fun onCreate() {
         super.onCreate()
         dataBinding = DataBindingUtil.bind(popupImplView)
-        dataBinding?.pop = this
-
+        dataBinding?.apply {
+            pop = this@LoginPopView
+            executePendingBindings()
+        }
     }
 
     override fun onDestroy() {

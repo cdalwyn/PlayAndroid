@@ -26,11 +26,14 @@ import com.ethanhua.skeleton.Skeleton
 import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import com.youth.banner.config.IndicatorConfig
 import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.random.Random.Default.nextInt
@@ -46,7 +49,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     private lateinit var bannerSkeleton: SkeletonScreen
     lateinit var mArticleAdapter: HomeArticleAdapter
     lateinit var mProjectAdapter: HomeProjectAdapter
-
+    val loginPopView: BasePopupView by inject(named("login"))
 
     override fun onSupportVisible() {
         val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK

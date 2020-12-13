@@ -55,7 +55,7 @@
                             android:text="体系"
                             android:textColor="#ffffff"
                             app:drawableEndCompat="@drawable/ic_setup"
-                            binding:onClickCommand="@{viewModel.onSystemTreeClickCommand}"/>
+                            binding:onClickCommand="@{viewModel.onSystemTreeClickCommand}" />
                     </com.lihang.ShadowLayout>
 
                     <com.lihang.ShadowLayout
@@ -80,24 +80,37 @@
                             android:text="导航"
                             android:textColor="#ffffff"
                             app:drawableEndCompat="@drawable/ic_navigate"
-                            binding:onClickCommand="@{viewModel.onNavClickCommand}"/>
+                            binding:onClickCommand="@{viewModel.onNavClickCommand}" />
                     </com.lihang.ShadowLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <TextView
-                    android:id="@+id/tv_title"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_6"
-                    android:padding="@dimen/dp_6"
-                    android:text="近期分享"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_16"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_setup" />
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_6"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dp_6"
+                        android:text="近期分享"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_16"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_setup" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/dp_16"
+                        app:srcCompat="@drawable/ic_pen"
+                        android:padding="@dimen/dp_4"
+                        binding:onClickCommand="@{viewModel.onEditShareClick}"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </com.google.android.material.appbar.AppBarLayout>
 

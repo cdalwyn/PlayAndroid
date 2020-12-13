@@ -199,6 +199,14 @@ class DataRepository constructor(
         return mLocalDataSource.getUserBrowseHistoryByUid()
     }
 
+    override fun deleteBrowseHistory(title: String, link: String): Observable<Int> {
+        return mLocalDataSource.deleteBrowseHistory(title,link)
+    }
+
+    override fun deleteAllWebHistory(): Observable<Int> {
+        return mLocalDataSource.deleteAllWebHistory()
+    }
+
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {
         return mHttpDataSource.userLogin(account, pwd)
     }
