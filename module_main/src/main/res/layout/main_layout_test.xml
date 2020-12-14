@@ -73,7 +73,7 @@
                 android:text="是否显示本地数据"
                 binding:layout_constraintStart_toStartOf="parent"
                 binding:layout_constraintTop_toBottomOf="@id/text"
-                binding:onCheckedChangeCommand="@{viewModel.switchOnClick}" />
+                binding:onSwitchCheckedCommand="@{viewModel.switchOnClick}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/edit_query"

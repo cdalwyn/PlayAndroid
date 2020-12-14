@@ -207,6 +207,22 @@ class DataRepository constructor(
         return mLocalDataSource.deleteAllWebHistory()
     }
 
+    override fun saveFollowSysModeFlag(isFollow: Boolean) {
+        return mLocalDataSource.saveFollowSysModeFlag(isFollow)
+    }
+
+    override fun getFollowSysUiModeFlag(): Boolean {
+        return mLocalDataSource.getFollowSysUiModeFlag()
+    }
+
+    override fun saveUiMode(nightModeFlag: Boolean) {
+        return mLocalDataSource.saveUiMode(nightModeFlag)
+    }
+
+    override fun getUiMode(): Boolean {
+        return mLocalDataSource.getUiMode()
+    }
+
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {
         return mHttpDataSource.userLogin(account, pwd)
     }

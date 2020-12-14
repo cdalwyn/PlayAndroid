@@ -11,7 +11,7 @@ import java.util.Set;
  * Created by Alwyn on 2020/10/10.
  * 缓存封装类
  */
-public class SpUtils {
+public class SpHelper {
 
     static {
         mv = MMKV.defaultMMKV();
@@ -19,7 +19,7 @@ public class SpUtils {
 
     private static MMKV mv;
 
-    private SpUtils() {
+    private SpHelper() {
     }
 
     /**

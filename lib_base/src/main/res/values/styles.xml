@@ -5,9 +5,9 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:windowAnimationStyle">@style/Animation_Activity</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="colorPrimary">@color/red</item>
-        <item name="colorPrimaryDark">@color/red</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/mColorPrimary</item>
+        <item name="colorPrimaryDark">@color/mColorPrimaryDark</item>
+        <item name="colorAccent">@color/mColorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:fontFamily">sans-serif</item>
         <!--取消水波纹效果-->
@@ -79,5 +79,9 @@
     <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="SwitchStyleClickable">
+        <item name="colorControlActivated">@color/md_theme_red</item>
     </style>
 </resources>

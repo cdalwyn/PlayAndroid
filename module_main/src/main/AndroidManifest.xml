@@ -3,7 +3,7 @@
     package="com.czl.module_main">
 
     <application>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MainActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.TestActivity" />
     </application>
 

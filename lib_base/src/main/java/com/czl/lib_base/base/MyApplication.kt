@@ -12,8 +12,11 @@ import com.blankj.utilcode.util.Utils
 import com.czl.lib_base.BuildConfig
 import com.czl.lib_base.R
 import com.czl.lib_base.callback.ErrorCallback
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.crash.CaocConfig
 import com.czl.lib_base.di.allModule
+import com.czl.lib_base.util.DayModeUtil
+import com.czl.lib_base.util.SpHelper
 import com.czl.lib_base.util.ToastHelper
 import com.didichuxing.doraemonkit.DoraemonKit
 import com.didichuxing.doraemonkit.DoraemonKitReal
@@ -94,12 +97,19 @@ open class MyApplication : Application() {
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
+
+//        AppCompatDelegate.setDefaultNightMode(
+//            if (DayModeUtil.isNightMode(this)) AppCompatDelegate.MODE_NIGHT_YES
+//            else AppCompatDelegate.MODE_NIGHT_NO
+//        )
         // 跟随系统切换黑夜模式
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        AppCompatDelegate.setDefaultNightMode(
-            if (mode == Configuration.UI_MODE_NIGHT_YES) AppCompatDelegate.MODE_NIGHT_YES
-            else AppCompatDelegate.MODE_NIGHT_NO
-        )
+        if (SpHelper.decodeBoolean(AppConstants.SpKey.SYS_UI_MODE))
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        else
+            AppCompatDelegate.setDefaultNightMode(
+                if (SpHelper.decodeBoolean(AppConstants.SpKey.USER_UI_MODE)) AppCompatDelegate.MODE_NIGHT_YES
+                else AppCompatDelegate.MODE_NIGHT_NO
+            )
         // 根据活动时间动态更换资源图标（如淘宝双11）
 //        LauncherIconManager.register(this)
     }

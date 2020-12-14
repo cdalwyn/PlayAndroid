@@ -12,6 +12,7 @@ import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_main.BR
 import com.czl.module_main.R
@@ -52,8 +53,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     val loginPopView: BasePopupView by inject(named("login"))
 
     override fun onSupportVisible() {
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES).init()
+        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(!DayModeUtil.isNightMode(requireContext())).init()
     }
 
     override fun initContentView(): Int {

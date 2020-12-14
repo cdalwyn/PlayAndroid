@@ -1,5 +1,6 @@
 package com.czl.lib_base.data.source
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.czl.lib_base.data.bean.UserBean
 import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.data.db.WebHistoryEntity
@@ -26,4 +27,9 @@ interface LocalDataSource {
     fun getUserBrowseHistoryByUid(): Flowable<List<WebHistoryEntity>>
     fun deleteBrowseHistory(title: String, link: String): Observable<Int>
     fun deleteAllWebHistory(): Observable<Int>
+
+    fun saveFollowSysModeFlag(isFollow: Boolean = true)
+    fun getFollowSysUiModeFlag(): Boolean
+    fun saveUiMode(nightModeFlag: Boolean = false)
+    fun getUiMode(): Boolean
 }

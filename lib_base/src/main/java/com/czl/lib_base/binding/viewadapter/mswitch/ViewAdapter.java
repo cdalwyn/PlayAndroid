@@ -1,6 +1,5 @@
 package com.czl.lib_base.binding.viewadapter.mswitch;
 
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import androidx.appcompat.widget.SwitchCompat;
@@ -29,15 +28,10 @@ public class ViewAdapter {
      * @param mSwitch        Switch控件
      * @param changeListener 事件绑定命令
      */
-    @BindingAdapter("onCheckedChangeCommand")
+    @BindingAdapter("onSwitchCheckedCommand")
     public static void onCheckedChangeCommand(final SwitchCompat mSwitch, final BindingCommand<Boolean> changeListener) {
         if (changeListener != null) {
-            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    changeListener.execute(isChecked);
-                }
-            });
+            mSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> changeListener.execute(isChecked));
         }
     }
 }

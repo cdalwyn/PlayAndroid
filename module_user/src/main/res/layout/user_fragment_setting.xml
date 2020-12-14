@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.czl.module_user.viewmodel.UserSettingVm" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/tv_follow_sys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:text="跟随系统夜间模式"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_sys"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:checked="@{viewModel.followSysUiModeState}"
+            android:theme="@style/SwitchStyleClickable"
+            app:layout_constraintBottom_toBottomOf="@id/tv_follow_sys"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_follow_sys"
+            binding:onSwitchCheckedCommand="@{viewModel.onFollowSysModeCheckedCommand}"/>
+
+        <TextView
+            android:id="@+id/tv_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:text="夜间模式"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_follow_sys"
+            binding:isVisible="@{!viewModel.followSysUiModeState}"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_night"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:theme="@style/SwitchStyleClickable"
+            android:enabled="@{!viewModel.followSysUiModeState}"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_night"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_night"
+            binding:onSwitchCheckedCommand="@{viewModel.onSwitchNightModeCheckedCommand}"
+            binding:isVisible="@{!viewModel.followSysUiModeState}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

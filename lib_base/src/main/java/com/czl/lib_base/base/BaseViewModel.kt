@@ -108,18 +108,18 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
      * @param clz    所跳转的目的Activity类
      * @param bundle 跳转所携带的信息
      */
-    fun startActivity(clz: Class<*>, bundle: Bundle? = null) {
+    fun startActivity(routePath: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
-        params[ParameterField.CLASS] = clz
+        params[ParameterField.ROUTE_PATH] = routePath
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
         }
         uC.startActivityEvent.postValue(params)
     }
 
-    fun startFragment(routh: String, bundle: Bundle? = null) {
+    fun startFragment(routePath: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
-        params[ParameterField.ROUTE_PATH] = routh
+        params[ParameterField.ROUTE_PATH] = routePath
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
         }

@@ -9,11 +9,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
+import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.ShareArticlePopView
@@ -60,9 +62,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 //        viewModel.registerRxBus();
     }
 
+
     open fun initStatusBar() {
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        ImmersionBar.with(this).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES, 0.2f).init()
+        ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(this), 0.2f)
+            .statusBarColor(R.color.color_default_bg).init()
     }
 
     open fun isImmersionBarEnabled(): Boolean {
@@ -148,10 +151,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
             .observe(this, { v: Void? -> dismissLoading() })
         //跳入新页面
         viewModel.uC.getStartActivityEvent().observe(
-            this, { params: Map<String?, Any?> ->
-                val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
-                val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-                startActivity(clz, bundle)
+            this, { map ->
+                val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+                val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+                RouteCenter.navigate(routePath, bundle)
             }
         )
         viewModel.uC.getStartFragmentEvent().observe(this, { map ->
@@ -176,7 +179,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
             this, { onBackPressedSupport() }
         )
         // 弹出分享文章窗口
-        viewModel.uC.getShowSharePopEvent().observe(this,{
+        viewModel.uC.getShowSharePopEvent().observe(this, {
             XPopup.Builder(this)
                 .enableDrag(true)
                 .moveUpToKeyboard(true)

@@ -9,7 +9,7 @@ import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.data.db.UserEntity
 import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.data.source.LocalDataSource
-import com.czl.lib_base.util.SpUtils
+import com.czl.lib_base.util.SpHelper
 import com.google.gson.reflect.TypeToken
 import io.reactivex.*
 import io.reactivex.disposables.Disposable
@@ -39,20 +39,20 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun getLoginName(): String? {
-        return SpUtils.decodeString(AppConstants.SpKey.LOGIN_NAME)
+        return SpHelper.decodeString(AppConstants.SpKey.LOGIN_NAME)
     }
 
     override fun saveUserData(userBean: UserBean) {
-        SpUtils.encode(AppConstants.SpKey.USER_ID, userBean.id)
-        SpUtils.encode(AppConstants.SpKey.LOGIN_NAME, userBean.publicName)
-        SpUtils.encode(
+        SpHelper.encode(AppConstants.SpKey.USER_ID, userBean.id)
+        SpHelper.encode(AppConstants.SpKey.LOGIN_NAME, userBean.publicName)
+        SpHelper.encode(
             AppConstants.SpKey.USER_JSON_DATA,
             GsonUtils.toJson(userBean, object : TypeToken<UserBean>() {}.type)
         )
     }
 
     override fun getUserData(): UserBean? {
-        val userJsonData = SpUtils.decodeString(AppConstants.SpKey.USER_JSON_DATA)
+        val userJsonData = SpHelper.decodeString(AppConstants.SpKey.USER_JSON_DATA)
         return if (userJsonData.isNullOrBlank())
             return null
         else GsonUtils.fromJson(
@@ -62,11 +62,11 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun getUserId(): Int {
-        return SpUtils.decodeInt(AppConstants.SpKey.USER_ID)
+        return SpHelper.decodeInt(AppConstants.SpKey.USER_ID)
     }
 
     override fun clearLoginState() {
-        SpUtils.clearAll()
+        SpHelper.clearAll()
     }
 
     override fun saveUserSearchHistory(keyword: String): Flowable<Boolean> {
@@ -190,5 +190,21 @@ class LocalDataImpl : LocalDataSource {
                 LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
             emitter.onNext(LitePal.deleteAll(WebHistoryEntity::class.java,"userentity_id=?",entity?.id.toString()))
         }
+    }
+
+    override fun saveFollowSysModeFlag(isFollow: Boolean) {
+        SpHelper.encode(AppConstants.SpKey.SYS_UI_MODE,isFollow)
+    }
+
+    override fun getFollowSysUiModeFlag(): Boolean {
+        return SpHelper.decodeBoolean(AppConstants.SpKey.SYS_UI_MODE)
+    }
+
+    override fun saveUiMode(nightModeFlag: Boolean) {
+        SpHelper.encode(AppConstants.SpKey.USER_UI_MODE,nightModeFlag)
+    }
+
+    override fun getUiMode(): Boolean {
+        return SpHelper.decodeBoolean(AppConstants.SpKey.USER_UI_MODE)
     }
 }

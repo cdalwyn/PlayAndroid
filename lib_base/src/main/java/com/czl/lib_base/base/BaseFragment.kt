@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
@@ -20,6 +21,7 @@ import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.callback.LoadingCallback
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
+import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
 import com.czl.lib_base.widget.ShareArticlePopView
@@ -71,7 +73,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 .findViewById(R.id.activity_root)
             //避免过度绘制策略
             if (enableSwipeBack()) {
-                rootView.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_default_container_bg))
+                rootView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_default_container_bg
+                    )
+                )
             }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
@@ -105,7 +112,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 }) as LoadService<Int>
             return if (enableSwipeBack()) {
                 //避免过度绘制策略
-                binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.color_default_container_bg))
+                binding.root.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_default_container_bg
+                    )
+                )
 //                attachToSwipeBack(binding.root)
                 attachToSwipeBack(loadService.loadLayout)
             } else {
@@ -179,8 +191,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initStatusBar() {
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        ImmersionBar.with(this).statusBarDarkFont(mode != Configuration.UI_MODE_NIGHT_YES, 0.2f).init()
+        ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(requireContext()), 0.2f)
+            .statusBarColor(R.color.color_default_bg).init()
     }
 
     open fun isThemeRedStatusBar(): Boolean {
@@ -188,16 +200,16 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initFitThemeStatusBar() {
-        val mode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
-        if (mode != Configuration.UI_MODE_NIGHT_YES){
+        if (!DayModeUtil.isNightMode(requireContext())) {
             ImmersionBar.with(this)
                 .statusBarDarkFont(false, 0.2f)
                 .statusBarColor(R.color.md_theme_red)
                 .fitsSystemWindows(true)
                 .init()
-        }else{
+        } else {
             ImmersionBar.with(this)
                 .statusBarDarkFont(false, 0.2f)
+                .statusBarColor(R.color.color_default_bg)
                 .fitsSystemWindows(true)
                 .init()
         }
@@ -244,10 +256,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getDismissDialogEvent()
             .observe(this, { dismissLoading() })
         //跳入新页面
-        viewModel.uC.getStartActivityEvent().observe(this, { params: Map<String?, Any?> ->
-            val clz = params[BaseViewModel.ParameterField.CLASS] as Class<*>?
-            val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-            startActivity(clz, bundle)
+        viewModel.uC.getStartActivityEvent().observe(this, { map ->
+            val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+            val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            RouteCenter.navigate(routePath,bundle)
         }
         )
         viewModel.uC.getStartFragmentEvent().observe(this, { map ->
@@ -279,7 +291,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 .enableDrag(true)
                 .moveUpToKeyboard(true)
                 .autoOpenSoftInput(true)
-                .asCustom(ShareArticlePopView(requireActivity() as BaseActivity<*, *>,it))
+                .asCustom(ShareArticlePopView(requireActivity() as BaseActivity<*, *>, it))
                 .show()
         })
     }
