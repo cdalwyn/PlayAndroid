@@ -106,8 +106,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/dp_16"
-                        app:srcCompat="@drawable/ic_pen"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        app:srcCompat="@drawable/ic_share"
                         android:padding="@dimen/dp_4"
                         binding:onClickCommand="@{viewModel.onEditShareClick}"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -72,7 +72,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/sp_12"
                 android:text="删除"
-                android:textColor="@color/white"
+                android:textColor="#ffffff"
                 binding:onRvItemCommand="@{adapter.onDeleteClickCommand}"
                 binding:rvItemBean="@{data}"/>
         </com.czl.lib_base.widget.EasySwipeMenuLayout>

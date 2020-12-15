@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/bg_login">
+        app:src="@drawable/splash_bg">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -63,6 +63,22 @@
         <com.czl.lib_base.widget.CommonItemSettingView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            attrs:mIcon="@drawable/ic_iv_score"
+            attrs:mRight="true"
+            attrs:mTitle="我的积分"
+            binding:onClickCommand="@{pop.onOpenScoreCommand}"/>
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            attrs:mIcon="@drawable/ic_share"
+            attrs:mRight="true"
+            attrs:mTitle="我的分享"
+            binding:onClickCommand="@{pop.onOpenShareCommand}"/>
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             attrs:mIcon="@drawable/ic_about"
             attrs:mRight="true"
             attrs:mTitle="关于我们" />

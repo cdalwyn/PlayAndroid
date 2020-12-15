@@ -277,6 +277,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_8"
                     android:layout_marginEnd="@dimen/dp_8"
+                    binding:isVisible="@{viewModel.historyVisible}"
                     app:hl_cornerRadius="@dimen/dp_10"
                     app:hl_shadowColor="@color/shadow_color"
                     app:hl_shadowLimit="@dimen/dp_4"

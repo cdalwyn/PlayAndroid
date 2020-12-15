@@ -1,19 +1,15 @@
 package com.czl.module_user.ui.fragment
 
-import androidx.appcompat.app.AppCompatDelegate
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.*
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
-import com.czl.lib_base.util.SpHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentSettingBinding
 import com.czl.module_user.viewmodel.UserSettingVm
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator
-import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
-import me.yokeyword.fragmentation.anim.FragmentAnimator
 
 /**
  * @author Alwyn
@@ -31,23 +27,28 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
     }
 
     override fun initData() {
+        viewModel.setTvCacheSize()
         viewModel.tvTitle.set("设置")
-        binding.swNight.isChecked = DayModeUtil.isNightMode(requireContext())
+        viewModel.historyVisible.set(viewModel.model.getReadHistoryState())
         binding.swSys.isChecked = viewModel.model.getFollowSysUiModeFlag()
+        // 跟随系统模式关闭时 判断黑夜模式状态
+        if (!binding.swSys.isChecked) binding.swNight.isChecked = viewModel.model.getUiMode()
     }
 
     override fun initViewObservable() {
         viewModel.uc.switchUiModeEvent.observe(this, { checked ->
+            LogUtils.iTag("life", "夜间模式=$checked")
             if (checked) {
-                DayModeUtil.setNightMode(requireContext())
+                // 当前app状态与选中模式不同才进行模式变化 通过渐变动画避免模式改变而引起的闪屏
                 if (!DayModeUtil.isNightMode(requireContext())) {
+                    DayModeUtil.setNightMode(requireContext())
                     back()
                     startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
                     activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
                 }
             } else {
-                DayModeUtil.setLightMode(requireContext())
                 if (DayModeUtil.isNightMode(requireContext())) {
+                    DayModeUtil.setLightMode(requireContext())
                     back()
                     startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
                     activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
@@ -55,15 +56,27 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             }
         })
         viewModel.uc.switchSysModeEvent.observe(this, { checked ->
+            // 跟随系统模式关闭后 需要给下面的黑夜模式开关进行判断并设置当前app模式
+            if (!checked) {
+                viewModel.model.saveUiMode(DayModeUtil.isNightMode(requireContext()))
+                binding.swNight.isChecked = DayModeUtil.isNightMode(requireContext())
+                if (DayModeUtil.isNightMode(requireContext())){
+                    DayModeUtil.setNightMode(requireContext())
+                }else{
+                    DayModeUtil.setLightMode(requireContext())
+                }
+            }
+            if (viewModel.model.getFollowSysUiModeFlag() && checked) {
+                return@observe
+            }
+            viewModel.model.saveFollowSysModeFlag(checked)
             if (checked) {
                 DayModeUtil.autoModeBySys()
                 back()
                 startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
                 activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
-            }else{
-                binding.swNight.isChecked = DayModeUtil.isNightMode(requireContext())
-                viewModel.model.saveUiMode(checked)
             }
         })
+
     }
 }

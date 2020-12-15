@@ -16,3 +16,4 @@ data class LoginSuccessEvent(val code:Int):LiveEvent
 data class RefreshUserFmEvent(val code:Int):LiveEvent
 data class RefreshWebListEvent(val code:Int):LiveEvent
 data class RefreshCollectStateEvent(val originId:Int):LiveEvent
+data class SwitchReadHistoryEvent(val checked: Boolean):LiveEvent

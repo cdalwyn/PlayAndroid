@@ -35,13 +35,13 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
 
     override fun initData() {
         viewModel.tvTitle.set("阅读历史")
-        viewModel.toolbarRightText.set("清空")
         initAdapter()
         binding.smartCommon.autoRefresh()
     }
 
     override fun initViewObservable() {
         viewModel.loadCompleteEvent.observe(this, {
+            viewModel.toolbarRightText.set(if (it.isEmpty()) "" else "清空")
             binding.smartCommon.finishRefreshWithNoMoreData()
             binding.ryCommon.hideShimmerAdapter()
             if (!mAdapter.hasEmptyView()) {
@@ -55,12 +55,13 @@ class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>(
             }
             mAdapter.setList(it)
         })
-        viewModel.clearAllEvent.observe(this,{
-            DialogHelper.showBaseDialog(requireContext(),"提示","确定清空所有历史记录吗？"){
+        viewModel.clearAllEvent.observe(this, {
+            DialogHelper.showBaseDialog(requireContext(), "提示", "确定清空所有历史记录吗？") {
                 viewModel.model.deleteAllWebHistory()
                     .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
                     .subscribe {
                         mAdapter.setList(null)
+                        viewModel.toolbarRightText.set("")
                     }
             }
         })

@@ -45,49 +45,75 @@ object LiveBusCenter {
         LiveEventBus.get(TokenExpiredEvent::class.java).observe(owner, observer)
     }
 
-    fun postRegisterSuccessEvent(account: String?,pwd:String?) {
-        LiveEventBus.get(RegisterSuccessEvent::class.java).post(RegisterSuccessEvent(account,pwd))
+    fun postRegisterSuccessEvent(account: String?, pwd: String?) {
+        LiveEventBus.get(RegisterSuccessEvent::class.java).post(RegisterSuccessEvent(account, pwd))
     }
-    fun observeRegisterSuccessEvent(owner: LifecycleOwner, func: (t: RegisterSuccessEvent) -> Unit) {
+
+    fun observeRegisterSuccessEvent(
+        owner: LifecycleOwner,
+        func: (t: RegisterSuccessEvent) -> Unit
+    ) {
         LiveEventBus.get(RegisterSuccessEvent::class.java).observe(owner, Observer(func))
     }
 
-    fun postSearchHistoryEvent(){
+    fun postSearchHistoryEvent() {
         LiveEventBus.get(SearchHistoryEvent::class.java).post(SearchHistoryEvent(0))
     }
+
     fun observeSearchHistoryEvent(owner: LifecycleOwner, func: (t: SearchHistoryEvent) -> Unit) {
         LiveEventBus.get(SearchHistoryEvent::class.java).observe(owner, Observer(func))
     }
-    fun postLogoutEvent(){
+
+    fun postLogoutEvent() {
         LiveEventBus.get(LogoutEvent::class.java).post(LogoutEvent(0))
     }
+
     fun observeLogoutEvent(owner: LifecycleOwner, func: (t: LogoutEvent) -> Unit) {
         LiveEventBus.get(LogoutEvent::class.java).observe(owner, Observer(func))
     }
-    fun postLoginSuccessEvent(){
+
+    fun postLoginSuccessEvent() {
         LiveEventBus.get(LoginSuccessEvent::class.java).post(LoginSuccessEvent(0))
     }
+
     fun observeLoginSuccessEvent(owner: LifecycleOwner, func: (t: LoginSuccessEvent) -> Unit) {
         LiveEventBus.get(LoginSuccessEvent::class.java).observe(owner, Observer(func))
     }
-    fun postRefreshUserFmEvent(){
+
+    fun postRefreshUserFmEvent() {
         LiveEventBus.get(RefreshUserFmEvent::class.java).post(RefreshUserFmEvent(0))
     }
+
     fun observeRefreshUserFmEvent(owner: LifecycleOwner, func: (t: RefreshUserFmEvent) -> Unit) {
         LiveEventBus.get(RefreshUserFmEvent::class.java).observe(owner, Observer(func))
     }
-    fun postRefreshWebListEvent(){
+
+    fun postRefreshWebListEvent() {
         LiveEventBus.get(RefreshWebListEvent::class.java).post(RefreshWebListEvent(0))
     }
+
     fun observeRefreshWebListEvent(owner: LifecycleOwner, func: (t: RefreshWebListEvent) -> Unit) {
         LiveEventBus.get(RefreshWebListEvent::class.java).observe(owner, Observer(func))
     }
 
-    fun postCollectStateEvent(originId:Int){
-        LiveEventBus.get(RefreshCollectStateEvent::class.java).post(RefreshCollectStateEvent(originId))
+    fun postCollectStateEvent(originId: Int) {
+        LiveEventBus.get(RefreshCollectStateEvent::class.java)
+            .post(RefreshCollectStateEvent(originId))
     }
-    fun observeCollectStateEvent(owner: LifecycleOwner, func: (t: RefreshCollectStateEvent) -> Unit) {
+
+    fun observeCollectStateEvent(
+        owner: LifecycleOwner,
+        func: (t: RefreshCollectStateEvent) -> Unit
+    ) {
         LiveEventBus.get(RefreshCollectStateEvent::class.java).observe(owner, Observer(func))
+    }
+
+    fun postSwitchReadHistoryEvent(checked:Boolean) {
+        LiveEventBus.get(SwitchReadHistoryEvent::class.java).post(SwitchReadHistoryEvent(checked))
+    }
+
+    fun observeReadHistoryEvent(owner: LifecycleOwner, func: (t: SwitchReadHistoryEvent) -> Unit) {
+        LiveEventBus.get(SwitchReadHistoryEvent::class.java).observe(owner, Observer(func))
     }
 
 }

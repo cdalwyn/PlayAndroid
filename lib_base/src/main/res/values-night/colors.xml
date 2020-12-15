@@ -20,7 +20,7 @@
 
     <color name="yellow_color_FF">#FFBA19</color>
 
-    <color name="blacks">#B3000000</color>
+    <color name="blacks">#fff3f3f3</color>
     <color name="black">#FFFFFF</color>
     <color name="blacks_tr">#77000000</color>
     <color name="md_yellow_color">#FF5000</color>
@@ -28,7 +28,7 @@
     <color name="md_theme_red">#EF5350</color>
     <color name="md_red_500">#B23031</color>
     <color name="md_red_600">#E53935</color>
-    <color name="md_red_350">#303030</color>
+    <color name="md_red_350">#424242</color>
     <color name="md_red_300">#BF1B21</color>
     <color name="red">#C30D23</color>
     <color name="red_3F">#D7373F</color>

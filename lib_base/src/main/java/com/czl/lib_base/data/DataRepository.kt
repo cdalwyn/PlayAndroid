@@ -223,6 +223,14 @@ class DataRepository constructor(
         return mLocalDataSource.getUiMode()
     }
 
+    override fun saveReadHistoryState(visible: Boolean) {
+        return mLocalDataSource.saveReadHistoryState(visible)
+    }
+
+    override fun getReadHistoryState(): Boolean {
+        return mLocalDataSource.getReadHistoryState()
+    }
+
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {
         return mHttpDataSource.userLogin(account, pwd)
     }

@@ -20,6 +20,7 @@ import org.koin.core.qualifier.named
  */
 @Route(path = AppConstants.Router.User.F_USER)
 class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
+    private val loginPopView: BasePopupView by inject(named("login"))
 
     override fun initContentView(): Int {
         return R.layout.user_fragment_user
@@ -44,9 +45,9 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
             viewModel.getUserCollectData()
             viewModel.getUserShareData()
         }
+        viewModel.historyVisible.set(viewModel.model.getReadHistoryState())
     }
 
-    private val loginPopView: BasePopupView by inject(named("login"))
 
     override fun initViewObservable() {
         LiveBusCenter.observeLogoutEvent(this) {
@@ -76,6 +77,8 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
                 viewModel.logout()
             }
         })
-
+        LiveBusCenter.observeReadHistoryEvent(this){
+            viewModel.historyVisible.set(it.checked)
+        }
     }
 }

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import com.bumptech.glide.Glide
 import com.czl.lib_base.BuildConfig
 import com.czl.lib_base.R
 import com.czl.lib_base.callback.ErrorCallback
@@ -181,6 +182,11 @@ open class MyApplication : Application() {
     override fun onTerminate() {
         super.onTerminate()
         ARouter.getInstance().destroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        Glide.get(this).clearMemory()
     }
 
 }

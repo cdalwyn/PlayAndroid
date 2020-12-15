@@ -110,7 +110,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
                     android:text="复制链接"
-                    android:textColor="@color/white"
+                    android:textColor="#ffffff"
                     binding:onRvItemCommand="@{adapter.onCopyLinkClickCommand}"
                     binding:rvItemBean="@{data}"
                     />
@@ -124,7 +124,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
                     android:text="浏览器打开"
-                    android:textColor="@color/white"
+                    android:textColor="#ffffff"
                     binding:onRvItemCommand="@{adapter.onOpenBrowserClickCommand}"
                     binding:rvItemBean="@{data}"/>
 
@@ -137,7 +137,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
                     android:text="删除"
-                    android:textColor="@color/white"
+                    android:textColor="#ffffff"
                     binding:onRvItemCommand="@{adapter.onDeleteClickCommand}"
                     binding:rvItemBean="@{data}"/>
             </LinearLayout>

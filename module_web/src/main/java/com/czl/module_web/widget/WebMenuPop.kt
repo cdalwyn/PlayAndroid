@@ -62,7 +62,8 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
         dismiss()
     })
     val onSettingClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        // todo 设置
+        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_SETTING)
+        dismiss()
     })
     val onOpenCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {

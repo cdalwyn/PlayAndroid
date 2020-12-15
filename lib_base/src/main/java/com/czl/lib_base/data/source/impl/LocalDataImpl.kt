@@ -207,4 +207,12 @@ class LocalDataImpl : LocalDataSource {
     override fun getUiMode(): Boolean {
         return SpHelper.decodeBoolean(AppConstants.SpKey.USER_UI_MODE)
     }
+
+    override fun saveReadHistoryState(visible: Boolean) {
+        SpHelper.encode(AppConstants.SpKey.READ_HISTORY_STATE,visible)
+    }
+
+    override fun getReadHistoryState(): Boolean {
+        return SpHelper.decodeBoolean(AppConstants.SpKey.READ_HISTORY_STATE,true)
+    }
 }

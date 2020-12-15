@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/dp_18"
+            android:padding="@dimen/dp_12"
             android:text="分享文章"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent" />
@@ -130,8 +130,7 @@
             android:layout_marginTop="@dimen/dp_40"
             android:layout_marginBottom="@dimen/dp_40"
             app:hl_cornerRadius="@dimen/dp_5"
-            app:hl_layoutBackground="@color/white"
-            app:hl_strokeColor="@color/md_theme_red"
+            app:hl_layoutBackground="@color/md_grey_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +143,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="分享"
-                android:textColor="@color/md_theme_red"
+                android:textColor="@color/white_aa"
                 binding:onClickCommand="@{pop.onBtnShareClickCommand}" />
         </com.lihang.ShadowLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

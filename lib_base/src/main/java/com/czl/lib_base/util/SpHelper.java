@@ -52,7 +52,9 @@ public class SpHelper {
         mv.encode(key, sets);
     }
 
-    public static void encodeParcelable(String key, Parcelable obj) { mv.encode(key, obj); }
+    public static void encodeParcelable(String key, Parcelable obj) {
+        mv.encode(key, obj);
+    }
 
     /**
      * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
@@ -71,6 +73,10 @@ public class SpHelper {
 
     public static Boolean decodeBoolean(String key) {
         return mv.decodeBool(key, false);
+    }
+
+    public static Boolean decodeBoolean(String key, boolean def) {
+        return mv.decodeBool(key, def);
     }
 
     public static Float decodeFloat(String key) {

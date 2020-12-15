@@ -32,4 +32,6 @@ interface LocalDataSource {
     fun getFollowSysUiModeFlag(): Boolean
     fun saveUiMode(nightModeFlag: Boolean = false)
     fun getUiMode(): Boolean
+    fun saveReadHistoryState(visible:Boolean)
+    fun getReadHistoryState():Boolean
 }

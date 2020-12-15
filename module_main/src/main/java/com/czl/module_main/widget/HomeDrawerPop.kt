@@ -31,6 +31,17 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
         fragment.startContainerActivity(AppConstants.Router.User.F_USER_COLLECT)
         dismiss()
     })
+
+    val onOpenScoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.startContainerActivity(AppConstants.Router.User.F_USER_SCORE)
+        dismiss()
+    })
+
+    val onOpenShareCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.startContainerActivity(AppConstants.Router.User.F_USER_SHARE)
+        dismiss()
+    })
+
     val onShowLoginPopClick: BindingCommand<Void> = BindingCommand(BindingAction {
         if (TextUtils.isEmpty(fragment.viewModel.model.getUserData()?.publicName)) {
             fragment.loginPopView.show()

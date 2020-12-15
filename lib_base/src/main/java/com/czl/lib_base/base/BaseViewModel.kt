@@ -45,7 +45,10 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     /**
      * 标题栏右图标点击事件 VM层重写setToolbarRightClick()
      */
-    var ivToolbarIconOnClick = BindingCommand<Void>(BindingAction { setToolbarRightClick() })
+    var ivToolbarIconOnClick = BindingCommand<Void>(BindingAction {
+        if (ivToolbarIconRes.get() != 0 || !toolbarRightText.get().isNullOrBlank())
+            setToolbarRightClick()
+    })
 
     //弱引用持有
     private lateinit var lifecycle: WeakReference<LifecycleProvider<*>>

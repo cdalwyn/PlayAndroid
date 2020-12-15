@@ -40,7 +40,7 @@ val appModule = module {
     factory (named("login")) {
         XPopup.Builder(AppManager.instance.currentActivity())
             .enableDrag(true)
-            .moveUpToKeyboard(true)
+            .moveUpToKeyboard(false)
             .autoOpenSoftInput(true)
             .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
     }

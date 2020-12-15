@@ -6,7 +6,6 @@
     >
 
     <data>
-
         <variable
             name="pop"
             type="com.czl.lib_base.widget.LoginPopView" />
@@ -15,22 +14,22 @@
 
     <com.czl.lib_base.widget.SrcScrollFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/bg_login">
+        app:src="@drawable/login_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:background="@color/black">
 
             <View
                 android:id="@+id/view"
                 android:layout_width="@dimen/dp_40"
                 android:layout_height="@dimen/dp_6"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_28"
                 android:background="@drawable/gray_btn_corner_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,10 +49,10 @@
                 android:id="@+id/tvLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
                 android:text="欢迎使用"
                 android:textColor="#FFFFFF"
-                android:textSize="@dimen/sp_20"
-                android:layout_marginTop="@dimen/dp_20"
+                android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view" />
@@ -70,7 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
@@ -123,11 +122,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
+                android:layout_marginTop="@dimen/dp_40"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/shape_round_white"
                 android:text="登录"
                 android:textColor="#000000"
-                android:layout_marginTop="@dimen/dp_40"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
                 binding:onClickCommand="@{pop.onLoginClickCommand}" />
 
@@ -140,11 +139,9 @@
                 android:padding="@dimen/dp_10"
                 android:text="注册"
                 android:textColor="#FFFFFF"
-                android:layout_marginBottom="@dimen/dp_20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnLogin"
+                app:layout_constraintTop_toBottomOf="@+id/btnLogin"
                 binding:onClickCommand="@{pop.onRegisterClickCommand}" />
 
             <androidx.constraintlayout.widget.Group
@@ -158,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
@@ -236,11 +233,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
+                android:layout_marginTop="@dimen/dp_40"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/shape_round_white"
                 android:text="注册"
                 android:textColor="#000000"
-                android:layout_marginTop="@dimen/dp_40"
                 app:layout_constraintTop_toBottomOf="@+id/tlRepassword"
                 binding:onClickCommand="@{pop.registerClickCommand}" />
 
@@ -248,16 +245,14 @@
                 android:id="@+id/btnToLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:layout_marginBottom="@dimen/dp_20"
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
                 android:text="有账号了？去登录"
                 android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnReg"
+                app:layout_constraintTop_toBottomOf="@+id/btnReg"
                 binding:onClickCommand="@{pop.toLoginClickCommand}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.czl.lib_base.widget.SrcScrollFrameLayout>

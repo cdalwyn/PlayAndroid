@@ -13,6 +13,7 @@ interface AppConstants {
         const val USER_JSON_DATA: String = "user_json_data"
         const val SYS_UI_MODE: String = "sys_ui_mode"
         const val USER_UI_MODE: String = "user_ui_mode"
+        const val READ_HISTORY_STATE: String = "read_history_state"
     }
 
     /**

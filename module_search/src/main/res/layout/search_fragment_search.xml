@@ -40,10 +40,10 @@
                 android:layout_weight="1"
                 android:padding="@dimen/dp_6"
                 app:mt_backIconUseTint="true"
-                app:mt_maxSuggestionsCount="5"
                 app:mt_navIconEnabled="false"
                 app:mt_roundedSearchBarEnabled="true"
                 app:mt_speechMode="false"
+                app:mt_searchBarColor="@color/color_default_container_bg"
                 binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
                 binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
                 binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />

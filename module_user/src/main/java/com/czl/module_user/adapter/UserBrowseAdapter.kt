@@ -45,8 +45,10 @@ class UserBrowseAdapter(private val mFragment: UserBrowseFragment) :
             mFragment.viewModel.model.deleteBrowseHistory(it.webTitle, it.webLink)
                 .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
                 .subscribe { num ->
+                    // 已删除的数量
                     if (num > 0) {
                         remove(it)
+                        if (data.isEmpty()) mFragment.viewModel.toolbarRightText.set("")
                     }
                 }
         }

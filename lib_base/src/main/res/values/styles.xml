@@ -70,7 +70,7 @@
         <item name="mt_menuIconTint">@color/searchBarMenuIconTintColor</item>
         <item name="mt_backIconTint">@color/black</item>
         <item name="mt_textColor">@color/black</item>
-        <item name="mt_hintColor">@color/searchBarHintColor</item>
+        <item name="mt_hintColor">@color/searchPlaceholderColor</item>
         <item name="mt_placeholderColor">@color/searchPlaceholderColor</item>
         <item name="mt_backIconDrawable">@drawable/ic_back_black_24dp</item>
         <item name="mt_hint">搜索关键词...</item>

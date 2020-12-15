@@ -1,5 +1,6 @@
 package com.czl.module_user.viewmodel
 
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
@@ -26,6 +27,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     var tvScore = ObservableField("0")
     var tvCollect = ObservableField("0")
     var tvShare = ObservableField("0")
+    val historyVisible = ObservableBoolean(true)
     val uc = UiChangeEvent()
 
     class UiChangeEvent {

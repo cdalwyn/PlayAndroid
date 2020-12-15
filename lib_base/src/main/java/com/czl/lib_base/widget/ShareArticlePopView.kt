@@ -82,13 +82,13 @@ class ShareArticlePopView(
                     sdlShare.setLayoutBackground(
                         ContextCompat.getColor(
                             activity,
-                            if (flag) R.color.md_theme_red else R.color.defaultTextColor
+                            if (flag) R.color.md_theme_red else R.color.md_grey_200
                         )
                     )
                     btnShare.setTextColor(
                         ContextCompat.getColor(
                             activity,
-                            if (!flag) R.color.md_theme_red else R.color.defaultTextColor
+                            if (!flag) R.color.white_aa else R.color.defaultTextColor
                         )
                     )
                     btnShare.isEnabled = flag

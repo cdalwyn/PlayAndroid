@@ -17,6 +17,10 @@ import com.lxj.xpopup.interfaces.SimpleCallback
 import io.reactivex.observers.DisposableObserver
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
+import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import retrofit2.HttpException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -26,18 +30,20 @@ import java.net.UnknownHostException
  * @Date 2020/10/10
  * @Description RxJava 处理Api异常
  */
-abstract class ApiSubscriberHelper<T> : DisposableObserver<T>() {
+abstract class ApiSubscriberHelper<T> : DisposableObserver<T>(),KoinComponent {
+    private val loginPopView: BasePopupView by inject(named("login"))
+
     override fun onNext(t: T) {
         if (t is BaseBean<*> && t.errorCode != 0) {
             showErrorToast(t.errorMsg)
             if (t.errorCode == -1001) {
                 LogUtils.e("当前用户未登录或者登录已失效")
-                XPopup.Builder(AppManager.instance.currentActivity())
-                    .enableDrag(true)
-                    .moveUpToKeyboard(true)
-                    .autoOpenSoftInput(true)
-                    .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
-                    .show()
+//                XPopup.Builder(AppManager.instance.currentActivity())
+//                    .enableDrag(true)
+//                    .moveUpToKeyboard(false)
+//                    .autoOpenSoftInput(true)
+//                    .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
+                loginPopView.show()
             }
         }
         onResult(t)
