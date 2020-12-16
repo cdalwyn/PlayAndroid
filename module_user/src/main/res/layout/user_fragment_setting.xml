@@ -119,15 +119,15 @@
                 android:id="@+id/sw_history"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginEnd="@dimen/dp_20"
-                android:theme="@style/SwitchStyleClickable"
                 android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_20"
                 android:checked="@{viewModel.historyVisible}"
-                app:layout_constraintStart_toEndOf="@id/tv_hint_history"
+                android:theme="@style/SwitchStyleClickable"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_hint_history"
                 app:layout_constraintTop_toTopOf="parent"
-                binding:onSwitchCheckedCommand="@{viewModel.onSwitchHistoryCommand}"/>
+                binding:onSwitchCheckedCommand="@{viewModel.onSwitchHistoryCommand}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -157,8 +157,7 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 android:gravity="center"
                 android:text="@{viewModel.cacheSize}"
-                app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
-                />
+                app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -169,8 +168,7 @@
             android:layout_marginTop="@dimen/dp_10"
             android:background="@color/color_default_bg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_clear"
-            >
+            app:layout_constraintTop_toBottomOf="@id/btn_clear">
 
             <TextView
                 android:layout_width="0dp"
@@ -187,10 +185,8 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:gravity="center"
-                android:text="@{viewModel.cacheSize}"
                 app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
-                binding:onClickCommand="@{viewModel.onAboutUsClickCommand}"
-                />
+                binding:onClickCommand="@{viewModel.onAboutUsClickCommand}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>

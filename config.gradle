@@ -80,7 +80,7 @@ ext {
             'koin_scope'                           : "org.koin:koin-androidx-scope:${versions["koin-version"]}",
             'koin_viewmodel'                       : "org.koin:koin-androidx-viewmodel:${versions["koin-version"]}",
             'koin_fragment'                        : "org.koin:koin-androidx-fragment:${versions["koin-version"]}",
-            'utils'                                : 'com.blankj:utilcodex:1.30.0',
+            'utils'                                : 'com.blankj:utilcodex:1.30.5',
             'mmkv'                                 : 'com.tencent:mmkv:1.0.23',
             'livebus'                              : 'com.jeremyliao:live-event-bus-x:1.7.2',
             'fragmentationx'                       : "me.yokeyword:fragmentationx:1.0.2",
