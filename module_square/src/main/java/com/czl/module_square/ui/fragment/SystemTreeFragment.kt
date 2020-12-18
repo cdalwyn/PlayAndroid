@@ -171,7 +171,7 @@ class SystemTreeFragment : BaseFragment<SquareFragmentSystemBinding, SystemTreeV
             }
             val groupItem = dataArrayMap[item.info.content.toInt()]
             holder.getView<ShadowLayout>(R.id.btn_item).setOnClickListener {
-                viewModel.startFragment(AppConstants.Router.Square.F_SYS_DETAIL,Bundle().apply {
+                viewModel.startContainerActivity(AppConstants.Router.Square.F_SYS_DETAIL,Bundle().apply {
                     putInt(AppConstants.BundleKey.SYSTEM_DETAIL_POSITION,groupItem.list.indexOfFirst { it.title==item.info.title })
                     putSerializable(AppConstants.BundleKey.SYSTEM_DETAIL, groupItem)
                 })

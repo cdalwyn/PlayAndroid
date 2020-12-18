@@ -68,9 +68,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun initData() {
         initBanner()

@@ -44,7 +44,7 @@ class SysContentAdapter(val mFragment: SysContentFragment) :
         if (it is SystemDetailBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            (mFragment.parentFragment as SystemDetailFragment).viewModel.startFragment(AppConstants.Router.Web.F_WEB, bundle)
+            (mFragment.parentFragment as SystemDetailFragment).viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
         }
     })
 

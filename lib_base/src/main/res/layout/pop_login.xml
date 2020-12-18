@@ -66,6 +66,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlAccount"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -80,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
+                    style="@style/TextInputWhiteStyle"
                     android:hint="账号"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -95,6 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
+                style="@style/TextInputWhiteStyle"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
@@ -108,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
                     android:hint="密码"
+                    style="@style/TextInputWhiteStyle"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -157,6 +161,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="40dp"
+                style="@style/TextInputWhiteStyle"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tvLogin">
@@ -169,6 +174,7 @@
                     android:hint="账号"
                     android:maxLines="1"
                     android:padding="10dp"
+                    style="@style/TextInputWhiteStyle"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
@@ -183,6 +189,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
+                style="@style/TextInputWhiteStyle"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tlRegAccount"
                 app:passwordToggleEnabled="true">
@@ -196,6 +203,7 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:padding="10dp"
+                    style="@style/TextInputWhiteStyle"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
                     android:theme="@style/TextInputWhiteStyle" />
@@ -210,6 +218,7 @@
                 android:layout_marginEnd="40dp"
                 android:hint=""
                 android:textColorHint="#FFFFFF"
+                style="@style/TextInputWhiteStyle"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tlRegPwd"
                 app:passwordToggleEnabled="true">
@@ -221,6 +230,7 @@
                     android:backgroundTint="#FFFFFF"
                     android:hint="确认密码"
                     android:inputType="textPassword"
+                    style="@style/TextInputWhiteStyle"
                     android:maxLines="1"
                     android:padding="10dp"
                     android:singleLine="true"

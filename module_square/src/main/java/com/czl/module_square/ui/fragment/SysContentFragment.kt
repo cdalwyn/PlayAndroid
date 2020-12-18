@@ -39,9 +39,6 @@ class SysContentFragment : BaseFragment<CommonRecycleviewBinding, SystemContentV
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun isImmersionBarEnabled(): Boolean {
         return false

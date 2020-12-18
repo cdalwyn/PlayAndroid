@@ -29,9 +29,6 @@ class HomeProjectFragment : BaseFragment<CommonRecycleviewBinding, HomeProjectVm
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun initData() {
         binding.smartCommon.autoRefresh()

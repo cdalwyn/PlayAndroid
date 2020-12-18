@@ -42,7 +42,7 @@ class LoginViewModel(application: MyApplication, model: DataRepository) :
     })
 
     val registerClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        startFragment(AppConstants.Router.Login.F_REGISTER)
+        startContainerActivity(AppConstants.Router.Login.F_REGISTER)
     })
 
     val touristClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {

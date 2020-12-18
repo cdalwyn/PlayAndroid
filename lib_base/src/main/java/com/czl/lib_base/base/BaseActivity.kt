@@ -65,7 +65,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     open fun initStatusBar() {
         ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(this), 0.2f)
-            .statusBarColor(R.color.color_default_bg).init()
+            .transparentStatusBar().init()
     }
 
     open fun isImmersionBarEnabled(): Boolean {

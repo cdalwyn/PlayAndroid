@@ -1,17 +1,18 @@
-package com.czl.lib_base.base;
+package com.czl.lib_base.base
 
-public interface IBaseView {
+interface IBaseView {
     /**
      * 初始化界面传递参数
      */
-    void initParam();
+    fun initParam()
+
     /**
      * 初始化数据
      */
-    void initData();
+    fun initData()
 
     /**
      * 初始化界面观察者的监听
      */
-    void initViewObservable();
+    fun initViewObservable()
 }

@@ -34,9 +34,7 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
+
 
     @SuppressLint("MissingPermission")
     override fun initData() {

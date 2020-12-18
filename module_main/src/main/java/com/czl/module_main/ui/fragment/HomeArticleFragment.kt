@@ -31,9 +31,6 @@ class HomeArticleFragment : BaseFragment<CommonRecycleviewBinding, HomeArticleVm
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun initData() {
         binding.smartCommon.autoRefresh()

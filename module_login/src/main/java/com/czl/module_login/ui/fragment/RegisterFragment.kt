@@ -11,6 +11,7 @@ import com.czl.module_login.BR
 import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginFragmentRegisterBinding
 import com.czl.module_login.viewmodel.RegisterViewModel
+import com.gyf.immersionbar.ImmersionBar
 import javax.inject.Inject
 
 @Route(path = AppConstants.Router.Login.F_REGISTER)
@@ -26,6 +27,10 @@ class RegisterFragment : BaseFragment<LoginFragmentRegisterBinding, RegisterView
 
     override fun useBaseLayout(): Boolean {
         return false
+    }
+
+    override fun onSupportVisible() {
+        ImmersionBar.with(this).statusBarDarkFont(false).init()
     }
 
     override fun initData() {

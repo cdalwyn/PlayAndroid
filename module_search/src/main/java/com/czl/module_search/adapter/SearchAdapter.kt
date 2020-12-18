@@ -82,7 +82,7 @@ class SearchAdapter(val mFragment: SearchFragment) :
         if (it is SearchDataBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB, bundle)
+            mFragment.viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
         }
     })
 

@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * About : kelin的Messenger
+ * 用于复杂的通信 如viewModel之间
  */
 public class Messenger {
 

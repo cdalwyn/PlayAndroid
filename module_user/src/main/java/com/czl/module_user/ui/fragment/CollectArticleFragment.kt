@@ -36,9 +36,6 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
         return false
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun onResume() {
         super.onResume()

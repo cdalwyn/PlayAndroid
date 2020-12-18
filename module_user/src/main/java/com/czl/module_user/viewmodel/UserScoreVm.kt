@@ -53,7 +53,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     }
 
     val onRankClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        startFragment(AppConstants.Router.User.F_USER_RANK, Bundle().apply {
+        startContainerActivity(AppConstants.Router.User.F_USER_RANK, Bundle().apply {
             putString(AppConstants.BundleKey.USER_SCORE, userScore)
             putString(AppConstants.BundleKey.USER_RANK, userScoreRank)
         })

@@ -120,6 +120,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         uC.startActivityEvent.postValue(params)
     }
 
+
     fun startFragment(routePath: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
         params[ParameterField.ROUTE_PATH] = routePath
@@ -173,7 +174,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     }
 
 
-    override fun onAny(owner: LifecycleOwner, event: Lifecycle.Event) {}
+    override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {}
     override fun onCreate() {}
     override fun onDestroy() {}
     override fun onStart() {}

@@ -34,9 +34,6 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
         return BR.viewModel
     }
 
-    override fun enableSwipeBack(): Boolean {
-        return false
-    }
 
     override fun useBaseLayout(): Boolean {
         return false

@@ -62,17 +62,17 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
         dismiss()
     })
     val onSettingClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_SETTING)
+        mFragment.viewModel.startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
         dismiss()
     })
     val onOpenCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {
+        mFragment.viewModel.startContainerActivity(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {
             putString(AppConstants.BundleKey.WEB_MENU_KEY, "collect")
         })
         dismiss()
     })
     val onHistoryClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.viewModel.startFragment(AppConstants.Router.User.F_USER_BROWSE)
+        mFragment.viewModel.startContainerActivity(AppConstants.Router.User.F_USER_BROWSE)
         dismiss()
     })
     val onShareOtherClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

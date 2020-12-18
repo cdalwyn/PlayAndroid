@@ -34,7 +34,7 @@ class UserBrowseAdapter(private val mFragment: UserBrowseFragment) :
 
     val onItemClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is WebHistoryEntity) {
-            mFragment.viewModel.startFragment(AppConstants.Router.Web.F_WEB, Bundle().apply {
+            mFragment.viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, Bundle().apply {
                 putString(AppConstants.BundleKey.WEB_URL, it.webLink)
             })
         }

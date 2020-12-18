@@ -13,40 +13,34 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package com.czl.lib_base.bus.event
 
-package com.czl.lib_base.bus.event;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
+import androidx.annotation.StringRes
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 
 /**
- * A SingleLiveEvent used for Snackbar messages. Like a {@link SingleLiveEvent} but also prevents
+ * A SingleLiveEvent used for Snackbar messages. Like a [SingleLiveEvent] but also prevents
  * null messages and uses a custom observer.
- * <p>
+ *
+ *
  * Note that only one observer is going to be notified of changes.
  */
-public class SnackbarMessage extends SingleLiveEvent<Integer> {
-
-    public void observe(LifecycleOwner owner, final SnackbarObserver observer) {
-        super.observe(owner, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer t) {
-                if (t == null) {
-                    return;
-                }
-                observer.onNewMessage(t);
+class SnackbarMessage : SingleLiveEvent<Int?>() {
+    fun observe(owner: LifecycleOwner?, observer: SnackbarObserver) {
+        super.observe(owner!!, Observer { t ->
+            if (t == null) {
+                return@Observer
             }
-        });
+            observer.onNewMessage(t)
+        })
     }
 
-    public interface SnackbarObserver {
+    interface SnackbarObserver {
         /**
          * Called when there is a new message to be shown.
          * @param snackbarMessageResourceId The new message, non-null.
          */
-        void onNewMessage(@StringRes int snackbarMessageResourceId);
+        fun onNewMessage(@StringRes snackbarMessageResourceId: Int)
     }
-
 }

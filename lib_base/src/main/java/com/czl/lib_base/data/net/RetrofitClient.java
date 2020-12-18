@@ -32,7 +32,7 @@ public class RetrofitClient {
     private static Retrofit retrofit;
 
     private static class SingletonHolder {
-        private static RetrofitClient INSTANCE = new RetrofitClient();
+        private static final RetrofitClient INSTANCE = new RetrofitClient();
     }
 
     public static RetrofitClient getInstance() {

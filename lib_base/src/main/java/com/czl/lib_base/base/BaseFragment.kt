@@ -71,15 +71,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
-            //避免过度绘制策略
-            if (enableSwipeBack()) {
-                rootView.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.color_default_container_bg
-                    )
-                )
-            }
             // 设置跑马灯
             rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
             rootBinding = DataBindingUtil.bind(rootView)
@@ -93,14 +84,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                         else -> ErrorCallback::class.java
                     }
                 }) as LoadService<Int>
-            //避免不必要的布局层级
-            return if (enableSwipeBack()) {
-//                attachToSwipeBack(rootBinding!!.root)
-                attachToSwipeBack(rootBinding!!.root)
-            } else {
-//                rootBinding!!.root
-                loadService.loadLayout
-            }
+            return rootView
         } else {
             binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
             loadService = loadSir.register(binding.root,
@@ -110,20 +94,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                         else -> ErrorCallback::class.java
                     }
                 }) as LoadService<Int>
-            return if (enableSwipeBack()) {
-                //避免过度绘制策略
-                binding.root.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.color_default_container_bg
-                    )
-                )
-//                attachToSwipeBack(binding.root)
-                attachToSwipeBack(loadService.loadLayout)
-            } else {
-//                binding.root
-                loadService.loadLayout
-            }
+            return loadService.loadLayout
         }
     }
 
@@ -150,6 +121,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         super.onViewCreated(view, savedInstanceState)
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding()
+        //私有的ViewModel与View的契约事件回调逻辑
+        registerUIChangeLiveDataCallBack()
     }
 
     /**
@@ -159,8 +132,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
         if (enableLazy()) {
-            //私有的ViewModel与View的契约事件回调逻辑
-            registerUIChangeLiveDataCallBack()
             //页面数据初始化方法
             initData()
             //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
@@ -171,8 +142,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
         super.onEnterAnimationEnd(savedInstanceState)
         if (!enableLazy()) {
-            //私有的ViewModel与View的契约事件回调逻辑
-            registerUIChangeLiveDataCallBack()
             //页面数据初始化方法
             initData()
             //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
@@ -259,7 +228,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.uC.getStartActivityEvent().observe(this, { map ->
             val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
             val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-            RouteCenter.navigate(routePath,bundle)
+            RouteCenter.navigate(routePath, bundle)
         }
         )
         viewModel.uC.getStartFragmentEvent().observe(this, { map ->
@@ -334,15 +303,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (over!!) smartCommon.finishLoadMoreWithNoMoreData()
         else smartCommon.finishLoadMore(true)
         mAdapter.addData(data as MutableList<T>)
-    }
-
-    /**
-     * 是否可滑动返回,默认true
-     *
-     * @return
-     */
-    protected open fun enableSwipeBack(): Boolean {
-        return true
     }
 
     /**
