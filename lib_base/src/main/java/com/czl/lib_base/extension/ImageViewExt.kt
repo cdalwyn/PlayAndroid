@@ -5,11 +5,14 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.gif.GifDrawable
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.czl.lib_base.R
+import jp.wasabeef.glide.transformations.BitmapTransformation
+import jp.wasabeef.glide.transformations.BlurTransformation
 import jp.wasabeef.glide.transformations.CropTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -19,8 +22,17 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * @Description
  */
 fun ImageView.loadImage(url: String) {
-    Glide.with(this).load(url).apply(RequestOptions.placeholderOf(R.drawable.ic_placeholder))
+    Glide.with(this).load(url).apply(
+        RequestOptions().diskCacheStrategy(
+            DiskCacheStrategy.RESOURCE
+        ).skipMemoryCache(true).dontAnimate().placeholder(R.drawable.ic_placeholder)
+    ).thumbnail(0.6f)
         .into(this)
+}
+
+fun ImageView.loadBlurImageRes(@DrawableRes imgRes: Int) {
+    Glide.with(this).load(imgRes).dontAnimate()
+        .apply(RequestOptions.bitmapTransform(BlurTransformation())).into(this)
 }
 
 fun ImageView.loadImage(uri: String?, requestListener: RequestListener<Drawable?>) {

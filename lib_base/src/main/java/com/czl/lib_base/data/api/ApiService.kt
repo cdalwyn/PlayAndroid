@@ -207,5 +207,11 @@ interface ApiService {
      * 删除文章
      */
     @POST("lg/user_article/delete/{id}/json")
-    fun deleteArticleById(@Path("id") id: Int):Observable<BaseBean<Any?>>
+    fun deleteArticleById(@Path("id") id: Int): Observable<BaseBean<Any?>>
+
+    /**
+     * 分享人的详情：文章 积分等
+     */
+    @GET("user/{uid}/share_articles/{page}/json")
+    fun getShareUserDetail(@Path("uid") uid: String,@Path("page")page: Int):Observable<BaseBean<ShareUserDetailBean>>
 }

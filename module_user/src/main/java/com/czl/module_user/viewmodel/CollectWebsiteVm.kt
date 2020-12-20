@@ -30,7 +30,7 @@ class CollectWebsiteVm(application: MyApplication, model: DataRepository) :
     fun getCollectWebsite() {
         model.getUserCollectWebsite()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<List<CollectWebsiteBean>>>() {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<List<CollectWebsiteBean>>>(loadService) {
                 override fun onResult(t: BaseBean<List<CollectWebsiteBean>>) {
                     if (t.errorCode == 0) {
                         loadDataCompleteEvent.postValue(t.data)

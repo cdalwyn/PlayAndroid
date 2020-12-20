@@ -29,6 +29,7 @@ import kotlin.collections.HashMap
 open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M) :
     AndroidViewModel(application), IBaseViewModel, Consumer<Disposable?> {
 
+    lateinit var loadService: LoadService<BaseBean<*>?>
     val uC: UIChangeLiveData = UIChangeLiveData()
 
     // 标题栏标题

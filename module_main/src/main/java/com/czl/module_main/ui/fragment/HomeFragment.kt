@@ -91,7 +91,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             } else {
                 bannerAdapter.setData(binding.banner, it)
             }
-            if (it == null) loadService.showWithConvertor(-1) else loadService.showWithConvertor(0)
+
         })
         // 置顶
         viewModel.uc.moveTopEvent.observe(this, { tabPosition ->

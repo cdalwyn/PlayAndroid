@@ -58,10 +58,8 @@ class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWeb
             binding.smartCommon.finishRefresh()
             binding.ryCommon.hideShimmerAdapter()
             if (it == null) {
-                loadService.showWithConvertor(-1)
                 return@observe
             }
-            loadService.showWithConvertor(0)
             if (!mAdapter.hasEmptyView()){
                 val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
                 emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {

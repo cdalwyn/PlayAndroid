@@ -29,8 +29,6 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
         return false
     }
 
-
-
     override fun initData() {
         initAdapter()
         binding.smartCommon.autoRefresh()

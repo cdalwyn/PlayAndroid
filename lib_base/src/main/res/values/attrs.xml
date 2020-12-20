@@ -5,6 +5,7 @@
         <attr name="mContent" format="string" />
         <attr name="mIcon" format="reference" />
         <attr name="mRight" format="boolean" />
+        <attr name="mBackground" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="SkeletonBlock">

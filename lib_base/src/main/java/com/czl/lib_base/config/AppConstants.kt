@@ -46,6 +46,7 @@ interface AppConstants {
             const val F_USER_SHARE = "/user/UserShareFragment"
             const val F_USER_BROWSE = "/user/UserBrowseFragment"
             const val F_USER_SETTING = "/user/UserSettingFragment"
+            const val F_USER_DETAIL = "/user/ShareUserDetailFragment"
         }
 
         object Square {
@@ -75,6 +76,7 @@ interface AppConstants {
         const val SYSTEM_DETAIL = "system_detail"
         const val SYSTEM_DETAIL_POSITION = "system_detail_position"
         const val WEB_MENU_KEY = "web_menu_key"
+        const val USER_ID = "user_id"
     }
 
     object Constants {

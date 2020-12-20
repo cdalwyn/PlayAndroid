@@ -63,6 +63,8 @@
                     android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
                     app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"
+                    binding:onRvItemCommand="@{adapter.onUserNameClick}"
+                    binding:rvItemBean="@{data}"
                     tools:text="扔物线" />
 
                 <ImageView

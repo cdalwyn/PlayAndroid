@@ -6,6 +6,7 @@ import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
+import com.czl.lib_base.util.DialogHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentSettingBinding
@@ -27,9 +28,12 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
     }
 
     override fun initData() {
-        viewModel.setTvCacheSize()
-        viewModel.tvTitle.set("设置")
-        viewModel.historyVisible.set(viewModel.model.getReadHistoryState())
+        viewModel.apply {
+            setTvCacheSize()
+            tvTitle.set("设置")
+            logoutVisible.set(!model.getLoginName().isNullOrBlank())
+            historyVisible.set(model.getReadHistoryState())
+        }
         binding.swSys.isChecked = viewModel.model.getFollowSysUiModeFlag()
         // 跟随系统模式关闭时 判断黑夜模式状态
         if (!binding.swSys.isChecked) binding.swNight.isChecked = viewModel.model.getUiMode()
@@ -60,9 +64,9 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             if (!checked) {
                 viewModel.model.saveUiMode(DayModeUtil.isNightMode(requireContext()))
                 binding.swNight.isChecked = DayModeUtil.isNightMode(requireContext())
-                if (DayModeUtil.isNightMode(requireContext())){
+                if (DayModeUtil.isNightMode(requireContext())) {
                     DayModeUtil.setNightMode(requireContext())
-                }else{
+                } else {
                     DayModeUtil.setLightMode(requireContext())
                 }
             }
@@ -77,6 +81,10 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                 activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
             }
         })
-
+        viewModel.uc.confirmLogoutEvent.observe(this, {
+            DialogHelper.showBaseDialog(requireContext(), "注销", "是否确定退出登录？") {
+                viewModel.logout()
+            }
+        })
     }
 }

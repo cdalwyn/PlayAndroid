@@ -46,7 +46,7 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
         cid?.let {
             model.getProjectByCid((currentPage+1).toString(), it)
                 .compose(RxThreadHelper.rxSchedulerHelper(this))
-                .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>() {
+                .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>(loadService) {
                     override fun onResult(t: BaseBean<ProjectBean>) {
                         if (t.errorCode == 0) {
                             currentPage++

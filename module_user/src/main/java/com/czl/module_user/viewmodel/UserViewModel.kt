@@ -50,23 +50,6 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
     })
 
-    fun logout() {
-        model.logout()
-            .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
-                override fun onResult(t: BaseBean<Any?>) {
-                    if (t.errorCode == 0) {
-                        model.clearLoginState()
-                        LiveBusCenter.postLogoutEvent()
-                    }
-                }
-
-                override fun onFailed(msg: String?) {
-                    showErrorToast(msg)
-                }
-            })
-    }
-
     val userNameOnClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         if (model.getLoginName().isNullOrBlank()) {
             uc.showLoginPopEvent.call()

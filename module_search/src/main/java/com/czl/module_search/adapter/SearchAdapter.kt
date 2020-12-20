@@ -10,6 +10,7 @@ import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.CollectArticleBean
 import com.czl.lib_base.data.bean.SearchDataBean
+import com.czl.lib_base.data.bean.SquareListBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.module_search.R
@@ -38,6 +39,15 @@ class SearchAdapter(val mFragment: SearchFragment) :
         }
     }
 
+    val onUserNameClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is SearchDataBean.Data) {
+            mFragment.viewModel.startContainerActivity(
+                AppConstants.Router.User.F_USER_DETAIL,
+                Bundle().apply {
+                    putString(AppConstants.BundleKey.USER_ID, it.userId.toString())
+                })
+        }
+    })
     val onCollectClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is SearchDataBean.Data) {
             if (!it.collect) {

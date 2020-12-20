@@ -11,6 +11,7 @@ import com.czl.lib_base.util.ToastHelper.showErrorToast
 import com.czl.lib_base.widget.LoginPopView
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
+import com.kingja.loadsir.core.LoadService
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.SimpleCallback
@@ -18,10 +19,12 @@ import io.reactivex.observers.DisposableObserver
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import retrofit2.HttpException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
@@ -29,11 +32,15 @@ import java.net.UnknownHostException
  * @author Alwyn
  * @Date 2020/10/10
  * @Description RxJava 处理Api异常
+ * 不自动处理状态页的不传构造即可
  */
-abstract class ApiSubscriberHelper<T> : DisposableObserver<T>(),KoinComponent {
+abstract class ApiSubscriberHelper<T>(private val loadService: LoadService<BaseBean<*>?>? = null) : DisposableObserver<T>(),KoinComponent {
     private val loginPopView: BasePopupView by inject(named("login"))
 
     override fun onNext(t: T) {
+        if (t is BaseBean<*>) {
+            loadService?.showWithConvertor(t)
+        }
         if (t is BaseBean<*> && t.errorCode != 0) {
             showErrorToast(t.errorMsg)
             if (t.errorCode == -1001) {
@@ -51,9 +58,9 @@ abstract class ApiSubscriberHelper<T> : DisposableObserver<T>(),KoinComponent {
 
     override fun onComplete() {}
 
-    @SuppressLint("MissingPermission")
     override fun onError(throwable: Throwable) {
-        if (!NetworkUtils.isConnected() || throwable is ConnectTimeoutException) {
+        loadService?.showWithConvertor(null)
+        if (throwable is ConnectException || throwable is ConnectTimeoutException) {
             onFailed("连接失败，请检查网络后再试")
         } else if (throwable is RuntimeException) {
             onFailed(throwable.message)

@@ -43,11 +43,9 @@ class NavigateFragment :BaseFragment<CommonRecycleviewBinding,NavigateViewModel>
     override fun initViewObservable() {
         viewModel.loadCompleteEvent.observe(this,{data->
             if (data==null) {
-                loadService.showWithConvertor(-1)
                 binding.smartCommon.finishRefresh(false)
                 return@observe
             }
-            loadService.showWithConvertor(0)
             binding.smartCommon.finishRefresh(true)
             if (!mAdapter.hasEmptyView()){
                 val emptyView = View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)

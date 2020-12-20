@@ -62,7 +62,7 @@ class UserScoreVm(application: MyApplication, model: DataRepository) :
     fun getTotalScore() {
         model.getUserScore()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<UserScoreBean>>() {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<UserScoreBean>>(loadService) {
                 override fun onResult(t: BaseBean<UserScoreBean>) {
                     if (t.errorCode == 0) {
                         t.data?.let {

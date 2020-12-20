@@ -47,7 +47,7 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
     }
 
     val onBackHomeClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.agentWeb.urlLoader.loadUrl(mFragment.homeUrl)
+        mFragment.agentWeb?.urlLoader?.loadUrl(mFragment.homeUrl)
         dismiss()
     })
     val onShareSquareClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -58,7 +58,7 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
         })
     })
     val onRefreshClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.agentWeb.urlLoader.reload()
+        mFragment.agentWeb?.urlLoader?.reload()
         dismiss()
     })
     val onSettingClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

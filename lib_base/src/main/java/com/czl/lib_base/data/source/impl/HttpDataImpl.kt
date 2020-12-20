@@ -148,4 +148,11 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.deleteArticleById(id)
     }
 
+    override fun getShareUserDetail(
+        uid: String,
+        page: Int
+    ): Observable<BaseBean<ShareUserDetailBean>> {
+        return apiService.getShareUserDetail(uid,page)
+    }
+
 }

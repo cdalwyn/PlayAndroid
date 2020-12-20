@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             attrs:mIcon="@drawable/ic_exit_login"
-            attrs:mRight="true"
+            attrs:mRight="false"
             attrs:mTitle="退出登录"
             binding:isVisible="@{!TextUtils.isEmpty(user.publicName)}"
             binding:onClickCommand="@{pop.onLogoutClickCommand}"

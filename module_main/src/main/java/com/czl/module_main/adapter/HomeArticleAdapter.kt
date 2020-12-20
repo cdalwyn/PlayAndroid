@@ -62,6 +62,14 @@ class HomeArticleAdapter(val mFragment: HomeFragment) :
         }
     })
 
+    val onUserNameClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is HomeArticleBean.Data) {
+            mFragment.viewModel.startContainerActivity(AppConstants.Router.User.F_USER_DETAIL,Bundle().apply {
+                putString(AppConstants.BundleKey.USER_ID,it.userId.toString())
+            })
+        }
+    })
+
     val diffConfig = object : DiffUtil.ItemCallback<HomeArticleBean.Data>() {
         override fun areItemsTheSame(
             oldItem: HomeArticleBean.Data,

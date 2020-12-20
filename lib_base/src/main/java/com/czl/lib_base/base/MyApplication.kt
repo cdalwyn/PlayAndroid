@@ -65,7 +65,7 @@ open class MyApplication : Application() {
         MMKV.initialize(this)
         // 初始化Fragmentation
         Fragmentation.builder()
-            .stackViewMode(Fragmentation.BUBBLE)
+            .stackViewMode(Fragmentation.NONE)
             .debug(BuildConfig.DEBUG)
             .install()
         // 屏幕适配
@@ -73,19 +73,6 @@ open class MyApplication : Application() {
             .setExcludeFontScale(true).designHeightInDp = 720
         //是否开启日志打印
         LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).setConsoleSwitch(BuildConfig.DEBUG)
-        //配置全局异常崩溃操作
-        CaocConfig.Builder.create()
-            .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //背景模式,开启沉浸式
-            .enabled(true) //是否启动全局异常捕获
-            .showErrorDetails(BuildConfig.DEBUG) //是否显示错误详细信息
-            .showRestartButton(true) //是否显示重启按钮
-            .trackActivities(true) //是否跟踪Activity
-            .minTimeBetweenCrashesMs(2000) //崩溃的间隔时间(毫秒)
-//            .errorDrawable(R.mipmap.ic_launcher) //错误图标
-//            .restartActivity(LoginActivity::class.java) //重新启动后的activity
-            //.errorActivity(YourCustomErrorActivity.class) //崩溃后的错误activity
-            //.eventListener(new YourCustomEventListener()) //崩溃后的错误监听
-            .apply()
         startKoin {
             androidLogger()
             androidContext(this@MyApplication)
@@ -98,11 +85,6 @@ open class MyApplication : Application() {
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
-
-//        AppCompatDelegate.setDefaultNightMode(
-//            if (DayModeUtil.isNightMode(this)) AppCompatDelegate.MODE_NIGHT_YES
-//            else AppCompatDelegate.MODE_NIGHT_NO
-//        )
         // 跟随系统切换黑夜模式
         if (SpHelper.decodeBoolean(AppConstants.SpKey.SYS_UI_MODE))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -111,8 +93,6 @@ open class MyApplication : Application() {
                 if (SpHelper.decodeBoolean(AppConstants.SpKey.USER_UI_MODE)) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
-        // 根据活动时间动态更换资源图标（如淘宝双11）
-//        LauncherIconManager.register(this)
     }
 
     companion object {
@@ -156,23 +136,14 @@ open class MyApplication : Application() {
                 savedInstanceState: Bundle?
             ) {
                 AppManager.instance.addActivity(activity)
-//                if ("leakcanary.internal.activity.LeakActivity" == activity.javaClass.name) {
-//                    return
-//                }
             }
 
-            override fun onActivityStarted(activity: Activity) {
-            }
+            override fun onActivityStarted(activity: Activity) {}
 
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}
-            override fun onActivitySaveInstanceState(
-                activity: Activity,
-                outState: Bundle?
-            ) {
-            }
-
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
             override fun onActivityDestroyed(activity: Activity) {
                 AppManager.instance.removeActivity(activity)
             }
@@ -187,6 +158,14 @@ open class MyApplication : Application() {
     override fun onLowMemory() {
         super.onLowMemory()
         Glide.get(this).clearMemory()
+    }
+
+    override fun onTrimMemory(level: Int) {
+        super.onTrimMemory(level)
+        if (level== TRIM_MEMORY_UI_HIDDEN){
+            Glide.get(this).clearMemory()
+        }
+        Glide.get(this).trimMemory(level)
     }
 
 }

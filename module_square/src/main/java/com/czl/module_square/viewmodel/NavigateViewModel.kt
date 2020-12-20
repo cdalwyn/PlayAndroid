@@ -23,7 +23,7 @@ class NavigateViewModel(application: MyApplication, model: DataRepository) :
     override fun refreshCommand() {
         model.getNavData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<List<NavigationBean>>>(){
+            .subscribe(object :ApiSubscriberHelper<BaseBean<List<NavigationBean>>>(loadService){
                 override fun onResult(t: BaseBean<List<NavigationBean>>) {
                     if (t.errorCode==0){
                         loadCompleteEvent.postValue(t.data)

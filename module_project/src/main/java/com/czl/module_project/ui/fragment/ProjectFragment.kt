@@ -51,9 +51,8 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
         val tabTitles = arrayListOf<String>()
         viewModel.model.getProjectSort()
             .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<List<ProjectSortBean>>>() {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<List<ProjectSortBean>>>(loadService) {
                 override fun onResult(t: BaseBean<List<ProjectSortBean>>) {
-                    loadService.showWithConvertor(t.errorCode)
                     if (t.errorCode == 0) {
                         for (data in t.data!!) {
                             binding.tabLayout.addTab(binding.tabLayout.newTab())
@@ -72,7 +71,7 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
                 }
 
                 override fun onFailed(msg: String?) {
-                    loadService.showWithConvertor(-1)
+
                     showErrorToast(msg)
                 }
             })

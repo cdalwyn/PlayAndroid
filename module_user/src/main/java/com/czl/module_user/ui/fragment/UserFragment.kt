@@ -67,11 +67,6 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         viewModel.uc.refreshEvent.observe(this,{
             binding.smartCommon.finishRefresh(1500)
         })
-        viewModel.uc.confirmLogoutEvent.observe(this,{
-            DialogHelper.showBaseDialog(requireContext(),"注销","是否确定退出登录？"){
-                viewModel.logout()
-            }
-        })
         LiveBusCenter.observeReadHistoryEvent(this){
             viewModel.historyVisible.set(it.checked)
         }

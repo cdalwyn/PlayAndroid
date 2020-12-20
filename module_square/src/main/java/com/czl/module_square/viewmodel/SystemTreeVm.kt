@@ -25,7 +25,7 @@ class SystemTreeVm(application: MyApplication, model: DataRepository) :
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         model.getSystemTreeData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<List<SystemTreeBean>>>(){
+            .subscribe(object :ApiSubscriberHelper<BaseBean<List<SystemTreeBean>>>(loadService){
                 override fun onResult(t: BaseBean<List<SystemTreeBean>>) {
                     if (t.errorCode==0){
                         loadCompletedEvent.postValue(t.data)

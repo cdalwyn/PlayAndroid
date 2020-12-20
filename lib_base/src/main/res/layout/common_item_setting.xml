@@ -1,52 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp_40"
     android:background="@color/white"
-    android:orientation="vertical">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_10">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_40"
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp_10">
+        android:padding="2dp"
+        android:layout_marginStart="@dimen/dp_10"
+        tools:src="@drawable/ic_like_on" />
 
-        <ImageView
-            android:id="@+id/iv_pic"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:padding="2dp"
-            android:gravity="center_vertical"
-            tools:src="@drawable/ic_like_on" />
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14"
+        tools:text="我的收藏" />
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp_10"
-            android:layout_weight="1"
-            android:gravity="start|center_vertical"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_14"
-            tools:text="我的收藏" />
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#b2b2b6"
+        />
 
-        <TextView
-            android:id="@+id/tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:text=""
-            android:textColor="#b2b2b6"
-            android:textSize="24sp" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_arrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
-
-    </LinearLayout>
-</androidx.appcompat.widget.LinearLayoutCompat>
+</LinearLayout>

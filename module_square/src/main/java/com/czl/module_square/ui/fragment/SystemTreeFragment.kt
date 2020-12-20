@@ -54,10 +54,8 @@ class SystemTreeFragment : BaseFragment<SquareFragmentSystemBinding, SystemTreeV
         viewModel.loadCompletedEvent.observe(this, { datas ->
             binding.smartCommon.finishRefresh()
             if (datas == null) {
-                loadService.showWithConvertor(-1)
                 return@observe
             }
-            loadService.showWithConvertor(0)
             val list = ArrayList<DefaultGroupedItem>()
             datas.forEach {
                 list.add(DefaultGroupedItem(true, it.name))

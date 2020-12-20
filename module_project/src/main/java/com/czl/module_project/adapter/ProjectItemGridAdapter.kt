@@ -34,6 +34,7 @@ class ProjectItemGridAdapter :
         item: ProjectBean.Data
     ) {
         holder.dataBinding?.let {
+            it.tvTitle.text = item.title
             // 设置图片宽高
             val layoutParams = it.ivProjectItem.layoutParams
             val screenWidth = context.resources.displayMetrics.widthPixels
@@ -46,8 +47,11 @@ class ProjectItemGridAdapter :
             }
             // 加载图片配置
             val options: RequestOptions = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.ic_placeholder)
+                .skipMemoryCache(true)
+                .dontAnimate()
+                .dontTransform()
+                .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.default_project_img)
             Glide.with(context)
                 .asBitmap()
                 .apply(options)
@@ -76,7 +80,6 @@ class ProjectItemGridAdapter :
                 })
                 .load(item.envelopePic)
                 .into(it.ivProjectItem)
-            it.tvTitle.text = item.title
         }
     }
 

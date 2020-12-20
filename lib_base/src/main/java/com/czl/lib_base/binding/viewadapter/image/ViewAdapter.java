@@ -34,7 +34,7 @@ public final class ViewAdapter {
         if (resId.get() != 0) {
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(resId.get());
-        }else {
+        } else {
             imageView.setVisibility(View.INVISIBLE);
         }
     }

@@ -20,12 +20,14 @@
         style="@style/actionBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/color_default_bg"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_default_bg">
+            >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"

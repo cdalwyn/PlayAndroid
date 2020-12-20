@@ -51,7 +51,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
     private var ryCommon: RecyclerView? = null
-    lateinit var loadService: LoadService<Int>
+    lateinit var loadService: LoadService<BaseBean<*>?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,22 +78,26 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
             // 有标题栏情况下绑定内容View
             loadService = loadSir.register(binding.root,
-                Callback.OnReloadListener { reload() }, Convertor<Int> { t ->
-                    when (t) {
-                        0 -> SuccessCallback::class.java
-                        else -> ErrorCallback::class.java
+                Callback.OnReloadListener { reload() },
+                Convertor<BaseBean<*>?> { t ->
+                    if (t == null || t.errorCode != 0) {
+                        ErrorCallback::class.java
+                    } else {
+                        SuccessCallback::class.java
                     }
-                }) as LoadService<Int>
+                }) as LoadService<BaseBean<*>?>
             return rootView
         } else {
             binding = DataBindingUtil.inflate(inflater, initContentView(), container, false)
             loadService = loadSir.register(binding.root,
-                Callback.OnReloadListener { reload() }, Convertor<Int> { t ->
-                    when (t) {
-                        0 -> SuccessCallback::class.java
-                        else -> ErrorCallback::class.java
+                Callback.OnReloadListener { reload() },
+                Convertor<BaseBean<*>?> { t ->
+                    if (t == null || t.errorCode != 0) {
+                        ErrorCallback::class.java
+                    } else {
+                        SuccessCallback::class.java
                     }
-                }) as LoadService<Int>
+                }) as LoadService<BaseBean<*>?>
             return loadService.loadLayout
         }
     }
@@ -211,6 +215,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         lifecycle.addObserver(viewModel)
         //注入RxLifecycle生命周期
         viewModel.injectLifecycleProvider(this)
+        //传入VM层交由M层数据驱动处理UI状态
+        viewModel.loadService = loadService
     }
 
     /**
@@ -280,12 +286,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     ) {
         this.ryCommon = ryCommon
         if (nullFlag) {
-            loadService.showWithConvertor(-1)
+            showErrorStatePage()
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)
             return
         }
-        loadService.showWithConvertor(0)
+        showSuccessStatePage()
         if (currentPage == defaultPage) {
             ryCommon.hideShimmerAdapter()
             if (!mAdapter.hasEmptyView()) {
@@ -354,7 +360,17 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     fun showSuccessToast(msg: String?) {
         ToastHelper.showSuccessToast(msg)
     }
+    fun showErrorStatePage() {
+        loadService.showCallback(ErrorCallback::class.java)
+    }
 
+    fun showLoadingStatePage() {
+        loadService.showCallback(LoadingCallback::class.java)
+    }
+
+    fun showSuccessStatePage() {
+        loadService.showCallback(SuccessCallback::class.java)
+    }
     /**
      * 跳转页面
      *

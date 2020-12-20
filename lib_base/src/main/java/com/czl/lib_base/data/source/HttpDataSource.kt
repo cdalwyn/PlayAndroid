@@ -38,6 +38,7 @@ interface HttpDataSource {
     fun getSystemTreeData(): Observable<BaseBean<List<SystemTreeBean>>>
     fun getNavData(): Observable<BaseBean<List<NavigationBean>>>
     fun getArticlesByCid(page: Int = 0, cid: String): Observable<BaseBean<SystemDetailBean>>
-    fun shareArticleToSquare(title: String,link: String): Observable<BaseBean<Any?>>
-    fun deleteArticleById(id: Int):Observable<BaseBean<Any?>>
+    fun shareArticleToSquare(title: String, link: String): Observable<BaseBean<Any?>>
+    fun deleteArticleById(id: Int): Observable<BaseBean<Any?>>
+    fun getShareUserDetail(uid: String, page: Int = 1): Observable<BaseBean<ShareUserDetailBean>>
 }

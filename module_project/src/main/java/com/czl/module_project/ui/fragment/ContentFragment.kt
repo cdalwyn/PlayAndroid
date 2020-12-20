@@ -75,12 +75,10 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
             if (it == null) {
                 binding.smartCommon.finishRefresh(500)
                 binding.smartCommon.finishLoadMore(false)
-                loadService.showWithConvertor(-1)
                 return@Observer
             }
             // 成功加载数据后关闭懒加载开关
             firstLoad = false
-            loadService.showWithConvertor(0)
             binding.smartCommon.finishRefresh(500)
             if (it.over) {
                 binding.smartCommon.finishLoadMoreWithNoMoreData()

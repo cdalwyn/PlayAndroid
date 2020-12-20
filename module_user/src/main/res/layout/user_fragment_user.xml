@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:attrs="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/tools"
-    >
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
@@ -46,10 +44,10 @@
                 android:id="@+id/tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/dp_20"
-                android:paddingStart="@dimen/dp_4"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="@dimen/dp_4"
+                android:paddingEnd="@dimen/dp_20"
                 android:text="@{TextUtils.isEmpty(userData.publicName)?`未登录`:userData.publicName}"
                 android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
@@ -78,10 +76,7 @@
                 android:id="@+id/ll_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_4"
                 app:hl_cornerRadius="@dimen/dp_4"
-                app:hl_shadowColor="@color/shadow_color"
-                app:hl_shadowLimit="@dimen/dp_4"
                 app:hl_layoutBackground="@color/white"
                 app:layout_constraintEnd_toStartOf="@id/ll_collect"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -118,11 +113,8 @@
                 android:id="@+id/ll_collect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_4"
                 app:hl_cornerRadius="@dimen/dp_4"
                 app:hl_layoutBackground="@color/white"
-                app:hl_shadowColor="@color/shadow_color"
-                app:hl_shadowLimit="@dimen/dp_4"
                 app:layout_constraintEnd_toStartOf="@id/ll_share"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@id/ll_score"
@@ -157,11 +149,8 @@
                 android:id="@+id/ll_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_4"
                 app:hl_cornerRadius="@dimen/dp_4"
                 app:hl_layoutBackground="@color/white"
-                app:hl_shadowColor="@color/shadow_color"
-                app:hl_shadowLimit="@dimen/dp_4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="spread"
                 app:layout_constraintStart_toEndOf="@id/ll_collect"
@@ -193,121 +182,80 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </com.lihang.ShadowLayout>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <com.lihang.ShadowLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_marginTop="@dimen/dp_10"
-                android:background="@drawable/shape_gray_top_corner"
+                app:hl_shadowLimit="@dimen/dp_4"
+                app:hl_shadowHiddenLeft="true"
+                app:hl_shadowHiddenRight="true"
+                app:hl_shadowHiddenBottom="true"
+                app:hl_cornerRadius_leftTop="@dimen/dp_20"
+                app:hl_cornerRadius_rightTop="@dimen/dp_20"
+                app:hl_layoutBackground="@color/color_default_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_collect"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="0dp">
+                app:layout_constraintTop_toBottomOf="@+id/ll_collect">
 
-                <com.lihang.ShadowLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+
+                <com.czl.lib_base.widget.CommonItemSettingView
+                    android:layout_marginTop="@dimen/dp_10"
                     android:id="@+id/item_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    app:hl_layoutBackground="@color/white"
-                    app:hl_cornerRadius="@dimen/dp_10"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_4"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_collect">
+                    android:padding="@dimen/dp_4"
+                    app:mBackground="@color/color_default_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_collect"
+                    app:mIcon="@drawable/ic_iv_score"
+                    app:mRight="true"
+                    app:mTitle="我的积分"
+                    binding:onClickCommand="@{viewModel.btnScoreClickCommand}" />
 
-                    <com.czl.lib_base.widget.CommonItemSettingView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="@dimen/dp_4"
-                        attrs:mIcon="@drawable/ic_iv_score"
-                        attrs:mRight="true"
-                        attrs:mTitle="我的积分"
-                        binding:onClickCommand="@{viewModel.btnScoreClickCommand}" />
-                </com.lihang.ShadowLayout>
-
-                <com.lihang.ShadowLayout
+               
+                <com.czl.lib_base.widget.CommonItemSettingView
                     android:id="@+id/item_collect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    app:hl_cornerRadius="@dimen/dp_10"
-                    app:hl_layoutBackground="@color/white"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_4"
-                    app:layout_constraintTop_toBottomOf="@+id/item_score">
+                    android:layout_margin="@dimen/dp_4"
+                    app:mIcon="@drawable/ic_favorites"
+                    app:mRight="true"
+                    app:mBackground="@color/color_default_bg"
+                    app:mTitle="我的收藏"
+                    binding:onClickCommand="@{viewModel.btnCollectClickCommand}" />
 
-                    <com.czl.lib_base.widget.CommonItemSettingView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_4"
-                        attrs:mIcon="@drawable/ic_favorites"
-                        attrs:mRight="true"
-                        attrs:mTitle="我的收藏"
-                        binding:onClickCommand="@{viewModel.btnCollectClickCommand}" />
-                </com.lihang.ShadowLayout>
 
-                <com.lihang.ShadowLayout
+                <com.czl.lib_base.widget.CommonItemSettingView
                     android:id="@+id/item_share"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    app:hl_cornerRadius="@dimen/dp_10"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_4"
-                    app:hl_layoutBackground="@color/white"
-                    app:layout_constraintTop_toBottomOf="@+id/item_collect">
+                    android:layout_margin="@dimen/dp_4"
+                    app:layout_constraintTop_toBottomOf="@+id/item_collect"
+                    app:mIcon="@drawable/ic_share"
+                    app:mRight="true"
+                    app:mTitle="我的分享"
+                    app:mBackground="@color/color_default_bg"
+                    binding:onClickCommand="@{viewModel.btnShareClickCommand}" />
 
-                    <com.czl.lib_base.widget.CommonItemSettingView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_4"
-                        attrs:mIcon="@drawable/ic_share"
-                        attrs:mRight="true"
-                        attrs:mTitle="我的分享"
-                        binding:onClickCommand="@{viewModel.btnShareClickCommand}" />
-                </com.lihang.ShadowLayout>
 
-                <com.lihang.ShadowLayout
+                <com.czl.lib_base.widget.CommonItemSettingView
                     android:id="@+id/item_history"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginEnd="@dimen/dp_8"
-                    binding:isVisible="@{viewModel.historyVisible}"
-                    app:hl_cornerRadius="@dimen/dp_10"
-                    app:hl_shadowColor="@color/shadow_color"
-                    app:hl_shadowLimit="@dimen/dp_4"
-                    app:hl_layoutBackground="@color/white"
-                    app:layout_constraintTop_toBottomOf="@+id/item_share">
+                    android:layout_margin="@dimen/dp_4"
+                    app:mBackground="@color/color_default_bg"
+                    app:layout_constraintTop_toBottomOf="@+id/item_share"
+                    app:mIcon="@drawable/ic_read"
+                    app:mRight="true"
+                    app:mTitle="阅读历史"
+                    binding:onClickCommand="@{viewModel.btnHistoryClickCommand}" />
 
-                    <com.czl.lib_base.widget.CommonItemSettingView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="@dimen/dp_4"
-                        attrs:mIcon="@drawable/ic_read"
-                        attrs:mRight="true"
-                        attrs:mTitle="阅读历史"
-                        binding:onClickCommand="@{viewModel.btnHistoryClickCommand}" />
-                </com.lihang.ShadowLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:padding="@dimen/dp_10"
-                    android:text="退出登录"
-                    android:textColor="@color/md_theme_red"
-                    android:layout_gravity="center_horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/item_history"
-                    binding:isVisible="@{!TextUtils.isEmpty(userData.publicName)}"
-                    binding:onClickCommand="@{viewModel.logoutClickCommand}" />
             </androidx.appcompat.widget.LinearLayoutCompat>
+            </com.lihang.ShadowLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>

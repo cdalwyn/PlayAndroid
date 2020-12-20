@@ -155,6 +155,13 @@ class DataRepository constructor(
         return mHttpDataSource.deleteArticleById(id)
     }
 
+    override fun getShareUserDetail(
+        uid: String,
+        page: Int
+    ): Observable<BaseBean<ShareUserDetailBean>> {
+        return mHttpDataSource.getShareUserDetail(uid,page)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

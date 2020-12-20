@@ -73,10 +73,8 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         // 总积分动画
         viewModel.uc.getTotalScoreEvent.observe(this, {
             if (it==null){
-                loadService.showWithConvertor(-1)
                 return@observe
             }
-            loadService.showWithConvertor(0)
             val animator = ValueAnimator.ofInt(0, it.coinCount)
             animator.duration = 1200L
             animator.addUpdateListener { animation ->

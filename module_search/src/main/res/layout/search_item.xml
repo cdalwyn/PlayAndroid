@@ -98,6 +98,8 @@
                         android:maxLines="1"
                         android:textSize="@dimen/sp_12"
                         android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
+                        binding:onRvItemCommand="@{adapter.onUserNameClick}"
+                        binding:rvItemBean="@{data}"
                         tools:text="cdalwynsssssssssssssssssssssssssssssssssss" />
 
                 </LinearLayout>

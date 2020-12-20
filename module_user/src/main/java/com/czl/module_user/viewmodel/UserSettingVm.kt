@@ -4,6 +4,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import com.blankj.utilcode.constant.MemoryConstants
 import com.blankj.utilcode.util.*
+import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
@@ -14,6 +15,7 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.event.LiveBusCenter
+import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.FileCacheUtils
 import com.czl.lib_base.util.RxThreadHelper
@@ -35,10 +37,12 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
     val followSysUiModeState: ObservableBoolean = ObservableBoolean(false)
     val cacheSize: ObservableField<String> = ObservableField("")
     val historyVisible: ObservableBoolean = ObservableBoolean(false)
+    val logoutVisible:ObservableBoolean = ObservableBoolean(true)
 
     class UiChangeEvent {
         val switchUiModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val switchSysModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
+        val confirmLogoutEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     val onFollowSysModeCheckedCommand: BindingCommand<Boolean> = BindingCommand { checked ->
@@ -80,7 +84,10 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
     })
 
     val onAboutUsClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        // todo 关于我们  点击用户名称跳转用户详情页
+
+    })
+    val logoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.confirmLogoutEvent.call()
     })
 
     fun setTvCacheSize() {
@@ -95,6 +102,24 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
             .compose(RxThreadHelper.rxSchedulerHelper())
             .subscribe {
                 cacheSize.set(it)
+            })
+    }
+
+    fun logout() {
+        model.logout()
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
+                override fun onResult(t: BaseBean<Any?>) {
+                    if (t.errorCode == 0) {
+                        logoutVisible.set(false)
+                        model.clearLoginState()
+                        LiveBusCenter.postLogoutEvent()
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+                    showErrorToast(msg)
+                }
             })
     }
 }

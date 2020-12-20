@@ -213,17 +213,14 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     private fun getBanner() {
         model.getBannerData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>() {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>(loadService) {
                 override fun onResult(t: BaseBean<List<HomeBannerBean>>) {
                     if (t.errorCode == 0) {
                         uc.bannerCompleteEvent.postValue(t.data)
-                    } else {
-                        uc.bannerCompleteEvent.postValue(null)
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-                    uc.bannerCompleteEvent.postValue(null)
                     showErrorToast(msg)
                 }
             })

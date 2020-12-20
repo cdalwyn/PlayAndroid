@@ -32,7 +32,7 @@ import java.lang.reflect.Method
 @Route(path = AppConstants.Router.Web.F_WEB)
 class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
-    lateinit var agentWeb: AgentWeb
+    var agentWeb: AgentWeb?=null
 
     // 是否加载失败
     private var errorFlag = false
@@ -83,7 +83,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             else viewModel.unCollectWebsite(arguments?.getString(AppConstants.BundleKey.WEB_URL_ID))
         })
         viewModel.uc.goForwardEvent.observe(this, {
-            if (viewModel.canForwardFlag.get()!!) agentWeb.webCreator.webView.goForward()
+            if (viewModel.canForwardFlag.get()!!) agentWeb?.webCreator?.webView?.goForward()
         })
         viewModel.uc.showMenuEvent.observe(this, {
             XPopup.Builder(context)
@@ -166,20 +166,20 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun reload() {
         super.reload()
-        agentWeb.urlLoader.reload()
+        agentWeb?.urlLoader?.reload()
     }
 
     override fun back() {
         if (!viewModel.canGoBackFlag.get()!!) {
             super.back()
         } else {
-            agentWeb.back()
+            agentWeb?.back()
         }
     }
 
     override fun onBackPressedSupport(): Boolean {
-        if (agentWeb.webCreator.webView.canGoBack()) {
-            agentWeb.back()
+        if (agentWeb!!.webCreator.webView.canGoBack()) {
+            agentWeb!!.back()
         } else {
             return super.onBackPressedSupport()
         }
@@ -188,18 +188,17 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        agentWeb.webLifeCycle.onDestroy()
+        agentWeb?.webLifeCycle?.onDestroy()
     }
 
     override fun onPause() {
         super.onPause()
-        agentWeb.webLifeCycle.onPause()
+        agentWeb?.webLifeCycle?.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        if (this::agentWeb.isInitialized)
-            agentWeb.webLifeCycle.onResume()
+        agentWeb?.webLifeCycle?.onResume()
     }
 
     override fun enableLazy(): Boolean {
@@ -281,14 +280,14 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             val statusCode = errorResponse?.statusCode
             if (404 == statusCode || 500 == statusCode) {
                 errorFlag = true
-                loadService.showWithConvertor(-1)
+                showErrorStatePage()
             }
         }
 
         override fun onPageFinished(view: WebView, url: String?) {
             super.onPageFinished(view, url)
             if (!errorFlag) {
-                loadService.showWithConvertor(0)
+                showSuccessStatePage()
             }
             viewModel.canForwardFlag.set(view.canGoForward())
             if (currentLink == homeUrl && !view.canGoBack()) {
