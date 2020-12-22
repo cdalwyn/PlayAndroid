@@ -2,6 +2,7 @@ package com.czl.module_main.widget
 
 import android.annotation.SuppressLint
 import android.text.TextUtils
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
@@ -58,6 +59,7 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
         binding?.apply {
             user = fragment.viewModel.model.getUserData()
             pop = this@HomeDrawerPop
+            executePendingBindings()
         }
     }
 

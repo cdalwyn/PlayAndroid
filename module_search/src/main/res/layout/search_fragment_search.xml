@@ -43,7 +43,7 @@
                 app:mt_navIconEnabled="false"
                 app:mt_roundedSearchBarEnabled="true"
                 app:mt_speechMode="false"
-                app:mt_searchBarColor="@color/color_default_container_bg"
+                app:mt_searchBarColor="@color/color_default_bg_deep"
                 binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
                 binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
                 binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />

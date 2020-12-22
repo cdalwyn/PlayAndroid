@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.czl.lib_base.R;
-import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding3.view.RxView;
 import com.mancj.materialsearchbar.adapter.DefaultSuggestionsAdapter;
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter;
 

@@ -4,7 +4,7 @@
     <color name="mColorPrimaryDark">#FAFAFA</color>
     <color name="mColorAccent">#EF5350</color>
     <color name="color_default_bg">#424242</color>
-    <color name="color_default_container_bg">#303030</color>
+    <color name="color_default_bg_deep">#303030</color>
 
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
@@ -16,7 +16,7 @@
     <color name="normalColor">#353A3E</color>
     <color name="searchPlaceholderColor">#BDBDBD</color>
 
-    <color name="shadow_color">#424242</color>
+    <color name="shadow_color">#808080</color>
 
     <color name="yellow_color_FF">#FFBA19</color>
 

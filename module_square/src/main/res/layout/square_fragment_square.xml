@@ -107,12 +107,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dp_16"
-                        android:drawablePadding="@dimen/dp_4"
                         android:gravity="center"
                         android:text="我要分享"
                         android:textColor="@color/blacks"
                         android:textSize="@dimen/sp_12"
-                        app:drawableStartCompat="@drawable/ic_pen"
                         binding:onClickCommand="@{viewModel.onEditShareClick}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

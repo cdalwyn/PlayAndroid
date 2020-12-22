@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="mColorPrimary">#fff3f3f3</color>
+    <!--系统默认背景色#fff3f3f3-->
+    <color name="mColorPrimary">#FAFAFA</color>
     <color name="mColorPrimaryDark">#303030</color>
     <color name="mColorAccent">#EF5350</color>
     <color name="color_default_bg">#fff3f3f3</color>
     <color name="color_default_dark">#424242</color>
-    <color name="color_default_container_bg">#FAFAFA</color>
+    <color name="color_default_bg_deep">#FAFAFA</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="color_line">#dbdbdb</color>
@@ -16,7 +17,7 @@
     <color name="normalColor">#353A3E</color>
 
     <color name="searchPlaceholderColor">#8A000000</color>
-    <color name="shadow_color">#9E9E9E</color>
+    <color name="shadow_color">#424242</color>
 
     <color name="yellow_color_FF">#FFBA19</color>
 

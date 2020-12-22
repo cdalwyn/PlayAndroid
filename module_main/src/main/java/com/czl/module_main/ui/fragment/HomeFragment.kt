@@ -33,6 +33,7 @@ import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.*
@@ -51,9 +52,11 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     lateinit var mArticleAdapter: HomeArticleAdapter
     lateinit var mProjectAdapter: HomeProjectAdapter
     val loginPopView: BasePopupView by inject(named("login"))
+    private var changeSearchTask: Disposable? = null
 
     override fun onSupportVisible() {
-        ImmersionBar.with(this).fitsSystemWindows(true).statusBarDarkFont(!DayModeUtil.isNightMode(requireContext())).init()
+        ImmersionBar.with(this).fitsSystemWindows(true)
+            .statusBarDarkFont(!DayModeUtil.isNightMode(requireContext())).init()
     }
 
     override fun initContentView(): Int {
@@ -176,8 +179,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         // 接收搜索热词
         viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
             if (list.isNotEmpty()) {
+                changeSearchTask?.dispose()
                 // 发布定时任务更换搜索框关键字
-                viewModel.addSubscribe(Flowable.interval(0, 20, TimeUnit.SECONDS)
+                changeSearchTask = Flowable.interval(0, 10, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         val hotKeyword = list[Random().nextInt(list.size)].name
@@ -185,7 +189,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                     }) {
                         it.printStackTrace()
                         LogUtils.e("定时更换搜索热词失败")
-                    })
+                    }
+                viewModel.addSubscribe(changeSearchTask!!)
             }
         })
         // 搜索框右边图标点击事件
@@ -223,7 +228,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         }
     }
 
-    private fun startSearch(keyword:String){
+    private fun startSearch(keyword: String) {
         // 保存到数据库
         viewModel.addSubscribe(viewModel.model.saveUserSearchHistory(keyword).subscribe())
         if (binding.searchBar.isSearchOpened) binding.searchBar.closeSearch()

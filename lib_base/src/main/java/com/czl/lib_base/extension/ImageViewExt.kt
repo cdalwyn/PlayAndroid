@@ -1,6 +1,7 @@
 package com.czl.lib_base.extension
 
 import android.graphics.drawable.Drawable
+import android.media.Image
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
@@ -29,7 +30,14 @@ fun ImageView.loadImage(url: String) {
     ).thumbnail(0.6f)
         .into(this)
 }
-
+fun ImageView.loadUrl(url: String?,@DrawableRes placeHolderRes:Int,@DrawableRes errorHolder:Int){
+    Glide.with(this)
+        .load(url)
+        .apply(
+            RequestOptions().placeholder(placeHolderRes).error(errorHolder)
+        )
+        .into(this)
+}
 fun ImageView.loadBlurImageRes(@DrawableRes imgRes: Int) {
     Glide.with(this).load(imgRes).dontAnimate()
         .apply(RequestOptions.bitmapTransform(BlurTransformation())).into(this)

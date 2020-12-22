@@ -187,12 +187,13 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/dp_10"
                 app:hl_shadowLimit="@dimen/dp_4"
+                app:hl_shadowColor="@color/shadow_color"
                 app:hl_shadowHiddenLeft="true"
                 app:hl_shadowHiddenRight="true"
                 app:hl_shadowHiddenBottom="true"
                 app:hl_cornerRadius_leftTop="@dimen/dp_20"
                 app:hl_cornerRadius_rightTop="@dimen/dp_20"
-                app:hl_layoutBackground="@color/color_default_bg"
+                app:hl_layoutBackground="@color/color_default_bg_deep"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_collect">
 
@@ -209,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_4"
-                    app:mBackground="@color/color_default_bg"
+                    app:mBackground="@color/color_default_bg_deep"
                     app:layout_constraintTop_toBottomOf="@+id/ll_collect"
                     app:mIcon="@drawable/ic_iv_score"
                     app:mRight="true"
@@ -224,7 +225,7 @@
                     android:layout_margin="@dimen/dp_4"
                     app:mIcon="@drawable/ic_favorites"
                     app:mRight="true"
-                    app:mBackground="@color/color_default_bg"
+                    app:mBackground="@color/color_default_bg_deep"
                     app:mTitle="我的收藏"
                     binding:onClickCommand="@{viewModel.btnCollectClickCommand}" />
 
@@ -238,7 +239,7 @@
                     app:mIcon="@drawable/ic_share"
                     app:mRight="true"
                     app:mTitle="我的分享"
-                    app:mBackground="@color/color_default_bg"
+                    app:mBackground="@color/color_default_bg_deep"
                     binding:onClickCommand="@{viewModel.btnShareClickCommand}" />
 
 
@@ -247,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_4"
-                    app:mBackground="@color/color_default_bg"
+                    app:mBackground="@color/color_default_bg_deep"
                     app:layout_constraintTop_toBottomOf="@+id/item_share"
                     app:mIcon="@drawable/ic_read"
                     app:mRight="true"

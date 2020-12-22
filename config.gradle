@@ -50,9 +50,9 @@ ext {
             "rxlifecycle"                          : "com.trello.rxlifecycle3:rxlifecycle:3.0.0",
             "rxlifecycle-components"               : "com.trello.rxlifecycle3:rxlifecycle-components:3.0.0",
             //rxbinding
-            "rxbinding"                            : "com.jakewharton.rxbinding2:rxbinding:2.1.1",
+            "rxbinding"                            : "com.jakewharton.rxbinding3:rxbinding:3.0.0",
             //rx 6.0权限请求
-            "rxpermissions"                        : "com.github.tbruyelle:rxpermissions:0.10.2",
+//            "rxpermissions"                        : "com.github.tbruyelle:rxpermissions:0.10.2",
             //network
             "okhttp"                               : "com.squareup.okhttp3:okhttp:3.10.0",
             "retrofit"                             : "com.squareup.retrofit2:retrofit:2.4.0",
