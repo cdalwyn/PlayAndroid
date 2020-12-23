@@ -6,7 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserShareAdapter
@@ -18,9 +18,9 @@ import com.czl.module_user.viewmodel.UserShareVm
  * @Description
  */
 @Route(path = AppConstants.Router.User.F_USER_SHARE)
-class UserShareFragment : BaseFragment<CommonRecycleviewBinding, UserShareVm>() {
+class UserShareFragment : BaseFragment<CommonRecyclerviewBinding, UserShareVm>() {
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

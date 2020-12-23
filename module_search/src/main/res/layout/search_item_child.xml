@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="name"
+            type="String" />
+    </data>
+
+    <com.lihang.ShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
+        app:hl_bindTextView="@id/tv_content"
+        app:hl_cornerRadius="@dimen/dp_20"
+        app:hl_layoutBackground="@color/white_ee"
+        app:hl_shapeMode="ripple"
+        app:hl_textColor_true="@color/black"
+        app:hl_layoutBackground_true="@color/md_theme_red"
+        app:hl_textColor="@color/black"
+        app:hl_shadowLimit="@dimen/dp_4"
+        app:hl_shadowHiddenTop="true"
+        app:hl_shadowHiddenLeft="true"
+        >
+
+        <TextView
+            android:text="@{name}"
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="14dp"
+            android:paddingEnd="@dimen/dp_14"
+            android:paddingTop="@dimen/dp_4"
+            android:paddingBottom="@dimen/dp_4"
+            tools:text="Google" />
+    </com.lihang.ShadowLayout>
+</layout>

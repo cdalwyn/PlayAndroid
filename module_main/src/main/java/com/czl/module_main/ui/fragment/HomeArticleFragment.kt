@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.adapter.HomeArticleAdapter
@@ -15,12 +15,12 @@ import com.czl.module_main.viewmodel.HomeArticleVm
  * @Date 2020/11/27
  * @Description
  */
-class HomeArticleFragment : BaseFragment<CommonRecycleviewBinding, HomeArticleVm>() {
+class HomeArticleFragment : BaseFragment<CommonRecyclerviewBinding, HomeArticleVm>() {
 
     private lateinit var mAdapter: HomeArticleAdapter
 
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

@@ -77,6 +77,7 @@ interface AppConstants {
         const val SYSTEM_DETAIL_POSITION = "system_detail_position"
         const val WEB_MENU_KEY = "web_menu_key"
         const val USER_ID = "user_id"
+        const val SEARCH_HOT_KEY_LIST = "search_hot_key_list"
     }
 
     object Constants {

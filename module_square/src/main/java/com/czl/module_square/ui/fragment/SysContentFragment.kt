@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_square.BR
 import com.czl.module_square.R
 import com.czl.module_square.adapter.SysContentAdapter
@@ -17,7 +17,7 @@ import com.czl.module_square.viewmodel.SystemContentVm
  * @Date 2020/12/5
  * @Description
  */
-class SysContentFragment : BaseFragment<CommonRecycleviewBinding, SystemContentVm>() {
+class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContentVm>() {
     private lateinit var mAdapter: SysContentAdapter
     private var firstLoad = true
 
@@ -28,7 +28,7 @@ class SysContentFragment : BaseFragment<CommonRecycleviewBinding, SystemContentV
     }
 
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

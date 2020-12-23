@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_square.BR
 import com.czl.module_square.R
 import com.czl.module_square.adapter.NavParentAdapter
@@ -19,10 +19,10 @@ import com.czl.module_square.viewmodel.NavigateViewModel
  * @Description 导航
  */
 @Route(path = AppConstants.Router.Square.F_NAV)
-class NavigateFragment :BaseFragment<CommonRecycleviewBinding,NavigateViewModel>(){
+class NavigateFragment :BaseFragment<CommonRecyclerviewBinding,NavigateViewModel>(){
     private lateinit var mAdapter:NavParentAdapter
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

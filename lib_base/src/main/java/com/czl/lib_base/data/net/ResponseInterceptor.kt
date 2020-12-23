@@ -1,11 +1,8 @@
 package com.czl.lib_base.data.net
 
 import com.czl.lib_base.base.BaseBean
-import com.czl.lib_base.event.LiveBusCenter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.blankj.utilcode.util.LogUtils
-import com.czl.lib_base.util.ToastHelper
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.Response
@@ -29,29 +26,26 @@ class ResponseInterceptor : Interceptor {
         val url = request.url().toString()
         if (HttpHeaders.hasBody(response)) {
             if (responseBody == null) return response
-            //            String url = request.url().toString();
             val mediaType = responseBody.contentType()
             when (response.code()) {
-                503, 504, 500, 404, 403 -> {
-                   ToastHelper.showErrorToast("服务器出错，请稍后再试")
+                503, 504, 500, 404, 403, 400 -> {
+                    response = response.newBuilder().code(response.code()).message("连接服务器失败，请稍后再试").build()
                 }
                 200 -> {
                     val source = responseBody.source()
                     source.request(Long.MAX_VALUE)
-                    val buffer = source.buffer()
+                    val buffer = source.buffer
                     val charset = StandardCharsets.UTF_8
                     //                    charset = mediaType.charset(charset);
                     if (charset != null) {
-                        // 服务器返回结果
+                        // 服务器返回结果 可处理加解密或者token失效
                         val bodyString = buffer.clone().readString(charset)
                         val baseBean = Gson().fromJson<BaseBean<*>>(
-                            bodyString,
-                            object : TypeToken<BaseBean<*>?>() {}.type
-                        )
+                            bodyString, object : TypeToken<BaseBean<*>?>() {}.type)
 //                        LogUtils.i("Interceptor Response=" + baseBean.toString() + ",code=" + baseBean.errorCode)
                         when (baseBean.errorCode) {
                             -1001 -> {
-                                // 请先登录 ApiSubscriberHelper 在RxJava网络业务层处理
+                                // token/cookie失效 ApiSubscriberHelper 已在ApiSubscriberHelper网络业务层处理
                                 // LiveBusCenter.postTokenExpiredEvent(baseBean.errorMsg)
                             }
                         }
@@ -66,16 +60,14 @@ class ResponseInterceptor : Interceptor {
 
     private fun isPlaintext(mediaType: MediaType?): Boolean {
         if (mediaType == null) return false
-        if (mediaType.type() != null && mediaType.type() == "text") {
+        if (mediaType.type() == "text") {
             return true
         }
         var subtype = mediaType.subtype()
-        if (subtype != null) {
-            subtype = subtype.toLowerCase(Locale.getDefault())
-            return subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains(
-                "xml"
-            ) || subtype.contains("html")
-        }
-        return false
+        subtype = subtype.toLowerCase(Locale.getDefault())
+        return subtype.contains("x-www-form-urlencoded")
+                || subtype.contains("json")
+                || subtype.contains("xml")
+                || subtype.contains("html")
     }
 }

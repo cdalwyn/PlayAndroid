@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
+import com.blankj.utilcode.util.KeyboardUtils
 import com.czl.lib_base.binding.command.BindingCommand
 
 object ViewAdapter {
@@ -18,11 +19,13 @@ object ViewAdapter {
         if (needRequestFocus) {
             editText.setSelection(editText.text.length)
             editText.requestFocus()
-            val imm =
-                editText.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+            editText.isFocusableInTouchMode = needRequestFocus
+            KeyboardUtils.showSoftInput(editText)
+        }else{
+            KeyboardUtils.hideSoftInput(editText)
+            editText.clearFocus()
         }
-        editText.isFocusableInTouchMode = needRequestFocus
+
     }
 
     /**

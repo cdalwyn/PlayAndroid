@@ -8,14 +8,13 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserBrowseAdapter
 import com.czl.module_user.viewmodel.UserBrowseVm
-import com.gyf.immersionbar.ImmersionBar
 
 /**
  * @author Alwyn
@@ -23,10 +22,10 @@ import com.gyf.immersionbar.ImmersionBar
  * @Description 阅读历史
  */
 @Route(path = AppConstants.Router.User.F_USER_BROWSE)
-class UserBrowseFragment : BaseFragment<CommonRecycleviewBinding, UserBrowseVm>() {
+class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>() {
     private lateinit var mAdapter: UserBrowseAdapter
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

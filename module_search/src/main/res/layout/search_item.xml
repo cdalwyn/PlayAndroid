@@ -58,23 +58,10 @@
                 binding:onRvItemCommand="@{adapter.onItemClickCommand}"
                 binding:rvItemBean="@{data}"
                 >
-
-                <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:ellipsize="end"
-                    android:maxLines="3"
-                    android:textSize="@dimen/sp_12"
-                    android:text="@{data.title}"
-                    android:textColor="@color/black"
-                    tools:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题题标题标题标题标题标题标题标题标题" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp">
+                    android:layout_marginBottom="@dimen/dp_4">
 
                     <TextView
                         android:id="@+id/item_tv_identity"
@@ -103,6 +90,19 @@
                         tools:text="cdalwynsssssssssssssssssssssssssssssssssss" />
 
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_4"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:textSize="@dimen/sp_12"
+                    android:text="@{data.title}"
+                    android:textColor="@color/black"
+                    tools:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题题标题标题标题标题标题标题标题标题" />
+
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"

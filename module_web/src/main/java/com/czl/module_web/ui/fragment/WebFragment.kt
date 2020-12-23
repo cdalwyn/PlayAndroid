@@ -12,7 +12,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ClipboardUtils
-import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.czl.lib_base.BR
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -32,7 +32,7 @@ import java.lang.reflect.Method
 @Route(path = AppConstants.Router.Web.F_WEB)
 class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
-    var agentWeb: AgentWeb?=null
+    var agentWeb: AgentWeb? = null
 
     // 是否加载失败
     private var errorFlag = false
@@ -79,8 +79,10 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                 showNormalToast("当前页面加载错误,收藏失败")
                 return@observe
             }
-            if (!viewModel.collectFlag.get()!!) viewModel.collectWebsite(currentTitle, currentLink)
-            else viewModel.unCollectWebsite(arguments?.getString(AppConstants.BundleKey.WEB_URL_ID))
+            clearEditFocus()
+            viewModel.collectWebsite(currentTitle, currentLink)
+//            if (!viewModel.collectFlag.get()!!) viewModel.collectWebsite(currentTitle, currentLink)
+//            else viewModel.unCollectWebsite(arguments?.getString(AppConstants.BundleKey.WEB_URL_ID))
         })
         viewModel.uc.goForwardEvent.observe(this, {
             if (viewModel.canForwardFlag.get()!!) agentWeb?.webCreator?.webView?.goForward()
@@ -92,6 +94,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                 .show()
         })
         viewModel.uc.openBrowserEvent.observe(this, {
+            clearEditFocus()
             val uri = Uri.parse(currentLink)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -99,10 +102,17 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         viewModel.uc.copyCurrentLinkEvent.observe(this, {
             ClipboardUtils.copyText(currentLink)
             showSuccessToast("复制成功")
+            clearEditFocus()
         })
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+    private fun clearEditFocus() {
+        binding.etWeb.apply {
+            clearFocus()
+            KeyboardUtils.hideSoftInput(this)
+        }
+    }
+
     private fun initWebView() {
         val webView = NestedScrollAgentWebView(context)
         val lp = CoordinatorLayout.LayoutParams(-1, -1)
@@ -137,30 +147,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         settings.apply {
             useWideViewPort = true
             loadWithOverviewMode = true
-//            javaScriptEnabled = true
-//            javaScriptCanOpenWindowsAutomatically = true
-//            setSupportMultipleWindows(true)
-//            setRenderPriority(WebSettings.RenderPriority.HIGH)
-//            allowFileAccess = true
-//            try {
-//                val clazz: Class<*> = webView.settings::class.java
-//                val method: Method = clazz.getMethod(
-//                    "setAllowUniversalAccessFromFileURLs",
-//                    Boolean::class.javaPrimitiveType
-//                )
-//                method.invoke(webView.settings, true)
-//            } catch (e: NoSuchMethodException) {
-//                e.printStackTrace()
-//            } catch (e: IllegalAccessException) {
-//                e.printStackTrace()
-//            } catch (e: InvocationTargetException) {
-//                e.printStackTrace()
-//            }
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                //target 23 default false, so manual set true
-//                CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
-//                mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-//            }
         }
     }
 

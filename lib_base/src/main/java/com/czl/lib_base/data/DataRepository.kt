@@ -198,6 +198,10 @@ class DataRepository constructor(
         return mLocalDataSource.deleteSearchHistory(history)
     }
 
+    override fun deleteAllSearchHistory(): Observable<Int> {
+        return mLocalDataSource.deleteAllSearchHistory()
+    }
+
     override fun saveUserBrowseHistory(title: String, link: String) {
         return mLocalDataSource.saveUserBrowseHistory(title,link)
     }

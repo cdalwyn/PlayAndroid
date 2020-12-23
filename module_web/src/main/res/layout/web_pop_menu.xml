@@ -99,7 +99,7 @@
                 android:drawablePadding="@dimen/dp_6"
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
-                android:text="收藏记录"
+                android:text="我的收藏"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
                 app:drawableTopCompat="@drawable/ic_menu_collect"

@@ -24,9 +24,9 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/dp_8"
                 android:paddingTop="@dimen/dp_14"
                 android:paddingBottom="@dimen/dp_14"
-                android:paddingStart="@dimen/dp_8"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp"
                 binding:isVisible="@{viewModel.backVisibility}"
                 binding:onClickCommand="@{viewModel.onSearchLeftCommand}" />
@@ -42,8 +42,8 @@
                 app:mt_backIconUseTint="true"
                 app:mt_navIconEnabled="false"
                 app:mt_roundedSearchBarEnabled="true"
-                app:mt_speechMode="false"
                 app:mt_searchBarColor="@color/color_default_bg_deep"
+                app:mt_speechMode="false"
                 binding:onSearchConfirmCommand="@{viewModel.onSearchConfirmCommand}"
                 binding:onSearchStateCommand="@{viewModel.onSearchStateCommand}"
                 binding:searchPlaceHolder="@{viewModel.searchPlaceHolder}" />
@@ -53,9 +53,15 @@
 
         <include
             android:id="@+id/include_ry"
-            layout="@layout/common_recycleview"
+            layout="@layout/common_recyclerview"
             app:viewModel="@{viewModel}" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <ViewStub
+            android:id="@+id/search_stub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout="@layout/search_recommend" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>

@@ -41,6 +41,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<SearchDataBean?> = SingleLiveEvent()
         val searchConfirmEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val searchFocusEvent:SingleLiveEvent<Boolean> = SingleLiveEvent()
     }
 
     /*左边返回按钮的显示*/
@@ -65,10 +66,11 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
         finish()
     })
 
-    val onSearchStateCommand: BindingCommand<Boolean> = BindingCommand(BindingConsumer { focused ->
+    val onSearchStateCommand: BindingCommand<Boolean> = BindingCommand { focused ->
         cancelVisibility.set(focused)
         backVisibility.set(!focused)
-    })
+        uc.searchFocusEvent.postValue(focused)
+    }
 
     val onSearchCancelClick: View.OnClickListener = View.OnClickListener {
         uc.searchCancelEvent.call()

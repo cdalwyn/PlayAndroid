@@ -23,6 +23,7 @@ interface LocalDataSource {
     fun saveUserSearchHistory(keyword: String): Flowable<Boolean>
     fun getSearchHistoryByUid(): Flowable<List<SearchHistoryEntity>>
     fun deleteSearchHistory(history: String): Disposable
+    fun deleteAllSearchHistory():Observable<Int>
     fun saveUserBrowseHistory(title: String, link: String)
     fun getUserBrowseHistoryByUid(): Flowable<List<WebHistoryEntity>>
     fun deleteBrowseHistory(title: String, link: String): Observable<Int>
@@ -34,4 +35,5 @@ interface LocalDataSource {
     fun getUiMode(): Boolean
     fun saveReadHistoryState(visible:Boolean)
     fun getReadHistoryState():Boolean
+
 }

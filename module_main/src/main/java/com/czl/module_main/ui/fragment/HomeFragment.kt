@@ -38,6 +38,7 @@ import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
 
 
@@ -53,6 +54,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     lateinit var mProjectAdapter: HomeProjectAdapter
     val loginPopView: BasePopupView by inject(named("login"))
     private var changeSearchTask: Disposable? = null
+    private var hotKeyList: List<String>?=null
 
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true)
@@ -179,6 +181,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         // 接收搜索热词
         viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
             if (list.isNotEmpty()) {
+                hotKeyList = list.map { it.name }
                 changeSearchTask?.dispose()
                 // 发布定时任务更换搜索框关键字
                 changeSearchTask = Flowable.interval(0, 10, TimeUnit.SECONDS)
@@ -234,6 +237,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         if (binding.searchBar.isSearchOpened) binding.searchBar.closeSearch()
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, keyword)
+        bundle.putStringArrayList(AppConstants.BundleKey.SEARCH_HOT_KEY_LIST, hotKeyList as ArrayList<String>?)
         startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         setSuggestAdapterData()
     }

@@ -4,11 +4,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.data.bean.CollectWebsiteBean
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -20,14 +19,14 @@ import com.czl.module_user.viewmodel.CollectWebsiteVm
  * @Date 2020/11/18
  * @Description
  */
-class CollectWebsiteFragment : BaseFragment<CommonRecycleviewBinding, CollectWebsiteVm>() {
+class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWebsiteVm>() {
 
     companion object {
         fun getInstance(): CollectWebsiteFragment = CollectWebsiteFragment()
     }
 
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {

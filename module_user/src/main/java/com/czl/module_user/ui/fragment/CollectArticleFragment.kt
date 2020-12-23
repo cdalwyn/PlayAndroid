@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
-import com.czl.lib_base.databinding.CommonRecycleviewBinding
+import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserCollectAdapter
@@ -15,7 +15,7 @@ import com.czl.module_user.viewmodel.CollectArticleVm
  * @Date 2020/11/18
  * @Description
  */
-class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArticleVm>() {
+class CollectArticleFragment : BaseFragment<CommonRecyclerviewBinding, CollectArticleVm>() {
 
     private var firstLoad = true
     private lateinit var mAdapter: UserCollectAdapter
@@ -25,7 +25,7 @@ class CollectArticleFragment : BaseFragment<CommonRecycleviewBinding, CollectArt
     }
 
     override fun initContentView(): Int {
-        return R.layout.common_recycleview
+        return R.layout.common_recyclerview
     }
 
     override fun initVariableId(): Int {
