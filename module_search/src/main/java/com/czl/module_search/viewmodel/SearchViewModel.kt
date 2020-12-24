@@ -40,7 +40,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<SearchDataBean?> = SingleLiveEvent()
-        val searchConfirmEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val searchConfirmEvent:SingleLiveEvent<String> = SingleLiveEvent()
         val searchFocusEvent:SingleLiveEvent<Boolean> = SingleLiveEvent()
     }
 
@@ -81,15 +81,7 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
             uc.searchCancelEvent.call()
             return@BindingConsumer
         }
-        addSubscribe(model.saveUserSearchHistory(it)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe { saved ->
-                if (saved) LiveBusCenter.postSearchHistoryEvent()
-            })
-        searchPlaceHolder.set(it)
-        keyword = it
-        uc.searchConfirmEvent.call()
+        uc.searchConfirmEvent.postValue(it)
     })
 
     fun getSearchDataByKeyword() {

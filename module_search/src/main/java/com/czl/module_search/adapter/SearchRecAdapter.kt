@@ -1,13 +1,11 @@
 package com.czl.module_search.adapter
 
 import android.view.View
-import androidx.databinding.ObservableBoolean
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.R
@@ -31,14 +29,12 @@ class SearchRecAdapter(
 ) :
     BaseQuickAdapter<String, BaseDataBindingHolder<SearchRecChildBinding>>(R.layout.search_rec_child) {
 
-    // todo 判断是历史记录清空后才隐藏
-    val historyVisible = ObservableBoolean(true)
-
     override fun convert(holder: BaseDataBindingHolder<SearchRecChildBinding>, item: String) {
         holder.dataBinding?.apply {
             title = item
             adapter = this@SearchRecAdapter
-            val mAdapter = SearchRecChildAdapter()
+            llRoot.visibility = View.VISIBLE
+            val mAdapter = SearchRecChildAdapter(mFragment)
             mAdapter.setDiffCallback(mAdapter.diffConfig)
             ryChild.apply {
                 layoutManager = FlexboxLayoutManager(
@@ -55,7 +51,6 @@ class SearchRecAdapter(
                 1 -> {
                     mFragment.viewModel.addSubscribe(histories.compose(RxThreadHelper.rxSchedulerHelper())
                         .subscribe { list ->
-                            historyVisible.set(list.isNotEmpty())
                             mAdapter.setDiffNewData(list.map { it.history } as MutableList<String>)
                         })
                 }
@@ -71,10 +66,11 @@ class SearchRecAdapter(
                 if (count > 0) {
                     val ryChild = getViewByPosition(1, R.id.ry_child) as RecyclerView
                     (ryChild.adapter as SearchRecChildAdapter).setDiffNewData(null)
-                    historyVisible.set(false)
+                    getViewByPosition(1,R.id.ll_root)?.visibility = View.GONE
                 }
             }
     })
+
 
 //    override fun convert(
 //        holder: BaseDataBindingHolder<SearchRecChildBinding>,

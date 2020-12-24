@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="name"
             type="String" />
+        <variable
+            name="adapter"
+            type="com.czl.module_search.adapter.SearchRecChildAdapter" />
     </data>
 
     <com.lihang.ShadowLayout
@@ -24,6 +28,8 @@
         app:hl_shadowLimit="@dimen/dp_4"
         app:hl_shadowHiddenTop="true"
         app:hl_shadowHiddenLeft="true"
+        binding:onRvItemCommand="@{adapter.onItemClickCommand}"
+        binding:rvItemBean="@{name}"
         >
 
         <TextView

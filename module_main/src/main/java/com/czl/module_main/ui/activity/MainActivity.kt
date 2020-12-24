@@ -67,8 +67,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     private fun initBottomBar() {
-        binding.apply {
-            bottomBar.apply {
+        binding.bottomBar.apply {
                 setMode(BottomNavigationBar.MODE_FIXED)
                 setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
                 addItem(
@@ -103,7 +102,6 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
                 setFirstSelectedPosition(0)
                 initialise()
             }
-        }
     }
 
 

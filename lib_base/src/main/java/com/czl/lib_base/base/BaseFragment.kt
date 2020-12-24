@@ -44,7 +44,7 @@ import java.lang.reflect.ParameterizedType
  */
 abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     BaseRxFragment(), IBaseView {
-    protected lateinit var binding: V
+    lateinit var binding: V
     lateinit var viewModel: VM
     private var viewModelId = 0
     private var dialog: BasePopupView? = null

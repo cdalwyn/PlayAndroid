@@ -7,12 +7,15 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.module_search.BR
 import com.czl.module_search.R
 import com.czl.module_search.adapter.SearchAdapter
 import com.czl.module_search.adapter.SearchRecAdapter
 import com.czl.module_search.databinding.SearchFragmentSearchBinding
 import com.czl.module_search.viewmodel.SearchViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * @author Alwyn
@@ -85,14 +88,22 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
             )
         })
         viewModel.uc.searchConfirmEvent.observe(this, {
+            viewModel.searchPlaceHolder.set(it)
+            viewModel.keyword = it
+            viewModel.addSubscribe(viewModel.model.saveUserSearchHistory(it)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe { saved ->
+                    if (saved) LiveBusCenter.postSearchHistoryEvent()
+                })
             binding.searchBar.closeSearch()
             if (this::mRecAdapter.isInitialized) {
-                mRecAdapter.historyVisible.set(true)
                 mRecAdapter.notifyDataSetChanged()
             }
             binding.includeRy.smartCommon.autoRefresh()
         })
         viewModel.uc.searchFocusEvent.observe(this, { focus ->
+            // 搜索框获取到焦点显示热门搜索和历史搜索 布局使用viewstub延迟加载
             if (focus) {
                 binding.includeRy.clRoot.visibility = View.GONE
                 if (!this::ryRecommend.isInitialized) {
