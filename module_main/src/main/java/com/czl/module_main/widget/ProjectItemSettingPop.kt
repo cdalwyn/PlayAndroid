@@ -95,12 +95,15 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
     })
 
     val onFindSameClick: BindingCommand<Void> = BindingCommand(BindingAction {
-        val bundle = Bundle()
-        bundle.putString(
-            AppConstants.BundleKey.WEB_URL,
-            RetrofitClient.baseUrl + bean.tags[0].url
-        )
-        mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
+//        val bundle = Bundle()
+//        bundle.putString(
+//            AppConstants.BundleKey.WEB_URL,
+//            RetrofitClient.baseUrl + bean.tags[0].url
+//        )
+        mFragment.startContainerActivity(AppConstants.Router.Square.F_SYS_CONTENT, Bundle().apply {
+            putString(AppConstants.BundleKey.SYS_CONTENT_TITLE,bean.chapterName)
+            putString("cid",bean.chapterId.toString())
+        })
         dismiss()
     })
 

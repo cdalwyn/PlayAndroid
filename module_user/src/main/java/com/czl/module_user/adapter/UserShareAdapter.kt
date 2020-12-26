@@ -42,6 +42,14 @@ class UserShareAdapter(val mFragment: UserShareFragment) :
         }
     })
 
+    val onNameClick:BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is UserShareBean.ShareArticles.Data) {
+            mFragment.startContainerActivity(AppConstants.Router.User.F_USER_DETAIL, Bundle().apply {
+                putString(AppConstants.BundleKey.USER_ID, it.userId.toString())
+            })
+        }
+    })
+
     val onDeleteClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is UserShareBean.ShareArticles.Data) {
             mFragment.viewModel.model.deleteArticleById(it.id)

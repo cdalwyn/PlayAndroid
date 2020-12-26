@@ -54,6 +54,7 @@ interface AppConstants {
             const val F_NAV = "/square/NavigateFragment"
             const val F_SYSTEM = "/square/SystemTreeFragment"
             const val F_SYS_DETAIL = "/square/SystemDetailFragment"
+            const val F_SYS_CONTENT = "/square/SysContentFragment"
         }
 
         object Project {
@@ -78,6 +79,7 @@ interface AppConstants {
         const val WEB_MENU_KEY = "web_menu_key"
         const val USER_ID = "user_id"
         const val SEARCH_HOT_KEY_LIST = "search_hot_key_list"
+        const val SYS_CONTENT_TITLE = "sys_content_title"
     }
 
     object Constants {

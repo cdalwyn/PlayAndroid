@@ -56,7 +56,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     val loginPopView: BasePopupView by inject(named("login"))
     private var changeSearchTask: Disposable? = null
     private var hotKeyList: List<String>?=null
-    private var topArticleList:MutableList<HomeArticleBean.Data> = mutableListOf()
 
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true)

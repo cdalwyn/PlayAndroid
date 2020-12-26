@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.databinding.CommonRecyclerviewBinding
 import com.czl.module_square.BR
 import com.czl.module_square.R
@@ -17,14 +19,22 @@ import com.czl.module_square.viewmodel.SystemContentVm
  * @Date 2020/12/5
  * @Description
  */
+@Route(path = AppConstants.Router.Square.F_SYS_CONTENT)
 class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContentVm>() {
     private lateinit var mAdapter: SysContentAdapter
+    private var title: String? = null
     private var firstLoad = true
 
     companion object {
         fun getInstance(cid: String) = SysContentFragment().apply {
-            arguments = Bundle().apply { putString("cid", cid) }
+            arguments = Bundle().apply {
+                putString("cid", cid)
+            }
         }
+    }
+
+    override fun initParam() {
+        title = arguments?.getString(AppConstants.BundleKey.SYS_CONTENT_TITLE)
     }
 
     override fun initContentView(): Int {
@@ -36,14 +46,12 @@ class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContent
     }
 
     override fun useBaseLayout(): Boolean {
-        return false
+        return !title.isNullOrEmpty()
     }
-
 
     override fun isImmersionBarEnabled(): Boolean {
-        return false
+        return !title.isNullOrEmpty()
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -57,6 +65,9 @@ class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContent
     }
 
     override fun initData() {
+        if (!title.isNullOrEmpty()) {
+            viewModel.tvTitle.set(title)
+        }
         initAdapter()
     }
 

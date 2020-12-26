@@ -49,7 +49,7 @@ class SystemDetailFragment : BaseFragment<SquareFragmentSysDetailBinding, System
             }
             binding.viewpager.apply {
                 adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
-                // 设置该属性后第一次将自动加载所有fragment
+                // 设置该属性后第一次将自动加载所有fragment 内部使用懒加载
                 offscreenPageLimit = fragments.size
             }
             TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->

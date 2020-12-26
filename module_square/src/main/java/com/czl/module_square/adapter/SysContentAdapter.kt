@@ -44,7 +44,15 @@ class SysContentAdapter(val mFragment: SysContentFragment) :
         if (it is SystemDetailBean.Data) {
             val bundle = Bundle()
             bundle.putString(AppConstants.BundleKey.WEB_URL, it.link)
-            (mFragment.parentFragment as SystemDetailFragment).viewModel.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
+            mFragment.startContainerActivity(AppConstants.Router.Web.F_WEB, bundle)
+        }
+    })
+
+    val onNameClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is SystemDetailBean.Data) {
+            mFragment.startContainerActivity(AppConstants.Router.User.F_USER_DETAIL,Bundle().apply {
+                putString(AppConstants.BundleKey.USER_ID,it.userId.toString())
+            })
         }
     })
 

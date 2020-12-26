@@ -41,7 +41,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/dp_6"
                 android:text="@{data.collect?pop.tvUnCollect:pop.tvCollect}"
-                android:textColor="@color/white"
+                android:textColor="#ffffff"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/dp_6"
                 android:text="相似"
-                android:textColor="@color/white"
+                android:textColor="#ffffff"
                 android:textSize="@dimen/sp_14" />
         </LinearLayout>
 

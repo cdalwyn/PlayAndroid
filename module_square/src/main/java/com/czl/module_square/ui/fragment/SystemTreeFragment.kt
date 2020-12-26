@@ -114,7 +114,7 @@ class SystemTreeFragment : BaseFragment<SquareFragmentSystemBinding, SystemTreeV
                 setTextColor(
                     ContextCompat.getColor(
                         mContext!!,
-                        if (selected) R.color.white else R.color.black
+                        if (selected) android.R.color.white else R.color.black
                     )
                 )
                 ellipsize = if (selected) TextUtils.TruncateAt.MARQUEE else TextUtils.TruncateAt.END

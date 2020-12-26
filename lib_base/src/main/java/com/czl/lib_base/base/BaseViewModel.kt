@@ -122,7 +122,7 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     }
 
 
-    fun startFragment(routePath: String, bundle: Bundle? = null) {
+    private fun startFragment(routePath: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
         params[ParameterField.ROUTE_PATH] = routePath
         if (bundle != null) {

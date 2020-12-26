@@ -67,8 +67,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_10"
+                    android:textStyle="bold"
                     android:maxLines="1"
                     android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
+                    binding:onRvItemCommand="@{adapter.onNameClick}"
+                    binding:rvItemBean="@{data}"
                     app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="扔物线" />

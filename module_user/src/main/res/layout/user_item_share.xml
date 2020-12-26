@@ -47,7 +47,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     android:text="@{data.shareUser}"
+                    binding:onRvItemCommand="@{adapter.onNameClick}"
+                    binding:rvItemBean="@{data}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="扔物线" />
