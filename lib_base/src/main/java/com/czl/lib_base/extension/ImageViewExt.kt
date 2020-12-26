@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.media.Image
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
+import com.blankj.utilcode.util.ResourceUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -30,7 +31,7 @@ fun ImageView.loadImage(url: String) {
     ).thumbnail(0.6f)
         .into(this)
 }
-fun ImageView.loadUrl(url: String?,@DrawableRes placeHolderRes:Int,@DrawableRes errorHolder:Int){
+fun ImageView.loadUrl(url: String?, placeHolderRes:Drawable, errorHolder:Drawable?=ResourceUtils.getDrawable(R.drawable.ic_error_placeholder)){
     Glide.with(this)
         .load(url)
         .apply(

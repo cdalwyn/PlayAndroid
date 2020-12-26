@@ -75,6 +75,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     }
 
     override fun initData() {
+        viewModel.tabSelectedPosition.set(0)
         initBanner()
         initSearchBar()
         initArticleAdapter()
@@ -144,6 +145,10 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             if (position == 1 && mProjectAdapter.data.isNullOrEmpty()) {
                 viewModel.currentProjectPage = -1
                 viewModel.getProject()
+            }
+            if (position==0 && mArticleAdapter.data.isNullOrEmpty()){
+                viewModel.currentArticlePage = -1
+                viewModel.getArticle()
             }
         })
         // 接收文章列表数据

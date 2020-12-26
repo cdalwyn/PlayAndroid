@@ -16,6 +16,8 @@
     <color name="normalColor">#353A3E</color>
     <color name="searchPlaceholderColor">#BDBDBD</color>
 
+    <color name="tab_bg_color">#303030</color>
+
     <color name="shadow_color">#808080</color>
 
     <color name="yellow_color_FF">#FFBA19</color>

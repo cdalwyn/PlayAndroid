@@ -1,9 +1,15 @@
 package com.czl.module_square.adapter
 
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
@@ -11,10 +17,13 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.SystemDetailBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
+import com.czl.lib_base.extension.ImagePopLoader
 import com.czl.module_square.R
 import com.czl.module_square.databinding.SquareItemArticleBinding
+import com.czl.module_square.databinding.SquareItemArticleImageBinding
 import com.czl.module_square.ui.fragment.SysContentFragment
 import com.czl.module_square.ui.fragment.SystemDetailFragment
+import com.lxj.xpopup.XPopup
 
 /**
  * @author Alwyn
@@ -22,23 +31,73 @@ import com.czl.module_square.ui.fragment.SystemDetailFragment
  * @Description
  */
 class SysContentAdapter(val mFragment: SysContentFragment) :
-    BaseQuickAdapter<SystemDetailBean.Data, BaseDataBindingHolder<SquareItemArticleBinding>>(
-        R.layout.square_item_article
-    ) {
+    BaseDelegateMultiAdapter<SystemDetailBean.Data, BaseViewHolder>() {
 
     val tvShare = " 分享 "
     val tvAuthor = " 作者 "
 
-    override fun convert(
-        holder: BaseDataBindingHolder<SquareItemArticleBinding>,
-        item: SystemDetailBean.Data
-    ) {
-        holder.dataBinding?.apply {
-            data = item
-            adapter = this@SysContentAdapter
-            executePendingBindings()
+//    override fun convert(
+//        holder: BaseDataBindingHolder<SquareItemArticleBinding>,
+//        item: SystemDetailBean.Data
+//    ) {
+//        holder.dataBinding?.apply {
+//            data = item
+//            adapter = this@SysContentAdapter
+//            executePendingBindings()
+//        }
+//    }
+
+    init {
+        setMultiTypeDelegate(object :BaseMultiTypeDelegate<SystemDetailBean.Data>(){
+            override fun getItemType(data: List<SystemDetailBean.Data>, position: Int): Int {
+                if (data[position].envelopePic.isEmpty()){
+                    return AppConstants.Constants.PLAIN_TEXT_TYPE
+                }else{
+                    return AppConstants.Constants.IMAGE_TEXT_TYPE
+                }
+            }
+        })
+        getMultiTypeDelegate()?.apply {
+            addItemType(AppConstants.Constants.PLAIN_TEXT_TYPE,R.layout.square_item_article)
+            addItemType(AppConstants.Constants.IMAGE_TEXT_TYPE,R.layout.square_item_article_image)
         }
     }
+
+    override fun convert(holder: BaseViewHolder, item: SystemDetailBean.Data) {
+
+        when(holder.itemViewType){
+            AppConstants.Constants.PLAIN_TEXT_TYPE->{
+                val dataBinding = DataBindingUtil.bind<SquareItemArticleBinding>(holder.itemView)
+                dataBinding?.apply {
+                    data = item
+                    adapter = this@SysContentAdapter
+                    executePendingBindings()
+                }
+            }
+            AppConstants.Constants.IMAGE_TEXT_TYPE->{
+                val dataBinding = DataBindingUtil.bind<SquareItemArticleImageBinding>(holder.itemView)
+                dataBinding?.apply {
+                    data = item
+                    adapter = this@SysContentAdapter
+                    executePendingBindings()
+                }
+            }
+        }
+
+    }
+
+    val onItemPicClickCommand: BindingCommand<Any> = BindingCommand(BindingConsumer {
+        if (it is SystemDetailBean.Data) {
+            XPopup.Builder(context)
+                .asImageViewer(
+                    getViewByPosition(
+                        getItemPosition(it),
+                        R.id.iv_cover
+                    ) as ImageView, it.envelopePic, ImagePopLoader()
+                )
+                .show()
+        }
+    })
 
     val onArticleItemClick: BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is SystemDetailBean.Data) {
@@ -112,4 +171,6 @@ class SysContentAdapter(val mFragment: SysContentFragment) :
         }
 
     }
+
+
 }

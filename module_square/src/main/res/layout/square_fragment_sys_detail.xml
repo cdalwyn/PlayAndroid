@@ -41,14 +41,14 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
-            app:tabBackground="@color/md_red_350"
-            app:tabMode="scrollable"
+            app:tabBackground="@color/tab_bg_color"
+            app:tabMode="auto"
             app:tabSelectedTextColor="#ffffff"
             app:tabIndicatorColor="@color/md_theme_red"
             app:tabIndicatorFullWidth="false"
             app:tabRippleColor="@color/trans"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            />
+            app:tabTextAppearance="@style/TabLayoutTextStyle" />
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
             android:layout_width="match_parent"

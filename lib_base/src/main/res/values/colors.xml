@@ -16,6 +16,8 @@
     <color name="warningColor">#FFA900</color>
     <color name="normalColor">#353A3E</color>
 
+    <color name="tab_bg_color">#EF5350</color>
+
     <color name="searchPlaceholderColor">#8A000000</color>
     <color name="shadow_color">#424242</color>
 

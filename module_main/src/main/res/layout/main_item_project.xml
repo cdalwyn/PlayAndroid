@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
                 binding:onRvItemCommand="@{adapter.onItemPicClickCommand}"
-                binding:placeholderRes="@drawable/ic_default_bg"
+                binding:placeholderRes="@{@drawable/ic_default_bg}"
                 binding:rvItemBean="@{data}"
                 binding:url="@{data.envelopePic}" />
 

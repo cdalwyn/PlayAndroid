@@ -187,7 +187,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     /**
      * 获取热门博文列表
      */
-    private fun getArticle() {
+     fun getArticle() {
         if (currentArticlePage == -1) {
             // 当前是第一页的时候合并首页置顶文章
             val mainObservable = model.getHomeArticle((currentArticlePage + 1).toString())

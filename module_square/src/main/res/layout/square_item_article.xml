@@ -79,7 +79,7 @@
                 <ImageView
                     android:id="@+id/iv_collect"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_20"
                     android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off_gray}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
