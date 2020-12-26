@@ -55,6 +55,7 @@
                     android:text="@{TextUtils.isEmpty(data.author)?adapter.tvShare:adapter.tvAuthor}"
                     android:textColor="@{TextUtils.isEmpty(data.author)?@color/green_68:@color/md_theme_red}"
                     android:textSize="@dimen/sp_12"
+                    binding:isVisible="@{!data.topFlag}"
                     app:layout_constraintEnd_toStartOf="@id/item_tv_author"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -63,11 +64,29 @@
                     tools:textColor="@color/green_68" />
 
                 <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20"
+                    android:background="@drawable/red_btn_corner"
+                    android:gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp_10"
+                    android:maxLines="1"
+                    android:text=" 置顶 "
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/sp_12"
+                    binding:isVisible="@{data.topFlag}"
+                    app:layout_constraintEnd_toStartOf="@id/item_tv_author"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <TextView
                     android:id="@+id/item_tv_author"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_10"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
                     app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +115,7 @@
                     android:text="@{data.title}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12"
-                    app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
+                    app:layout_constraintTop_toBottomOf="@id/item_tv_author"
                     tools:text="啊实打实大啊实打实大苏打实打实的阿三大苏打萨达萨达萨达萨达是阿斯顿撒打算啊实打实大苏打撒旦萨达萨达萨达是阿斯顿撒旦啊实打实的撒啊实打实的阿松大苏打" />
 
                 <TextView

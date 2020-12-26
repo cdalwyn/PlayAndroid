@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.data.db.SearchHistoryEntity
+import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_search.R
 import com.czl.module_search.databinding.SearchRecChildBinding
@@ -33,7 +34,6 @@ class SearchRecAdapter(
         holder.dataBinding?.apply {
             title = item
             adapter = this@SearchRecAdapter
-            llRoot.visibility = View.VISIBLE
             val mAdapter = SearchRecChildAdapter(mFragment)
             mAdapter.setDiffCallback(mAdapter.diffConfig)
             ryChild.apply {
@@ -51,6 +51,9 @@ class SearchRecAdapter(
                 1 -> {
                     mFragment.viewModel.addSubscribe(histories.compose(RxThreadHelper.rxSchedulerHelper())
                         .subscribe { list ->
+                            if (list.isEmpty()){
+                                getViewByPosition(1,R.id.ll_root)?.visibility = View.GONE
+                            }
                             mAdapter.setDiffNewData(list.map { it.history } as MutableList<String>)
                         })
                 }
@@ -60,15 +63,17 @@ class SearchRecAdapter(
     }
 
     val onClearClick: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.viewModel.model.deleteAllSearchHistory()
-            .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
-            .subscribe { count ->
-                if (count > 0) {
-                    val ryChild = getViewByPosition(1, R.id.ry_child) as RecyclerView
-                    (ryChild.adapter as SearchRecChildAdapter).setDiffNewData(null)
-                    getViewByPosition(1,R.id.ll_root)?.visibility = View.GONE
+        DialogHelper.showBaseDialog(context,"提示","是否清空所有搜索记录？"){
+            mFragment.viewModel.model.deleteAllSearchHistory()
+                .compose(RxThreadHelper.rxSchedulerHelper(mFragment.viewModel))
+                .subscribe { count ->
+                    if (count > 0) {
+                        val ryChild = getViewByPosition(1, R.id.ry_child) as RecyclerView
+                        (ryChild.adapter as SearchRecChildAdapter).setDiffNewData(null)
+                        getViewByPosition(1,R.id.ll_root)?.visibility = View.GONE
+                    }
                 }
-            }
+        }
     })
 
 

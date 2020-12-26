@@ -11,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.RxThreadHelper
@@ -55,6 +56,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     val loginPopView: BasePopupView by inject(named("login"))
     private var changeSearchTask: Disposable? = null
     private var hotKeyList: List<String>?=null
+    private var topArticleList:MutableList<HomeArticleBean.Data> = mutableListOf()
 
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true)
@@ -72,7 +74,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     override fun useBaseLayout(): Boolean {
         return false
     }
-
 
     override fun initData() {
         initBanner()

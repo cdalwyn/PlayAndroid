@@ -155,4 +155,8 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.getShareUserDetail(uid,page)
     }
 
+    override fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>> {
+        return apiService.getHomeTopArticle()
+    }
+
 }

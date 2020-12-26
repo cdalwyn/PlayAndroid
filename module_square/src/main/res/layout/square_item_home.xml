@@ -60,6 +60,7 @@
                     android:layout_height="@dimen/dp_20"
                     android:layout_marginStart="@dimen/dp_10"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
                     app:layout_constraintStart_toEndOf="@id/item_tv_identity"
                     app:layout_constraintTop_toTopOf="parent"

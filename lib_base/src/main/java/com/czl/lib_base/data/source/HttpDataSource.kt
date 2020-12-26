@@ -41,4 +41,5 @@ interface HttpDataSource {
     fun shareArticleToSquare(title: String, link: String): Observable<BaseBean<Any?>>
     fun deleteArticleById(id: Int): Observable<BaseBean<Any?>>
     fun getShareUserDetail(uid: String, page: Int = 1): Observable<BaseBean<ShareUserDetailBean>>
+    fun getHomeTopArticle():Observable<BaseBean<List<HomeArticleBean.Data>>>
 }

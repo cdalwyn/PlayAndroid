@@ -46,8 +46,8 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean> = SingleLiveEvent()
         val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-        val loadSearchHotKeyEvent:SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
-        val searchIconClickEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val loadSearchHotKeyEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
+        val searchIconClickEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
 
@@ -98,7 +98,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         uc.searchConfirmEvent.postValue(keyword)
     })
 
-    val onSearchIconCommand:BindingCommand<Void> = BindingCommand(BindingAction {
+    val onSearchIconCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         uc.searchIconClickEvent.call()
     })
 
@@ -112,7 +112,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             override fun OnItemClickListener(position: Int, v: View?) {
                 uc.searchItemClickEvent.postValue(position)
             }
-
         }
 
     /**
@@ -146,12 +145,12 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
     }
 
-    private fun getSearchHotKeyword(){
+    private fun getSearchHotKeyword() {
         model.getSearchHotKey()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>(){
+            .subscribe(object : ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>() {
                 override fun onResult(t: BaseBean<List<SearchHotKeyBean>>) {
-                    if (t.errorCode==0){
+                    if (t.errorCode == 0) {
                         uc.loadSearchHotKeyEvent.postValue(t.data)
                     }
                 }
@@ -159,7 +158,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 override fun onFailed(msg: String?) {
 
                 }
-
             })
     }
 
@@ -190,6 +188,35 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
      * 获取热门博文列表
      */
     private fun getArticle() {
+        if (currentArticlePage == -1) {
+            // 当前是第一页的时候合并首页置顶文章
+            val mainObservable = model.getHomeArticle((currentArticlePage + 1).toString())
+            val topObservable = model.getHomeTopArticle()
+            Observable.zip(mainObservable, topObservable,
+                { t1, t2 ->
+                    t2.data?.let {
+                        it.forEach { data->data.topFlag=true }
+                        t1.data?.datas?.addAll(0,it)
+                    }
+                    t1
+                }).compose(RxThreadHelper.rxSchedulerHelper(this))
+                .subscribe(object :ApiSubscriberHelper<BaseBean<HomeArticleBean>>(){
+                    override fun onResult(t: BaseBean<HomeArticleBean>) {
+                        if (t.errorCode == 0) {
+                            currentArticlePage++
+                            uc.loadArticleCompleteEvent.postValue(t.data)
+                        } else {
+                            uc.loadArticleCompleteEvent.postValue(null)
+                        }
+                    }
+
+                    override fun onFailed(msg: String?) {
+                        uc.loadArticleCompleteEvent.postValue(null)
+                        showErrorToast(msg)
+                    }
+                })
+            return
+        }
         model.getHomeArticle((currentArticlePage + 1).toString())
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<HomeArticleBean>>() {
@@ -208,7 +235,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
-
 
     private fun getBanner() {
         model.getBannerData()

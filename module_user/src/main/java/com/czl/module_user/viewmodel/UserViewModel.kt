@@ -75,7 +75,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     fun getUserShareData() {
         model.getUserShareData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>() {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>(loadService) {
                 override fun onResult(t: BaseBean<UserShareBean>) {
                     if (t.errorCode == 0) {
                         t.data?.let { data ->

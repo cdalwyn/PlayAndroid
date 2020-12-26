@@ -205,7 +205,7 @@ data class HomeArticleBean(
     @SerializedName("curPage")
     val curPage: Int,
     @SerializedName("datas")
-    val datas: List<Data>,
+    var datas: ArrayList<Data>,
     @SerializedName("offset")
     val offset: Int,
     @SerializedName("over")
@@ -282,13 +282,21 @@ data class HomeArticleBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) :BaseObservable(){
+    ) : BaseObservable() {
         @Bindable
-        var collect:Boolean = false
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.collect)
-        }
+        var collect: Boolean = false
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.collect)
+            }
+
+        @Bindable
+        var topFlag: Boolean = false
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.topFlag)
+            }
+
         data class Tag(
             @SerializedName("name")
             val name: String,
@@ -297,6 +305,7 @@ data class HomeArticleBean(
         )
     }
 }
+
 data class ProjectBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -378,14 +387,14 @@ data class ProjectBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) :BaseObservable(){
+    ) : BaseObservable() {
         @Bindable
         @SerializedName("collect")
-        var collect:Boolean = false
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.collect)
-        }
+        var collect: Boolean = false
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.collect)
+            }
 
         data class Tag(
             @SerializedName("name")
@@ -395,6 +404,7 @@ data class ProjectBean(
         )
     }
 }
+
 data class SearchDataBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -474,14 +484,15 @@ data class SearchDataBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ):BaseObservable() {
+    ) : BaseObservable() {
         @Bindable
         @SerializedName("collect")
-        var collect:Boolean = false
+        var collect: Boolean = false
             set(value) {
                 field = value
                 notifyPropertyChanged(BR.collect)
             }
+
         data class Tag(
             @SerializedName("name")
             val name: String,
@@ -490,6 +501,7 @@ data class SearchDataBean(
         )
     }
 }
+
 data class SearchHotKeyBean(
     @SerializedName("id")
     val id: Int,
@@ -502,6 +514,7 @@ data class SearchHotKeyBean(
     @SerializedName("visible")
     val visible: Int
 )
+
 data class ProjectSortBean(
     @SerializedName("children")
     val children: List<Any>,
@@ -518,6 +531,7 @@ data class ProjectSortBean(
     @SerializedName("visible")
     val visible: Int
 )
+
 data class UserScoreBean(
     @SerializedName("coinCount")
     val coinCount: Int,
@@ -528,6 +542,7 @@ data class UserScoreBean(
     @SerializedName("username")
     val username: String
 )
+
 data class UserShareBean(
     @SerializedName("coinInfo")
     val coinInfo: CoinInfo,
@@ -631,6 +646,7 @@ data class UserShareBean(
         )
     }
 }
+
 data class UserScoreDetailBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -666,6 +682,7 @@ data class UserScoreDetailBean(
         val userName: String
     )
 }
+
 data class UserRankBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -695,6 +712,7 @@ data class UserRankBean(
         val username: String
     )
 }
+
 data class CollectWebsiteBean(
     @SerializedName("desc")
     val desc: String,
@@ -713,6 +731,7 @@ data class CollectWebsiteBean(
     @SerializedName("visible")
     val visible: Int
 )
+
 data class SquareListBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -792,16 +811,17 @@ data class SquareListBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ):BaseObservable(){
+    ) : BaseObservable() {
         @Bindable
         @SerializedName("collect")
-        var collect:Boolean = false
+        var collect: Boolean = false
             set(value) {
                 field = value
                 notifyPropertyChanged(BR.collect)
             }
     }
 }
+
 data class SystemTreeBean(
     @SerializedName("children")
     val children: List<Children>,
@@ -838,9 +858,10 @@ data class SystemTreeBean(
         @SerializedName("visible")
         val visible: Int,
         @Transient
-        var group:String
+        var group: String
     )
 }
+
 data class NavigationBean(
     @SerializedName("articles")
     val articles: List<Article>,
@@ -916,6 +937,7 @@ data class NavigationBean(
         val zan: Int
     )
 }
+
 data class SystemDetailBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -995,16 +1017,17 @@ data class SystemDetailBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ):BaseObservable(){
+    ) : BaseObservable() {
         @Bindable
         @SerializedName("collect")
-        var collect:Boolean = false
+        var collect: Boolean = false
             set(value) {
                 field = value
                 notifyPropertyChanged(BR.collect)
             }
     }
 }
+
 data class ShareUserDetailBean(
     @SerializedName("coinInfo")
     val coinInfo: CoinInfo,
@@ -1103,10 +1126,10 @@ data class ShareUserDetailBean(
             val visible: Int,
             @SerializedName("zan")
             val zan: Int
-        ):BaseObservable(){
+        ) : BaseObservable() {
             @Bindable
             @SerializedName("collect")
-            var collect:Boolean = false
+            var collect: Boolean = false
                 set(value) {
                     field = value
                     notifyPropertyChanged(BR.collect)

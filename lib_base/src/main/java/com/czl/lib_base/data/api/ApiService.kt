@@ -214,4 +214,10 @@ interface ApiService {
      */
     @GET("user/{uid}/share_articles/{page}/json")
     fun getShareUserDetail(@Path("uid") uid: String,@Path("page")page: Int):Observable<BaseBean<ShareUserDetailBean>>
+
+    /**
+     * 获取首页置顶文章
+     */
+    @GET("article/top/json")
+    fun getHomeTopArticle():Observable<BaseBean<List<HomeArticleBean.Data>>>
 }

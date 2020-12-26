@@ -162,6 +162,10 @@ class DataRepository constructor(
         return mHttpDataSource.getShareUserDetail(uid,page)
     }
 
+    override fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>> {
+        return mHttpDataSource.getHomeTopArticle()
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

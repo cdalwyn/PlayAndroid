@@ -54,11 +54,11 @@ open class MyApplication : Application() {
             ARouter.openLog()
             ARouter.openDebug()
         }
-        DoraemonKit.apply {
-            setDebug(BuildConfig.DEBUG)
-            setAwaysShowMainIcon(BuildConfig.DEBUG)
-            install(this@MyApplication)
-        }
+//        DoraemonKit.apply {
+//            setDebug(BuildConfig.DEBUG)
+//            setAwaysShowMainIcon(BuildConfig.DEBUG)
+//            install(this@MyApplication)
+//        }
         ARouter.init(this)
         setApplication(this)
         LitePal.initialize(this)

@@ -43,7 +43,6 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         viewModel.historyVisible.set(viewModel.model.getReadHistoryState())
     }
 
-
     override fun initViewObservable() {
         LiveBusCenter.observeLogoutEvent(this) {
             binding.userData = null
@@ -70,5 +69,10 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>() {
         LiveBusCenter.observeReadHistoryEvent(this){
             viewModel.historyVisible.set(it.checked)
         }
+    }
+
+    override fun reload() {
+        super.reload()
+        binding.smartCommon.autoRefresh()
     }
 }
