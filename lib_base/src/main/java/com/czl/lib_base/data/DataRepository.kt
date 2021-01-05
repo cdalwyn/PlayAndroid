@@ -166,6 +166,16 @@ class DataRepository constructor(
         return mHttpDataSource.getHomeTopArticle()
     }
 
+    override fun getTodoList(
+        status: Int,
+        type: Int,
+        priority: Int,
+        orderby: Int,
+        page: Int
+    ): Observable<BaseBean<TodoBean>> {
+        return mHttpDataSource.getTodoList(status, type, priority, orderby, page)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

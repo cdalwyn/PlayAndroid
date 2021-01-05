@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.czl.module_user.viewmodel.UserTodoViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_common"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableLoadMore="false"
+            binding:onRefreshCommand="@{viewModel.refreshCommand}">
+
+            <com.cooltechworks.views.shimmer.ShimmerRecyclerView
+                android:id="@+id/ry_common"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_demo_child_count="10" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/dp_20"
+            android:src="@drawable/ic_add_red"
+            android:visibility="invisible"
+            app:backgroundTint="@color/white"
+            app:elevation="@dimen/dp_6"
+            app:fabSize="normal"
+            app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
+            app:pressedTranslationZ="@dimen/dp_10"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

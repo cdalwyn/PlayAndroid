@@ -213,11 +213,32 @@ interface ApiService {
      * 分享人的详情：文章 积分等
      */
     @GET("user/{uid}/share_articles/{page}/json")
-    fun getShareUserDetail(@Path("uid") uid: String,@Path("page")page: Int):Observable<BaseBean<ShareUserDetailBean>>
+    fun getShareUserDetail(
+        @Path("uid") uid: String,
+        @Path("page") page: Int
+    ): Observable<BaseBean<ShareUserDetailBean>>
 
     /**
      * 获取首页置顶文章
      */
     @GET("article/top/json")
-    fun getHomeTopArticle():Observable<BaseBean<List<HomeArticleBean.Data>>>
+    fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>>
+
+    /**
+     * 查询待办清单
+     * 页码从1开始，拼接在url上
+    status 状态， 1-完成；0未完成; 默认全部展示；
+    type 创建时传入的类型, 默认全部展示 （app内预定义）
+    priority 创建时传入的优先级；默认全部展示 （app内预定义）
+    orderby 1:完成日期顺序；2.完成日期逆序；3.创建日期顺序；4.创建日期逆序(默认)；
+     */
+    @POST("lg/todo/v2/list/{page}/json")
+    @FormUrlEncoded
+    fun getTodoList(
+        @Path("page") page: Int,
+        @Field("status") status: Int,
+        @Field("type") type: Int,
+        @Field("priority") priority: Int,
+        @Field("orderby") orderby: Int
+    ):Observable<BaseBean<TodoBean>>
 }

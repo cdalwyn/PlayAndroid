@@ -200,9 +200,7 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-
+                android:orientation="vertical">
 
                 <com.czl.lib_base.widget.CommonItemSettingView
                     android:layout_marginTop="@dimen/dp_10"
@@ -211,7 +209,6 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dp_4"
                     app:mBackground="@color/color_default_bg_deep"
-                    app:layout_constraintTop_toBottomOf="@+id/ll_collect"
                     app:mIcon="@drawable/ic_iv_score"
                     app:mRight="true"
                     app:mTitle="我的积分"
@@ -235,13 +232,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_4"
-                    app:layout_constraintTop_toBottomOf="@+id/item_collect"
                     app:mIcon="@drawable/ic_share"
                     app:mRight="true"
                     app:mTitle="我的分享"
                     app:mBackground="@color/color_default_bg_deep"
                     binding:onClickCommand="@{viewModel.btnShareClickCommand}" />
 
+                <com.czl.lib_base.widget.CommonItemSettingView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp_4"
+                    app:mBackground="@color/color_default_bg_deep"
+                    app:mIcon="@drawable/ic_todo"
+                    app:mTitle="待办清单"
+                    binding:onClickCommand="@{viewModel.onTodoClickCommand}"/>
 
                 <com.czl.lib_base.widget.CommonItemSettingView
                     android:id="@+id/item_history"
@@ -249,7 +253,6 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_4"
                     app:mBackground="@color/color_default_bg_deep"
-                    app:layout_constraintTop_toBottomOf="@+id/item_share"
                     app:mIcon="@drawable/ic_read"
                     app:mRight="true"
                     app:mTitle="阅读历史"

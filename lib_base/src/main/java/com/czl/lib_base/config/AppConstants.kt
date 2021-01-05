@@ -47,6 +47,7 @@ interface AppConstants {
             const val F_USER_BROWSE = "/user/UserBrowseFragment"
             const val F_USER_SETTING = "/user/UserSettingFragment"
             const val F_USER_DETAIL = "/user/ShareUserDetailFragment"
+            const val F_USER_TODO = "/user/UserTodoFragment"
         }
 
         object Square {

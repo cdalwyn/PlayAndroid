@@ -72,6 +72,10 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
         startContainerActivity(AppConstants.Router.User.F_USER_BROWSE)
     })
 
+    val onTodoClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        startContainerActivity(AppConstants.Router.User.F_USER_TODO)
+    })
+
     fun getUserShareData() {
         model.getUserShareData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
