@@ -50,9 +50,7 @@ public class FabScrollBehavior extends FloatingActionButton.Behavior {
     private void animateIn(FloatingActionButton fab) {
 //        fab.animate().translationY(0).setInterpolator(new LinearInterpolator()).start();
         fab.animate().scaleX(1f).scaleY(1f).setDuration(200).setInterpolator(new LinearInterpolator()).start();
-        if (fab.getVisibility() != View.VISIBLE) {
-            fab.setVisibility(View.VISIBLE);
-        }
+        fab.setVisibility(View.VISIBLE);
     }
 
 }

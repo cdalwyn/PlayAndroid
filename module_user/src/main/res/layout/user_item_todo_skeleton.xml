@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+
+       <com.czl.lib_base.widget.SkeletonBlock
+           android:layout_width="280dp"
+           android:layout_height="@dimen/dp_24"
+           android:background="@color/light_transparent"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10">
+
+            <View
+                android:id="@+id/iv_type"
+                android:layout_width="@dimen/dp_32"
+                android:layout_height="@dimen/dp_32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/light_transparent"
+                />
+
+            <com.czl.lib_base.widget.SkeletonBlock
+                android:id="@+id/tv_title"
+                android:layout_width="100dp"
+                android:layout_height="@dimen/dp_24"
+                android:layout_marginStart="@dimen/dp_10"
+                android:background="@color/light_transparent"
+                app:layout_constraintStart_toEndOf="@id/iv_type"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="标题标题标题" />
+
+            <com.czl.lib_base.widget.SkeletonBlock
+                android:id="@+id/tv_content"
+                android:layout_width="200dp"
+                android:layout_height="@dimen/dp_24"
+                android:background="@color/light_transparent"
+                app:layout_constraintStart_toStartOf="@id/tv_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,5 +1,7 @@
 package com.czl.lib_base.data.source.impl
 
+import com.czl.lib_base.annotation.TodoOrder
+import com.czl.lib_base.annotation.TodoType
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.api.ApiService
 import com.czl.lib_base.data.bean.*
@@ -161,12 +163,30 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 
     override fun getTodoList(
         status: Int,
-        type: Int,
+        @TodoType type: Int,
         priority: Int,
-        orderby: Int,
+        @TodoOrder orderby: Int,
         page: Int
     ): Observable<BaseBean<TodoBean>> {
         return apiService.getTodoList(page, status, type, priority, orderby)
+    }
+
+    override fun addTodo(
+        title: String,
+        content: String,
+        date: String,
+        @TodoType type: Int,
+        priority: Int
+    ): Observable<BaseBean<Any?>> {
+        return apiService.addTodo(title, content, date, type, priority)
+    }
+
+    override fun deleteTodo(todoId: Int): Observable<BaseBean<Any?>> {
+        return apiService.deleteTodo(todoId)
+    }
+
+    override fun updateTodoState(todoId: Int, status: Int): Observable<BaseBean<Any?>> {
+        return apiService.updateTodoState(todoId, status)
     }
 
 }

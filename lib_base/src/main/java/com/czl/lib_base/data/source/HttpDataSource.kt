@@ -1,5 +1,8 @@
 package com.czl.lib_base.data.source
 
+import com.czl.lib_base.annotation.TodoOrder
+import com.czl.lib_base.annotation.TodoPriority
+import com.czl.lib_base.annotation.TodoType
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
@@ -42,5 +45,8 @@ interface HttpDataSource {
     fun deleteArticleById(id: Int): Observable<BaseBean<Any?>>
     fun getShareUserDetail(uid: String, page: Int = 1): Observable<BaseBean<ShareUserDetailBean>>
     fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>>
-    fun getTodoList(status: Int, type: Int=0, priority: Int=1 , orderby: Int=4, page: Int = 1): Observable<BaseBean<TodoBean>>
+    fun getTodoList(status: Int=-1, @TodoType type: Int=0, @TodoPriority priority: Int=0, @TodoOrder orderby: Int=TodoOrder.createDesc, page: Int = 1): Observable<BaseBean<TodoBean>>
+    fun addTodo(title: String, content: String, date: String, @TodoType type: Int, priority: Int):Observable<BaseBean<Any?>>
+    fun deleteTodo(todoId: Int): Observable<BaseBean<Any?>>
+    fun updateTodoState(todoId: Int, status: Int):Observable<BaseBean<Any?>>
 }

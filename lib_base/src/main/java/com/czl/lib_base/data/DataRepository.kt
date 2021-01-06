@@ -1,5 +1,7 @@
 package com.czl.lib_base.data
 
+import com.czl.lib_base.annotation.TodoOrder
+import com.czl.lib_base.annotation.TodoType
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseModel
 import com.czl.lib_base.data.bean.*
@@ -168,12 +170,30 @@ class DataRepository constructor(
 
     override fun getTodoList(
         status: Int,
-        type: Int,
+        @TodoType type: Int,
         priority: Int,
-        orderby: Int,
+        @TodoOrder orderby: Int,
         page: Int
     ): Observable<BaseBean<TodoBean>> {
         return mHttpDataSource.getTodoList(status, type, priority, orderby, page)
+    }
+
+    override fun addTodo(
+        title: String,
+        content: String,
+        date: String,
+        @TodoType type: Int,
+        priority: Int
+    ): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.addTodo(title, content, date, type, priority)
+    }
+
+    override fun deleteTodo(todoId: Int): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.deleteTodo(todoId)
+    }
+
+    override fun updateTodoState(todoId: Int, status: Int): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.updateTodoState(todoId, status)
     }
 
     override fun getLocalData(): String {

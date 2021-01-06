@@ -3,6 +3,8 @@ package com.czl.lib_base.data.bean
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.czl.lib_base.BR
+import com.czl.lib_base.annotation.TodoPriority
+import com.czl.lib_base.annotation.TodoType
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -1167,12 +1169,14 @@ data class TodoBean(
         @SerializedName("id")
         val id: Int,
         @SerializedName("priority")
+        @TodoPriority
         val priority: Int,
         @SerializedName("status")
         val status: Int,
         @SerializedName("title")
         val title: String,
         @SerializedName("type")
+        @TodoType
         val type: Int,
         @SerializedName("userId")
         val userId: Int

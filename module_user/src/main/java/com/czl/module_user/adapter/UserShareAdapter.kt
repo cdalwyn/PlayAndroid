@@ -83,6 +83,5 @@ class UserShareAdapter(val mFragment: UserShareFragment) :
         ): Boolean {
             return oldItem.title == newItem.title
         }
-
     }
 }

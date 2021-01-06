@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.czl.lib_base.data.bean.TodoBean.Data" />
+        <variable
+            name="adapter"
+            type="com.czl.module_user.adapter.UserTodoAdapter" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_28">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="@dimen/dp_10"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:text="@{data.dateStr}"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2021-1-6" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="优先级  "/>
+            <TextView
+                android:id="@+id/tv_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/red"
+                android:background="@drawable/stroke_red"
+                tools:text="高"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <com.lihang.ShadowLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_5"
+            app:hl_cornerRadius="@dimen/dp_10"
+            app:hl_layoutBackground="@color/white"
+            app:hl_shadowLimit="@dimen/dp_4">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp_10">
+
+                <ImageView
+                    android:id="@+id/iv_type"
+                    android:layout_width="@dimen/dp_32"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_4"
+                    android:background="@drawable/red_btn_corner"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:src="@drawable/ic_life"/>
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp_16"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:text="@{data.title}"
+                    android:layout_marginStart="@dimen/dp_10"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/iv_type"
+                    tools:text="标题标题标题" />
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{data.content}"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_title"
+                    tools:text="内容内容内容内容内容内容内容内容内容"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.lihang.ShadowLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

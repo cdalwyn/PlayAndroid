@@ -225,7 +225,7 @@ interface ApiService {
     fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>>
 
     /**
-     * 查询待办清单
+     * 查询todo待办清单
      * 页码从1开始，拼接在url上
     status 状态， 1-完成；0未完成; 默认全部展示；
     type 创建时传入的类型, 默认全部展示 （app内预定义）
@@ -240,5 +240,32 @@ interface ApiService {
         @Field("type") type: Int,
         @Field("priority") priority: Int,
         @Field("orderby") orderby: Int
-    ):Observable<BaseBean<TodoBean>>
+    ): Observable<BaseBean<TodoBean>>
+
+    /**
+     * 新增一个todo
+     */
+    @POST("lg/todo/add/json")
+    @FormUrlEncoded
+    fun addTodo(
+        @Field("title") title: String,
+        @Field("content") content: String,
+        @Field("date") date: String,
+        @Field("type") type: Int,
+        @Field("priority") priority: Int,
+    ): Observable<BaseBean<Any?>>
+
+    /**
+     * 删除todo
+     */
+    @POST("lg/todo/delete/{id}/json")
+    fun deleteTodo(@Path("id") todoId: Int): Observable<BaseBean<Any?>>
+
+    /**
+     * 更新完成状态Todo
+     * id: 拼接在链接上，为唯一标识
+     * status: 0或1，传1代表未完成到已完成，反之则反之。
+     */
+    @POST("lg/todo/done/{id}/json")
+    fun updateTodoState(@Path("id") todoId: Int, @Field("status") status: Int):Observable<BaseBean<Any?>>
 }
