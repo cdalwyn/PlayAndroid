@@ -53,29 +53,15 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
 
     override fun initViewObservable() {
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
-            val smartCommon = binding.smartCommon
-            if (data == null) {
-                smartCommon.finishRefresh(false)
-                smartCommon.finishLoadMore(false)
-                return@observe
-            }
-            if (viewModel.currentPage == 1) {
-                binding.ryCommon.hideShimmerAdapter()
-                if (!mAdapter.hasEmptyView()) {
-                    val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
-                    emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
-                        smartCommon.autoRefresh()
-                    }
-                    mAdapter.setEmptyView(emptyView)
-                }
-                mAdapter.setDiffNewData(data.datas as MutableList<TodoBean.Data>)
-                if (data.over) smartCommon.finishRefreshWithNoMoreData()
-                else smartCommon.finishRefresh(true)
-                return@observe
-            }
-            if (data.over) smartCommon.finishLoadMoreWithNoMoreData()
-            else smartCommon.finishLoadMore(true)
-            mAdapter.addData(data.datas)
+            handleRecyclerviewData(
+                data == null,
+                data?.datas as MutableList<*>?,
+                mAdapter,
+                binding.ryCommon,
+                binding.smartCommon,
+                viewModel.currentPage,
+                data?.over,1
+            )
         })
     }
 }
