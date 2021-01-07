@@ -114,6 +114,7 @@ class ShareArticlePopView(
                     }
 
                     override fun onFailed(msg: String?) {
+                        activity.viewModel.dismissLoading()
                         activity.viewModel.showErrorToast(msg)
                     }
                 })

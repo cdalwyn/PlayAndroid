@@ -18,7 +18,8 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
         tools:targetApi="m"
-        tools:replace="theme">
+        tools:replace="theme"
+        >
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

@@ -116,7 +116,10 @@ ext {
             'ConsecutiveScroller'                  : 'com.github.donkingliang:ConsecutiveScroller:4.4.0',
             'flexbox'                              : 'com.google.android:flexbox:2.0.1',
             'linkage-recyclerview'                 : 'com.kunminx.linkage:linkage-recyclerview:2.1.5',
-            'dokitx'                               : 'com.didichuxing.doraemonkit:dokitx:3.3.5'
+            'dokitx'                               : 'com.didichuxing.doraemonkit:dokitx:3.3.5',
+            'calendarview'                         : 'com.haibin:calendarview:3.7.0',
+            'dialog-datetime'                             : 'com.afollestad.material-dialogs:datetime:3.3.0',
+            'dialog-lifecycle'                             : 'com.afollestad.material-dialogs:lifecycle:3.3.0'
 
 
     ]

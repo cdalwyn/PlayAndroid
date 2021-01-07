@@ -32,9 +32,9 @@ dependencies {
     //json解析
     api rootProject.ext.dependencies.gson
     //material-dialogs
-    api(rootProject.ext.dependencies["material-dialogs-core"]) {
-        exclude group: 'com.android.support'
-    }
+//    api(rootProject.ext.dependencies["material-dialogs-core"]) {
+//        exclude group: 'com.android.support'
+//    }
 //    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
 //        exclude group: 'com.android.support'
 //    }
@@ -103,6 +103,9 @@ dependencies {
     api rootProject.ext.dependencies["loadsir"]
     api rootProject.ext.dependencies["flexbox"]
     api rootProject.ext.dependencies["linkage-recyclerview"]
+    api rootProject.ext.dependencies["dialog-datetime"]
+    api rootProject.ext.dependencies["dialog-lifecycle"]
+//    api rootProject.ext.dependencies["calendarview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
     debugApi rootProject.ext.dependencies["dokitx"]
 

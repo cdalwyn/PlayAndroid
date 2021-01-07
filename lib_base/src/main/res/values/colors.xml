@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--系统默认背景色#fff3f3f3-->
-    <color name="mColorPrimary">#FAFAFA</color>
+<!--    <color name="colorPrimary">#EF5350</color>-->
+<!--    <color name="colorPrimaryDark">#303030</color>-->
+<!--    <color name="colorAccent">#EF5350</color>-->
+    <color name="mColorPrimary">#EF5350</color>
     <color name="mColorPrimaryDark">#303030</color>
     <color name="mColorAccent">#EF5350</color>
     <color name="color_default_bg">#fff3f3f3</color>

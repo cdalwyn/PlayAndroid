@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -56,11 +57,42 @@
             android:layout_marginStart="@dimen/dp_20"
             android:layout_marginEnd="@dimen/dp_10"
             android:layout_marginBottom="@dimen/dp_5"
-            app:hl_cornerRadius="@dimen/dp_10"
+            app:hl_shadowLimit="@dimen/dp_4"
+            app:hl_shadowHiddenTop="true"
+            app:hl_shadowHiddenRight="true"
+            app:hl_cornerRadius="@dimen/dp_5"
             app:hl_layoutBackground="@color/white"
-            app:hl_shadowLimit="@dimen/dp_4">
+            >
+            <com.czl.lib_base.widget.EasySwipeMenuLayout
+                android:id="@+id/swipe_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:canLeftSwipe="true"
+                app:canRightSwipe="true"
+                app:contentView="@id/cl_content"
+                app:leftMenuView="@id/iv_left_view"
+                app:rightMenuView="@id/iv_right_view">
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_left_view"
+                    android:layout_width="48dp"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp_14"
+                    binding:imgBgRes="@{data.status==0?@color/green_68:@color/md_theme_red}"
+                    binding:imgRes="@{data.status==0?@drawable/ic_finished_white:@drawable/ic_restore}"
+                    binding:onRvItemCommand="@{adapter.onFinishClickCommand}"
+                    binding:rvItemBean="@{data}"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_right_view"
+                    android:src="@drawable/ic_delete_white"
+                    android:layout_width="48dp"
+                    android:padding="@dimen/dp_14"
+                    android:layout_height="match_parent"
+                    android:background="@color/md_theme_red"
+                    binding:onRvItemCommand="@{adapter.onDeleteClickCommand}"
+                    binding:rvItemBean="@{data}"/>
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dp_10">
@@ -100,7 +132,15 @@
                     app:layout_constraintStart_toStartOf="@id/tv_title"
                     tools:text="内容内容内容内容内容内容内容内容内容"/>
 
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.czl.lib_base.widget.EasySwipeMenuLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_finished_flag"
+                binding:isVisible="@{data.status==1}"/>
         </com.lihang.ShadowLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

@@ -1171,8 +1171,6 @@ data class TodoBean(
         @SerializedName("priority")
         @TodoPriority
         val priority: Int,
-        @SerializedName("status")
-        val status: Int,
         @SerializedName("title")
         val title: String,
         @SerializedName("type")
@@ -1180,6 +1178,15 @@ data class TodoBean(
         val type: Int,
         @SerializedName("userId")
         val userId: Int
-    )
+    ):BaseObservable(){
+        @Bindable
+        @SerializedName("status")
+        var status: Int = -1
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.status)
+        }
+
+    }
 }
 

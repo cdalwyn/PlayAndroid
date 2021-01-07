@@ -1,19 +1,23 @@
 package com.czl.module_user.ui.fragment
 
-import android.view.View
-import android.view.ViewGroup
+import android.graphics.Canvas
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
+import com.chad.library.adapter.base.listener.OnItemSwipeListener
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.TodoBean
+import com.czl.lib_base.util.DialogHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserTodoAdapter
 import com.czl.module_user.databinding.UserFragmentTodoBinding
 import com.czl.module_user.viewmodel.UserTodoViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 /**
@@ -60,8 +64,19 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                 binding.ryCommon,
                 binding.smartCommon,
                 viewModel.currentPage,
-                data?.over,1
+                data?.over, 1
             )
+        })
+        viewModel.uc.showAddTodoPopEvent.observe(this, {
+            // 显示日期选择
+            DialogHelper.showDateDialog(this) { dialog, date ->
+                showNormalToast(
+                    SimpleDateFormat(
+                        "yyyy-MM-dd",
+                        Locale.getDefault()
+                    ).format(date.time)
+                )
+            }
         })
     }
 }

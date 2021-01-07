@@ -259,6 +259,7 @@ interface ApiService {
      * 删除todo
      */
     @POST("lg/todo/delete/{id}/json")
+    @FormUrlEncoded
     fun deleteTodo(@Path("id") todoId: Int): Observable<BaseBean<Any?>>
 
     /**
@@ -267,5 +268,6 @@ interface ApiService {
      * status: 0或1，传1代表未完成到已完成，反之则反之。
      */
     @POST("lg/todo/done/{id}/json")
+    @FormUrlEncoded
     fun updateTodoState(@Path("id") todoId: Int, @Field("status") status: Int):Observable<BaseBean<Any?>>
 }

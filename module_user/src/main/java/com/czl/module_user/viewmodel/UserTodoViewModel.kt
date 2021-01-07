@@ -29,6 +29,7 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
 
     @TodoType
     var todoType: Int = TodoType.ALL
+    // 0 未完成 1 已完成 -1 显示所有
     var status = -1
 
     @TodoPriority
@@ -38,8 +39,14 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
     var orderBy = TodoOrder.createDesc
     val uc = UiChangeEvent()
 
+    val addTodoClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.showAddTodoPopEvent.call()
+    })
+
+
     class UiChangeEvent {
         val refreshCompleteEvent: SingleLiveEvent<TodoBean?> = SingleLiveEvent()
+        val showAddTodoPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     override fun refreshCommand() {
@@ -59,7 +66,7 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
                     if (t.errorCode == 0) {
                         currentPage++
                         uc.refreshCompleteEvent.postValue(t.data)
-                    }else{
+                    } else {
                         uc.refreshCompleteEvent.postValue(null)
                     }
                 }
@@ -67,6 +74,38 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
                 override fun onFailed(msg: String?) {
                     uc.refreshCompleteEvent.postValue(null)
                 }
+            })
+    }
+
+    fun deleteTodo(todoId: Int, func: () -> Unit) {
+        model.deleteTodo(todoId)
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
+                override fun onResult(t: BaseBean<Any?>) {
+                    if (t.errorCode == 0) {
+                        func.invoke()
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+
+                }
+            })
+    }
+
+    fun updateTodoState(todoId: Int, state: Int,func:()->Unit) {
+        model.updateTodoState(todoId,state)
+            .compose(RxThreadHelper.rxSchedulerHelper(this))
+            .subscribe(object :ApiSubscriberHelper<BaseBean<Any?>>(){
+                override fun onResult(t: BaseBean<Any?>) {
+                    if (t.errorCode==0){
+                        func.invoke()
+                    }
+                }
+
+                override fun onFailed(msg: String?) {
+                }
+
             })
     }
 }
