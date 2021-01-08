@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.datetime.DateTimeCallback
 import com.afollestad.materialdialogs.datetime.datePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.czl.lib_base.R
+import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseFragment
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -45,23 +46,23 @@ object DialogHelper {
             .asConfirm(title, content, "取消", "确定", OnConfirmListener(func), null, true).show()
     }
 
-    fun showDateDialog(fragment: BaseFragment<*, *>, dateTimeCallback: DateTimeCallback) {
-        MaterialDialog(fragment.requireContext())
+    fun showDateDialog(activity: BaseActivity<*, *>, dateTimeCallback: DateTimeCallback) {
+        MaterialDialog(activity)
             .show {
                 getActionButton(WhichButton.POSITIVE).updateTextColor(
                     ContextCompat.getColor(
-                        fragment.requireContext(),
+                        activity,
                         R.color.md_theme_red
                     )
                 )
                 getActionButton(WhichButton.NEGATIVE).updateTextColor(
                     ContextCompat.getColor(
-                        fragment.requireContext(),
+                        activity,
                         R.color.md_grey
                     )
                 )
                 datePicker(dateCallback = dateTimeCallback)
-                lifecycleOwner(fragment)
+                lifecycleOwner(activity)
             }
     }
 }

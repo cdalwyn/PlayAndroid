@@ -11,6 +11,7 @@ import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.data.source.impl.HttpDataImpl
 import com.czl.lib_base.data.source.impl.LocalDataImpl
+import com.czl.lib_base.widget.AddTodoPopView
 import com.czl.lib_base.widget.LoginPopView
 import com.lxj.xpopup.XPopup
 import org.koin.android.ext.koin.androidApplication
@@ -37,17 +38,25 @@ val appModule = module {
     // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
     single { AppViewModelFactory(get(), get()) }
 
-    factory (named("login")) {
+
+}
+
+val factoryModule = module {
+    factory(named("login")) {
         XPopup.Builder(AppManager.instance.currentActivity())
             .enableDrag(true)
             .moveUpToKeyboard(false)
             .autoOpenSoftInput(true)
             .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
     }
-}
-
-val viewModelModule = module {
-//    viewModel { TestViewModel(androidApplication(), get()) }
+    factory(named("todo")) {
+        XPopup.Builder(AppManager.instance.currentActivity())
+            .enableDrag(true)
+            .moveUpToKeyboard(true)
+            .autoOpenSoftInput(true)
+            .autoFocusEditText(true)
+            .asCustom(AddTodoPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
+    }
 }
 
 //val factoryModule = module {
@@ -62,4 +71,4 @@ val viewModelModule = module {
 //    }
 //}
 
-val allModule = appModule
+val allModule = appModule + factoryModule

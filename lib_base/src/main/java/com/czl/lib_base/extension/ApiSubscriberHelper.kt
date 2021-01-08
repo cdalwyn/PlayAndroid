@@ -1,25 +1,16 @@
 package com.czl.lib_base.extension
 
-import android.annotation.SuppressLint
 import android.net.ParseException
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.NetworkUtils
-import com.czl.lib_base.base.AppManager
-import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.util.ToastHelper.showErrorToast
-import com.czl.lib_base.widget.LoginPopView
 import com.google.gson.JsonParseException
 import com.google.gson.JsonSyntaxException
 import com.kingja.loadsir.core.LoadService
-import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.lxj.xpopup.interfaces.SimpleCallback
 import io.reactivex.observers.DisposableObserver
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
-import org.koin.android.ext.android.inject
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named

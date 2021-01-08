@@ -259,7 +259,6 @@ interface ApiService {
      * 删除todo
      */
     @POST("lg/todo/delete/{id}/json")
-    @FormUrlEncoded
     fun deleteTodo(@Path("id") todoId: Int): Observable<BaseBean<Any?>>
 
     /**

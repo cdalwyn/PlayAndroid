@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="pop"
+            type="com.czl.lib_base.widget.AddTodoPopView" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_line"
+            app:layout_constraintTop_toBottomOf="@id/tl_title" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_20"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:passwordToggleEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_title"
+                style="@style/TextInputThemeStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="请输入待办标题~"
+                android:imeOptions="actionNext"
+                android:padding="@dimen/dp_10"
+                android:singleLine="true"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tl_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:passwordToggleEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_content"
+                style="@style/TextInputThemeStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="请输入待办内容~"
+                android:imeOptions="actionGo"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/dp_10"
+                android:singleLine="false"
+                android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tl_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/md_theme_red"
+                android:text="@{pop.dateObservableStr}"
+                binding:onClickCommand="@{pop.onDateClickCommand}"
+                tools:text="今天"
+                app:drawableStartCompat="@drawable/ic_calendar" />
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_40"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_4"
+                android:src="@drawable/ic_menu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:textColor="@color/md_theme_red"
+                android:text="@{pop.priorityObservableStr}"
+                binding:onClickCommand="@{pop.onPriorityClickCommand}"
+                tools:text="正常"
+                app:drawableStartCompat="@drawable/ic_priority" />
+
+            <ImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_40"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_4"
+                android:src="@drawable/ic_menu"/>
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawablePadding="@dimen/dp_5"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:textColor="@color/md_theme_red"
+                android:text="@{pop.typeObservableStr}"
+                binding:onClickCommand="@{pop.onTypeClickCommand}"
+                tools:text="默认"
+                app:drawableStartCompat="@drawable/ic_todo_red" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_send"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:src="@drawable/ic_send_todo_grey"
+            app:layout_constraintTop_toBottomOf="@id/tl_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/ll_menu"
+            app:drawableStartCompat="@drawable/ic_send_todo_grey"
+            binding:onClickCommand="@{pop.onConfirmClickCommand}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -28,6 +28,8 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import java.lang.reflect.ParameterizedType
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by Alwyn on 2020/10/10.
@@ -208,6 +210,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     fun showSuccessToast(msg: String?) {
         ToastHelper.showSuccessToast(msg)
     }
+
 
     /**
      * 跳转页面

@@ -116,4 +116,11 @@ object LiveBusCenter {
         LiveEventBus.get(SwitchReadHistoryEvent::class.java).observe(owner, Observer(func))
     }
 
+    fun postTodoListRefreshEvent(){
+        LiveEventBus.get(TodoListRefreshEvent::class.java).post(TodoListRefreshEvent(0))
+    }
+    fun observeTodoListRefreshEvent(owner: LifecycleOwner, func: (t: TodoListRefreshEvent) -> Unit){
+        LiveEventBus.get(TodoListRefreshEvent::class.java).observe(owner, Observer(func))
+    }
+
 }

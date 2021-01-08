@@ -60,6 +60,7 @@
             app:hl_shadowLimit="@dimen/dp_4"
             app:hl_shadowHiddenTop="true"
             app:hl_shadowHiddenRight="true"
+            app:hl_shadowHiddenLeft="true"
             app:hl_cornerRadius="@dimen/dp_5"
             app:hl_layoutBackground="@color/white"
             >

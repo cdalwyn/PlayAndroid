@@ -10,12 +10,17 @@ import com.chad.library.adapter.base.listener.OnItemSwipeListener
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DialogHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserTodoAdapter
 import com.czl.module_user.databinding.UserFragmentTodoBinding
 import com.czl.module_user.viewmodel.UserTodoViewModel
+import com.lxj.xpopup.core.BasePopupView
+import org.koin.android.ext.android.inject
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +33,7 @@ import java.util.*
 @Route(path = AppConstants.Router.User.F_USER_TODO)
 class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel>() {
     private lateinit var mAdapter: UserTodoAdapter
+    private val todoPopView: BasePopupView by inject(named("todo"))
     override fun initContentView(): Int {
         return R.layout.user_fragment_todo
     }
@@ -68,15 +74,10 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
             )
         })
         viewModel.uc.showAddTodoPopEvent.observe(this, {
-            // 显示日期选择
-            DialogHelper.showDateDialog(this) { dialog, date ->
-                showNormalToast(
-                    SimpleDateFormat(
-                        "yyyy-MM-dd",
-                        Locale.getDefault()
-                    ).format(date.time)
-                )
-            }
+            todoPopView.show()
+        })
+        LiveBusCenter.observeTodoListRefreshEvent(this,{
+            binding.smartCommon.autoRefresh()
         })
     }
 }
