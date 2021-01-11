@@ -32,8 +32,10 @@ import java.util.*
  */
 @Route(path = AppConstants.Router.User.F_USER_TODO)
 class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel>() {
+
     private lateinit var mAdapter: UserTodoAdapter
     private val todoPopView: BasePopupView by inject(named("todo"))
+
     override fun initContentView(): Int {
         return R.layout.user_fragment_todo
     }
@@ -76,7 +78,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         viewModel.uc.showAddTodoPopEvent.observe(this, {
             todoPopView.show()
         })
-        LiveBusCenter.observeTodoListRefreshEvent(this,{
+        LiveBusCenter.observeTodoListRefreshEvent(this, {
             binding.smartCommon.autoRefresh()
         })
     }

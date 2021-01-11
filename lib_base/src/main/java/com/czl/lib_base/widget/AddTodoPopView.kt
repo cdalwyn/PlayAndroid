@@ -130,7 +130,7 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
             listItemsSingleChoice(
                 items = typeList,
                 initialSelection = typeList.indexOf(typeObservableStr.get())
-            ) { dialog, index, text ->
+            ) { _, index, text ->
                 typeObservableStr.set(text.toString())
                 val drawableStart = when (index) {
                     0 -> ContextCompat.getDrawable(activity, R.drawable.ic_todo_red)

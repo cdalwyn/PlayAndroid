@@ -139,7 +139,6 @@ open class MyApplication : Application() {
             }
 
             override fun onActivityStarted(activity: Activity) {}
-
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}
