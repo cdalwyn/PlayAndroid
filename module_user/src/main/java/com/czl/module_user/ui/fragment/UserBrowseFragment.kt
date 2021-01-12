@@ -76,6 +76,5 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
             setDemoLayoutReference(R.layout.user_item_browse_skeleton)
             showShimmerAdapter()
         }
-
     }
 }

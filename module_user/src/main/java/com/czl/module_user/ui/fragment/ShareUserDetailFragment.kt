@@ -134,7 +134,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
                     // 注意此操作如果第一项划出屏幕外,拿到的是空的，所以必须是position是0的时候才能调用
                     val firstView = layoutManager.findViewByPosition(position)
                     // 第一项Item的高度
-                    val firstHeight: Int = firstView!!.getHeight()
+                    val firstHeight: Int = firstView!!.height
                     // 要在它滑到二分之一的时候去渐变
                     val changeHeight = firstHeight / 2
                     // 小于头部高度一半隐藏标题栏
@@ -152,7 +152,6 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
                     homeToolbar.visibility = View.VISIBLE
                     homeToolbar.alpha = 1f
                 }
-
             }
         })
     }

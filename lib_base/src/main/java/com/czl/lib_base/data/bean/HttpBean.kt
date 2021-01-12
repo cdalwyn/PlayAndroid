@@ -1,11 +1,13 @@
 package com.czl.lib_base.data.bean
 
+import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.czl.lib_base.BR
 import com.czl.lib_base.annotation.TodoPriority
 import com.czl.lib_base.annotation.TodoType
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author Alwyn
@@ -1139,6 +1141,8 @@ data class ShareUserDetailBean(
         }
     }
 }
+
+@Parcelize
 data class TodoBean(
     @SerializedName("curPage")
     val curPage: Int,
@@ -1154,10 +1158,11 @@ data class TodoBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-) {
+) : Parcelable {
+    @Parcelize
     data class Data(
         @SerializedName("completeDate")
-        val completeDate: Any,
+        val completeDate: String? = "",
         @SerializedName("completeDateStr")
         val completeDateStr: String,
         @SerializedName("content")
@@ -1178,14 +1183,14 @@ data class TodoBean(
         val type: Int,
         @SerializedName("userId")
         val userId: Int
-    ):BaseObservable(){
+    ) : BaseObservable(), Parcelable {
         @Bindable
         @SerializedName("status")
         var status: Int = -1
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.status)
-        }
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.status)
+            }
 
     }
 }

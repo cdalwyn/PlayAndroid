@@ -43,7 +43,6 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
         uc.showAddTodoPopEvent.call()
     })
 
-
     class UiChangeEvent {
         val refreshCompleteEvent: SingleLiveEvent<TodoBean?> = SingleLiveEvent()
         val showAddTodoPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
@@ -58,7 +57,7 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
         getTodoList()
     }
 
-    fun getTodoList() {
+    private fun getTodoList() {
         model.getTodoList(status, todoType, priority, orderBy, currentPage + 1)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<TodoBean>>(loadService) {
@@ -105,7 +104,6 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
 
                 override fun onFailed(msg: String?) {
                 }
-
             })
     }
 }

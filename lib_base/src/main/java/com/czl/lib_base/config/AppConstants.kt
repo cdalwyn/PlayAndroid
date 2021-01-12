@@ -48,6 +48,7 @@ interface AppConstants {
             const val F_USER_SETTING = "/user/UserSettingFragment"
             const val F_USER_DETAIL = "/user/ShareUserDetailFragment"
             const val F_USER_TODO = "/user/UserTodoFragment"
+            const val F_USER_TODO_INFO = "/user/UserTodoInfoFragment"
         }
 
         object Square {
@@ -81,6 +82,7 @@ interface AppConstants {
         const val USER_ID = "user_id"
         const val SEARCH_HOT_KEY_LIST = "search_hot_key_list"
         const val SYS_CONTENT_TITLE = "sys_content_title"
+        const val TODO_INFO_DATA = "todo_info_data"
     }
 
     object Constants {

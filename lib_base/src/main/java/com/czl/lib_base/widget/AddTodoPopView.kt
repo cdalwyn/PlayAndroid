@@ -8,6 +8,7 @@ import androidx.databinding.ObservableField
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseActivity
@@ -25,6 +26,7 @@ import com.lxj.xpopup.util.XPopupUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
+import me.yokeyword.fragmentation.SupportFragment
 import java.text.SimpleDateFormat
 import java.util.*
 

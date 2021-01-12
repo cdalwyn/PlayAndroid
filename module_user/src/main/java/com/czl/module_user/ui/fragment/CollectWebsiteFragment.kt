@@ -33,7 +33,6 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
         return BR.viewModel
     }
 
-
     override fun useBaseLayout(): Boolean {
         return false
     }

@@ -2,22 +2,16 @@ package com.czl.module_user.viewmodel
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import com.blankj.utilcode.constant.MemoryConstants
 import com.blankj.utilcode.util.*
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.bus.event.SingleLiveEvent
-import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.util.DayModeUtil
-import com.czl.lib_base.util.FileCacheUtils
 import com.czl.lib_base.util.RxThreadHelper
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
