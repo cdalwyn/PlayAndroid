@@ -92,11 +92,12 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
 
     val onItemClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {
         if (it is TodoBean.Data) {
+            mFragment.clickItemIndex = getItemPosition(it)
             mFragment.startContainerActivity(
                 AppConstants.Router.User.F_USER_TODO_INFO,
                 Bundle().apply {
                     putParcelable(AppConstants.BundleKey.TODO_INFO_DATA, it)
-                })
+                },201)
         }
     })
 

@@ -8,6 +8,7 @@ import androidx.databinding.ObservableField
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
+import com.afollestad.materialdialogs.utils.MDUtil.getStringArray
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
@@ -38,8 +39,6 @@ import java.util.*
 @SuppressLint("ViewConstructor")
 class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity) {
     private var dataBinding: PopAddTodoBinding? = null
-    private val typeList = arrayListOf("默认", "工作", "学习", "生活", "消费", "娱乐", "家庭")
-    private val priorityList = arrayListOf("高", "正常", "低")
     private val nowDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     val dateObservableStr = ObservableField("今天")
     val priorityObservableStr = ObservableField("正常")
@@ -86,8 +85,8 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
                 etTitle.text.toString().trim(),
                 etContent.text.toString().trim(),
                 if (dateObservableStr.get() == "今天") nowDateFormat else dateObservableStr.get() ?: nowDateFormat,
-                typeList.indexOf(typeObservableStr.get()),
-                priorityList.indexOf(priorityObservableStr.get()) + 1
+                activity.getStringArray(R.array.todo_type).indexOf(typeObservableStr.get()),
+                activity.getStringArray(R.array.todo_priority).indexOf(priorityObservableStr.get()) + 1
             ).compose(RxThreadHelper.rxSchedulerHelper(activity.viewModel))
                 .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
                     override fun onResult(t: BaseBean<Any?>) {
@@ -117,8 +116,8 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
         MaterialDialog(activity).show {
             title(text = "优先级")
             listItemsSingleChoice(
-                items = priorityList,
-                initialSelection = priorityList.indexOf(priorityObservableStr.get())
+                R.array.todo_priority,
+                initialSelection = activity.getStringArray(R.array.todo_priority).indexOf(priorityObservableStr.get())
             ) { _, _, text ->
                 priorityObservableStr.set(text.toString())
             }
@@ -130,8 +129,8 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
         MaterialDialog(activity).show {
             title(text = "分类")
             listItemsSingleChoice(
-                items = typeList,
-                initialSelection = typeList.indexOf(typeObservableStr.get())
+                R.array.todo_type,
+                initialSelection = activity.getStringArray(R.array.todo_type).indexOf(typeObservableStr.get())
             ) { _, index, text ->
                 typeObservableStr.set(text.toString())
                 val drawableStart = when (index) {

@@ -9,4 +9,20 @@
     <string name="customactivityoncrash_error_activity_error_details_copy">复制日志</string>
     <string name="customactivityoncrash_error_activity_error_details_copied">复制日志</string>
     <string name="customactivityoncrash_error_activity_error_details_clipboard_label">错误信息</string>
+
+    <string-array name="todo_type">
+        <item>默认</item>
+        <item>工作</item>
+        <item>学习</item>
+        <item>生活</item>
+        <item>消费</item>
+        <item>娱乐</item>
+        <item>家庭</item>
+    </string-array>
+
+    <string-array name="todo_priority">
+        <item>高</item>
+        <item>正常</item>
+        <item>低</item>
+    </string-array>
 </resources>

@@ -136,15 +136,19 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
      * @param routePath Fragment路由地址
      * @param bundle    跳转所携带的信息
      */
+    /**
+     * 跳转容器页面
+     * @param routePath Fragment路由地址
+     * @param bundle    跳转所携带的信息
+     */
     fun startContainerActivity(
         routePath: String,
-        bundle: Bundle? = null
+        bundle: Bundle? = null, requestCode: Int? = null
     ) {
         val params: MutableMap<String, Any> = HashMap()
         params[ParameterField.ROUTE_PATH] = routePath
-        if (bundle != null) {
-            params[ParameterField.BUNDLE] = bundle
-        }
+        if (bundle != null) params[ParameterField.BUNDLE] = bundle
+        if (requestCode != null) params[ParameterField.REQUEST_CODE] = requestCode
         uC.startContainerActivityEvent.postValue(params)
     }
 
@@ -209,14 +213,9 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     }
 
     object ParameterField {
-        @JvmField
-        var CLASS = "CLASS"
-
-        @JvmField
-        var ROUTE_PATH = "ROUTE_PATH"
-
-        @JvmField
-        var BUNDLE = "BUNDLE"
-
+        const val CLASS = "CLASS"
+        const val ROUTE_PATH = "ROUTE_PATH"
+        const val BUNDLE = "BUNDLE"
+        const val REQUEST_CODE = "REQUEST_CODE"
     }
 }

@@ -247,7 +247,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             this, { params: Map<String?, Any?> ->
                 val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-                startContainerActivity(canonicalName, bundle)
+                val code = params[BaseViewModel.ParameterField.REQUEST_CODE] as Int?
+                startContainerActivity(canonicalName, bundle,code)
             }
         )
         //关闭界面
@@ -401,14 +402,15 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      */
     fun startContainerActivity(
         routePath: String?,
-        bundle: Bundle? = null
+        bundle: Bundle? = null, reqCode: Int? = null
     ) {
         val intent = Intent(context, ContainerFmActivity::class.java)
         intent.putExtra(ContainerFmActivity.FRAGMENT, routePath)
-        if (bundle != null) {
-            intent.putExtra(ContainerFmActivity.BUNDLE, bundle)
-        }
-        startActivity(intent)
+        if (bundle != null) intent.putExtra(ContainerFmActivity.BUNDLE, bundle)
+        if (reqCode == null)
+            startActivity(intent)
+        else
+            startActivityForResult(intent,reqCode)
     }
 
     /**

@@ -1,8 +1,10 @@
 package com.czl.lib_base.data.bean
 
+import android.os.Parcel
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.versionedparcelable.ParcelField
 import com.czl.lib_base.BR
 import com.czl.lib_base.annotation.TodoPriority
 import com.czl.lib_base.annotation.TodoType
@@ -1164,23 +1166,23 @@ data class TodoBean(
         @SerializedName("completeDate")
         val completeDate: String? = "",
         @SerializedName("completeDateStr")
-        val completeDateStr: String,
+        val completeDateStr: String?,
         @SerializedName("content")
-        val content: String,
+        var content: String?,
         @SerializedName("date")
         val date: Long,
         @SerializedName("dateStr")
-        val dateStr: String,
+        var dateStr: String?,
         @SerializedName("id")
         val id: Int,
         @SerializedName("priority")
         @TodoPriority
-        val priority: Int,
+        var priority: Int,
         @SerializedName("title")
-        val title: String,
+        var title: String?,
         @SerializedName("type")
         @TodoType
-        val type: Int,
+        var type: Int,
         @SerializedName("userId")
         val userId: Int
     ) : BaseObservable(), Parcelable {

@@ -1,67 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="viewModel"
+            type="com.czl.module_user.viewmodel.TodoInfoFmViewModel" />
+
         <variable
             name="data"
             type="com.czl.lib_base.data.bean.TodoBean.Data" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tl_title"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:passwordToggleEnabled="false">
+            android:background="@color/md_theme_red">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_title"
-                style="@style/TextInputThemeStyle"
+            <com.lihang.ShadowLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:textStyle="bold"
-                android:textSize="@dimen/dp_20"
-                android:hint="请输入待办标题~"
-                android:text="@{data.title}"
-                android:imeOptions="actionNext"
-                android:inputType="textMultiLine"
-                android:padding="@dimen/dp_10"
-                android:textColor="@color/black" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/dp_16"
+                android:background="@color/white"
+                app:hl_cornerRadius="@dimen/dp_10"
+                app:hl_layoutBackground="@color/white"
+                app:hl_shadowLimit="@dimen/dp_10">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tl_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dp_10"
-            android:paddingEnd="@dimen/dp_10"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tl_title"
-            app:passwordToggleEnabled="false">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_content"
-                style="@style/TextInputThemeStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:text="@{data.content}"
-                android:hint="请输入待办内容~"
-                android:imeOptions="actionNext"
-                android:inputType="textMultiLine"
-                android:padding="@dimen/dp_10"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="?actionBarSize"
+                        android:gravity="center"
+                        android:onClick="@{(x)->viewModel.finish()}"
+                        android:padding="@dimen/dp_10"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_back_black_24dp" />
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="@dimen/dp_20"
+                        android:background="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                        app:layout_constraintStart_toEndOf="@id/iv_back"
+                        app:layout_constraintTop_toTopOf="@id/iv_back" />
+
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/dp_10"
+                        android:gravity="center"
+                        android:text="@{data.dateStr}"
+                        android:textColor="@color/black"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                        app:layout_constraintStart_toEndOf="@id/iv_back"
+                        app:layout_constraintTop_toTopOf="@id/iv_back"
+                        binding:onClickCommand="@{viewModel.onDateClickCommand}"
+                        tools:text="2021-1-13" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tl_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="50"
+                        app:hintEnabled="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_back"
+                        app:passwordToggleEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_title"
+                            style="@style/TextInputThemeStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="主题"
+                            android:imeOptions="actionNext"
+                            android:inputType="textMultiLine"
+                            android:maxLength="50"
+                            android:padding="@dimen/dp_10"
+                            android:text="@{data.title}"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_16"
+                            android:textStyle="bold" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tl_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/dp_10"
+                        android:paddingEnd="@dimen/dp_10"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="200"
+                        app:hintEnabled="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tl_title"
+                        app:passwordToggleEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_content"
+                            style="@style/TextInputThemeStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="内容"
+                            android:imeOptions="actionNext"
+                            android:inputType="textMultiLine"
+                            android:maxLength="200"
+                            android:padding="@dimen/dp_10"
+                            android:text="@{data.content}" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tv_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5"
+                        android:text=" 分类 :"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@id/tl_content" />
+
+                    <com.czl.lib_base.widget.FlowRadioGroup
+                        android:id="@+id/rg_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_15"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/tv_type"
+                        binding:onCheckedChangedCommand="@{viewModel.onTypeGroupCheckCommand}">
+
+                        <RadioButton
+                            android:id="@+id/rb_default"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==0}"
+                            android:drawableStart="@drawable/ic_todo_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="默认" />
+
+                        <RadioButton
+                            android:id="@+id/rb_work"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==1}"
+                            android:drawableStart="@drawable/ic_work_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="工作" />
+
+                        <RadioButton
+                            android:id="@+id/rb_study"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==2}"
+                            android:drawableStart="@drawable/ic_study_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="学习" />
+
+                        <RadioButton
+                            android:id="@+id/rb_life"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==3}"
+                            android:drawableStart="@drawable/ic_life_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="生活" />
+
+                        <RadioButton
+                            android:id="@+id/rb_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==4}"
+                            android:drawableStart="@drawable/ic_pay_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="消费" />
+
+                        <RadioButton
+                            android:id="@+id/rb_play"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==5}"
+                            android:drawableStart="@drawable/ic_play_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="娱乐" />
+
+                        <RadioButton
+                            android:id="@+id/rb_family"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.type==6}"
+                            android:drawableStart="@drawable/ic_family_red"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:text="家庭" />
+
+                    </com.czl.lib_base.widget.FlowRadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5"
+                        android:text=" 优先级 :"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@id/rg_type" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_15"
+                        app:layout_constraintTop_toBottomOf="@id/tv_priority"
+                        binding:onCheckedChangedCommand="@{viewModel.onPriorityCheckCommand}">
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.priority==1}"
+                            android:padding="@dimen/dp_5"
+                            android:text="高" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.priority==2}"
+                            android:padding="@dimen/dp_5"
+                            android:text="正常" />
+
+                        <RadioButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="@{data.priority==3}"
+                            android:padding="@dimen/dp_5"
+                            android:text="低" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.lihang.ShadowLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

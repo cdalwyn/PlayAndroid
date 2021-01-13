@@ -1,11 +1,13 @@
 package com.czl.module_user.ui.fragment
 
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.bean.TodoBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -27,6 +29,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
 
     private lateinit var mAdapter: UserTodoAdapter
     private val todoPopView: BasePopupView by inject(named("todo"))
+    var clickItemIndex: Int = 0
 
     override fun initContentView(): Int {
         return R.layout.user_fragment_todo
@@ -73,5 +76,15 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         LiveBusCenter.observeTodoListRefreshEvent(this, {
             binding.smartCommon.autoRefresh()
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 201 && resultCode == 200 && data != null) {
+            val todoInfo =
+                data.getParcelableExtra<TodoBean.Data>(AppConstants.BundleKey.TODO_INFO_DATA)
+            if (todoInfo != null)
+                mAdapter.setData(clickItemIndex, todoInfo)
+        }
     }
 }
