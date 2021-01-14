@@ -1,12 +1,14 @@
 package com.czl.module_user.adapter
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.module.DraggableModule
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
@@ -77,17 +79,13 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
             }
             executePendingBindings()
         }
-        // 若与上一项日期相同则隐藏 达到时间分组效果
-        if (getItemPosition(item) - 1 >= 0 && item.dateStr == getItem(getItemPosition(item) - 1).dateStr) {
-            holder.dataBinding?.tvDate?.visibility = View.GONE
-        }
         // 若未完成且日期已过期
-        if (item.status == 0 && item.date < nowTimeMills) {
-            holder.dataBinding?.ivState?.apply {
-                visibility = View.VISIBLE
-                setImageResource(R.drawable.ic_date_out)
-            }
-        }
+//        if (item.status == 0 && item.date < nowTimeMills && !TimeUtils.isToday(item.date)) {
+//            holder.dataBinding?.ivState?.apply {
+//                visibility = View.VISIBLE
+//                setImageResource(R.drawable.ic_date_out)
+//            }
+//        }
     }
 
     val onItemClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {
@@ -103,16 +101,11 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
 
     val onFinishClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {
         if (it is TodoBean.Data) {
+            val itemPosition = getItemPosition(it)
             mFragment.viewModel.updateTodoState(it.id, if (it.status == 0) 1 else 0) {
-                (getViewByPosition(
-                    getItemPosition(it),
-                    R.id.swipe_layout
-                ) as EasySwipeMenuLayout).resetStatus()
+                (getViewByPosition(itemPosition, R.id.swipe_layout) as EasySwipeMenuLayout).resetStatus()
                 // 标记已完成或者未完成
-                (getViewByPosition(
-                    getItemPosition(it),
-                    R.id.iv_state
-                ) as ImageView).setImageResource(R.drawable.ic_finished_flag)
+                (getViewByPosition(itemPosition, R.id.iv_state) as ImageView).setImageResource(R.drawable.ic_finished_flag)
                 it.status = if (it.status == 1) 0 else 1
             }
         }
@@ -131,7 +124,7 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
             oldItem: TodoBean.Data,
             newItem: TodoBean.Data
         ): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(
@@ -140,5 +133,15 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
         ): Boolean {
             return oldItem == newItem
         }
+    }
+
+    fun getImage(item:TodoBean.Data):Drawable?{
+        if (item.status==1){
+            return ContextCompat.getDrawable(context,R.drawable.ic_finished_flag)
+        }
+        if (item.dateExpired){
+            return ContextCompat.getDrawable(context,R.drawable.ic_date_out)
+        }
+        return null
     }
 }

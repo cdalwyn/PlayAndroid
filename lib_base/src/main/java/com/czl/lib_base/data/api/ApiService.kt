@@ -252,7 +252,7 @@ interface ApiService {
         @Field("content") content: String,
         @Field("date") date: String,
         @Field("type") type: Int,
-        @Field("priority") priority: Int,
+        @Field("priority") priority: Int
     ): Observable<BaseBean<Any?>>
 
     /**
@@ -268,5 +268,19 @@ interface ApiService {
      */
     @POST("lg/todo/done/{id}/json")
     @FormUrlEncoded
-    fun updateTodoState(@Path("id") todoId: Int, @Field("status") status: Int):Observable<BaseBean<Any?>>
+    fun updateTodoState(
+        @Path("id") todoId: Int,
+        @Field("status") status: Int
+    ): Observable<BaseBean<Any?>>
+
+    /**
+     * 更新todo
+     */
+    @POST("lg/todo/update/{id}/json")
+    @FormUrlEncoded
+    fun updateTodo(
+        @Path("id") todoId: Int, @Field("title") title: String, @Field("content") content: String,
+        @Field("date") date: String, @Field("status") status: Int, @Field("type") type: Int,
+        @Field("priority") priority: Int
+    ):Observable<BaseBean<Any?>>
 }

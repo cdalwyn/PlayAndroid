@@ -1144,56 +1144,57 @@ data class ShareUserDetailBean(
     }
 }
 
-@Parcelize
-data class TodoBean(
-    @SerializedName("curPage")
-    val curPage: Int,
-    @SerializedName("datas")
-    val datas: List<Data>,
-    @SerializedName("offset")
-    val offset: Int,
-    @SerializedName("over")
-    val over: Boolean,
-    @SerializedName("pageCount")
-    val pageCount: Int,
-    @SerializedName("size")
-    val size: Int,
-    @SerializedName("total")
-    val total: Int
-) : Parcelable {
-    @Parcelize
-    data class Data(
-        @SerializedName("completeDate")
-        val completeDate: String? = "",
-        @SerializedName("completeDateStr")
-        val completeDateStr: String?,
-        @SerializedName("content")
-        var content: String?,
-        @SerializedName("date")
-        val date: Long,
-        @SerializedName("dateStr")
-        var dateStr: String?,
-        @SerializedName("id")
-        val id: Int,
-        @SerializedName("priority")
-        @TodoPriority
-        var priority: Int,
-        @SerializedName("title")
-        var title: String?,
-        @SerializedName("type")
-        @TodoType
-        var type: Int,
-        @SerializedName("userId")
-        val userId: Int
-    ) : BaseObservable(), Parcelable {
-        @Bindable
-        @SerializedName("status")
-        var status: Int = -1
-            set(value) {
-                field = value
-                notifyPropertyChanged(BR.status)
-            }
-
-    }
-}
+//@Parcelize
+//data class TodoBean(
+//    @SerializedName("curPage")
+//    val curPage: Int,
+//    @SerializedName("datas")
+//    val datas: List<Data>,
+//    @SerializedName("offset")
+//    val offset: Int,
+//    @SerializedName("over")
+//    val over: Boolean,
+//    @SerializedName("pageCount")
+//    val pageCount: Int,
+//    @SerializedName("size")
+//    val size: Int,
+//    @SerializedName("total")
+//    val total: Int
+//) : Parcelable {
+//    @Parcelize
+//    data class Data(
+//        @SerializedName("completeDate")
+//        val completeDate: String? = "",
+//        @SerializedName("completeDateStr")
+//        val completeDateStr: String?,
+//        @SerializedName("content")
+//        var content: String?,
+//        @SerializedName("date")
+//        val date: Long,
+//        @SerializedName("dateStr")
+//        var dateStr: String?,
+//        @SerializedName("id")
+//        val id: Int,
+//        @SerializedName("priority")
+//        @TodoPriority
+//        var priority: Int,
+//        @SerializedName("title")
+//        var title: String?,
+//        @SerializedName("type")
+//        @TodoType
+//        var type: Int,
+//        @SerializedName("userId")
+//        val userId: Int,
+//        @SerializedName("status")
+//        var status: Int,
+//        ) : BaseObservable(), Parcelable {
+//        @Transient
+//        @Bindable
+//        var dateVisible: Boolean = false
+//            set(value) {
+//                field = value
+//                notifyPropertyChanged(BR.dateVisible)
+//            }
+//    }
+//}
 

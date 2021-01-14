@@ -196,6 +196,10 @@ class DataRepository constructor(
         return mHttpDataSource.updateTodoState(todoId, status)
     }
 
+    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<Any?>> {
+        return mHttpDataSource.updateTodo(todoInfo)
+    }
+
     override fun getLocalData(): String {
         return mLocalDataSource.getLocalData()
     }

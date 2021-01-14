@@ -7,6 +7,8 @@ import com.czl.lib_base.data.api.ApiService
 import com.czl.lib_base.data.bean.*
 import com.czl.lib_base.data.source.HttpDataSource
 import io.reactivex.Observable
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author Alwyn
@@ -31,7 +33,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 //    }
 
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {
-        return apiService.pwdLogin(account,pwd)
+        return apiService.pwdLogin(account, pwd)
     }
 
 
@@ -64,7 +66,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
     }
 
     override fun unCollectArticle(id: Int, originId: Int): Observable<BaseBean<Any?>> {
-        return apiService.unCollectArticle(id,originId)
+        return apiService.unCollectArticle(id, originId)
     }
 
     override fun logout(): Observable<BaseBean<Any?>> {
@@ -76,14 +78,14 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         password: String,
         repassword: String
     ): Observable<BaseBean<Any?>> {
-        return apiService.register(username,password,repassword)
+        return apiService.register(username, password, repassword)
     }
 
     override fun searchByKeyword(
         page: String,
         keyword: String
     ): Observable<BaseBean<SearchDataBean>> {
-        return apiService.searchByKeyword(page,keyword)
+        return apiService.searchByKeyword(page, keyword)
     }
 
     override fun getSearchHotKey(): Observable<BaseBean<List<SearchHotKeyBean>>> {
@@ -95,7 +97,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
     }
 
     override fun getProjectByCid(page: String, cid: String): Observable<BaseBean<ProjectBean>> {
-        return apiService.getProjectByCid(page,cid)
+        return apiService.getProjectByCid(page, cid)
     }
 
     override fun getUserShareData(page: String): Observable<BaseBean<UserShareBean>> {
@@ -123,7 +125,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
     }
 
     override fun collectWebsite(name: String, link: String): Observable<BaseBean<Any?>> {
-        return apiService.collectWebsite(name,link)
+        return apiService.collectWebsite(name, link)
     }
 
     override fun getSquareList(page: Int): Observable<BaseBean<SquareListBean>> {
@@ -139,11 +141,11 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
     }
 
     override fun getArticlesByCid(page: Int, cid: String): Observable<BaseBean<SystemDetailBean>> {
-        return apiService.getArticlesByCid(page,cid)
+        return apiService.getArticlesByCid(page, cid)
     }
 
     override fun shareArticleToSquare(title: String, link: String): Observable<BaseBean<Any?>> {
-        return apiService.shareArticleToSquare(title,link)
+        return apiService.shareArticleToSquare(title, link)
     }
 
     override fun deleteArticleById(id: Int): Observable<BaseBean<Any?>> {
@@ -154,7 +156,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         uid: String,
         page: Int
     ): Observable<BaseBean<ShareUserDetailBean>> {
-        return apiService.getShareUserDetail(uid,page)
+        return apiService.getShareUserDetail(uid, page)
     }
 
     override fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>> {
@@ -187,6 +189,20 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
 
     override fun updateTodoState(todoId: Int, status: Int): Observable<BaseBean<Any?>> {
         return apiService.updateTodoState(todoId, status)
+    }
+
+    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<Any?>> {
+        return apiService.updateTodo(
+            todoInfo.id,
+            todoInfo.title ?: "",
+            todoInfo.content ?: "",
+            todoInfo.dateStr ?: SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(
+                Date()
+            ),
+            todoInfo.status,
+            todoInfo.type,
+            todoInfo.priority
+        )
     }
 
 }
