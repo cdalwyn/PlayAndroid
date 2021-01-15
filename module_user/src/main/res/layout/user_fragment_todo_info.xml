@@ -72,6 +72,21 @@
                         binding:onClickCommand="@{viewModel.onDateClickCommand}"
                         tools:text="2021-1-13" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:text="保存"
+                        android:gravity="center"
+                        android:textColor="@color/md_theme_red"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:layout_marginEnd="@dimen/dp_10"
+                        android:drawableStart="@drawable/ic_save"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/iv_back"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
+                        binding:onClickCommand="@{viewModel.onSaveClickCommand}"
+                        app:drawableStartCompat="@drawable/ic_save" />
+
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_title"
                         android:layout_width="match_parent"

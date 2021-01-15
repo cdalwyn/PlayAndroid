@@ -5,6 +5,7 @@ import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import androidx.versionedparcelable.ParcelField
+import com.chad.library.adapter.base.entity.SectionEntity
 import com.czl.lib_base.BR
 import com.czl.lib_base.annotation.TodoPriority
 import com.czl.lib_base.annotation.TodoType
@@ -1144,57 +1145,193 @@ data class ShareUserDetailBean(
     }
 }
 
-//@Parcelize
-//data class TodoBean(
-//    @SerializedName("curPage")
-//    val curPage: Int,
-//    @SerializedName("datas")
-//    val datas: List<Data>,
-//    @SerializedName("offset")
-//    val offset: Int,
-//    @SerializedName("over")
-//    val over: Boolean,
-//    @SerializedName("pageCount")
-//    val pageCount: Int,
-//    @SerializedName("size")
-//    val size: Int,
-//    @SerializedName("total")
-//    val total: Int
-//) : Parcelable {
-//    @Parcelize
-//    data class Data(
-//        @SerializedName("completeDate")
-//        val completeDate: String? = "",
-//        @SerializedName("completeDateStr")
-//        val completeDateStr: String?,
-//        @SerializedName("content")
-//        var content: String?,
-//        @SerializedName("date")
-//        val date: Long,
-//        @SerializedName("dateStr")
-//        var dateStr: String?,
-//        @SerializedName("id")
-//        val id: Int,
-//        @SerializedName("priority")
-//        @TodoPriority
-//        var priority: Int,
-//        @SerializedName("title")
-//        var title: String?,
-//        @SerializedName("type")
-//        @TodoType
-//        var type: Int,
-//        @SerializedName("userId")
-//        val userId: Int,
-//        @SerializedName("status")
-//        var status: Int,
-//        ) : BaseObservable(), Parcelable {
-//        @Transient
-//        @Bindable
-//        var dateVisible: Boolean = false
-//            set(value) {
-//                field = value
-//                notifyPropertyChanged(BR.dateVisible)
-//            }
-//    }
-//}
+class TodoBean() : Parcelable {
+    var curPage = 0
+    var offset = 0
+    @SerializedName("over")
+    var isOver = false
+    var pageCount = 0
+    var size = 0
+    var total = 0
+    var datas: List<Data> = arrayListOf()
 
+    constructor(parcel: Parcel) : this() {
+        curPage = parcel.readInt()
+        offset = parcel.readInt()
+        isOver = parcel.readByte() != 0.toByte()
+        pageCount = parcel.readInt()
+        size = parcel.readInt()
+        total = parcel.readInt()
+        datas = parcel.createTypedArrayList(Data.CREATOR)!!
+    }
+
+    class Data() : BaseObservable(), Parcelable {
+        var completeDate: String? = null
+        var completeDateStr: String? = null
+        var content: String? = null
+        var date: Long = 0
+        var dateStr: String? = null
+        var id = 0
+        var priority = 0
+        var title: String? = null
+        var type = 0
+        var userId = 0
+
+        @Bindable
+        var dateExpired = false
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.dateExpired)
+            }
+
+        @Bindable
+        var status = 0
+            set(status) {
+                field = status
+                notifyPropertyChanged(BR.status)
+            }
+
+        constructor(parcel: Parcel) : this() {
+            completeDate = parcel.readString()
+            completeDateStr = parcel.readString()
+            content = parcel.readString()
+            date = parcel.readLong()
+            dateStr = parcel.readString()
+            id = parcel.readInt()
+            priority = parcel.readInt()
+            title = parcel.readString()
+            type = parcel.readInt()
+            userId = parcel.readInt()
+            dateExpired = parcel.readBoolean()
+            status = parcel.readInt()
+        }
+
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(completeDate)
+            parcel.writeString(completeDateStr)
+            parcel.writeString(content)
+            parcel.writeLong(date)
+            parcel.writeString(dateStr)
+            parcel.writeInt(id)
+            parcel.writeInt(priority)
+            parcel.writeString(title)
+            parcel.writeInt(type)
+            parcel.writeInt(userId)
+            parcel.writeBoolean(dateExpired)
+            parcel.writeInt(status)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Data
+
+            if (completeDate != other.completeDate) return false
+            if (completeDateStr != other.completeDateStr) return false
+            if (content != other.content) return false
+            if (date != other.date) return false
+            if (dateStr != other.dateStr) return false
+            if (id != other.id) return false
+            if (priority != other.priority) return false
+            if (title != other.title) return false
+            if (type != other.type) return false
+            if (userId != other.userId) return false
+            if (dateExpired != other.dateExpired) return false
+            if (status != other.status) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = completeDate?.hashCode() ?: 0
+            result = 31 * result + (completeDateStr?.hashCode() ?: 0)
+            result = 31 * result + (content?.hashCode() ?: 0)
+            result = 31 * result + date.hashCode()
+            result = 31 * result + (dateStr?.hashCode() ?: 0)
+            result = 31 * result + id
+            result = 31 * result + priority
+            result = 31 * result + (title?.hashCode() ?: 0)
+            result = 31 * result + type
+            result = 31 * result + userId
+            result = 31 * result + dateExpired.hashCode()
+            result = 31 * result + status
+            return result
+        }
+
+        override fun toString(): String {
+            return "Data(completeDate=$completeDate, completeDateStr=$completeDateStr, content=$content, date=$date, dateStr=$dateStr, id=$id, priority=$priority, title=$title, type=$type, userId=$userId, dateExpired=$dateExpired, status=$status)"
+        }
+
+        companion object CREATOR : Parcelable.Creator<Data> {
+            override fun createFromParcel(parcel: Parcel): Data {
+                return Data(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Data?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as TodoBean
+
+        if (curPage != other.curPage) return false
+        if (offset != other.offset) return false
+        if (isOver != other.isOver) return false
+        if (pageCount != other.pageCount) return false
+        if (size != other.size) return false
+        if (total != other.total) return false
+        if (datas != other.datas) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = curPage
+        result = 31 * result + offset
+        result = 31 * result + isOver.hashCode()
+        result = 31 * result + pageCount
+        result = 31 * result + size
+        result = 31 * result + total
+        result = 31 * result + (datas.hashCode())
+        return result
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(curPage)
+        parcel.writeInt(offset)
+        parcel.writeByte(if (isOver) 1 else 0)
+        parcel.writeInt(pageCount)
+        parcel.writeInt(size)
+        parcel.writeInt(total)
+        parcel.writeTypedList(datas)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    override fun toString(): String {
+        return "TodoBean(curPage=$curPage, offset=$offset, isOver=$isOver, pageCount=$pageCount, size=$size, total=$total, datas=$datas)"
+    }
+
+    companion object CREATOR : Parcelable.Creator<TodoBean> {
+        override fun createFromParcel(parcel: Parcel): TodoBean {
+            return TodoBean(parcel)
+        }
+
+        override fun newArray(size: Int): Array<TodoBean?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

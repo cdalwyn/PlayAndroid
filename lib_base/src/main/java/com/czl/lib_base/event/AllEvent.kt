@@ -1,5 +1,6 @@
 package com.czl.lib_base.event
 
+import com.czl.lib_base.data.bean.TodoBean
 import com.jeremyliao.liveeventbus.core.LiveEvent
 
 /**
@@ -17,4 +18,4 @@ data class RefreshUserFmEvent(val code:Int):LiveEvent
 data class RefreshWebListEvent(val code:Int):LiveEvent
 data class RefreshCollectStateEvent(val originId:Int):LiveEvent
 data class SwitchReadHistoryEvent(val checked: Boolean):LiveEvent
-data class TodoListRefreshEvent(val code: Int):LiveEvent
+data class TodoListRefreshEvent(val code: Int, val todoInfo: TodoBean.Data):LiveEvent

@@ -84,7 +84,7 @@
                 android:padding="@dimen/dp_10"
                 android:textColor="@color/md_theme_red"
                 android:text="@{pop.dateObservableStr}"
-                binding:onClickCommand="@{pop.onDateClickCommand}"
+                android:onClick="@{pop.onDateClickCommand}"
                 tools:text="今天"
                 app:drawableStartCompat="@drawable/ic_calendar" />
             <ImageView

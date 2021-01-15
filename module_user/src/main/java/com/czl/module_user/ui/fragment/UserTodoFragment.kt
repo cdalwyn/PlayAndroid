@@ -20,6 +20,7 @@ import com.czl.module_user.viewmodel.UserTodoViewModel
 import com.lxj.xpopup.core.BasePopupView
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
+import java.util.*
 
 
 /**
@@ -63,13 +64,9 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
 
     override fun initViewObservable() {
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
-            // 遍历设置时间文本的可见性达到时间分组效果
-            data?.datas?.forEachIndexed { index, item ->
-                if (index == 0) item.dateVisible = true
-                if (index >= 1 && item.dateStr != data.datas[index - 1].dateStr) {
-                    item.dateVisible = true
-                }
-                if (item.date < System.currentTimeMillis() && !TimeUtils.isToday(item.date)){
+            // 遍历设置时间是否过期
+            data?.datas?.forEach{ item ->
+                if (item.date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(item.date)) {
                     item.dateExpired = true
                 }
             }
@@ -80,14 +77,36 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                 binding.ryCommon,
                 binding.smartCommon,
                 viewModel.currentPage,
-                data?.over, 1
+                data?.isOver, 1
             )
         })
         viewModel.uc.showAddTodoPopEvent.observe(this, {
             todoPopView.show()
         })
         LiveBusCenter.observeTodoListRefreshEvent(this, {
-            binding.smartCommon.autoRefresh()
+            if (it.code == 0) {
+                val todoInfo = it.todoInfo
+                // 查找是否有相同日期的数据存在
+                val sameDateTodo = mAdapter.data.find { item -> item.dateStr == todoInfo.dateStr }
+                if (sameDateTodo != null) {
+                    // 存在
+                    mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
+                    return@observeTodoListRefreshEvent
+                }
+                // 不存在相同日期  则查找最后一个未来日期添加到下面
+                val moreDateTodo = mAdapter.data.findLast { item -> item.date > todoInfo.date }
+                if (moreDateTodo != null) {
+                    mAdapter.addData(mAdapter.getItemPosition(moreDateTodo) + 1, todoInfo)
+                    return@observeTodoListRefreshEvent
+                }
+                // 不存在未来日期 则查找第一个以前的日期
+                val lessDateTodo = mAdapter.data.find { item -> item.date < todoInfo.date }
+                if (lessDateTodo != null) {
+                    mAdapter.addData(mAdapter.getItemPosition(lessDateTodo),todoInfo)
+                    return@observeTodoListRefreshEvent
+                }
+                mAdapter.addData(todoInfo)
+            }
         })
     }
 
@@ -96,49 +115,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         if (requestCode == 201 && resultCode == 200 && data != null) {
             val todoInfo =
                 data.getParcelableExtra<TodoBean.Data>(AppConstants.BundleKey.TODO_INFO_DATA)
-            val item = mAdapter.getItem(clickItemIndex)
-            if (todoInfo != null && item != todoInfo) {
-                if (item.dateStr == todoInfo.dateStr) {
-                    // 如果时间是同一天则直接刷新
-                    mAdapter.setData(clickItemIndex, todoInfo)
-                } else {
-                    // 不是同一天
-                    binding.smartCommon.autoRefresh()
-                    /*// 1. 先判断当前日期文本是否可见 若可见的则把下一项的日期先显示可见
-                    if (item.dateVisible) {
-                        mAdapter.getItem(clickItemIndex+1).dateVisible = true
-                    }
-                    // 2. 删除当前项
-                    mAdapter.removeAt(clickItemIndex)
-                    // 3. 在列表中查找与当前项日期是否相同的
-                    val sameDateItem = mAdapter.data.findLast { it.dateStr == todoInfo.dateStr }
-                    // 3.1 若存在相同的
-                    if (sameDateItem != null) {
-                        item.dateVisible = false
-                        mAdapter.addData(
-                            mAdapter.getItemPosition(sameDateItem),
-                            todoInfo
-                        )
-                    } else {
-                        // 3.2 不存在相同的
-                        todoInfo.dateVisible = true
-                        // 查找比当前日期久且最近的一个
-                        val lessDateItem = mAdapter.data.find { it.date < todoInfo.date }
-                        if (lessDateItem != null) {
-                            mAdapter.addData(mAdapter.getItemPosition(lessDateItem), todoInfo)
-                        } else {
-                            // 若没有比当前日期久的 则查找离当前日期近的
-                            val moreDateItem = mAdapter.data.findLast { it.date > todoInfo.date }
-                            if (moreDateItem != null) {
-                                mAdapter.addData(mAdapter.getItemPosition(moreDateItem) + 1, todoInfo)
-                            } else {
-                                // 若也没有离当前日期近的 则是日期最近的
-                                mAdapter.setData(0, todoInfo)
-                            }
-                        }
-                    }*/
-                }
-            }
+            todoInfo?.let { mAdapter.setData(clickItemIndex, it) }
         }
     }
 }

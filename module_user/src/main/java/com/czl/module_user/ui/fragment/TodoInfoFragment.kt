@@ -3,22 +3,16 @@ package com.czl.module_user.ui.fragment
 import android.content.Intent
 import com.afollestad.materialdialogs.MaterialDialog
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseActivity
-import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.TodoBean
-import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
-import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentTodoInfoBinding
 import com.czl.module_user.viewmodel.TodoInfoFmViewModel
 import com.gyf.immersionbar.ImmersionBar
-import com.jakewharton.rxbinding3.widget.checked
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -62,57 +56,31 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
 
     override fun initViewObservable() {
         viewModel.uc.pickDateEvent.observe(this, {
-            DialogHelper.showDateDialog(requireActivity() as BaseActivity<*, *>) { dialog: MaterialDialog, datetime: Calendar ->
+            DialogHelper.showDateDialog(requireActivity() as BaseActivity<*, *>,binding.tvDate.text.toString()) { dialog: MaterialDialog, datetime: Calendar ->
                 binding.tvDate.text =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(datetime.time)
+                dialog.dismiss()
             }
+        })
+        viewModel.uc.saveDataEvent.observe(this,{
+            updateTodoData()
+        })
+        viewModel.uc.updateSuccessEvent.observe(this,{data->
+            activity?.setResult(200, Intent().apply {
+                putExtra(AppConstants.BundleKey.TODO_INFO_DATA, data)
+            })
         })
     }
 
-    override fun back() {
-        updateBackData()
-    }
-
-    override fun onBackPressedSupport(): Boolean {
-        updateBackData()
-        return true
-    }
-
     // 处理返回更新数据
-    private fun updateBackData() {
+    private fun updateTodoData() {
         todoInfo?.apply {
             title = binding.etTitle.text.toString()
             content = binding.etContent.text.toString()
             dateStr = binding.tvDate.text.toString()
             type = viewModel.todoType
             priority = viewModel.todoPriority
-            viewModel.model.updateTodo(this)
-                .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
-                .doOnSubscribe { viewModel.showLoading() }
-                .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
-                    override fun onResult(t: BaseBean<Any?>) {
-                        viewModel.dismissLoading()
-                        if (t.errorCode == 0) {
-                            activity?.setResult(200, Intent().apply {
-                                putExtra(AppConstants.BundleKey.TODO_INFO_DATA, todoInfo)
-                            })
-                        }
-                        if (preFragment == null) {
-                            requireActivity().finish()
-                        } else {
-                            pop()
-                        }
-                    }
-
-                    override fun onFailed(msg: String?) {
-                        viewModel.dismissLoading()
-                        if (preFragment == null) {
-                            requireActivity().finish()
-                        } else {
-                            pop()
-                        }
-                    }
-                })
+            viewModel.saveData(this)
         }
     }
 }

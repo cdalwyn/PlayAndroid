@@ -2,12 +2,15 @@ package com.czl.lib_base.util
 
 import android.content.Context
 import androidx.core.content.ContextCompat
+import com.afollestad.date.DatePicker
+import com.afollestad.materialdialogs.DialogCallback
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.datetime.DateTimeCallback
 import com.afollestad.materialdialogs.datetime.datePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.blankj.utilcode.util.TimeUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseFragment
@@ -46,9 +49,14 @@ object DialogHelper {
             .asConfirm(title, content, "取消", "确定", OnConfirmListener(func), null, true).show()
     }
 
-    fun showDateDialog(activity: BaseActivity<*, *>, dateTimeCallback: DateTimeCallback) {
+    fun showDateDialog(
+        activity: BaseActivity<*, *>,
+        dateStr: String? = null,
+        dateTimeCallback: DateTimeCallback
+    ) {
         MaterialDialog(activity)
             .show {
+                noAutoDismiss()
                 getActionButton(WhichButton.POSITIVE).updateTextColor(
                     ContextCompat.getColor(
                         activity,
@@ -61,7 +69,18 @@ object DialogHelper {
                         R.color.md_grey
                     )
                 )
-                datePicker(dateCallback = dateTimeCallback)
+                neutralButton(text = "回到今天",click = object :DialogCallback{
+                    override fun invoke(dialog: MaterialDialog) {
+                        dialog.findViewById<DatePicker>(R.id.datetimeDatePicker).setDate(Calendar.getInstance().apply { time = Date() })
+                    }
+                })
+                negativeButton { dismiss() }
+                datePicker(
+                    currentDate = if (dateStr.isNullOrEmpty()) null else Calendar.getInstance()
+                        .apply {
+                               time = TimeUtils.string2Date(dateStr,"yyyy-MM-dd")
+                        }, dateCallback = dateTimeCallback
+                )
                 lifecycleOwner(activity)
             }
     }

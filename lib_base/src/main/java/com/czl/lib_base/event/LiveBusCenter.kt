@@ -2,6 +2,7 @@ package com.czl.lib_base.event
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.czl.lib_base.data.bean.TodoBean
 import com.jeremyliao.liveeventbus.LiveEventBus
 
 /**
@@ -116,8 +117,8 @@ object LiveBusCenter {
         LiveEventBus.get(SwitchReadHistoryEvent::class.java).observe(owner, Observer(func))
     }
 
-    fun postTodoListRefreshEvent(){
-        LiveEventBus.get(TodoListRefreshEvent::class.java).post(TodoListRefreshEvent(0))
+    fun postTodoListRefreshEvent(todoInfo:TodoBean.Data){
+        LiveEventBus.get(TodoListRefreshEvent::class.java).post(TodoListRefreshEvent(0,todoInfo))
     }
     fun observeTodoListRefreshEvent(owner: LifecycleOwner, func: (t: TodoListRefreshEvent) -> Unit){
         LiveEventBus.get(TodoListRefreshEvent::class.java).observe(owner, Observer(func))

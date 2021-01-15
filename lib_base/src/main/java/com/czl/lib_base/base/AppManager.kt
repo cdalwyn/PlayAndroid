@@ -81,12 +81,6 @@ class AppManager private constructor() {
         for (activity in activityStack!!) {
             finishActivity(activity)
         }
-        //        for (int i = 0, size = activityStack.size(); i < size; i++) {
-//            if (null != activityStack.get(i)) {
-//                finishActivity(activityStack.get(i));
-//            }
-//        }
-//        activityStack.clear();
     }
 
     /**
@@ -146,7 +140,7 @@ class AppManager private constructor() {
         try {
             finishAllActivity()
             // 杀死该应用进程
-          android.os.Process.killProcess(android.os.Process.myPid())
+            android.os.Process.killProcess(android.os.Process.myPid())
 //            调用 System.exit(n) 实际上等效于调用：
 //            Runtime.getRuntime().exit(n)
 //            finish()是Activity的类方法，仅仅针对Activity，当调用finish()时，只是将活动推向后台，并没有立即释放内存，活动的资源并没有被清理；当调用System.exit(0)时，退出当前Activity并释放资源（内存），但是该方法不可以结束整个App如有多个Activty或者有其他组件service等不会结束。
@@ -169,6 +163,6 @@ class AppManager private constructor() {
          *
          * @return AppManager
          */
-        val instance:AppManager by lazy { AppManager() }
+        val instance: AppManager by lazy { AppManager() }
     }
 }

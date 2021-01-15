@@ -32,7 +32,6 @@ import java.util.*
  */
 class UserTodoAdapter(private val mFragment: UserTodoFragment) :
     BaseQuickAdapter<TodoBean.Data, BaseDataBindingHolder<UserItemTodoBinding>>(R.layout.user_item_todo) {
-    private val nowTimeMills = System.currentTimeMillis()
     override fun convert(holder: BaseDataBindingHolder<UserItemTodoBinding>, item: TodoBean.Data) {
         holder.dataBinding?.apply {
             data = item
