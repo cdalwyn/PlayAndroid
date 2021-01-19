@@ -61,12 +61,12 @@ class TodoInfoFmViewModel(application: MyApplication, model: DataRepository) :
         model.updateTodo(todoInfo)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .doOnSubscribe { showLoading() }
-            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
-                override fun onResult(t: BaseBean<Any?>) {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<TodoBean.Data>>() {
+                override fun onResult(t: BaseBean<TodoBean.Data>) {
                     dismissLoading()
                     if (t.errorCode == 0) {
                         showSuccessToast("保存成功")
-                        uc.updateSuccessEvent.postValue(todoInfo)
+                        uc.updateSuccessEvent.postValue(t.data)
                     }
                 }
 

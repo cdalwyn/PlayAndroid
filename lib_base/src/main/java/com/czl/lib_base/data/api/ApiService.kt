@@ -282,5 +282,5 @@ interface ApiService {
         @Path("id") todoId: Int, @Field("title") title: String, @Field("content") content: String,
         @Field("date") date: String, @Field("status") status: Int, @Field("type") type: Int,
         @Field("priority") priority: Int
-    ):Observable<BaseBean<Any?>>
+    ):Observable<BaseBean<TodoBean.Data>>
 }

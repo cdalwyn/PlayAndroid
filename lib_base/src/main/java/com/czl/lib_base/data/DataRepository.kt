@@ -196,7 +196,7 @@ class DataRepository constructor(
         return mHttpDataSource.updateTodoState(todoId, status)
     }
 
-    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<Any?>> {
+    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<TodoBean.Data>> {
         return mHttpDataSource.updateTodo(todoInfo)
     }
 

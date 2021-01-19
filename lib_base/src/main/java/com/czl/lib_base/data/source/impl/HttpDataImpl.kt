@@ -191,7 +191,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         return apiService.updateTodoState(todoId, status)
     }
 
-    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<Any?>> {
+    override fun updateTodo(todoInfo: TodoBean.Data): Observable<BaseBean<TodoBean.Data>> {
         return apiService.updateTodo(
             todoInfo.id,
             todoInfo.title ?: "",

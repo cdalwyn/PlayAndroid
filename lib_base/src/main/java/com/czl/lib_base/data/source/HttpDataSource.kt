@@ -49,5 +49,5 @@ interface HttpDataSource {
     fun addTodo(title: String, content: String, date: String, @TodoType type: Int, priority: Int):Observable<BaseBean<Any?>>
     fun deleteTodo(todoId: Int): Observable<BaseBean<Any?>>
     fun updateTodoState(todoId: Int, status: Int):Observable<BaseBean<Any?>>
-    fun updateTodo(todoInfo: TodoBean.Data):Observable<BaseBean<Any?>>
+    fun updateTodo(todoInfo: TodoBean.Data):Observable<BaseBean<TodoBean.Data>>
 }

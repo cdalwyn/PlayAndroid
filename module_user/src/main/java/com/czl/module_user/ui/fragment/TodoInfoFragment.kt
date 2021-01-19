@@ -3,6 +3,8 @@ package com.czl.module_user.ui.fragment
 import android.content.Intent
 import com.afollestad.materialdialogs.MaterialDialog
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -42,6 +44,7 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
     }
 
     override fun initFitThemeStatusBar() {
+        // 兼容夜间模式
         ImmersionBar.with(this)
             .statusBarDarkFont(false, 0.2f)
             .statusBarColor(com.czl.lib_base.R.color.md_theme_red)
@@ -56,18 +59,23 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
 
     override fun initViewObservable() {
         viewModel.uc.pickDateEvent.observe(this, {
-            DialogHelper.showDateDialog(requireActivity() as BaseActivity<*, *>,binding.tvDate.text.toString()) { dialog: MaterialDialog, datetime: Calendar ->
+            DialogHelper.showDateDialog(
+                requireActivity() as BaseActivity<*, *>,
+                binding.tvDate.text.toString()
+            ) { dialog: MaterialDialog, datetime: Calendar ->
                 binding.tvDate.text =
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(datetime.time)
                 dialog.dismiss()
             }
         })
-        viewModel.uc.saveDataEvent.observe(this,{
+        viewModel.uc.saveDataEvent.observe(this, {
             updateTodoData()
         })
-        viewModel.uc.updateSuccessEvent.observe(this,{data->
+        viewModel.uc.updateSuccessEvent.observe(this, { data ->
             activity?.setResult(200, Intent().apply {
-                putExtra(AppConstants.BundleKey.TODO_INFO_DATA, data)
+                putExtra(AppConstants.BundleKey.TODO_INFO_DATA, data.apply {
+                    dateExpired = date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(date)
+                })
             })
         })
     }

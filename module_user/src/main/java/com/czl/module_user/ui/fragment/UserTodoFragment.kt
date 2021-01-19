@@ -33,7 +33,6 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
 
     private lateinit var mAdapter: UserTodoAdapter
     private val todoPopView: BasePopupView by inject(named("todo"))
-    var clickItemIndex: Int = 0
 
     override fun initContentView(): Int {
         return R.layout.user_fragment_todo
@@ -65,7 +64,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
     override fun initViewObservable() {
         viewModel.uc.refreshCompleteEvent.observe(this, { data ->
             // 遍历设置时间是否过期
-            data?.datas?.forEach{ item ->
+            data?.datas?.forEach { item ->
                 if (item.date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(item.date)) {
                     item.dateExpired = true
                 }
@@ -87,25 +86,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
             if (it.code == 0) {
                 val todoInfo = it.todoInfo
                 // 查找是否有相同日期的数据存在
-                val sameDateTodo = mAdapter.data.find { item -> item.dateStr == todoInfo.dateStr }
-                if (sameDateTodo != null) {
-                    // 存在
-                    mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
-                    return@observeTodoListRefreshEvent
-                }
-                // 不存在相同日期  则查找最后一个未来日期添加到下面
-                val moreDateTodo = mAdapter.data.findLast { item -> item.date > todoInfo.date }
-                if (moreDateTodo != null) {
-                    mAdapter.addData(mAdapter.getItemPosition(moreDateTodo) + 1, todoInfo)
-                    return@observeTodoListRefreshEvent
-                }
-                // 不存在未来日期 则查找第一个以前的日期
-                val lessDateTodo = mAdapter.data.find { item -> item.date < todoInfo.date }
-                if (lessDateTodo != null) {
-                    mAdapter.addData(mAdapter.getItemPosition(lessDateTodo),todoInfo)
-                    return@observeTodoListRefreshEvent
-                }
-                mAdapter.addData(todoInfo)
+                updateList(todoInfo)
             }
         })
     }
@@ -115,7 +96,28 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         if (requestCode == 201 && resultCode == 200 && data != null) {
             val todoInfo =
                 data.getParcelableExtra<TodoBean.Data>(AppConstants.BundleKey.TODO_INFO_DATA)
-            todoInfo?.let { mAdapter.setData(clickItemIndex, it) }
+                    ?: return
+//            todoInfo?.let { mAdapter.setData(mAdapter.getItemPosition(mAdapter.data.first {item->item.id==it.id}), it) }
+            // 查找是否有相同日期的数据存在
+            updateList(todoInfo)
         }
+    }
+
+    private fun updateList(todoInfo: TodoBean.Data) {
+        val sameDateTodo = mAdapter.data.find { item -> item.dateStr == todoInfo.dateStr }
+        if (sameDateTodo != null) {
+            // 存在
+            mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
+            return
+        }
+        // 不存在相同日期  则查找最后一个未来日期添加到下面
+        val moreDateTodo = mAdapter.data.findLast { item -> item.date > todoInfo.date }
+        if (moreDateTodo != null) {
+            mAdapter.addData(mAdapter.getItemPosition(moreDateTodo) + 1, todoInfo)
+            return
+        }
+        // 不存在未来日期 则直接添加到第一个
+        mAdapter.addData(0, todoInfo)
+        viewModel.scrollToTop()
     }
 }

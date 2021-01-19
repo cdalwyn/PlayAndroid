@@ -12,7 +12,7 @@ import com.google.android.material.tabs.TabLayout
 object ViewAdapter {
     @JvmStatic
     @BindingAdapter("onTabSelectedCommand")
-    fun onTabSelectedCommand(tabLayout: TabLayout, bindingCommand: BindingCommand<Int?>?) {
+    fun onTabSelectedCommand(tabLayout: TabLayout, bindingCommand: BindingCommand<Int>?) {
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 bindingCommand?.execute(tab.position)

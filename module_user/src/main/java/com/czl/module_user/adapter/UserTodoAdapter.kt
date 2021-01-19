@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.databinding.ObservableInt
 import androidx.recyclerview.widget.DiffUtil
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.TimeUtils
@@ -89,7 +90,6 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
 
     val onItemClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {
         if (it is TodoBean.Data) {
-            mFragment.clickItemIndex = getItemPosition(it)
             mFragment.startContainerActivity(
                 AppConstants.Router.User.F_USER_TODO_INFO,
                 Bundle().apply {
@@ -104,8 +104,8 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
             mFragment.viewModel.updateTodoState(it.id, if (it.status == 0) 1 else 0) {
                 (getViewByPosition(itemPosition, R.id.swipe_layout) as EasySwipeMenuLayout).resetStatus()
                 // 标记已完成或者未完成
-                (getViewByPosition(itemPosition, R.id.iv_state) as ImageView).setImageResource(R.drawable.ic_finished_flag)
                 it.status = if (it.status == 1) 0 else 1
+                (getViewByPosition(itemPosition, R.id.iv_state) as ImageView).setImageDrawable(getImage(it))
             }
         }
     })
