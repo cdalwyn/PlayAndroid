@@ -17,7 +17,10 @@ import com.czl.module_user.R
 import com.czl.module_user.adapter.UserTodoAdapter
 import com.czl.module_user.databinding.UserFragmentTodoBinding
 import com.czl.module_user.viewmodel.UserTodoViewModel
+import com.czl.module_user.widget.TodoFilterPopView
+import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.enums.PopupPosition
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.*
@@ -89,6 +92,13 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                 updateList(todoInfo)
             }
         })
+        viewModel.uc.showDrawerPopEvent.observe(this, {
+            XPopup.Builder(context)
+                .popupPosition(PopupPosition.Right)
+                .hasStatusBar(false)
+                .asCustom(TodoFilterPopView(this))
+                .show()
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,7 +107,6 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
             val todoInfo =
                 data.getParcelableExtra<TodoBean.Data>(AppConstants.BundleKey.TODO_INFO_DATA)
                     ?: return
-//            todoInfo?.let { mAdapter.setData(mAdapter.getItemPosition(mAdapter.data.first {item->item.id==it.id}), it) }
             // 查找是否有相同日期的数据存在
             updateList(todoInfo)
         }

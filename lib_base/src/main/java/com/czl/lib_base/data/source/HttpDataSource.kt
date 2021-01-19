@@ -46,7 +46,7 @@ interface HttpDataSource {
     fun getShareUserDetail(uid: String, page: Int = 1): Observable<BaseBean<ShareUserDetailBean>>
     fun getHomeTopArticle(): Observable<BaseBean<List<HomeArticleBean.Data>>>
     fun getTodoList(status: Int=-1, @TodoType type: Int=0, @TodoPriority priority: Int=0, @TodoOrder orderby: Int=TodoOrder.createDesc, page: Int = 1): Observable<BaseBean<TodoBean>>
-    fun addTodo(title: String, content: String, date: String, @TodoType type: Int, priority: Int):Observable<BaseBean<Any?>>
+    fun addTodo(title: String, content: String, date: String, @TodoType type: Int, priority: Int):Observable<BaseBean<TodoBean.Data>>
     fun deleteTodo(todoId: Int): Observable<BaseBean<Any?>>
     fun updateTodoState(todoId: Int, status: Int):Observable<BaseBean<Any?>>
     fun updateTodo(todoInfo: TodoBean.Data):Observable<BaseBean<TodoBean.Data>>

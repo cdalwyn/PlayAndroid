@@ -30,6 +30,7 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
 
     @TodoType
     var todoType: Int = TodoType.ALL
+
     // 0 未完成 1 已完成 -1 显示所有
     var status = -1
 
@@ -47,6 +48,7 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
     class UiChangeEvent {
         val refreshCompleteEvent: SingleLiveEvent<TodoBean?> = SingleLiveEvent()
         val showAddTodoPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val showDrawerPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     override fun refreshCommand() {
@@ -93,12 +95,12 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
             })
     }
 
-    fun updateTodoState(todoId: Int, state: Int,func:()->Unit) {
-        model.updateTodoState(todoId,state)
+    fun updateTodoState(todoId: Int, state: Int, func: () -> Unit) {
+        model.updateTodoState(todoId, state)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<Any?>>(){
+            .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
                 override fun onResult(t: BaseBean<Any?>) {
-                    if (t.errorCode==0){
+                    if (t.errorCode == 0) {
                         func.invoke()
                     }
                 }
@@ -106,5 +108,9 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
                 override fun onFailed(msg: String?) {
                 }
             })
+    }
+
+    override fun setToolbarRightClick() {
+        uc.showDrawerPopEvent.call()
     }
 }

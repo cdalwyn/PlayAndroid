@@ -184,7 +184,7 @@ class DataRepository constructor(
         date: String,
         @TodoType type: Int,
         priority: Int
-    ): Observable<BaseBean<Any?>> {
+    ): Observable<BaseBean<TodoBean.Data>> {
         return mHttpDataSource.addTodo(title, content, date, type, priority)
     }
 

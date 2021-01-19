@@ -63,6 +63,7 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
             initBtnState()
             executePendingBindings()
         }
+
     }
 
     private fun PopAddTodoBinding.initBtnState() {
@@ -96,20 +97,24 @@ class AddTodoPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activit
             activity.dataRepository.addTodo(
                 todoTitle, todoContent, todoDateStr, todoType, todoPriority
             ).compose(RxThreadHelper.rxSchedulerHelper(activity.viewModel))
-                .subscribe(object : ApiSubscriberHelper<BaseBean<Any?>>() {
-                    override fun onResult(t: BaseBean<Any?>) {
+                .subscribe(object : ApiSubscriberHelper<BaseBean<TodoBean.Data>>() {
+                    override fun onResult(t: BaseBean<TodoBean.Data>) {
                         if (t.errorCode == 0) {
                             dismiss()
                             activity.showSuccessToast("添加成功")
-                            LiveBusCenter.postTodoListRefreshEvent(TodoBean.Data().apply {
-                                title = todoTitle
-                                content = todoContent
-                                dateStr = todoDateStr
-                                type = todoType
-                                priority = todoPriority
-                                date = TimeUtils.date2Millis(TimeUtils.string2Date(todoDateStr,"yyyy-MM-dd"))
-                                dateExpired = date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(date)
-                            })
+                            dataBinding?.apply {
+                                // 恢复默认状态
+                                etTitle.setText("")
+                                etContent.setText("")
+                                dateObservableStr.set("今天")
+                                priorityObservableStr.set("正常")
+                                typeObservableStr.set("默认")
+                            }
+                            t.data?.let {
+                                LiveBusCenter.postTodoListRefreshEvent(it.apply {
+                                    dateExpired = date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(date)
+                                })
+                            }
                         }
                     }
 

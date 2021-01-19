@@ -253,7 +253,7 @@ interface ApiService {
         @Field("date") date: String,
         @Field("type") type: Int,
         @Field("priority") priority: Int
-    ): Observable<BaseBean<Any?>>
+    ): Observable<BaseBean<TodoBean.Data>>
 
     /**
      * 删除todo

@@ -61,6 +61,21 @@
         <item name="colorControlHighlight">@color/md_theme_red</item>
     </style>
 
+    <!-- 筛选选择框自定义主题 -->
+    <style name="select_style">
+        <item name="android:layout_width">60dip</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">4dip</item>
+        <item name="android:layout_marginRight">4dip</item>
+        <item name="android:paddingTop">4dip</item>
+        <item name="android:paddingBottom">4dip</item>
+        <item name="android:background">@drawable/tag_tv_selector</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/tag_text_color_selector</item>
+    </style>
+
     <style name="SearchBarStyle" parent="MaterialSearchBarLight">
         <item name="mt_searchBarColor">@color/color_default_bg</item>
         <item name="mt_dividerColor">@color/searchBarDividerColor</item>

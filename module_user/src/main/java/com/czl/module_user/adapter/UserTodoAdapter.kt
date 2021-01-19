@@ -79,13 +79,6 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
             }
             executePendingBindings()
         }
-        // 若未完成且日期已过期
-//        if (item.status == 0 && item.date < nowTimeMills && !TimeUtils.isToday(item.date)) {
-//            holder.dataBinding?.ivState?.apply {
-//                visibility = View.VISIBLE
-//                setImageResource(R.drawable.ic_date_out)
-//            }
-//        }
     }
 
     val onItemClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {

@@ -179,7 +179,7 @@ class HttpDataImpl(private val apiService: ApiService) : HttpDataSource {
         date: String,
         @TodoType type: Int,
         priority: Int
-    ): Observable<BaseBean<Any?>> {
+    ): Observable<BaseBean<TodoBean.Data>> {
         return apiService.addTodo(title, content, date, type, priority)
     }
 
