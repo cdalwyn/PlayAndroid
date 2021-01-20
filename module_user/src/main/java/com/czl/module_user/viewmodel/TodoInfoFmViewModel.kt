@@ -78,6 +78,7 @@ class TodoInfoFmViewModel(application: MyApplication, model: DataRepository) :
 
                 override fun onFailed(msg: String?) {
                     dismissLoading()
+                    showErrorToast(msg)
                 }
             })
     }
