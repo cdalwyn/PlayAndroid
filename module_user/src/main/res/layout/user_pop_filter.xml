@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="pop"
+            type="com.czl.module_user.widget.TodoFilterPopView" />
+
+        <variable
+            name="type"
+            type="Integer" />
+
+        <variable
+            name="priority"
+            type="Integer" />
+
+        <variable
+            name="status"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +31,9 @@
             android:id="@+id/iv_close"
             android:layout_width="@dimen/dp_40"
             android:layout_height="@dimen/dp_40"
-            android:padding="@dimen/dp_6"
             android:layout_marginTop="@dimen/dp_10"
+            android:onClick="@{()->pop.dismiss()}"
+            android:padding="@dimen/dp_6"
             android:src="@drawable/ic_delete_32dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,25 +69,28 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
             android:layout_marginEnd="@dimen/dp_10"
-            app:layout_constraintTop_toBottomOf="@id/tv_type">
+            app:layout_constraintTop_toBottomOf="@id/tv_type"
+            binding:onCheckedChangedCommand="@{pop.onTypeGroupCheckCommand}">
 
             <RadioButton
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==0}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
-                android:text="默认" />
+                android:text="全部" />
 
             <RadioButton
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==1}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="工作" />
 
@@ -78,9 +98,10 @@
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==2}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="学习" />
 
@@ -88,9 +109,10 @@
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==3}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="生活" />
 
@@ -98,9 +120,10 @@
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==4}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="消费" />
 
@@ -108,9 +131,10 @@
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==5}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="娱乐" />
 
@@ -118,41 +142,151 @@
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{type==6}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="家庭" />
 
         </com.czl.lib_base.widget.FlowRadioGroup>
+
         <TextView
             android:id="@+id/tv_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
             android:padding="@dimen/dp_10"
             android:text="优先级"
             android:textColor="@color/black"
             android:textSize="@dimen/sp_18"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/dp_10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rg_type" />
+
         <com.czl.lib_base.widget.FlowRadioGroup
             android:id="@+id/rg_priority"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_priority">
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/tv_priority"
+            binding:onCheckedChangedCommand="@{pop.onPriorityGroupCheckCommand}">
+
             <RadioButton
                 style="@style/select_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="@{priority==0}"
                 android:paddingStart="@dimen/dp_16"
-                android:paddingEnd="@dimen/dp_16"
                 android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="全部" />
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{priority==1}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
                 android:paddingBottom="@dimen/dp_6"
                 android:text="高" />
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{priority==2}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="正常" />
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{priority==3}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="低" />
         </com.czl.lib_base.widget.FlowRadioGroup>
 
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:text="状态"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_priority" />
+
+        <com.czl.lib_base.widget.FlowRadioGroup
+            android:id="@+id/rg_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/tv_status"
+            binding:onCheckedChangedCommand="@{pop.onStatusGroupCheckCommand}">
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{status==-1}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="全部" />
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{status==0}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="待办" />
+
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{status==1}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="已完成" />
+        </com.czl.lib_base.widget.FlowRadioGroup>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:background="@drawable/red_btn_corner_10dp"
+            android:text="确定"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            binding:onClickCommand="@{pop.onConfirmClickCommand}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

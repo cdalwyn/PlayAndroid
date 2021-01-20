@@ -37,10 +37,7 @@ val appModule = module {
     single { DataRepository(get(), get()) }
     // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
     single { AppViewModelFactory(get(), get()) }
-
-
 }
-
 val factoryModule = module {
     factory(named("login")) {
         XPopup.Builder(AppManager.instance.currentActivity())
@@ -58,7 +55,7 @@ val factoryModule = module {
             .asCustom(AddTodoPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
     }
 }
-
+val allModule = appModule + factoryModule
 //val factoryModule = module {
 //    // 带参数注入
 //    factory { (view: View) -> TestDataImpl(view) }
@@ -71,4 +68,3 @@ val factoryModule = module {
 //    }
 //}
 
-val allModule = appModule + factoryModule

@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:orientation="vertical"
-            android:layout_marginBottom="@dimen/dp_36">
+            android:layout_marginBottom="@dimen/dp_20">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/iv_icon"
@@ -75,6 +75,22 @@
             attrs:mRight="true"
             attrs:mTitle="我的分享"
             binding:onClickCommand="@{pop.onOpenShareCommand}"/>
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            attrs:mIcon="@drawable/ic_todo"
+            attrs:mRight="true"
+            attrs:mTitle="待办清单"
+            binding:onClickCommand="@{pop.onOpenTodoCommand}"/>
+
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            attrs:mIcon="@drawable/ic_read"
+            attrs:mRight="true"
+            attrs:mTitle="阅读历史"
+            binding:onClickCommand="@{pop.onOpenWebHistoryCommand}"/>
 
         <com.czl.lib_base.widget.CommonItemSettingView
             android:layout_width="match_parent"

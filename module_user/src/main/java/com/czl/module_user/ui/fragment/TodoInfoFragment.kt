@@ -77,6 +77,7 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
                     dateExpired = date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(date)
                 })
             })
+            viewModel.finish()
         })
     }
 
@@ -88,6 +89,7 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
             dateStr = binding.tvDate.text.toString()
             type = viewModel.todoType
             priority = viewModel.todoPriority
+            status = viewModel.todoStatus
             viewModel.saveData(this)
         }
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:binding="http://schemas.android.com/tools"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="pop"
             type="com.czl.lib_base.widget.LoginPopView" />
@@ -25,15 +25,15 @@
             android:layout_height="match_parent"
             tools:background="@color/black">
 
-            <View
-                android:id="@+id/view"
-                android:layout_width="@dimen/dp_40"
-                android:layout_height="@dimen/dp_6"
-                android:layout_marginTop="@dimen/dp_28"
-                android:background="@drawable/gray_btn_corner_10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <View-->
+<!--                android:id="@+id/view"-->
+<!--                android:layout_width="@dimen/dp_40"-->
+<!--                android:layout_height="@dimen/dp_6"-->
+<!--                android:layout_marginTop="@dimen/dp_28"-->
+<!--                android:background="@drawable/gray_btn_corner_10dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
             <!--            <androidx.appcompat.widget.AppCompatImageView-->
             <!--                android:layout_width="wrap_content"-->
             <!--                android:layout_height="wrap_content"-->
@@ -55,7 +55,7 @@
                 android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/view" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group_login"
@@ -78,10 +78,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAccount"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
-                    style="@style/TextInputWhiteStyle"
                     android:hint="账号"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -94,24 +94,25 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                style="@style/TextInputWhiteStyle"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tlAccount"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPwd"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
                     android:hint="密码"
-                    style="@style/TextInputWhiteStyle"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -138,10 +139,9 @@
                 android:id="@+id/btnRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
                 android:padding="@dimen/dp_10"
-                android:text="注册"
+                android:text="没有账号？前往注册"
                 android:textColor="#FFFFFF"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -156,25 +156,25 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlRegAccount"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginEnd="40dp"
-                style="@style/TextInputWhiteStyle"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tvLogin">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegAccount"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
                     android:hint="账号"
                     android:maxLines="1"
                     android:padding="10dp"
-                    style="@style/TextInputWhiteStyle"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#FFFFFF"
@@ -183,19 +183,21 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlRegPwd"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
-                style="@style/TextInputWhiteStyle"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tlRegAccount"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegPwd"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
@@ -203,7 +205,6 @@
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:padding="10dp"
-                    style="@style/TextInputWhiteStyle"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
                     android:theme="@style/TextInputWhiteStyle" />
@@ -211,6 +212,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tlRepassword"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -218,19 +220,19 @@
                 android:layout_marginEnd="40dp"
                 android:hint=""
                 android:textColorHint="#FFFFFF"
-                style="@style/TextInputWhiteStyle"
                 app:hintTextColor="#FFFFFF"
                 app:layout_constraintTop_toBottomOf="@id/tlRegPwd"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegRePwd"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#FFFFFF"
                     android:hint="确认密码"
                     android:inputType="textPassword"
-                    style="@style/TextInputWhiteStyle"
                     android:maxLines="1"
                     android:padding="10dp"
                     android:singleLine="true"
@@ -259,7 +261,6 @@
                 android:padding="@dimen/dp_10"
                 android:text="有账号了？去登录"
                 android:textColor="#FFFFFF"
-                android:layout_marginTop="@dimen/dp_10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnReg"

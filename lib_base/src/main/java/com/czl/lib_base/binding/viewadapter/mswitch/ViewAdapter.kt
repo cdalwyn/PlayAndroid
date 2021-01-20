@@ -26,7 +26,7 @@ object ViewAdapter {
      */
     @JvmStatic
     @BindingAdapter("onSwitchCheckedCommand")
-    fun onCheckedChangeCommand(mSwitch: SwitchCompat, changeListener: BindingCommand<Boolean?>?) {
+    fun onCheckedChangeCommand(mSwitch: SwitchCompat, changeListener: BindingCommand<Boolean>?) {
         if (changeListener != null) {
             mSwitch.setOnCheckedChangeListener { buttonView: CompoundButton?, isChecked: Boolean ->
                 changeListener.execute(

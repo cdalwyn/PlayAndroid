@@ -87,7 +87,8 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
                 AppConstants.Router.User.F_USER_TODO_INFO,
                 Bundle().apply {
                     putParcelable(AppConstants.BundleKey.TODO_INFO_DATA, it)
-                },201)
+                }, 201
+            )
         }
     })
 
@@ -95,10 +96,15 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
         if (it is TodoBean.Data) {
             val itemPosition = getItemPosition(it)
             mFragment.viewModel.updateTodoState(it.id, if (it.status == 0) 1 else 0) {
-                (getViewByPosition(itemPosition, R.id.swipe_layout) as EasySwipeMenuLayout).resetStatus()
+                (getViewByPosition(
+                    itemPosition,
+                    R.id.swipe_layout
+                ) as EasySwipeMenuLayout).resetStatus()
                 // 标记已完成或者未完成
                 it.status = if (it.status == 1) 0 else 1
-                (getViewByPosition(itemPosition, R.id.iv_state) as ImageView).setImageDrawable(getImage(it))
+                (getViewByPosition(itemPosition, R.id.iv_state) as ImageView).setImageDrawable(
+                    getImage(it)
+                )
             }
         }
     })
@@ -127,12 +133,12 @@ class UserTodoAdapter(private val mFragment: UserTodoFragment) :
         }
     }
 
-    fun getImage(item:TodoBean.Data):Drawable?{
-        if (item.status==1){
-            return ContextCompat.getDrawable(context,R.drawable.ic_finished_flag)
+    fun getImage(item: TodoBean.Data): Drawable? {
+        if (item.status == 1) {
+            return ContextCompat.getDrawable(context, R.drawable.ic_finished_flag)
         }
-        if (item.dateExpired){
-            return ContextCompat.getDrawable(context,R.drawable.ic_date_out)
+        if (item.dateExpired) {
+            return ContextCompat.getDrawable(context, R.drawable.ic_date_out)
         }
         return null
     }

@@ -129,7 +129,7 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
 
     override fun reload() {
         super.reload()
-        viewModel.getSearchDataByKeyword()
+        binding.includeRy.smartCommon.autoRefresh()
     }
 
 

@@ -80,6 +80,6 @@ class CollectArticleFragment : BaseFragment<CommonRecyclerviewBinding, CollectAr
 
     override fun reload() {
         super.reload()
-        viewModel.getUserCollectData()
+        binding.smartCommon.autoRefresh()
     }
 }

@@ -35,6 +35,8 @@ class TodoInfoFmViewModel(application: MyApplication, model: DataRepository) :
     @TodoPriority
     var todoPriority: Int = 0
 
+    var todoStatus:Int = 0
+
     class UiChangeEvent {
         val pickDateEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val saveDataEvent:SingleLiveEvent<Void> = SingleLiveEvent()
@@ -55,6 +57,10 @@ class TodoInfoFmViewModel(application: MyApplication, model: DataRepository) :
 
     val onSaveClickCommand:BindingCommand<Void> = BindingCommand(BindingAction {
         uc.saveDataEvent.call()
+    })
+
+    val onSwitchStatusCommand: BindingCommand<Boolean> = BindingCommand(BindingConsumer { checked->
+        todoStatus = if (checked) 1 else 0
     })
 
     fun saveData(todoInfo:TodoBean.Data){

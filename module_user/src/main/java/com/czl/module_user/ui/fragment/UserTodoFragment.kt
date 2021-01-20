@@ -1,11 +1,9 @@
 package com.czl.module_user.ui.fragment
 
 import android.content.Intent
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.TimeUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
@@ -87,16 +85,15 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         })
         LiveBusCenter.observeTodoListRefreshEvent(this, {
             if (it.code == 0) {
-                val todoInfo = it.todoInfo
                 // 查找是否有相同日期的数据存在
-                updateList(todoInfo)
+                updateList(it.todoInfo, true)
             }
         })
         viewModel.uc.showDrawerPopEvent.observe(this, {
             XPopup.Builder(context)
                 .popupPosition(PopupPosition.Right)
                 .hasStatusBar(false)
-                .asCustom(TodoFilterPopView(this))
+                .asCustom(TodoFilterPopView(this,viewModel.status,viewModel.todoType,viewModel.priority))
                 .show()
         })
     }
@@ -108,18 +105,23 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                 data.getParcelableExtra<TodoBean.Data>(AppConstants.BundleKey.TODO_INFO_DATA)
                     ?: return
             // 查找是否有相同日期的数据存在
-            updateList(todoInfo)
+            updateList(todoInfo, false)
         }
     }
 
-    private fun updateList(todoInfo: TodoBean.Data) {
+    private fun updateList(todoInfo: TodoBean.Data, isCreateFlag: Boolean) {
         val sameDateTodo = mAdapter.data.find { item -> item.dateStr == todoInfo.dateStr }
         if (sameDateTodo != null) {
-            // 存在
-            mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
+            if (isCreateFlag)
+                // 新建时直接添加
+                mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
+            else
+                // 编辑后则更新
+                mAdapter.setData(mAdapter.getItemPosition(mAdapter.data.find { it.id == todoInfo.id }), todoInfo)
             return
         }
-        // 不存在相同日期  则查找最后一个未来日期添加到下面
+        // 不存在相同日期  则先删除旧的再查找最后一个未来日期添加到下面
+        mAdapter.data.find { it.id == todoInfo.id }?.let { mAdapter.remove(it) }
         val moreDateTodo = mAdapter.data.findLast { item -> item.date > todoInfo.date }
         if (moreDateTodo != null) {
             mAdapter.addData(mAdapter.getItemPosition(moreDateTodo) + 1, todoInfo)
@@ -128,5 +130,10 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         // 不存在未来日期 则直接添加到第一个
         mAdapter.addData(0, todoInfo)
         viewModel.scrollToTop()
+    }
+
+    override fun reload() {
+        super.reload()
+        binding.smartCommon.autoRefresh()
     }
 }

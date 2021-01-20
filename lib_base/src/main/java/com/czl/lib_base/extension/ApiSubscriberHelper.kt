@@ -51,7 +51,7 @@ abstract class ApiSubscriberHelper<T>(private val loadService: LoadService<BaseB
 
     override fun onError(throwable: Throwable) {
         loadService?.showWithConvertor(null)
-        if (throwable is ConnectException || throwable is ConnectTimeoutException) {
+        if (throwable is ConnectException || throwable is ConnectTimeoutException || throwable is UnknownHostException) {
             onFailed("连接失败，请检查网络后再试")
         } else if (throwable is RuntimeException) {
             onFailed(throwable.message)
@@ -67,8 +67,6 @@ abstract class ApiSubscriberHelper<T>(private val loadService: LoadService<BaseB
             || throwable is ParseException
         ) {
             onFailed("数据解析异常，请稍候再试")
-        } else if (throwable is UnknownHostException) {
-            onFailed("连接失败，请检查网络后再试")
         } else {
             onFailed(throwable.message)
         }

@@ -248,7 +248,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
                 val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                 val code = params[BaseViewModel.ParameterField.REQUEST_CODE] as Int?
-                startContainerActivity(canonicalName, bundle,code)
+                startContainerActivity(canonicalName, bundle, code)
             }
         )
         //关闭界面
@@ -287,7 +287,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     ) {
         this.ryCommon = ryCommon
         if (nullFlag) {
-            showErrorStatePage()
+            if (currentPage == defaultPage)
+                showErrorStatePage()
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)
             return
@@ -361,6 +362,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     fun showSuccessToast(msg: String?) {
         ToastHelper.showSuccessToast(msg)
     }
+
     fun showErrorStatePage() {
         loadService.showCallback(ErrorCallback::class.java)
     }
@@ -372,6 +374,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     fun showSuccessStatePage() {
         loadService.showCallback(SuccessCallback::class.java)
     }
+
     /**
      * 跳转页面
      *
@@ -410,7 +413,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (reqCode == null)
             startActivity(intent)
         else
-            startActivityForResult(intent,reqCode)
+            startActivityForResult(intent, reqCode)
     }
 
     /**

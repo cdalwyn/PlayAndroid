@@ -25,4 +25,10 @@
         <item>正常</item>
         <item>低</item>
     </string-array>
+
+    <string-array name="todo_status">
+        <item>全部</item>
+        <item>待办</item>
+        <item>已完成</item>
+    </string-array>
 </resources>

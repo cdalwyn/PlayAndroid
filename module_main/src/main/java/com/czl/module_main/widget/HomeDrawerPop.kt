@@ -43,6 +43,16 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
         dismiss()
     })
 
+    val onOpenTodoCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.startContainerActivity(AppConstants.Router.User.F_USER_TODO)
+        dismiss()
+    })
+
+    val onOpenWebHistoryCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.startContainerActivity(AppConstants.Router.User.F_USER_BROWSE)
+        dismiss()
+    })
+
     val onShowLoginPopClick: BindingCommand<Void> = BindingCommand(BindingAction {
         if (TextUtils.isEmpty(fragment.viewModel.model.getUserData()?.publicName)) {
             fragment.loginPopView.show()

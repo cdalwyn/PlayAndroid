@@ -75,17 +75,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:text="保存"
-                        android:gravity="center"
-                        android:textColor="@color/md_theme_red"
-                        android:drawablePadding="@dimen/dp_5"
                         android:layout_marginEnd="@dimen/dp_10"
                         android:drawableStart="@drawable/ic_save"
+                        android:drawablePadding="@dimen/dp_5"
+                        android:gravity="center"
+                        android:text="保存"
+                        android:textColor="@color/md_theme_red"
+                        app:drawableStartCompat="@drawable/ic_save"
+                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/iv_back"
-                        app:layout_constraintBottom_toBottomOf="@id/iv_back"
-                        binding:onClickCommand="@{viewModel.onSaveClickCommand}"
-                        app:drawableStartCompat="@drawable/ic_save" />
+                        binding:onClickCommand="@{viewModel.onSaveClickCommand}" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tl_title"
@@ -157,6 +157,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
                         android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@id/tv_type"
                         binding:onCheckedChangedCommand="@{viewModel.onTypeGroupCheckCommand}">
@@ -240,6 +241,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dp_15"
+                        android:layout_marginEnd="@dimen/dp_15"
+                        android:orientation="horizontal"
                         app:layout_constraintTop_toBottomOf="@id/tv_priority"
                         binding:onCheckedChangedCommand="@{viewModel.onPriorityCheckCommand}">
 
@@ -264,6 +267,34 @@
                             android:padding="@dimen/dp_5"
                             android:text="低" />
                     </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tv_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:padding="@dimen/dp_5"
+                        android:text=" 是否已完成 :"
+                        android:textColor="@color/black"
+                        app:layout_constraintTop_toBottomOf="@id/rg_priority" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="@{data.status==1}"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_status"
+                        app:layout_constraintEnd_toEndOf="@id/rg_priority"
+                        app:layout_constraintTop_toTopOf="@id/tv_status"
+                        binding:onSwitchCheckedCommand="@{viewModel.onSwitchStatusCommand}" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_12"
+                        android:text="（可在列表的每一项侧滑显示菜单进行标记完成或删除）"
+                        app:layout_constraintStart_toStartOf="@id/tv_status"
+                        app:layout_constraintTop_toBottomOf="@id/tv_status" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.lihang.ShadowLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

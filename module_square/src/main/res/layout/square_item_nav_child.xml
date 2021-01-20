@@ -16,8 +16,7 @@
     <com.lihang.ShadowLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_6"
+        android:layout_marginStart="@dimen/dp_5"
         app:hl_bindTextView="@id/tv_content"
         app:hl_cornerRadius="@dimen/dp_20"
         app:hl_layoutBackground="@color/white_ee"
@@ -26,8 +25,6 @@
         app:hl_layoutBackground_true="@color/md_theme_red"
         app:hl_textColor="@color/black"
         app:hl_shadowLimit="@dimen/dp_4"
-        app:hl_shadowHiddenTop="true"
-        app:hl_shadowHiddenLeft="true"
         binding:onRvItemCommand="@{adapter.onItemClickCommand}"
         binding:rvItemBean="@{data}">
 

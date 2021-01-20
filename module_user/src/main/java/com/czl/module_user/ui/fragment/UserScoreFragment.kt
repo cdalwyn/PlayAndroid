@@ -45,7 +45,7 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
 
     override fun reload() {
         super.reload()
-        viewModel.getTotalScore()
+        binding.smartCommon.autoRefresh()
     }
 
     override fun initViewObservable() {

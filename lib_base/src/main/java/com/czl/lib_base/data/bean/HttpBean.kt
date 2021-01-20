@@ -1166,7 +1166,7 @@ class TodoBean() : Parcelable {
     }
 
     class Data() : BaseObservable(), Parcelable {
-        var completeDate: String? = null
+        var completeDate: Long? = null
         var completeDateStr: String? = null
         var content: String? = null
         var date: Long = 0
@@ -1192,7 +1192,7 @@ class TodoBean() : Parcelable {
             }
 
         constructor(parcel: Parcel) : this() {
-            completeDate = parcel.readString()
+            completeDate = parcel.readLong()
             completeDateStr = parcel.readString()
             content = parcel.readString()
             date = parcel.readLong()
@@ -1208,7 +1208,7 @@ class TodoBean() : Parcelable {
 
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeString(completeDate)
+            parcel.writeLong(completeDate?:0)
             parcel.writeString(completeDateStr)
             parcel.writeString(content)
             parcel.writeLong(date)
