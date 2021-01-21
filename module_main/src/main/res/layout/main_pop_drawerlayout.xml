@@ -51,7 +51,13 @@
                 binding:onClickCommand="@{pop.onShowLoginPopClick}"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
+        <com.czl.lib_base.widget.CommonItemSettingView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            attrs:mIcon="@drawable/ic_scan"
+            attrs:mRight="false"
+            attrs:mTitle="扫一扫"
+            binding:onClickCommand="@{pop.onScanClickCommand}"/>
         <com.czl.lib_base.widget.CommonItemSettingView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +103,8 @@
             android:layout_height="wrap_content"
             attrs:mIcon="@drawable/ic_about"
             attrs:mRight="true"
-            attrs:mTitle="关于我们" />
+            attrs:mTitle="关于作者"
+            binding:onClickCommand="@{pop.onOpenAboutCommand}"/>
 
         <com.czl.lib_base.widget.CommonItemSettingView
             android:id="@+id/btn_exit"

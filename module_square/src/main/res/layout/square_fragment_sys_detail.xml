@@ -43,6 +43,7 @@
             android:layout_height="@dimen/dp_40"
             app:tabBackground="@color/tab_bg_color"
             app:tabMode="auto"
+            app:tabTextColor="@color/white_cc"
             app:tabSelectedTextColor="#ffffff"
             app:tabIndicatorColor="@color/md_theme_red"
             app:tabIndicatorFullWidth="false"

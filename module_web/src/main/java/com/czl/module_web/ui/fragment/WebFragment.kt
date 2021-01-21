@@ -113,6 +113,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
         val webView = NestedScrollAgentWebView(context)
         val lp = CoordinatorLayout.LayoutParams(-1, -1)
@@ -142,11 +143,18 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             .createAgentWeb()
             .ready()
             .go(homeUrl)
-
-        val settings = webView.settings
-        settings.apply {
+        webView.settings.apply {
+            //支持javascript
+            javaScriptEnabled = true
+            // 设置可以支持缩放
+            setSupportZoom(true)
+            // 设置出现缩放工具
+            builtInZoomControls = true
+            //扩大比例的缩放
             useWideViewPort = true
+            //自适应屏幕
             loadWithOverviewMode = true
+            displayZoomControls = false
         }
     }
 
@@ -199,7 +207,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-
             if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")) {
                 try {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -217,7 +224,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             request: WebResourceRequest
         ): Boolean {
             val url = request.url.toString()
-
             if (url.startsWith(DefaultWebClient.INTENT_SCHEME) || url.endsWith(".apk")
             ) {
                 try {

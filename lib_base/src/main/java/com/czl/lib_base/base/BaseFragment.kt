@@ -287,7 +287,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     ) {
         this.ryCommon = ryCommon
         if (nullFlag) {
-            if (currentPage == defaultPage)
+            if (currentPage == defaultPage-1)
                 showErrorStatePage()
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)

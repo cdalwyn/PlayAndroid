@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.CollectionUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.data.bean.CollectWebsiteBean
@@ -13,6 +14,7 @@ import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserCollectWebAdapter
 import com.czl.module_user.viewmodel.CollectWebsiteVm
+import java.util.stream.Collectors
 
 /**
  * @author Alwyn
@@ -65,7 +67,7 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
                 }
                 mAdapter.setEmptyView(emptyView)
             }
-            mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
+            mAdapter.setDiffNewData(it.reversed() as MutableList<CollectWebsiteBean>?)
         })
         LiveBusCenter.observeRefreshWebListEvent(this) {
             viewModel.getCollectWebsite()

@@ -105,6 +105,7 @@ dependencies {
     api rootProject.ext.dependencies["linkage-recyclerview"]
     api rootProject.ext.dependencies["dialog-datetime"]
     api rootProject.ext.dependencies["dialog-lifecycle"]
+    api rootProject.ext.dependencies["matisse"]
 //    api rootProject.ext.dependencies["calendarview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
     debugApi rootProject.ext.dependencies["dokitx"]

@@ -168,7 +168,8 @@
             android:layout_marginTop="@dimen/dp_10"
             android:background="@color/color_default_bg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_clear">
+            app:layout_constraintTop_toBottomOf="@id/btn_clear"
+            binding:onClickCommand="@{viewModel.onAboutUsClickCommand}">
 
             <TextView
                 android:layout_width="0dp"
@@ -176,7 +177,7 @@
                 android:layout_marginStart="@dimen/dp_20"
                 android:layout_weight="1"
                 android:padding="@dimen/dp_10"
-                android:text="关于我们"
+                android:text="关于作者"
                 android:textColor="@color/black" />
 
             <TextView
@@ -186,7 +187,7 @@
                 android:layout_marginEnd="@dimen/dp_20"
                 android:gravity="center"
                 app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
-                binding:onClickCommand="@{viewModel.onAboutUsClickCommand}" />
+                 />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

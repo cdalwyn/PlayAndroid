@@ -119,7 +119,8 @@ ext {
             'dokitx'                               : 'com.didichuxing.doraemonkit:dokitx:3.3.5',
             'calendarview'                         : 'com.haibin:calendarview:3.7.0',
             'dialog-datetime'                      : 'com.afollestad.material-dialogs:datetime:3.3.0',
-            'dialog-lifecycle'                     : 'com.afollestad.material-dialogs:lifecycle:3.3.0'
+            'dialog-lifecycle'                     : 'com.afollestad.material-dialogs:lifecycle:3.3.0',
+            'matisse'                              : 'com.zhihu.android:matisse:0.5.3-beta3'
 
 
     ]

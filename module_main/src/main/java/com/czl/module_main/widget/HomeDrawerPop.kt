@@ -8,10 +8,12 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.util.DialogHelper
+import com.czl.lib_base.util.PermissionUtil
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainPopDrawerlayoutBinding
 import com.czl.module_main.ui.fragment.HomeFragment
 import com.lxj.xpopup.core.DrawerPopupView
+import com.permissionx.guolindev.callback.RequestCallback
 
 /**
  * @author Alwyn
@@ -57,6 +59,20 @@ class HomeDrawerPop(private val fragment: HomeFragment) :
         if (TextUtils.isEmpty(fragment.viewModel.model.getUserData()?.publicName)) {
             fragment.loginPopView.show()
         }
+    })
+
+    val onScanClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        PermissionUtil.reqCamera(fragment = fragment, callback = { allGranted, _, _ ->
+            if (allGranted) {
+                fragment.viewModel.startContainerActivity(AppConstants.Router.Main.F_QR_SCAN)
+                dismiss()
+            }
+        })
+    })
+
+    val onOpenAboutCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        fragment.viewModel.startContainerActivity(AppConstants.Router.User.F_ABOUT_US)
+        dismiss()
     })
 
     override fun getImplLayoutId(): Int {

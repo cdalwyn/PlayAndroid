@@ -37,8 +37,8 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
             pop = this@WebMenuPop
             clRoot.background = XPopupUtils.createDrawable(
                 ContextCompat.getColor(context, com.czl.lib_base.R.color.white),
-                30f,
-                30f,
+                40f,
+                40f,
                 0f,
                 0f
             )
@@ -66,9 +66,11 @@ class WebMenuPop(private val mFragment: WebFragment) : BottomPopupView(mFragment
         dismiss()
     })
     val onOpenCollectClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        mFragment.viewModel.startContainerActivity(AppConstants.Router.User.F_USER_COLLECT, Bundle().apply {
-            putString(AppConstants.BundleKey.WEB_MENU_KEY, "collect")
-        })
+        mFragment.viewModel.startContainerActivity(
+            AppConstants.Router.User.F_USER_COLLECT,
+            Bundle().apply {
+                putString(AppConstants.BundleKey.WEB_MENU_KEY, "collect")
+            })
         dismiss()
     })
     val onHistoryClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

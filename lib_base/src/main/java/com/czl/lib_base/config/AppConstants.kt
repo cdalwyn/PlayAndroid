@@ -30,6 +30,7 @@ interface AppConstants {
             const val A_TEST = "/main/TestActivity"
             const val A_MAIN = "/main/MainActivity"
             const val F_HOME = "/main/HomeFragment"
+            const val F_QR_SCAN = "/main/QRScanFragment"
         }
 
         object Login {
@@ -49,6 +50,7 @@ interface AppConstants {
             const val F_USER_DETAIL = "/user/ShareUserDetailFragment"
             const val F_USER_TODO = "/user/UserTodoFragment"
             const val F_USER_TODO_INFO = "/user/UserTodoInfoFragment"
+            const val F_ABOUT_US = "/user/AboutUsFragment"
         }
 
         object Square {

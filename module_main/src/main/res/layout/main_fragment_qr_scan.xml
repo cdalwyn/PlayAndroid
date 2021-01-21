@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:binding="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.czl.module_main.viewmodel.QrScanViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <cn.bingoogolapple.qrcode.zxing.ZXingView
+            android:id="@+id/scan_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:qrcv_animTime="1000"
+            app:qrcv_barcodeRectHeight="120dp"
+            app:qrcv_borderColor="@color/md_theme_red"
+            app:qrcv_borderSize="1dp"
+            app:qrcv_cornerColor="@color/md_theme_red"
+            app:qrcv_cornerLength="20dp"
+            app:qrcv_cornerSize="3dp"
+            app:qrcv_isAutoZoom="false"
+            app:qrcv_isBarcode="false"
+            app:qrcv_isOnlyDecodeScanBoxArea="false"
+            app:qrcv_isShowDefaultGridScanLineDrawable="true"
+            app:qrcv_isShowDefaultScanLineDrawable="true"
+            app:qrcv_isShowLocationPoint="false"
+            app:qrcv_isShowTipBackground="true"
+            app:qrcv_isShowTipTextAsSingleLine="false"
+            app:qrcv_isTipTextBelowRect="true"
+            app:qrcv_maskColor="#33FFFFFF"
+            app:qrcv_qrCodeTipText=""
+            app:qrcv_rectWidth="260dp"
+            app:qrcv_scanLineColor="@color/red"
+            app:qrcv_scanLineSize="2dp"
+            app:qrcv_topOffset="100dp"
+            app:qrcv_verticalBias="-1" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_flashlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_10"
+            android:onClick="@{viewModel.onFlashLightClick}"
+            android:padding="@dimen/dp_10"
+            android:src="@{viewModel.isOpenFlag?@drawable/ic_flashlight_28dp:@drawable/ic_flashlight_20dp}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:src="@drawable/ic_flashlight_28dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
