@@ -16,8 +16,7 @@
         android:layout_height="match_parent"
         app:maskLayerColor="#80000000"
         app:scrollOrientation="vertical"
-        app:src="@drawable/splash_bg">
-
+        app:src="@drawable/login_bg">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,14 +26,13 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/dp_10"
-                android:onClick="@{viewModel.onBackClick}"
                 android:layout_marginStart="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_20"
-                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{viewModel.onBackClick}"
+                android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_arrow_back_white_24dp"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
                 android:id="@+id/tvLogin"
@@ -61,10 +59,10 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAccount"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#ffffff"
-                    style="@style/TextInputWhiteStyle"
                     android:hint="账号"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -78,22 +76,23 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
-                style="@style/TextInputWhiteStyle"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#ffffff"
                 app:hintTextColor="#ffffff"
-                app:layout_constraintTop_toBottomOf="@id/tlAccount">
+                app:layout_constraintTop_toBottomOf="@id/tlAccount"
+                app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPwd"
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#ffffff"
-                    style="@style/TextInputWhiteStyle"
                     android:hint="密码"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -114,13 +113,14 @@
                 android:hint=""
                 android:textColorHint="#ffffff"
                 app:hintTextColor="#ffffff"
-                app:layout_constraintTop_toBottomOf="@id/textInputLayout">
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout"
+                app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="#ffffff"
-                    style="@style/TextInputWhiteStyle"
                     android:hint="确认密码"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -133,9 +133,9 @@
 
             <Button
                 android:id="@+id/btn_register"
+                style="@style/TextInputWhiteStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/TextInputWhiteStyle"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:background="@drawable/shape_round_white"

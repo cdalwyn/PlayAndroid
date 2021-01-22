@@ -84,7 +84,6 @@
                     </com.lihang.ShadowLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -129,7 +128,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="@dimen/dp_20"
-                android:nestedScrollingEnabled="true"
                 android:onClick="@{viewModel.fabOnClickListener}"
                 android:src="@drawable/ic_top"
                 android:visibility="invisible"

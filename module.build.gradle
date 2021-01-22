@@ -25,9 +25,9 @@ android {
                 includeCompileClasspath = true
             }
         }
-        ndk {
-            abiFilters 'armeabi-v7a'
-        }
+//        ndk {
+//            abiFilters 'armeabi-v7a'
+//        }
 //        kapt {
 //            arguments {
 //                arg("AROUTER_MODULE_NAME", project.getName())

@@ -1,20 +1,23 @@
 package com.czl.module_user.ui.fragment
 
+import android.graphics.Color
 import com.czl.lib_base.base.BaseFragment
+import com.czl.lib_base.extension.loadBlurImageRes
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentFirstAboutBinding
 import com.czl.module_user.viewmodel.FirstAboutViewModel
+import com.gyf.immersionbar.ImmersionBar
 
 /**
  * @author Alwyn
  * @Date 2021/1/21
  * @Description
  */
-class FirstAboutFragment:BaseFragment<UserFragmentFirstAboutBinding,FirstAboutViewModel>() {
+class FirstAboutFragment : BaseFragment<UserFragmentFirstAboutBinding, FirstAboutViewModel>() {
 
-    companion object{
-        fun getInstance():FirstAboutFragment = FirstAboutFragment()
+    companion object {
+        fun getInstance(): FirstAboutFragment = FirstAboutFragment()
     }
 
     override fun initContentView(): Int {
@@ -29,8 +32,12 @@ class FirstAboutFragment:BaseFragment<UserFragmentFirstAboutBinding,FirstAboutVi
         return false
     }
 
-    override fun initData() {
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        ImmersionBar.with(this).statusBarDarkFont(false).init()
+    }
 
+    override fun initData() {
     }
 
     override fun initViewObservable() {

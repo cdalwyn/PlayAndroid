@@ -1,14 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.czl.module_user.viewmodel.FirstAboutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/md_theme_red">
+        android:background="#303030">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/dp_20"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:onClick="@{()->viewModel.finish()}"
+                android:padding="@dimen/dp_12"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="48dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="关于作者"
+                android:textColor="#ffffff" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:layout_constraintBottom_toTopOf="@id/tv_github" />
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/bg_avatar"
+            android:layout_marginBottom="@dimen/dp_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_toolbar"
+            app:layout_constraintBottom_toTopOf="@id/tv_github"
+            app:riv_oval="true" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_40"
+            android:padding="@dimen/dp_4"
+            android:text="cdalwyn"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
+            app:layout_constraintStart_toStartOf="@+id/iv_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+
+
+        <TextView
+            android:id="@+id/tv_github"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:drawableStart="@drawable/ic_github"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="Github"
+            android:textColor="#ffffff"
+            android:layout_marginBottom="@dimen/dp_40"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:gravity="center|end"
+            android:maxLines="1"
+            android:onClick="@{viewModel.onGithubClick}"
+            android:singleLine="true"
+            android:text="https://github.com/cdalwyn"
+            android:textColor="@color/md_grey_200"
+            app:layout_constraintBottom_toBottomOf="@id/tv_github"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_github"
+            app:layout_constraintTop_toTopOf="@id/tv_github" />
+
+
+        <TextView
+            android:id="@+id/tv_blog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_10"
+            android:drawableStart="@drawable/ic_csdn"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="center"
+            android:padding="@dimen/dp_10"
+            android:text="CSDN"
+            android:textColor="#ffffff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_github" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/dp_20"
+            android:layout_marginEnd="@dimen/dp_20"
+            android:ellipsize="end"
+            android:gravity="center|end"
+            android:maxLines="1"
+            android:onClick="@{viewModel.onBlogClick}"
+            android:singleLine="true"
+            android:text="https://blog.csdn.net/weixin_44352679"
+            android:textColor="@color/md_grey_200"
+            app:layout_constraintBottom_toBottomOf="@id/tv_blog"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_blog"
+            app:layout_constraintTop_toTopOf="@id/tv_blog" />
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="@dimen/dp_15"-->
+<!--            android:drawableBottom="@drawable/ic_arrow_top_white"-->
+<!--            android:gravity="center"-->
+<!--            android:text="请作者喝杯咖啡~\n上滑"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="@dimen/sp_12"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

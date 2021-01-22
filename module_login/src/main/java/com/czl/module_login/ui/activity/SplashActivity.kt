@@ -7,6 +7,7 @@ import com.czl.module_login.databinding.LoginActivitySplashBinding
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
+import com.czl.lib_base.util.DayModeUtil
 import com.czl.module_login.viewmodel.SplashViewModel
 import com.gyf.immersionbar.ImmersionBar
 import io.reactivex.Flowable
@@ -27,6 +28,7 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
     }
 
     override fun initData() {
+        binding.ivSplash.setImageResource(if (DayModeUtil.isNightMode(this)) R.drawable.splash_bg_dark else R.drawable.splash_bg_light)
         viewModel.addSubscribe(
             Flowable.timer(1500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

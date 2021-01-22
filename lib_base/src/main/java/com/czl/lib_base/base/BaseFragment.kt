@@ -2,6 +2,7 @@ package com.czl.lib_base.base
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -165,7 +166,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     open fun initStatusBar() {
         ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(requireContext()), 0.2f)
-            .statusBarColor(R.color.color_default_bg).init()
+            .statusBarColor(R.color.color_toolbar).init()
     }
 
     open fun isThemeRedStatusBar(): Boolean {
@@ -182,7 +183,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         } else {
             ImmersionBar.with(this)
                 .statusBarDarkFont(false, 0.2f)
-                .statusBarColor(R.color.color_default_bg)
+                .statusBarColor(R.color.color_toolbar)
                 .fitsSystemWindows(true)
                 .init()
         }

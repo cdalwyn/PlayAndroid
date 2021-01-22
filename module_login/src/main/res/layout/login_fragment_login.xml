@@ -82,6 +82,7 @@
                 android:textColorHint="#FFFFFF"
                 app:passwordToggleEnabled="true"
                 app:hintTextColor="#FFFFFF"
+                app:passwordToggleTint="#ffffff"
                 app:layout_constraintTop_toBottomOf="@id/tlAccount">
 
                 <com.google.android.material.textfield.TextInputEditText

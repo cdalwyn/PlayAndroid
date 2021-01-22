@@ -10,6 +10,7 @@
     <color name="color_default_bg">#fff3f3f3</color>
     <color name="color_default_dark">#424242</color>
     <color name="color_default_bg_deep">#FAFAFA</color>
+    <color name="color_toolbar">#FAFAFA</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="color_line">#dbdbdb</color>

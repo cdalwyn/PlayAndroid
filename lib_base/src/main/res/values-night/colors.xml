@@ -8,7 +8,7 @@
     <color name="mColorAccent">#EF5350</color>
     <color name="color_default_bg">#424242</color>
     <color name="color_default_bg_deep">#303030</color>
-
+    <color name="color_toolbar">#424242</color>
     <!--Toast bg color-->
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="color_line">#dbdbdb</color>

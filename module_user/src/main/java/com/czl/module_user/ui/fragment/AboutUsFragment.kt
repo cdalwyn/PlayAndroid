@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.extension.loadBlurImageRes
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentAboutUsBinding
@@ -36,7 +37,7 @@ class AboutUsFragment : BaseFragment<UserFragmentAboutUsBinding, AboutUsViewMode
             adapter = ViewPagerFmAdapter(
                 childFragmentManager,
                 lifecycle,
-                arrayListOf(FirstAboutFragment.getInstance(), SecAboutFragment.getInstance())
+                arrayListOf(FirstAboutFragment.getInstance())
             )
         }
     }

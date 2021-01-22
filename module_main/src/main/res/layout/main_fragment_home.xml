@@ -29,13 +29,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/trans"
                 app:elevation="0dp">
-
 
                 <com.czl.lib_base.widget.MaterialSearchBar
                     android:id="@+id/search_bar"
@@ -57,13 +55,11 @@
                     binding:onSearchIconCommand="@{viewModel.onSearchIconCommand}"
                     binding:onSearchItemClick="@{viewModel.onSearchItemClick}" />
 
-
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     app:layout_scrollFlags="scroll" />
-
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabLayout"
@@ -93,12 +89,10 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-
             <com.cooltechworks.views.shimmer.ShimmerRecyclerView
                 android:id="@+id/ry_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tabLayout"
@@ -111,7 +105,6 @@
                 android:id="@+id/ry_project"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="true"
                 android:visibility="gone"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -134,7 +127,6 @@
                 app:fabSize="mini"
                 app:layout_behavior="com.czl.lib_base.widget.FabScrollBehavior"
                 app:pressedTranslationZ="@dimen/dp_10" />
-
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -20,7 +20,7 @@
         style="@style/actionBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_default_bg"
+        android:background="@color/color_toolbar"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <androidx.constraintlayout.widget.ConstraintLayout

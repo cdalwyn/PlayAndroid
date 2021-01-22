@@ -1,6 +1,8 @@
 package com.czl.module_user.ui.fragment
 
+import android.graphics.Color
 import com.czl.lib_base.base.BaseFragment
+import com.czl.lib_base.extension.loadBlurImageRes
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentSecAboutBinding
@@ -30,7 +32,6 @@ class SecAboutFragment:BaseFragment<UserFragmentSecAboutBinding,SecAboutViewMode
     }
 
     override fun initData() {
-
     }
 
     override fun initViewObservable() {

@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ShareUserDetailBean
+import com.czl.lib_base.extension.loadBlurImageRes
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -108,16 +109,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
         headerDataBinding = DataBindingUtil.bind(headerView)
         userDetailAdapter.addHeaderView(headerView)
         userDetailAdapter.setDiffCallback(userDetailAdapter.diffConfig)
-        headerDataBinding?.ivPlaceholder?.let {
-            Glide.with(this).load(R.drawable.bg_user_detail).dontAnimate()
-                .apply(
-                    RequestOptions.bitmapTransform(
-                        if (!DayModeUtil.isNightMode(requireContext())) BlurTransformation()
-                        else MultiTransformation(GrayscaleTransformation(), BlurTransformation())
-                    )
-                )
-                .into(it)
-        }
+        headerDataBinding?.ivPlaceholder?.loadBlurImageRes(R.drawable.bg_user_detail)
     }
 
     private fun initRvScroll() {
