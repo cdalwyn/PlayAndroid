@@ -37,7 +37,7 @@ class AboutUsFragment : BaseFragment<UserFragmentAboutUsBinding, AboutUsViewMode
             adapter = ViewPagerFmAdapter(
                 childFragmentManager,
                 lifecycle,
-                arrayListOf(FirstAboutFragment.getInstance())
+                arrayListOf(FirstAboutFragment.getInstance(),SecAboutFragment.getInstance())
             )
         }
     }

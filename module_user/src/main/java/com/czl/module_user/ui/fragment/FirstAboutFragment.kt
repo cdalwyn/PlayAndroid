@@ -1,6 +1,9 @@
 package com.czl.module_user.ui.fragment
 
 import android.graphics.Color
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.blankj.utilcode.util.BarUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.extension.loadBlurImageRes
 import com.czl.module_user.BR
@@ -38,6 +41,9 @@ class FirstAboutFragment : BaseFragment<UserFragmentFirstAboutBinding, FirstAbou
     }
 
     override fun initData() {
+        val layoutParams = binding.llToolbar.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams.setMargins(0,BarUtils.getStatusBarHeight(),0,0)
+        binding.llToolbar.layoutParams = layoutParams
     }
 
     override fun initViewObservable() {

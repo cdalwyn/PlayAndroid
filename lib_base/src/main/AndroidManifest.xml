@@ -19,8 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:replace="theme"
-        tools:targetApi="m">
+        android:requestLegacyExternalStorage="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="n">
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -43,7 +44,15 @@
         <meta-data
             android:name="android.vendor.full_screen"
             android:value="true" />
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
         <activity android:name=".mvvm.ui.ContainerFmActivity" />
         <activity android:name=".crash.DefaultErrorActivity" />
     </application>

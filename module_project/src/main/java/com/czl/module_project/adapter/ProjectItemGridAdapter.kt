@@ -3,6 +3,7 @@ package com.czl.module_project.adapter
 import android.graphics.Bitmap
 import android.util.SparseArray
 import androidx.recyclerview.widget.DiffUtil
+import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -73,7 +74,12 @@ class ProjectItemGridAdapter :
                         isFirstResource: Boolean
                     ): Boolean {
                         if (sizeSparseArray.get(getItemPosition(item)) == null) {
-                            sizeSparseArray.put(getItemPosition(item), resource?.height)
+                            resource?.let { bitmap->
+                                sizeSparseArray.put(
+                                    getItemPosition(item),
+                                    bitmap.height
+                                )
+                            }
                         }
                         return false
                     }

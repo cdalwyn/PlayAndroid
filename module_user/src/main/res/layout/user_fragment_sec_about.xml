@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.czl.module_user.viewmodel.SecAboutViewModel" />
@@ -11,5 +14,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_about_us" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_wx"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/dp_40"
+            app:layout_constraintBottom_toTopOf="@id/tv_desc"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_wx_pay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/wx_pay"
+                binding:onLongClickCommand="@{viewModel.onSaveWxImg}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ll_ali"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="@dimen/dp_40"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_desc"
+            app:layout_constraintVertical_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_ali_pay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ali_pay"
+                binding:onLongClickCommand="@{viewModel.onSaveAliImg}" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="请作者喝杯咖啡~\n长按可保存图片"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBottom_toTopOf="@+id/ll_ali"
+            app:layout_constraintTop_toBottomOf="@+id/ll_wx" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

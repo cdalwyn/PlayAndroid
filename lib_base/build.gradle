@@ -31,13 +31,6 @@ dependencies {
     api rootProject.ext.dependencies["adapter-rxjava"]
     //json解析
     api rootProject.ext.dependencies.gson
-    //material-dialogs
-//    api(rootProject.ext.dependencies["material-dialogs-core"]) {
-//        exclude group: 'com.android.support'
-//    }
-//    api(rootProject.ext.dependencies["material-dialogs-commons"]) {
-//        exclude group: 'com.android.support'
-//    }
     //glide图片加载库
     api(rootProject.ext.dependencies.glide) {
         exclude group: 'com.android.support'
@@ -63,7 +56,6 @@ dependencies {
     api rootProject.ext.dependencies["refresh-footer-classic"]
     api rootProject.ext.dependencies["refresh"]
     api rootProject.ext.dependencies["searchview"]
-//    api project(path: ":mvvmhabit")
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
     api rootProject.ext.androidx["junit"]
@@ -73,7 +65,6 @@ dependencies {
     api rootProject.ext.androidx["multidex"]
     api rootProject.ext.androidx["kotlin_lib"]
     api rootProject.ext.androidx["kotlin_core"]
-
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_compiler"]
     api rootProject.ext.dependencies["koin_scope"]
