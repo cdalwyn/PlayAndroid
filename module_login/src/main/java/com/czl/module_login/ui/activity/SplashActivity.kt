@@ -1,6 +1,7 @@
 package com.czl.module_login.ui.activity
 
 
+import android.animation.Animator
 import com.czl.module_login.BR
 import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginActivitySplashBinding
@@ -33,10 +34,10 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
             Flowable.timer(1500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    if (viewModel.model.getLoginName().isNullOrBlank()){
+                    if (viewModel.model.getLoginName().isNullOrBlank()) {
                         startContainerActivity(AppConstants.Router.Login.F_LOGIN)
-                        overridePendingTransition(R.anim.h_fragment_enter,0)
-                    }else{
+                        overridePendingTransition(R.anim.h_fragment_enter, 0)
+                    } else {
                         RouteCenter.navigate(AppConstants.Router.Main.A_MAIN)
                     }
                     finish()

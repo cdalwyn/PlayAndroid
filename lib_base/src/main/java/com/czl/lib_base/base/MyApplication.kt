@@ -85,7 +85,11 @@ open class MyApplication : Application() {
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
-        // 跟随系统切换黑夜模式
+        // 切换情景模式
+        initNightMode()
+    }
+
+    private fun initNightMode() {
         if (SpHelper.decodeBoolean(AppConstants.SpKey.SYS_UI_MODE))
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         else
@@ -98,11 +102,10 @@ open class MyApplication : Application() {
     companion object {
         init {
             ClassicsFooter.REFRESH_FOOTER_FINISH = ""
-            SmartRefreshLayout.setDefaultRefreshInitializer { context, layout ->
+            SmartRefreshLayout.setDefaultRefreshInitializer { _, layout ->
                 layout.apply {
                     setEnableOverScrollDrag(true)
-                    setEnableScrollContentWhenLoaded(true)
-                    setEnableNestedScroll(true)
+                    setEnableScrollContentWhenLoaded(false)
                     setEnableAutoLoadMore(true)
                     setEnableOverScrollBounce(true)
                     setFooterHeight(60f)
@@ -161,7 +164,7 @@ open class MyApplication : Application() {
 
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
-        if (level== TRIM_MEMORY_UI_HIDDEN){
+        if (level == TRIM_MEMORY_UI_HIDDEN) {
             Glide.get(this).clearMemory()
         }
         Glide.get(this).trimMemory(level)

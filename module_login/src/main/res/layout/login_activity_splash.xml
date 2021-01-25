@@ -6,12 +6,12 @@
     <data>
 
     </data>
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        tools:context=".mvvm.ui.activity.SplashActivity">
+        tools:context=".mvvm.ui.activity.SplashActivity" />
 
-    </androidx.appcompat.widget.AppCompatImageView>
 </layout>

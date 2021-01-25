@@ -48,7 +48,6 @@ class ProjectItemSettingPop(val mFragment: HomeFragment, val bean: ProjectBean.D
         super.onDestroy()
     }
 
-
     val onCollectCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         if (!bean.collect) {
             mFragment.viewModel.collectArticle(bean.id)

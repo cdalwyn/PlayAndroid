@@ -1,22 +1,24 @@
 package com.czl.module_project.adapter
 
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.util.SparseArray
 import androidx.recyclerview.widget.DiffUtil
-import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
+import com.czl.lib_base.binding.command.BindingCommand
+import com.czl.lib_base.binding.command.BindingConsumer
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectBean
-import com.czl.lib_base.extension.loadImage
 import com.czl.module_project.R
 import com.czl.module_project.databinding.ProjectItemGridBinding
+import com.czl.module_project.ui.fragment.ContentFragment
 
 
 /**
@@ -24,7 +26,7 @@ import com.czl.module_project.databinding.ProjectItemGridBinding
  * @Date 2020/11/11
  * @Description 瀑布流适配器
  */
-class ProjectItemGridAdapter :
+class ProjectItemGridAdapter(val contentFragment: ContentFragment) :
     BaseQuickAdapter<ProjectBean.Data, BaseDataBindingHolder<ProjectItemGridBinding>>(R.layout.project_item_grid) {
 
     // 存储图片的高度
@@ -34,17 +36,19 @@ class ProjectItemGridAdapter :
         holder: BaseDataBindingHolder<ProjectItemGridBinding>,
         item: ProjectBean.Data
     ) {
-        holder.dataBinding?.let {
-            it.tvTitle.text = item.title
+        holder.dataBinding?.apply {
+            tvTitle.text = item.title
+            adapter = this@ProjectItemGridAdapter
+            this.item = item
             // 设置图片宽高
-            val layoutParams = it.ivProjectItem.layoutParams
+            val layoutParams = ivProjectItem.layoutParams
             val screenWidth = context.resources.displayMetrics.widthPixels
             val mWidth = screenWidth / 2
             layoutParams.width = mWidth
             if (sizeSparseArray.get(getItemPosition(item)) != null) {
                 val mHeight = sizeSparseArray.get(getItemPosition(item))
                 layoutParams.height = mHeight!!
-                it.ivProjectItem.layoutParams = layoutParams
+                ivProjectItem.layoutParams = layoutParams
             }
             // 加载图片配置
             val options: RequestOptions = RequestOptions()
@@ -74,7 +78,7 @@ class ProjectItemGridAdapter :
                         isFirstResource: Boolean
                     ): Boolean {
                         if (sizeSparseArray.get(getItemPosition(item)) == null) {
-                            resource?.let { bitmap->
+                            resource?.let { bitmap ->
                                 sizeSparseArray.put(
                                     getItemPosition(item),
                                     bitmap.height
@@ -85,9 +89,18 @@ class ProjectItemGridAdapter :
                     }
                 })
                 .load(item.envelopePic)
-                .into(it.ivProjectItem)
+                .into(ivProjectItem)
+            executePendingBindings()
         }
     }
+
+    val onItemClickCommand: BindingCommand<Any?> = BindingCommand(BindingConsumer {
+        if (it is ProjectBean.Data) {
+            contentFragment.startContainerActivity(
+                AppConstants.Router.Web.F_WEB,
+                Bundle().apply { putString(AppConstants.BundleKey.WEB_URL, it.link) })
+        }
+    })
 
     val diffConfig = object : DiffUtil.ItemCallback<ProjectBean.Data>() {
         override fun areItemsTheSame(
@@ -103,6 +116,5 @@ class ProjectItemGridAdapter :
         ): Boolean {
             return oldItem.title == newItem.title
         }
-
     }
 }

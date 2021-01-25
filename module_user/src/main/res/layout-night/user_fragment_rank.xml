@@ -43,7 +43,8 @@
                 android:gravity="center"
                 android:text="积分排行榜"
                 android:layout_marginEnd="48dp"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                binding:onClickCommand="@{viewModel.scrollToTopCommand}"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

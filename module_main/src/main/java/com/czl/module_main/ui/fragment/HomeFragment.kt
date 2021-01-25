@@ -1,17 +1,14 @@
 package com.czl.module_main.ui.fragment
 
-import android.content.res.Configuration
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.RxThreadHelper
@@ -29,8 +26,6 @@ import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.youth.banner.config.IndicatorConfig
-import com.youth.banner.indicator.CircleIndicator
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,23 +34,24 @@ import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
-import kotlin.random.Random.Default.nextInt
 
-
+/**
+ * @author Alwyn
+ * @Date 2020/11/27
+ * @Description 首页
+ */
 @Route(path = AppConstants.Router.Main.F_HOME)
 class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     private lateinit var bannerAdapter: MyBannerAdapter
     private lateinit var suggestAdapter: SearchSuggestAdapter
-
     private lateinit var mHomeDrawerPop: HomeDrawerPop
     private lateinit var bannerSkeleton: SkeletonScreen
     lateinit var mArticleAdapter: HomeArticleAdapter
     lateinit var mProjectAdapter: HomeProjectAdapter
     val loginPopView: BasePopupView by inject(named("login"))
     private var changeSearchTask: Disposable? = null
-    private var hotKeyList: List<String>?=null
+    private var hotKeyList: List<String>? = null
 
     override fun onSupportVisible() {
         ImmersionBar.with(this).fitsSystemWindows(true)
@@ -90,14 +86,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             if (!this::bannerAdapter.isInitialized) {
                 bannerAdapter = MyBannerAdapter(it, this)
                 binding.banner.adapter = bannerAdapter
-//                binding.banner.indicator = CircleIndicator(context).apply {
-//                    indicatorConfig.gravity = IndicatorConfig.Direction.RIGHT
-//                    indicatorConfig.selectedColor = ContextCompat.getColor(context,R.color.md_theme_red)
-//                }
             } else {
                 bannerAdapter.setData(binding.banner, it)
             }
-
         })
         // 置顶
         viewModel.uc.moveTopEvent.observe(this, { tabPosition ->
@@ -146,7 +137,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 viewModel.currentProjectPage = -1
                 viewModel.getProject()
             }
-            if (position==0 && mArticleAdapter.data.isNullOrEmpty()){
+            if (position == 0 && mArticleAdapter.data.isNullOrEmpty()) {
                 viewModel.currentArticlePage = -1
                 viewModel.getArticle()
             }
@@ -242,7 +233,10 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         if (binding.searchBar.isSearchOpened) binding.searchBar.closeSearch()
         val bundle = Bundle()
         bundle.putString(AppConstants.BundleKey.MAIN_SEARCH_KEYWORD, keyword)
-        bundle.putStringArrayList(AppConstants.BundleKey.SEARCH_HOT_KEY_LIST, hotKeyList as ArrayList<String>?)
+        bundle.putStringArrayList(
+            AppConstants.BundleKey.SEARCH_HOT_KEY_LIST,
+            hotKeyList as ArrayList<String>?
+        )
         startContainerActivity(AppConstants.Router.Search.F_SEARCH, bundle)
         setSuggestAdapterData()
     }
@@ -290,5 +284,4 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             addPageTransformer(AlphaPageTransformer(0.6f))
         }
     }
-
 }

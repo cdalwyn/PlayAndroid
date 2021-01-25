@@ -1,5 +1,6 @@
 package com.czl.module_user.viewmodel
 
+import android.view.View
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
@@ -43,7 +44,8 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
         userId?.let {
             model.getShareUserDetail(it, currentPage + 1)
                 .compose(RxThreadHelper.rxSchedulerHelper(this))
-                .subscribe(object : ApiSubscriberHelper<BaseBean<ShareUserDetailBean>>(loadService) {
+                .subscribe(object :
+                    ApiSubscriberHelper<BaseBean<ShareUserDetailBean>>(loadService) {
                     override fun onResult(t: BaseBean<ShareUserDetailBean>) {
                         if (t.errorCode == 0) {
                             currentPage++

@@ -41,7 +41,7 @@ fun ImageView.loadUrl(url: String?, placeHolderRes:Drawable, errorHolder:Drawabl
 }
 fun ImageView.loadBlurImageRes(@DrawableRes imgRes: Int,radius: Int=25,scale:Int = 1) {
     Glide.with(this).load(imgRes).dontAnimate()
-        .apply(RequestOptions.bitmapTransform(BlurTransformation(radius,scale))).into(this)
+        .apply(RequestOptions.bitmapTransform(BlurTransformation(radius,scale)).placeholder(R.drawable.ic_placeholder)).into(this)
 }
 
 fun ImageView.loadBlurImage(url: String?){

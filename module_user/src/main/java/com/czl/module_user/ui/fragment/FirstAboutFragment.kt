@@ -41,12 +41,14 @@ class FirstAboutFragment : BaseFragment<UserFragmentFirstAboutBinding, FirstAbou
     }
 
     override fun initData() {
-        val layoutParams = binding.llToolbar.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.setMargins(0,BarUtils.getStatusBarHeight(),0,0)
-        binding.llToolbar.layoutParams = layoutParams
+        view?.setBackgroundColor(Color.TRANSPARENT)
     }
 
     override fun initViewObservable() {
-
+        viewModel.showSecPageEvent.observe(this, {
+            if (parentFragment is AboutUsFragment){
+                (parentFragment as AboutUsFragment).binding.viewPager2.currentItem = 1
+            }
+        })
     }
 }

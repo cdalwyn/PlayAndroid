@@ -64,6 +64,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
             .load(R.layout.user_detail_skeleton)
             .show()
         viewModel.uc.loadCompleteEvent.observe(this, { data ->
+            ryCommon = binding.ryCommon
             val smartCommon = binding.smartCommon
             if (data == null) {
                 skeleton.hide()

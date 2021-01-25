@@ -40,8 +40,14 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
     }
 
     override fun initData() {
+        view?.setBackgroundColor(Color.TRANSPARENT)
         val layoutParams = binding.llWx.layoutParams as ConstraintLayout.LayoutParams
-        layoutParams.setMargins(0,BarUtils.getStatusBarHeight(),0,0)
+        layoutParams.setMargins(
+            layoutParams.leftMargin,
+            BarUtils.getStatusBarHeight() + BarUtils.getActionBarHeight(),
+            layoutParams.rightMargin,
+            layoutParams.bottomMargin
+        )
         binding.llWx.layoutParams = layoutParams
     }
 
@@ -50,7 +56,7 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     val bitmap = BitmapFactory.decodeResource(resources, R.drawable.wx_pay)
-                    saveBitmapToPicturesPath(context,bitmap, "alwyn_wechat_pay_code")
+                    saveBitmapToPicturesPath(context, bitmap, "alwyn_wechat_pay_code")
                     bitmap.recycle()
                     showSuccessToast("保存成功")
                 }
@@ -60,7 +66,7 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ali_pay)
-                    saveBitmapToPicturesPath(context,bitmap, "alwyn_Ali_pay_code")
+                    saveBitmapToPicturesPath(context, bitmap, "alwyn_Ali_pay_code")
                     bitmap.recycle()
                     showSuccessToast("保存成功")
                 }

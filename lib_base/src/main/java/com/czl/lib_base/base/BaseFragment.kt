@@ -51,7 +51,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var dialog: BasePopupView? = null
     private lateinit var rootView: View
     protected var rootBinding: ViewDataBinding? = null
-    private var ryCommon: RecyclerView? = null
+    protected var ryCommon: RecyclerView? = null
     lateinit var loadService: LoadService<BaseBean<*>?>
 
     override fun onCreate(savedInstanceState: Bundle?) {

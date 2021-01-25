@@ -57,6 +57,7 @@
                 android:text="@{viewModel.tvTitle}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_16"
+                binding:onClickCommand="@{viewModel.scrollToTopCommand}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

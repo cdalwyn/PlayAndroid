@@ -102,14 +102,14 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         //解决item跳动
         manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        mAdapter = ProjectItemGridAdapter()
+        mAdapter = ProjectItemGridAdapter(this)
         binding.ryCommon.apply {
             layoutManager = manager
             adapter = mAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     // 解决滑到顶部留白问题
-                    val first: IntArray = IntArray(2)
+                    val first = IntArray(2)
                     manager.findFirstCompletelyVisibleItemPositions(first)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE && (first[0] == 1 || first[1] == 1)) {
                         manager.invalidateSpanAssignments()
@@ -117,11 +117,5 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
                 }
             })
         }
-        mAdapter.setOnItemClickListener { adapter, _, position ->
-            val item = adapter.getItem(position) as ProjectBean.Data
-            startContainerActivity(AppConstants.Router.Web.F_WEB,
-                Bundle().apply { putString(AppConstants.BundleKey.WEB_URL, item.link) })
-        }
     }
-
 }
