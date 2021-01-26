@@ -26,12 +26,17 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
     private var sortId:String? = null
     companion object {
         const val SORT_ID = "sort_id"
-        fun getInstance(id: String): ContentFragment {
-            val bundle = Bundle()
-            bundle.putString(SORT_ID, id)
-            val contentFragment = ContentFragment()
-            contentFragment.arguments = bundle
-            return contentFragment
+//        fun getInstance(id: String): ContentFragment {
+//            val bundle = Bundle()
+//            bundle.putString(SORT_ID, id)
+//            val contentFragment = ContentFragment()
+//            contentFragment.arguments = bundle
+//            return contentFragment
+//        }
+        fun getInstance(id: String):ContentFragment = ContentFragment().apply {
+            arguments = Bundle().apply {
+                putString(SORT_ID, id)
+            }
         }
     }
 
@@ -46,7 +51,6 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
     override fun useBaseLayout(): Boolean {
         return false
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -93,7 +97,7 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
             mAdapter.setDiffNewData(it.datas as MutableList<ProjectBean.Data>)
         })
         // 置顶
-        viewModel.uc.moveTopEvent.observe(this, Observer {
+        viewModel.uc.moveTopEvent.observe(this, {
             binding.ryCommon.smoothScrollToPosition(0)
         })
     }

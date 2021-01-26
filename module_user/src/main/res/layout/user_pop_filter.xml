@@ -20,6 +20,10 @@
         <variable
             name="status"
             type="Integer" />
+
+        <variable
+            name="timeState"
+            type="Integer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -275,7 +279,57 @@
                 android:paddingBottom="@dimen/dp_6"
                 android:text="已完成" />
         </com.czl.lib_base.widget.FlowRadioGroup>
-
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:text="时效"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rg_status" />
+        <com.czl.lib_base.widget.FlowRadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginEnd="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/tv_time"
+            binding:onCheckedChangedCommand="@{pop.onTimeStateGroupCheckCommand}">
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{timeState==0}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="全部" />
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{timeState==1}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="未过期" />
+            <RadioButton
+                style="@style/select_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@{timeState==2}"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingTop="@dimen/dp_6"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingBottom="@dimen/dp_6"
+                android:text="已过期" />
+        </com.czl.lib_base.widget.FlowRadioGroup>
         <Button
             android:id="@+id/btn_confirm"
             android:layout_width="match_parent"

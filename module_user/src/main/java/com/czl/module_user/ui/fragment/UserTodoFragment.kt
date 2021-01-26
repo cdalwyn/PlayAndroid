@@ -72,7 +72,17 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
             }
             handleRecyclerviewData(
                 data == null,
-                data?.datas as MutableList<*>?,
+                when (viewModel.timeState) {
+                    1 -> {
+                        data?.datas?.filter { !it.dateExpired } as MutableList<*>?
+                    }
+                    2 -> {
+                        data?.datas?.filter { it.dateExpired } as MutableList<*>?
+                    }
+                    else -> {
+                        data?.datas as MutableList<*>?
+                    }
+                },
                 mAdapter,
                 binding.ryCommon,
                 binding.smartCommon,
@@ -93,7 +103,15 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
             XPopup.Builder(context)
                 .popupPosition(PopupPosition.Right)
                 .hasStatusBar(false)
-                .asCustom(TodoFilterPopView(this,viewModel.status,viewModel.todoType,viewModel.priority))
+                .asCustom(
+                    TodoFilterPopView(
+                        this,
+                        viewModel.status,
+                        viewModel.todoType,
+                        viewModel.priority,
+                        viewModel.timeState
+                    )
+                )
                 .show()
         })
     }
@@ -113,11 +131,14 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
         val sameDateTodo = mAdapter.data.find { item -> item.dateStr == todoInfo.dateStr }
         if (sameDateTodo != null) {
             if (isCreateFlag)
-                // 新建时直接添加
+            // 新建时直接添加
                 mAdapter.addData(mAdapter.getItemPosition(sameDateTodo), todoInfo)
             else
-                // 编辑后则更新
-                mAdapter.setData(mAdapter.getItemPosition(mAdapter.data.find { it.id == todoInfo.id }), todoInfo)
+            // 编辑后则更新
+                mAdapter.setData(
+                    mAdapter.getItemPosition(mAdapter.data.find { it.id == todoInfo.id }),
+                    todoInfo
+                )
             return
         }
         // 不存在相同日期  则先删除旧的再查找最后一个未来日期添加到下面

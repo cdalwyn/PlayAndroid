@@ -2,6 +2,9 @@ package com.czl.module_login.ui.activity
 
 
 import android.animation.Animator
+import com.blankj.utilcode.util.ScreenUtils
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.czl.module_login.BR
 import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginActivitySplashBinding
@@ -13,9 +16,14 @@ import com.czl.module_login.viewmodel.SplashViewModel
 import com.gyf.immersionbar.ImmersionBar
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>() {
+
+    private val arrayLight = arrayListOf(R.drawable.splash_bg_light, R.drawable.bg_splash_light2)
+    private val arrayDark = arrayListOf(R.drawable.splash_bg_dark, R.drawable.bg_splash_dark2)
+
     override fun initContentView(): Int {
         return R.layout.login_activity_splash
     }
@@ -29,7 +37,14 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
     }
 
     override fun initData() {
-        binding.ivSplash.setImageResource(if (DayModeUtil.isNightMode(this)) R.drawable.splash_bg_dark else R.drawable.splash_bg_light)
+        Glide.with(this).load(if (DayModeUtil.isNightMode(this))
+            arrayDark[Random().nextInt(arrayDark.size)]
+        else arrayLight[Random().nextInt(arrayLight.size)])
+            .override(ScreenUtils.getAppScreenWidth(),ScreenUtils.getAppScreenHeight())
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+            .skipMemoryCache(true)
+            .into(binding.ivSplash)
+
         viewModel.addSubscribe(
             Flowable.timer(1500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())

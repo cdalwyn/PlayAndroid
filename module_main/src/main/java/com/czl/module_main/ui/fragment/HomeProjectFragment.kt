@@ -29,7 +29,6 @@ class HomeProjectFragment : BaseFragment<CommonRecyclerviewBinding, HomeProjectV
         return false
     }
 
-
     override fun initData() {
         binding.smartCommon.autoRefresh()
     }

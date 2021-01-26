@@ -67,7 +67,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun initData() {
         initWebView()
-
     }
 
     override fun initViewObservable() {

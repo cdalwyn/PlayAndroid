@@ -124,7 +124,6 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         uC.startActivityEvent.postValue(params)
     }
 
-
     private fun startFragment(routePath: String, bundle: Bundle? = null) {
         val params: HashMap<String, Any> = HashMap()
         params[ParameterField.ROUTE_PATH] = routePath
@@ -134,11 +133,6 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         uC.startFragmentEvent.postValue(params)
     }
 
-    /**
-     * 跳转容器页面
-     * @param routePath Fragment路由地址
-     * @param bundle    跳转所携带的信息
-     */
     /**
      * 跳转容器页面
      * @param routePath Fragment路由地址
@@ -181,7 +175,6 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
         ToastHelper.showSuccessToast(msg)
     }
 
-
     override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {}
     override fun onCreate() {}
     override fun onDestroy() {}
@@ -189,34 +182,19 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     override fun onStop() {}
     override fun onResume() {}
     override fun onPause() {}
-//    override fun registerRxBus() {
-//        addSubscribe(
-//            RxBus.getDefault()
-//                .toObservable(TokenExpiredEvent::class.java)
-//                .subscribe {
-//                    val dataRepository: DataRepository = get()
-//                    dataRepository.saveLocalToken("")
-//                    startActivity(MainActivity::class.java)
-//                    AppManager.getAppManager().finishAllActivity()
-//                }
-//        )
-//    }
 
     override fun onCleared() {
         super.onCleared()
         model.onCleared()
         //ViewModel销毁时会执行，同时取消所有异步任务
         mCompositeDisposable.clear()
-
     }
 
-    @Throws(Exception::class)
     override fun accept(disposable: Disposable?) {
         disposable?.let { addSubscribe(it) }
     }
 
     object ParameterField {
-        const val CLASS = "CLASS"
         const val ROUTE_PATH = "ROUTE_PATH"
         const val BUNDLE = "BUNDLE"
         const val REQUEST_CODE = "REQUEST_CODE"

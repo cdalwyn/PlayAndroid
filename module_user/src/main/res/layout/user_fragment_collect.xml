@@ -15,6 +15,7 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_5"
             app:tabBackground="@color/white"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/md_theme_red"

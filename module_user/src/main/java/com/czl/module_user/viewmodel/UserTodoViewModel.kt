@@ -39,6 +39,10 @@ class UserTodoViewModel(application: MyApplication, model: DataRepository) :
 
     @TodoOrder
     var orderBy = TodoOrder.createDesc
+
+    // 0 全部 1 未过期 2 已过期
+    var timeState = 0
+
     val uc = UiChangeEvent()
 
     val addTodoClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {

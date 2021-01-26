@@ -22,7 +22,8 @@ class TodoFilterPopView(
     private val mFragment: UserTodoFragment,
     private val status: Int,
     private val todoType: Int,
-    private val priority: Int
+    private val priority: Int,
+    private val timeState: Int
 ) : DrawerPopupView(mFragment.requireContext()) {
     private var dataBinding: UserPopFilterBinding? = null
     private var mType = -1
@@ -41,18 +42,19 @@ class TodoFilterPopView(
             status = this@TodoFilterPopView.status
             type = todoType
             priority = this@TodoFilterPopView.priority
+            timeState = this@TodoFilterPopView.timeState
             executePendingBindings()
         }
     }
 
     val onConfirmClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        dataBinding?.apply {
-            mFragment.viewModel.todoType = mType
-            mFragment.viewModel.priority = mPriority
-            mFragment.viewModel.status = mStatus
-            mFragment.binding.smartCommon.autoRefresh()
-            dismiss()
+        mFragment.viewModel.apply {
+            todoType = mType
+            priority = mPriority
+            status = mStatus
         }
+        mFragment.binding.smartCommon.autoRefresh()
+        dismiss()
     })
 
     val onTypeGroupCheckCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
@@ -69,5 +71,10 @@ class TodoFilterPopView(
 
     val onStatusGroupCheckCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
         mStatus = StringUtils.getStringArray(R.array.todo_status).indexOf(it) - 1
+    })
+
+    val onTimeStateGroupCheckCommand: BindingCommand<String> = BindingCommand(BindingConsumer {
+        mFragment.viewModel.timeState =
+            StringUtils.getStringArray(R.array.todo_time_state).indexOf(it)
     })
 }

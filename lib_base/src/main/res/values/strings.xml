@@ -31,4 +31,10 @@
         <item>待办</item>
         <item>已完成</item>
     </string-array>
+
+    <string-array name="todo_time_state">
+        <item>全部</item>
+        <item>未过期</item>
+        <item>已过期</item>
+    </string-array>
 </resources>

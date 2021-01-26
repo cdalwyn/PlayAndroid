@@ -47,7 +47,7 @@
                 android:text="回到首页"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                app:drawableTopCompat="@drawable/ic_home_menu"
+                android:drawableTop="@drawable/ic_home_menu"
                 binding:onClickCommand="@{pop.onBackHomeClickCommand}" />
 
             <TextView
@@ -61,7 +61,7 @@
                 android:text="分享到广场"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                app:drawableTopCompat="@drawable/ic_menu_share_square"
+                android:drawableTop="@drawable/ic_menu_share_square"
                 binding:onClickCommand="@{pop.onShareSquareClickCommand}" />
 
             <TextView
@@ -75,7 +75,7 @@
                 android:text="刷新"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                app:drawableTopCompat="@drawable/ic_menu_refresh"
+                android:drawableTop="@drawable/ic_menu_refresh"
                 binding:onClickCommand="@{pop.onRefreshClickCommand}" />
 
             <TextView
@@ -89,7 +89,7 @@
                 android:text="设置"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                app:drawableTopCompat="@drawable/ic_menu_setting"
+                android:drawableTop="@drawable/ic_menu_setting"
                 binding:onClickCommand="@{pop.onSettingClickCommand}" />
 
             <TextView
@@ -102,7 +102,7 @@
                 android:text="我的收藏"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
-                app:drawableTopCompat="@drawable/ic_menu_collect"
+                android:drawableTop="@drawable/ic_menu_collect"
                 binding:onClickCommand="@{pop.onOpenCollectClickCommand}" />
 
             <TextView
