@@ -12,6 +12,7 @@ import com.czl.lib_base.data.source.LocalDataSource
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import org.litepal.crud.LitePalSupport
 
 /**
  * @author Alwyn
@@ -283,6 +284,5 @@ class DataRepository constructor(
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {
         return mHttpDataSource.userLogin(account, pwd)
     }
-
 
 }

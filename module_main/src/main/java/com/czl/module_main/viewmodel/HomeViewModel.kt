@@ -50,7 +50,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchIconClickEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
-
     val onRefreshListener: BindingCommand<Void> = BindingCommand(BindingAction {
         currentArticlePage = -1
         currentProjectPage = -1
@@ -61,7 +60,6 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             1 -> getProject()
         }
     })
-
 
     val onLoadMoreListener: BindingCommand<Void> = BindingCommand(BindingAction {
         when (tabSelectedPosition.get()) {
@@ -251,6 +249,5 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
-
 
 }

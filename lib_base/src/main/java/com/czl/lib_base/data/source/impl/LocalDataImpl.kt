@@ -11,10 +11,12 @@ import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpHelper
 import com.google.gson.reflect.TypeToken
+import com.tencent.mmkv.MMKV
 import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.litepal.LitePal
+import org.litepal.crud.LitePalSupport
 import org.litepal.extension.findFirst
 
 /**
@@ -38,7 +40,7 @@ class LocalDataImpl : LocalDataSource {
         return list.toString()
     }
 
-    override fun getLoginName(): String? {
+    override fun getLoginName(): String {
         return SpHelper.decodeString(AppConstants.SpKey.LOGIN_NAME)
     }
 
@@ -53,7 +55,7 @@ class LocalDataImpl : LocalDataSource {
 
     override fun getUserData(): UserBean? {
         val userJsonData = SpHelper.decodeString(AppConstants.SpKey.USER_JSON_DATA)
-        return if (userJsonData.isNullOrBlank())
+        return if (userJsonData.isBlank())
             return null
         else GsonUtils.fromJson(
             userJsonData,
@@ -223,4 +225,6 @@ class LocalDataImpl : LocalDataSource {
     override fun getReadHistoryState(): Boolean {
         return SpHelper.decodeBoolean(AppConstants.SpKey.READ_HISTORY_STATE,true)
     }
+
+
 }

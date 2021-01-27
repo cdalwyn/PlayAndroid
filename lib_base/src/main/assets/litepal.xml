@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="wanandroid" />
-    <version value="6" />
+    <version value="7" />
     <list>
         <mapping class="com.czl.lib_base.data.db.UserEntity" />
         <mapping class="com.czl.lib_base.data.db.SearchHistoryEntity" />
         <mapping class="com.czl.lib_base.data.db.WebHistoryEntity" />
+        <mapping class="com.czl.lib_base.data.bean.HomeBannerBean"/>
     </list>
     <!--
         Define where the .db file should be. "internal" means the .db file

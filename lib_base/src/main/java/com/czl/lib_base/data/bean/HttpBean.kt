@@ -11,6 +11,7 @@ import com.czl.lib_base.annotation.TodoPriority
 import com.czl.lib_base.annotation.TodoType
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import org.litepal.crud.LitePalSupport
 
 /**
  * @author Alwyn
@@ -191,21 +192,21 @@ data class CollectArticleBean(
 
 data class HomeBannerBean(
     @SerializedName("desc")
-    val desc: String,
+    val desc: String = "",
     @SerializedName("id")
     val id: Int,
     @SerializedName("imagePath")
-    val imagePath: String,
+    val imagePath: String = "",
     @SerializedName("isVisible")
     val isVisible: Int,
     @SerializedName("order")
     val order: Int,
     @SerializedName("title")
-    val title: String,
+    val title: String = "",
     @SerializedName("type")
     val type: Int,
     @SerializedName("url")
-    val url: String
+    val url: String = ""
 )
 
 data class HomeArticleBean(
@@ -1148,6 +1149,7 @@ data class ShareUserDetailBean(
 class TodoBean() : Parcelable {
     var curPage = 0
     var offset = 0
+
     @SerializedName("over")
     var isOver = false
     var pageCount = 0
@@ -1208,7 +1210,7 @@ class TodoBean() : Parcelable {
 
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeLong(completeDate?:0)
+            parcel.writeLong(completeDate ?: 0)
             parcel.writeString(completeDateStr)
             parcel.writeString(content)
             parcel.writeLong(date)

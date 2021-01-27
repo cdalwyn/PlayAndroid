@@ -29,7 +29,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="280dp"
         android:layout_height="match_parent"
-        android:background="@color/color_default_bg">
+        android:background="@color/color_toolbar">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_close"

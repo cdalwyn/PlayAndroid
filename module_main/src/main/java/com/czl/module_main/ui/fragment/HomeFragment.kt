@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.CacheDiskUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.RxThreadHelper
@@ -26,12 +28,14 @@ import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.tencent.mmkv.MMKV
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
+import org.litepal.LitePal
 import java.util.*
 import java.util.concurrent.TimeUnit
 

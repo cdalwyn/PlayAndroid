@@ -9,7 +9,6 @@ interface AppConstants {
     object SpKey {
         const val LOGIN_NAME: String = "login_name"
         const val USER_ID: String = "user_id"
-        const val SEARCH_HISTORY: String = "search_history"
         const val USER_JSON_DATA: String = "user_json_data"
         const val SYS_UI_MODE: String = "sys_ui_mode"
         const val USER_UI_MODE: String = "user_ui_mode"
