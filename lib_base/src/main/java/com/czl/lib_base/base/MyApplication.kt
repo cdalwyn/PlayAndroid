@@ -15,6 +15,7 @@ import com.czl.lib_base.R
 import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.crash.CaocConfig
+import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.di.allModule
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.SpHelper
@@ -34,6 +35,7 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.plugins.RxJavaPlugins
 import me.jessyan.autosize.AutoSizeConfig
 import me.yokeyword.fragmentation.Fragmentation
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -53,12 +55,13 @@ open class MyApplication : Application() {
         if (BuildConfig.DEBUG) {
             ARouter.openLog()
             ARouter.openDebug()
-        }
-//        DoraemonKit.apply {
+            //        DoraemonKit.apply {
 //            setDebug(BuildConfig.DEBUG)
 //            setAwaysShowMainIcon(BuildConfig.DEBUG)
 //            install(this@MyApplication)
 //        }
+        }
+
         ARouter.init(this)
         setApplication(this)
         LitePal.initialize(this)
