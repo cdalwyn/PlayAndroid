@@ -2,49 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dp_4"
-        android:paddingBottom="@dimen/dp_6"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        android:layout_marginBottom="@dimen/dp_10">
+    <com.czl.lib_base.widget.SkeletonBlock
+        android:layout_width="150dp"
+        android:layout_height="20dp"
+        android:background="@color/light_transparent" />
 
-        <View
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:background="@color/light_transparent" />
+    <com.czl.lib_base.widget.SkeletonBlock
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:background="@color/light_transparent" />
 
+    <com.czl.lib_base.widget.SkeletonBlock
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:background="@color/light_transparent" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.czl.lib_base.widget.SkeletonBlock
-                android:layout_width="240dp"
-                android:layout_height="30dp"
-                android:background="@color/light_transparent" />
-
-
-            <com.czl.lib_base.widget.SkeletonBlock
-                android:layout_width="180dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="60dp"
-                android:background="@color/light_transparent" />
-
-            <com.czl.lib_base.widget.SkeletonBlock
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:background="@color/light_transparent" />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </LinearLayout>
 </LinearLayout>

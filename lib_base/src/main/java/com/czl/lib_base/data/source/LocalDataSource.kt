@@ -8,6 +8,7 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import org.litepal.crud.LitePalSupport
+import java.io.Serializable
 
 /**
  * @author Alwyn
@@ -35,5 +36,8 @@ interface LocalDataSource {
     fun getUiMode(): Boolean
     fun saveReadHistoryState(visible: Boolean)
     fun getReadHistoryState(): Boolean
+
+    fun <T : Serializable> saveCacheListData(list: List<T>)
+    fun <T : Serializable> getCacheListData(key:String): List<T>?
 
 }

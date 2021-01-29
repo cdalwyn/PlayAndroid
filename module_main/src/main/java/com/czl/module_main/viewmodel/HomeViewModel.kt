@@ -2,6 +2,7 @@ package com.czl.module_main.viewmodel
 
 import android.view.View
 import androidx.databinding.ObservableInt
+import com.blankj.utilcode.util.CacheDiskUtils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
@@ -9,6 +10,7 @@ import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
 import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.HomeArticleBean
 import com.czl.lib_base.data.bean.HomeBannerBean
@@ -19,6 +21,7 @@ import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.mancj.materialsearchbar.adapter.SuggestionsAdapter
 import io.reactivex.Observable
+import java.io.Serializable
 
 
 /**
@@ -37,7 +40,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
     val tabSelectedPosition: ObservableInt = ObservableInt(0)
 
     inner class UiChangeEvent {
-        val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>?> = SingleLiveEvent()
+        val bannerCompleteEvent: SingleLiveEvent<List<HomeBannerBean>> = SingleLiveEvent()
         val drawerOpenEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
         val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
@@ -143,7 +146,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         return model.unCollectArticle(id).compose(RxThreadHelper.rxSchedulerHelper(this))
     }
 
-    private fun getSearchHotKeyword() {
+    fun getSearchHotKeyword() {
         model.getSearchHotKey()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<SearchHotKeyBean>>>() {
@@ -234,7 +237,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             })
     }
 
-    private fun getBanner() {
+    fun getBanner() {
         model.getBannerData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .subscribe(object : ApiSubscriberHelper<BaseBean<List<HomeBannerBean>>>(loadService) {
@@ -249,5 +252,13 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
+
+    fun <T:Serializable>getCacheData(key:String):List<T>?{
+        return model.getCacheListData(key)
+    }
+
+//    fun getCacheHotKeyword() :List<SearchHotKeyBean>?{
+//        return model.getCacheListData(AppConstants.C)
+//    }
 
 }

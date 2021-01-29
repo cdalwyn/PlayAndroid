@@ -1,23 +1,23 @@
 package com.czl.lib_base.data.source.impl
 
 import android.annotation.SuppressLint
+import com.blankj.utilcode.util.CacheDiskUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.bean.UserBean
+import com.czl.lib_base.data.bean.*
 import com.czl.lib_base.data.db.SearchHistoryEntity
 import com.czl.lib_base.data.db.UserEntity
 import com.czl.lib_base.data.db.WebHistoryEntity
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpHelper
 import com.google.gson.reflect.TypeToken
-import com.tencent.mmkv.MMKV
 import io.reactivex.*
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.litepal.LitePal
-import org.litepal.crud.LitePalSupport
 import org.litepal.extension.findFirst
+import java.io.Serializable
 
 /**
  * @author Alwyn
@@ -128,10 +128,16 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun deleteAllSearchHistory(): Observable<Int> {
-        return Observable.create { emitter->
+        return Observable.create { emitter ->
             val entity =
                 LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
-            emitter.onNext(LitePal.deleteAll(SearchHistoryEntity::class.java,"userentity_id=?",entity?.id.toString()))
+            emitter.onNext(
+                LitePal.deleteAll(
+                    SearchHistoryEntity::class.java,
+                    "userentity_id=?",
+                    entity?.id.toString()
+                )
+            )
         }
     }
 
@@ -195,15 +201,21 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun deleteAllWebHistory(): Observable<Int> {
-        return Observable.create { emitter->
+        return Observable.create { emitter ->
             val entity =
                 LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
-            emitter.onNext(LitePal.deleteAll(WebHistoryEntity::class.java,"userentity_id=?",entity?.id.toString()))
+            emitter.onNext(
+                LitePal.deleteAll(
+                    WebHistoryEntity::class.java,
+                    "userentity_id=?",
+                    entity?.id.toString()
+                )
+            )
         }
     }
 
     override fun saveFollowSysModeFlag(isFollow: Boolean) {
-        SpHelper.encode(AppConstants.SpKey.SYS_UI_MODE,isFollow)
+        SpHelper.encode(AppConstants.SpKey.SYS_UI_MODE, isFollow)
     }
 
     override fun getFollowSysUiModeFlag(): Boolean {
@@ -211,7 +223,7 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun saveUiMode(nightModeFlag: Boolean) {
-        SpHelper.encode(AppConstants.SpKey.USER_UI_MODE,nightModeFlag)
+        SpHelper.encode(AppConstants.SpKey.USER_UI_MODE, nightModeFlag)
     }
 
     override fun getUiMode(): Boolean {
@@ -219,11 +231,52 @@ class LocalDataImpl : LocalDataSource {
     }
 
     override fun saveReadHistoryState(visible: Boolean) {
-        SpHelper.encode(AppConstants.SpKey.READ_HISTORY_STATE,visible)
+        SpHelper.encode(AppConstants.SpKey.READ_HISTORY_STATE, visible)
     }
 
     override fun getReadHistoryState(): Boolean {
-        return SpHelper.decodeBoolean(AppConstants.SpKey.READ_HISTORY_STATE,true)
+        return SpHelper.decodeBoolean(AppConstants.SpKey.READ_HISTORY_STATE, true)
+    }
+
+    override fun <T : Serializable> saveCacheListData(list: List<T>) {
+        if (list.isNotEmpty()) {
+            when (list[0]) {
+                is HomeBannerBean -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_HOME_BANNER,
+                        HomeBannerCache(list as List<HomeBannerBean>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                    )
+                }
+                is HomeArticleBean.Data -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_HOME_ARTICLE,
+                        HomeArticleCache(list as List<HomeArticleBean.Data>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                    )
+                }
+                is SearchHotKeyBean -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_HOME_KEYWORD,
+                        HomeSearchKeywordCache(list as List<SearchHotKeyBean>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                    )
+                }
+            }
+        }
+    }
+
+    override fun <T : Serializable> getCacheListData(key: String): List<T>? {
+        return when (val serializable = CacheDiskUtils.getInstance().getSerializable(key)) {
+            is HomeBannerCache? -> {
+                serializable?.homeBannerBeans as List<T>?
+            }
+            is HomeArticleCache?  -> {
+                serializable?.homeArticleBeans as List<T>?
+            }
+            is SearchHotKeyBean? -> {
+                serializable as List<T>?
+            }
+
+            else -> emptyList()
+        }
     }
 
 

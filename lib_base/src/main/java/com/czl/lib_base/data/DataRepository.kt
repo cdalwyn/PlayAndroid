@@ -13,6 +13,7 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import org.litepal.crud.LitePalSupport
+import java.io.Serializable
 
 /**
  * @author Alwyn
@@ -279,6 +280,14 @@ class DataRepository constructor(
 
     override fun getReadHistoryState(): Boolean {
         return mLocalDataSource.getReadHistoryState()
+    }
+
+    override fun <T : Serializable> saveCacheListData(list: List<T>) {
+        return mLocalDataSource.saveCacheListData(list)
+    }
+
+    override fun <T : Serializable> getCacheListData(key:String): List<T>? {
+        return mLocalDataSource.getCacheListData(key)
     }
 
     override fun userLogin(account: String, pwd: String): Observable<BaseBean<UserBean>> {

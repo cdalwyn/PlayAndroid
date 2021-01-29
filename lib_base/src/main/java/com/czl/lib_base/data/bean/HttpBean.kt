@@ -12,6 +12,7 @@ import com.czl.lib_base.annotation.TodoType
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import org.litepal.crud.LitePalSupport
+import java.io.Serializable
 
 /**
  * @author Alwyn
@@ -189,7 +190,6 @@ data class CollectArticleBean(
         val zan: Int
     )
 }
-
 data class HomeBannerBean(
     @SerializedName("desc")
     val desc: String = "",
@@ -207,7 +207,7 @@ data class HomeBannerBean(
     val type: Int,
     @SerializedName("url")
     val url: String = ""
-)
+):Serializable
 
 data class HomeArticleBean(
     @SerializedName("curPage")
@@ -224,7 +224,7 @@ data class HomeArticleBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-) {
+) :Serializable{
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -290,7 +290,7 @@ data class HomeArticleBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable() {
+    ) : BaseObservable(),Serializable {
         @Bindable
         var collect: Boolean = false
             set(value) {
@@ -310,7 +310,7 @@ data class HomeArticleBean(
             val name: String,
             @SerializedName("url")
             val url: String
-        )
+        ):Serializable
     }
 }
 
@@ -521,7 +521,7 @@ data class SearchHotKeyBean(
     val order: Int,
     @SerializedName("visible")
     val visible: Int
-)
+):Serializable
 
 data class ProjectSortBean(
     @SerializedName("children")

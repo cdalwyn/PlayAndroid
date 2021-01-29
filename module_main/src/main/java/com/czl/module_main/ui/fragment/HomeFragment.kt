@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.CacheDiskUtils
-import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.LogUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.data.db.SearchHistoryEntity
+import com.czl.lib_base.data.bean.HomeArticleBean
+import com.czl.lib_base.data.bean.HomeBannerBean
+import com.czl.lib_base.data.bean.SearchHotKeyBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.RxThreadHelper
@@ -28,14 +28,12 @@ import com.ethanhua.skeleton.SkeletonScreen
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
-import com.tencent.mmkv.MMKV
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import org.litepal.LitePal
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -80,7 +78,35 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         initSearchBar()
         initArticleAdapter()
         initProjectAdapter()
-        binding.smartCommon.autoRefresh()
+        // 加载保存时间为AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS的缓存 超过则刷新加载
+        loadData()
+    }
+
+    private fun loadData() {
+        val cacheBannerData =
+            viewModel.getCacheData<HomeBannerBean>(AppConstants.CacheKey.CACHE_HOME_BANNER)
+        val cacheArticles =
+            viewModel.getCacheData<HomeArticleBean.Data>(AppConstants.CacheKey.CACHE_HOME_ARTICLE)
+        val cacheKeyword =
+            viewModel.getCacheData<SearchHotKeyBean>(AppConstants.CacheKey.CACHE_HOME_KEYWORD)
+        if (!cacheBannerData.isNullOrEmpty()) {
+            bannerSkeleton.hide()
+            bannerAdapter = MyBannerAdapter(cacheBannerData, this)
+            binding.banner.adapter = bannerAdapter
+        } else {
+            binding.smartCommon.autoRefresh()
+        }
+        if (!cacheArticles.isNullOrEmpty()) {
+            binding.ryArticle.hideShimmerAdapter()
+            mArticleAdapter.setDiffNewData(cacheArticles as MutableList<HomeArticleBean.Data>?)
+        } else {
+            binding.smartCommon.autoRefresh()
+        }
+        if (!cacheKeyword.isNullOrEmpty()) {
+            setTimerHotKey(cacheKeyword)
+        } else {
+            viewModel.getSearchHotKeyword()
+        }
     }
 
     override fun initViewObservable() {
@@ -88,6 +114,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         viewModel.uc.bannerCompleteEvent.observe(this, {
             bannerSkeleton.hide()
             if (!this::bannerAdapter.isInitialized) {
+                // 第一次加载
+                viewModel.model.saveCacheListData(it)
                 bannerAdapter = MyBannerAdapter(it, this)
                 binding.banner.adapter = bannerAdapter
             } else {
@@ -148,6 +176,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 接收文章列表数据
         viewModel.uc.loadArticleCompleteEvent.observe(this, { data ->
+            if (!data.datas.isNullOrEmpty()) {
+                viewModel.model.saveCacheListData(data.datas)
+            }
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -181,19 +212,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         // 接收搜索热词
         viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
             if (list.isNotEmpty()) {
-                hotKeyList = list.map { it.name }
-                changeSearchTask?.dispose()
-                // 发布定时任务更换搜索框关键字
-                changeSearchTask = Flowable.interval(0, 10, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        val hotKeyword = list[Random().nextInt(list.size)].name
-                        binding.searchBar.setPlaceHolder(hotKeyword)
-                    }) {
-                        it.printStackTrace()
-                        LogUtils.e("定时更换搜索热词失败")
-                    }
-                viewModel.addSubscribe(changeSearchTask!!)
+                // 缓存
+                viewModel.model.saveCacheListData(list)
+                setTimerHotKey(list)
             }
         })
         // 搜索框右边图标点击事件
@@ -205,6 +226,22 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 startSearch(binding.searchBar.placeHolderText.toString())
             }
         })
+    }
+
+    private fun setTimerHotKey(list: List<SearchHotKeyBean>) {
+        hotKeyList = list.map { it.name }
+        changeSearchTask?.dispose()
+        // 发布定时任务更换搜索框关键字
+        changeSearchTask = Flowable.interval(0, 10, TimeUnit.SECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                val hotKeyword = list[Random().nextInt(list.size)].name
+                binding.searchBar.setPlaceHolder(hotKeyword)
+            }) {
+                it.printStackTrace()
+                LogUtils.e("定时更换搜索热词失败")
+            }
+        viewModel.addSubscribe(changeSearchTask!!)
     }
 
     private fun initProjectAdapter() {

@@ -15,6 +15,13 @@ interface AppConstants {
         const val READ_HISTORY_STATE: String = "read_history_state"
     }
 
+    object CacheKey{
+        const val CACHE_SAVE_TIME_SECONDS = 3600
+        const val CACHE_HOME_BANNER = "cache_home_banner"
+        const val CACHE_HOME_ARTICLE = "cache_home_article"
+        const val CACHE_HOME_KEYWORD = "cache_home_keyword"
+    }
+
     /**
      * value规则： /(module后缀)/(所在类名)
      * 路由 A_ : Activity
