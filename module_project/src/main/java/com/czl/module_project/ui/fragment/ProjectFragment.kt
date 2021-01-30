@@ -34,47 +34,45 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
         return false
     }
 
-
-
-    @SuppressLint("MissingPermission")
     override fun initData() {
-        initTab()
+        val cacheSort = viewModel.getCacheSort()
+        if (cacheSort.isNotEmpty()) {
+            initViewpager(cacheSort)
+        } else {
+            viewModel.getProjectSort()
+        }
+    }
+
+    override fun initViewObservable() {
+        viewModel.loadCompleteEvent.observe(this, {
+            if (!it.isNullOrEmpty()) {
+                viewModel.model.saveCacheListData(it)
+            }
+            initViewpager(it)
+        })
+    }
+
+    private fun initViewpager(it: List<ProjectSortBean>) {
+        val fragments = arrayListOf<ContentFragment>()
+        val tabTitles = arrayListOf<String>()
+        for (data in it) {
+            binding.tabLayout.addTab(binding.tabLayout.newTab())
+            tabTitles.add(data.name)
+            fragments.add(ContentFragment.getInstance(data.id.toString()))
+        }
+        binding.viewpager.apply {
+            adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
+            // 优化体验设置该属性后第一次将自动加载所有fragment 在子fragment内部添加懒加载机制
+            offscreenPageLimit = fragments.size
+        }
+        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
+            tab.text = tabTitles[position]
+        }.attach()
     }
 
     override fun reload() {
         super.reload()
-        initTab()
-    }
-
-    private fun initTab() {
-        val fragments = arrayListOf<ContentFragment>()
-        val tabTitles = arrayListOf<String>()
-        viewModel.model.getProjectSort()
-            .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<List<ProjectSortBean>>>(loadService) {
-                override fun onResult(t: BaseBean<List<ProjectSortBean>>) {
-                    if (t.errorCode == 0) {
-                        for (data in t.data!!) {
-                            binding.tabLayout.addTab(binding.tabLayout.newTab())
-                            tabTitles.add(data.name)
-                            fragments.add(ContentFragment.getInstance(data.id.toString()))
-                        }
-                        binding.viewpager.apply {
-                            adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
-                            // 设置该属性后第一次将自动加载所有fragment 不配置该属性则使用viewpager2内部加载机制
-                            offscreenPageLimit = fragments.size
-                        }
-                        TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
-                            tab.text = tabTitles[position]
-                        }.attach()
-                    }
-                }
-
-                override fun onFailed(msg: String?) {
-
-                    showErrorToast(msg)
-                }
-            })
+        viewModel.getProjectSort()
     }
 
 }

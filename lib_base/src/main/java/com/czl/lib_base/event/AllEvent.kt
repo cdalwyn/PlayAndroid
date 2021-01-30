@@ -1,5 +1,6 @@
 package com.czl.lib_base.event
 
+import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.bean.TodoBean
 import com.jeremyliao.liveeventbus.core.LiveEvent
 
@@ -9,7 +10,7 @@ import com.jeremyliao.liveeventbus.core.LiveEvent
  * @Description 页面通信事件
  */
 data class MainEvent(val msg: String?):LiveEvent
-data class TokenExpiredEvent(val msg: String?):LiveEvent
+data class TokenExpiredEvent(val msg: String?)
 data class RegisterSuccessEvent(val account: String?,val pwd:String?):LiveEvent
 data class SearchHistoryEvent(val code:Int):LiveEvent
 data class LogoutEvent(val code:Int):LiveEvent

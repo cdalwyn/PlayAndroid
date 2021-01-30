@@ -329,7 +329,7 @@ data class ProjectBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-) {
+):Serializable {
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -395,7 +395,7 @@ data class ProjectBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable() {
+    ) : BaseObservable(),Serializable {
         @Bindable
         @SerializedName("collect")
         var collect: Boolean = false
@@ -409,7 +409,7 @@ data class ProjectBean(
             val name: String,
             @SerializedName("url")
             val url: String
-        )
+        ):Serializable
     }
 }
 
@@ -538,7 +538,7 @@ data class ProjectSortBean(
     val parentChapterId: Int,
     @SerializedName("visible")
     val visible: Int
-)
+):Serializable
 
 data class UserScoreBean(
     @SerializedName("coinCount")
@@ -755,7 +755,7 @@ data class SquareListBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-) {
+):Serializable {
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -819,7 +819,7 @@ data class SquareListBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable() {
+    ) : BaseObservable(),Serializable {
         @Bindable
         @SerializedName("collect")
         var collect: Boolean = false

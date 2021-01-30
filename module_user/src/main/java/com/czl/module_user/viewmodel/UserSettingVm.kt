@@ -65,7 +65,7 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
         addSubscribe(Flowable.create(FlowableOnSubscribe<Boolean> {
             it.onNext(CleanUtils.cleanInternalCache())
         }, BackpressureStrategy.BUFFER)
-            .compose(RxThreadHelper.rxSchedulerHelper())
+            .compose(RxThreadHelper.rxFlowSchedulerHelper())
             .doOnSubscribe { showLoading("清理中") }
             .subscribe {
                 Flowable.timer(300, TimeUnit.MILLISECONDS)
@@ -94,7 +94,7 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
                 )
             )
         }, BackpressureStrategy.BUFFER)
-            .compose(RxThreadHelper.rxSchedulerHelper())
+            .compose(RxThreadHelper.rxFlowSchedulerHelper())
             .subscribe {
                 cacheSize.set(it)
             })

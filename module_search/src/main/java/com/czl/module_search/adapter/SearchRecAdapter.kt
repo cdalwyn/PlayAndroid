@@ -49,7 +49,7 @@ class SearchRecAdapter(
                     mAdapter.setDiffNewData(hotKeyList)
                 }
                 1 -> {
-                    mFragment.viewModel.addSubscribe(histories.compose(RxThreadHelper.rxSchedulerHelper())
+                    mFragment.viewModel.addSubscribe(histories.compose(RxThreadHelper.rxFlowSchedulerHelper())
                         .subscribe { list ->
                             if (list.isEmpty()){
                                 getViewByPosition(1,R.id.ll_root)?.visibility = View.GONE

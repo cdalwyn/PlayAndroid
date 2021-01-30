@@ -4,7 +4,6 @@ package com.czl.lib_base.base
 /**
  * 注入全局的数据仓库，可以考虑使用Dagger2/Koin。（根据项目实际情况搭建，千万不要为了架构而架构）
  * 当前项目已采用Koin注入
- * Created by goldze on 2019/3/26.
  */
 object Injection {
 //    fun provideDemoRepository(): DataRepository? {

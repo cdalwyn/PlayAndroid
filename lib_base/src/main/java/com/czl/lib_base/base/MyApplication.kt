@@ -68,7 +68,7 @@ open class MyApplication : Application() {
         MMKV.initialize(this)
         // 初始化Fragmentation
         Fragmentation.builder()
-            .stackViewMode(Fragmentation.NONE)
+            .stackViewMode(Fragmentation.BUBBLE)
             .debug(BuildConfig.DEBUG)
             .install()
         // 屏幕适配

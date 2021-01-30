@@ -28,22 +28,18 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     var tvCollect = ObservableField("0")
     var tvShare = ObservableField("0")
     val historyVisible = ObservableBoolean(true)
+    var firstSuccessLoadFlag = false
     val uc = UiChangeEvent()
 
     class UiChangeEvent {
         val showLoginPopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val refreshEvent: SingleLiveEvent<Void> = SingleLiveEvent()
-        val confirmLogoutEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         getUserCollectData()
         getUserShareData()
         uc.refreshEvent.call()
-    })
-
-    val logoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        uc.confirmLogoutEvent.call()
     })
 
     val onSettingClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -79,18 +75,21 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     fun getUserShareData() {
         model.getUserShareData()
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>(loadService) {
+            .subscribe(object : ApiSubscriberHelper<BaseBean<UserShareBean>>() {
                 override fun onResult(t: BaseBean<UserShareBean>) {
                     if (t.errorCode == 0) {
+                        firstSuccessLoadFlag = true
                         t.data?.let { data ->
                             tvScore.set(data.coinInfo.coinCount.toString())
                             tvShare.set(data.shareArticles.datas.size.toString())
                         }
+                    }else{
+                        firstSuccessLoadFlag = false
                     }
                 }
 
                 override fun onFailed(msg: String?) {
-
+                    firstSuccessLoadFlag = false
                 }
             })
     }
@@ -101,13 +100,17 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
             .subscribe(object : ApiSubscriberHelper<BaseBean<CollectArticleBean>>() {
                 override fun onResult(t: BaseBean<CollectArticleBean>) {
                     if (t.errorCode == 0) {
+                        firstSuccessLoadFlag = true
                         t.data?.let { data ->
                             tvCollect.set(data.datas.size.toString())
                         }
+                    }else{
+                        firstSuccessLoadFlag = false
                     }
                 }
 
                 override fun onFailed(msg: String?) {
+                    firstSuccessLoadFlag = false
                 }
 
             })

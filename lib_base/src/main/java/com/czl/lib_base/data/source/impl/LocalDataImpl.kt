@@ -244,19 +244,41 @@ class LocalDataImpl : LocalDataSource {
                 is HomeBannerBean -> {
                     CacheDiskUtils.getInstance().put(
                         AppConstants.CacheKey.CACHE_HOME_BANNER,
-                        HomeBannerCache(list as List<HomeBannerBean>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                        HomeBannerCache(list as List<HomeBannerBean>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
                     )
                 }
                 is HomeArticleBean.Data -> {
                     CacheDiskUtils.getInstance().put(
                         AppConstants.CacheKey.CACHE_HOME_ARTICLE,
-                        HomeArticleCache(list as List<HomeArticleBean.Data>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                        HomeArticleCache(list as List<HomeArticleBean.Data>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
                     )
                 }
                 is SearchHotKeyBean -> {
                     CacheDiskUtils.getInstance().put(
                         AppConstants.CacheKey.CACHE_HOME_KEYWORD,
-                        HomeSearchKeywordCache(list as List<SearchHotKeyBean>), AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                        HomeSearchKeywordCache(list as List<SearchHotKeyBean>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                    )
+                }
+                is SquareListBean.Data -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_SQUARE_LIST,
+                        HomeSquareCache(list as List<SquareListBean.Data>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
+                    )
+                }
+                is ProjectSortBean -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_PROJECT_SORT,
+                        HomeProjectSortCache(list as List<ProjectSortBean>)
+                    )
+                }
+                is ProjectBean.Data -> {
+                    CacheDiskUtils.getInstance().put(
+                        AppConstants.CacheKey.CACHE_PROJECT_CONTENT,
+                        HomeProjectContentCache(list as List<ProjectBean.Data>)
                     )
                 }
             }
@@ -268,13 +290,21 @@ class LocalDataImpl : LocalDataSource {
             is HomeBannerCache? -> {
                 serializable?.homeBannerBeans as List<T>?
             }
-            is HomeArticleCache?  -> {
+            is HomeArticleCache? -> {
                 serializable?.homeArticleBeans as List<T>?
             }
-            is SearchHotKeyBean? -> {
-                serializable as List<T>?
+            is HomeSearchKeywordCache? -> {
+                serializable?.searchHotKeyBean as List<T>?
             }
-
+            is HomeSquareCache? -> {
+                serializable?.squareCache as List<T>?
+            }
+            is HomeProjectSortCache? -> {
+                serializable?.sortCache as List<T>?
+            }
+            is HomeProjectContentCache? -> {
+                serializable?.contentCache as List<T>?
+            }
             else -> emptyList()
         }
     }

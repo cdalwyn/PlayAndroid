@@ -12,12 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
+import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
+import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
+import com.czl.lib_base.widget.LoginPopView
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
@@ -27,6 +31,8 @@ import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
+import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import java.lang.reflect.ParameterizedType
 import java.text.SimpleDateFormat
 import java.util.*
@@ -130,21 +136,17 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModel.injectLifecycleProvider(this)
     }
 
-
     //刷新布局
     fun refreshLayout() {
         binding.setVariable(viewModelId, viewModel)
     }
 
+
     /**
      * 注册ViewModel与View的契约UI回调事件
      */
     private fun registerUIChangeLiveDataCallBack() {
-        // token失效重新登录
-//        LiveBusCenter.observeTokenExpiredEvent(this, {
-//            dataRepository.clearLoginState()
-//            showLoginPop()
-//        })
+
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
             .observe(this, { title: String? -> showLoading(title) })

@@ -40,6 +40,7 @@ class UserCollectFragment : BaseFragment<UserFragmentCollectBinding, UserCollect
             arrayListOf(CollectArticleFragment.getInstance(), CollectWebsiteFragment.getInstance())
         binding.viewpager.apply {
             adapter = ViewPagerFmAdapter(childFragmentManager, lifecycle, fragments)
+            offscreenPageLimit = fragments.size
         }
         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, position ->
             if (position == 0) {
@@ -52,4 +53,5 @@ class UserCollectFragment : BaseFragment<UserFragmentCollectBinding, UserCollect
             binding.viewpager.currentItem = 1
         }
     }
+
 }

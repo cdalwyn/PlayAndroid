@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_5"
-        android:background="@color/white"
+        android:background="@color/md_theme_red"
         android:visibility="gone"
         binding:isVisible="@{viewModel.showWebLinkMenuFlag}"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -24,6 +24,7 @@
             android:gravity="center"
             android:padding="@dimen/dp_10"
             android:text="复制链接"
+            android:textColor="#ffffff"
             binding:onClickCommand="@{viewModel.copyLinkClickCommand}"/>
         <TextView
             android:layout_width="0dp"
@@ -31,6 +32,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:padding="@dimen/dp_10"
+            android:textColor="#ffffff"
             android:text="用浏览器打开"
             binding:onClickCommand="@{viewModel.openOnBrowserClick}"/>
         <TextView
@@ -38,6 +40,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="@dimen/dp_10"
+            android:textColor="#ffffff"
             android:layout_weight="1"
             android:text="收藏链接"
             binding:onClickCommand="@{viewModel.onCollectClickCommand}"/>

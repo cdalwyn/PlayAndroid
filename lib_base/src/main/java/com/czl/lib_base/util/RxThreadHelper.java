@@ -39,9 +39,15 @@ public class RxThreadHelper {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T> FlowableTransformer<T, T> rxSchedulerHelper() {    //compose简化线程
+    public static <T> FlowableTransformer<T, T> rxFlowSchedulerHelper() {    //compose简化线程
         return observable -> observable
                 .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static <T> ObservableTransformer<T, T> rxSchedulerHelper() {    //compose简化线程
+        return observable -> observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

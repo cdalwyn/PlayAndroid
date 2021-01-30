@@ -19,6 +19,7 @@
         app:lottie_autoPlay="true"
         app:lottie_fileName="load_error.json"
         app:lottie_repeatCount="1"
+        app:lottie_loop="false"
         />
     <TextView
         android:id="@+id/tv_empty"

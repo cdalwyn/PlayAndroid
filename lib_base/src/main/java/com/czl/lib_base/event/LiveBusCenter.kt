@@ -38,13 +38,13 @@ object LiveBusCenter {
         LiveEventBus.get(MainEvent::class.java).observe(owner, Observer(func))
     }
 
-    fun postTokenExpiredEvent(value: String?) {
-        LiveEventBus.get(TokenExpiredEvent::class.java).post(TokenExpiredEvent(value))
-    }
-
-    fun observeTokenExpiredEvent(owner: LifecycleOwner, observer: Observer<TokenExpiredEvent>) {
-        LiveEventBus.get(TokenExpiredEvent::class.java).observe(owner, observer)
-    }
+//    fun postTokenExpiredEvent(value: String?) {
+//        LiveEventBus.get(TokenExpiredEvent::class.java).post(TokenExpiredEvent(value))
+//    }
+//
+//    fun observeTokenExpiredEvent(owner: LifecycleOwner, observer: Observer<TokenExpiredEvent>) {
+//        LiveEventBus.get(TokenExpiredEvent::class.java).observe(owner, observer)
+//    }
 
     fun postRegisterSuccessEvent(account: String?, pwd: String?) {
         LiveEventBus.get(RegisterSuccessEvent::class.java).post(RegisterSuccessEvent(account, pwd))

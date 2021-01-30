@@ -18,13 +18,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
+import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.callback.LoadingCallback
+import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
+import com.czl.lib_base.widget.LoginPopView
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.Callback
@@ -37,6 +40,8 @@ import com.lxj.xpopup.core.BasePopupView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 import java.lang.reflect.ParameterizedType
 
 
@@ -128,14 +133,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         initViewDataBinding()
         //私有的ViewModel与View的契约事件回调逻辑
         registerUIChangeLiveDataCallBack()
-    }
-
-    /**
-     * 正常创建启动Fragment情况 onViewCreated-onLazyInitView-onEnterAnimationEnd
-     * Viewpager创建实例 onViewCreated-onLazyInitView
-     */
-    override fun onLazyInitView(savedInstanceState: Bundle?) {
-        super.onLazyInitView(savedInstanceState)
         if (enableLazy()) {
             //页面数据初始化方法
             initData()
@@ -144,6 +141,17 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         }
     }
 
+    /**
+     * 正常创建启动Fragment情况 onViewCreated-onLazyInitView-onEnterAnimationEnd
+     * Viewpager创建实例 onViewCreated-onLazyInitView
+     */
+    override fun onLazyInitView(savedInstanceState: Bundle?) {
+        super.onLazyInitView(savedInstanceState)
+    }
+
+    /**
+     * 入栈动画完毕后执行
+     */
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
         super.onEnterAnimationEnd(savedInstanceState)
         if (!enableLazy()) {
@@ -165,7 +173,8 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initStatusBar() {
-        ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(requireContext()), 0.2f)
+        ImmersionBar.with(this)
+            .statusBarDarkFont(!DayModeUtil.isNightMode(requireContext()), 0.2f)
             .statusBarColor(R.color.color_toolbar).init()
     }
 
@@ -225,6 +234,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      */
     //注册ViewModel与View的契约UI回调事件
     private fun registerUIChangeLiveDataCallBack() {
+
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
             .observe(this, { title: String? -> showLoading(title) })
@@ -288,7 +298,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     ) {
         this.ryCommon = ryCommon
         if (nullFlag) {
-            if (currentPage == defaultPage-1)
+            if (currentPage == defaultPage - 1)
                 showErrorStatePage()
             smartCommon.finishRefresh(false)
             smartCommon.finishLoadMore(false)

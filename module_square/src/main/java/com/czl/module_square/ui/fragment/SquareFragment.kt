@@ -6,6 +6,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
+import com.czl.lib_base.data.bean.SquareListBean
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.module_square.BR
 import com.czl.module_square.R
@@ -31,7 +32,17 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
 
     override fun initData() {
         initAdapter()
-        binding.smartCommon.autoRefresh()
+        loadData()
+    }
+
+    private fun loadData() {
+        val cacheData = viewModel.getCacheData()
+        if (!cacheData.isNullOrEmpty()){
+            binding.ryCommon.hideShimmerAdapter()
+            mAdapter.setDiffNewData(cacheData as MutableList<SquareListBean.Data>)
+        }else{
+            binding.smartCommon.autoRefresh()
+        }
     }
 
     private fun initAdapter() {
@@ -51,6 +62,9 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
             binding.ryCommon.smoothScrollToPosition(0)
         })
         viewModel.uc.loadCompleteEvent.observe(this, { data ->
+            if (!data?.datas.isNullOrEmpty()){
+                viewModel.model.saveCacheListData(data!!.datas)
+            }
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,

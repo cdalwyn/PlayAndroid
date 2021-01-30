@@ -84,4 +84,8 @@ class SquareViewModel(application: MyApplication, model: DataRepository) :
                 }
             })
     }
+
+    fun getCacheData(): List<SquareListBean.Data> {
+        return model.getCacheListData(AppConstants.CacheKey.CACHE_SQUARE_LIST) ?: emptyList()
+    }
 }

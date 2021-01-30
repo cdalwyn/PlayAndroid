@@ -30,8 +30,10 @@ import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.youth.banner.transformer.AlphaPageTransformer
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import java.util.*
@@ -78,35 +80,53 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         initSearchBar()
         initArticleAdapter()
         initProjectAdapter()
-        // 加载保存时间为AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS的缓存 超过则刷新加载
+        // 加载保存时间为AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS的缓存 过期则刷新加载
         loadData()
     }
 
     private fun loadData() {
-        val cacheBannerData =
-            viewModel.getCacheData<HomeBannerBean>(AppConstants.CacheKey.CACHE_HOME_BANNER)
-        val cacheArticles =
-            viewModel.getCacheData<HomeArticleBean.Data>(AppConstants.CacheKey.CACHE_HOME_ARTICLE)
-        val cacheKeyword =
-            viewModel.getCacheData<SearchHotKeyBean>(AppConstants.CacheKey.CACHE_HOME_KEYWORD)
-        if (!cacheBannerData.isNullOrEmpty()) {
-            bannerSkeleton.hide()
-            bannerAdapter = MyBannerAdapter(cacheBannerData, this)
-            binding.banner.adapter = bannerAdapter
-        } else {
-            binding.smartCommon.autoRefresh()
-        }
-        if (!cacheArticles.isNullOrEmpty()) {
-            binding.ryArticle.hideShimmerAdapter()
-            mArticleAdapter.setDiffNewData(cacheArticles as MutableList<HomeArticleBean.Data>?)
-        } else {
-            binding.smartCommon.autoRefresh()
-        }
-        if (!cacheKeyword.isNullOrEmpty()) {
-            setTimerHotKey(cacheKeyword)
-        } else {
-            viewModel.getSearchHotKeyword()
-        }
+        showLoadingStatePage()
+        val bannerObservable = Observable.create<List<HomeBannerBean?>> {
+            it.onNext(viewModel.getCacheData(AppConstants.CacheKey.CACHE_HOME_BANNER))
+        }.subscribeOn(Schedulers.io())
+        val articleObservable = Observable.create<List<HomeArticleBean.Data?>> {
+            it.onNext(viewModel.getCacheData(AppConstants.CacheKey.CACHE_HOME_ARTICLE))
+        }.subscribeOn(Schedulers.io())
+        val keywordObservable = Observable.create<List<SearchHotKeyBean>> {
+            it.onNext(viewModel.getCacheData(AppConstants.CacheKey.CACHE_HOME_KEYWORD))
+        }.subscribeOn(Schedulers.io())
+        // merge合并后 按时间线并行执行  concat 合并会按发送顺序串行执行
+        viewModel.addSubscribe(Observable.merge(
+            bannerObservable,
+            articleObservable,
+            keywordObservable
+        )
+            .compose(RxThreadHelper.rxSchedulerHelper())
+            .subscribe({
+                showSuccessStatePage()
+                if (!it.isNullOrEmpty()) {
+                    when (it[0]) {
+                        is HomeBannerBean? -> {
+                            bannerSkeleton.hide()
+                            bannerAdapter = MyBannerAdapter(it as List<HomeBannerBean?>, this)
+                            binding.banner.adapter = bannerAdapter
+                        }
+                        is HomeArticleBean.Data? -> {
+                            binding.ryArticle.hideShimmerAdapter()
+                            mArticleAdapter.setDiffNewData(it as MutableList<HomeArticleBean.Data>?)
+                        }
+                        is SearchHotKeyBean -> {
+                            setTimerHotKey(it as List<SearchHotKeyBean>)
+                        }
+                    }
+                } else {
+                    binding.smartCommon.autoRefresh()
+                }
+            }) {
+                showSuccessStatePage()
+                it.printStackTrace()
+                binding.smartCommon.autoRefresh()
+            })
     }
 
     override fun initViewObservable() {
@@ -176,8 +196,8 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         })
         // 接收文章列表数据
         viewModel.uc.loadArticleCompleteEvent.observe(this, { data ->
-            if (!data.datas.isNullOrEmpty()) {
-                viewModel.model.saveCacheListData(data.datas)
+            if (!data?.datas.isNullOrEmpty()) {
+                viewModel.model.saveCacheListData(data!!.datas)
             }
             handleRecyclerviewData(
                 data == null,
@@ -292,7 +312,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
      */
     private fun setSuggestAdapterData() {
         viewModel.addSubscribe(viewModel.model.getSearchHistoryByUid()
-            .compose(RxThreadHelper.rxSchedulerHelper())
+            .compose(RxThreadHelper.rxFlowSchedulerHelper())
             .subscribe {
                 suggestAdapter.suggestions = it.map { x -> x.history }
                 if (suggestAdapter.suggestions.isEmpty()) binding.searchBar.hideSuggestionsList()

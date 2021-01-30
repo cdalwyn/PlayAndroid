@@ -46,7 +46,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchItemClickEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
-        val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean> = SingleLiveEvent()
+        val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean?> = SingleLiveEvent()
         val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val loadSearchHotKeyEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
@@ -253,12 +253,9 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
             })
     }
 
-    fun <T:Serializable>getCacheData(key:String):List<T>?{
-        return model.getCacheListData(key)
+    fun <T:Serializable>getCacheData(key:String):List<T>{
+        return model.getCacheListData(key)?: emptyList()
     }
 
-//    fun getCacheHotKeyword() :List<SearchHotKeyBean>?{
-//        return model.getCacheListData(AppConstants.C)
-//    }
 
 }

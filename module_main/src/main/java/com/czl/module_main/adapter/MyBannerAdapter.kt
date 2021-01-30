@@ -21,7 +21,7 @@ import com.youth.banner.adapter.BannerAdapter
 
 
 class MyBannerAdapter(
-    mData: List<HomeBannerBean>?,
+    mData: List<HomeBannerBean?>,
     private val homeFragment: HomeFragment
 ) :
     BannerAdapter<HomeBannerBean, ImageTitleHolder>(mData) {

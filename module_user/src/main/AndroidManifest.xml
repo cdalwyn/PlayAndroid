@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.czl.module_user">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application>
 
     </application>
