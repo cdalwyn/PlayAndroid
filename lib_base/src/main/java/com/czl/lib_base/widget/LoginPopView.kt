@@ -1,10 +1,11 @@
 package com.czl.lib_base.widget
 
 import android.annotation.SuppressLint
-import androidx.core.content.ContextCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.blankj.utilcode.util.BarUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.base.BaseBean
@@ -15,9 +16,7 @@ import com.czl.lib_base.databinding.PopLoginBinding
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.core.BottomPopupView
-import com.lxj.xpopup.util.XPopupUtils
 
 /**
  * @author Alwyn
@@ -32,6 +31,8 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     val registerFlag: ObservableInt = ObservableInt(0)
     val tvLoginAccount = ObservableField("")
     val tvLoginPwd = ObservableField("")
+
+    val tvTitleObservable: ObservableField<String> = ObservableField("登录")
 
     // 登录
     val onLoginClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -68,14 +69,23 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     override fun doAfterShow() {
         super.doAfterShow()
         registerFlag.set(0)
+        activity.loginPopMap.put(0, this)
     }
+
+    override fun beforeDismiss() {
+        super.beforeDismiss()
+        activity.loginPopMap.clear()
+    }
+
     // 切换注册UI
     val onRegisterClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        tvTitleObservable.set("注册")
         registerFlag.set(1)
     })
 
     // 返回登录UI
     val toLoginClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        tvTitleObservable.set("登录")
         registerFlag.set(0)
     })
 
@@ -120,6 +130,22 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
         dataBinding = DataBindingUtil.bind(popupImplView)
         dataBinding?.apply {
             pop = this@LoginPopView
+            val layoutParams = tvLogin.layoutParams as ConstraintLayout.LayoutParams
+            layoutParams.setMargins(
+                layoutParams.leftMargin,
+                BarUtils.getStatusBarHeight() + BarUtils.getActionBarHeight(),
+                layoutParams.rightMargin,
+                layoutParams.bottomMargin
+            )
+            val params = ivBack.layoutParams as ConstraintLayout.LayoutParams
+            params.setMargins(
+                params.leftMargin,
+                BarUtils.getStatusBarHeight(),
+                params.rightMargin,
+                params.bottomMargin
+            )
+            ivBack.layoutParams = params
+            tvLogin.layoutParams = layoutParams
             executePendingBindings()
         }
     }

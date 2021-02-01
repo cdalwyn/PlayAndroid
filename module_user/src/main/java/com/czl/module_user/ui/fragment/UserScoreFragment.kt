@@ -39,10 +39,6 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         return true
     }
 
-    override fun enableLazy(): Boolean {
-        return false
-    }
-
     override fun reload() {
         super.reload()
         binding.smartCommon.autoRefresh()
@@ -72,7 +68,9 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         })
         // 总积分动画
         viewModel.uc.getTotalScoreEvent.observe(this, {
-            if (it==null){
+            if (it == null) {
+                binding.smartCommon.finishRefresh(false)
+                binding.smartCommon.finishLoadMore(false)
                 return@observe
             }
             val animator = ValueAnimator.ofInt(0, it.coinCount)

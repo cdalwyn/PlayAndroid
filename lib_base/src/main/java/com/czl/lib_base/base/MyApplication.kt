@@ -2,7 +2,6 @@ package com.czl.lib_base.base
 
 import android.app.Activity
 import android.app.Application
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -12,21 +11,11 @@ import com.blankj.utilcode.util.Utils
 import com.bumptech.glide.Glide
 import com.czl.lib_base.BuildConfig
 import com.czl.lib_base.R
-import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.config.AppConstants
-import com.czl.lib_base.crash.CaocConfig
-import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.di.allModule
-import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.SpHelper
 import com.czl.lib_base.util.ToastHelper
-import com.didichuxing.doraemonkit.DoraemonKit
-import com.didichuxing.doraemonkit.DoraemonKitReal
-import com.gyf.immersionbar.ImmersionBar
-import com.kingja.loadsir.callback.SuccessCallback
-import com.kingja.loadsir.core.LoadSir
 import com.lxj.xpopup.XPopup
-import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -35,11 +24,9 @@ import es.dmoral.toasty.Toasty
 import io.reactivex.plugins.RxJavaPlugins
 import me.jessyan.autosize.AutoSizeConfig
 import me.yokeyword.fragmentation.Fragmentation
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 import org.litepal.LitePal
 
 

@@ -25,6 +25,18 @@
             android:layout_height="match_parent"
             tools:background="@color/black">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:gravity="center"
+                android:onClick="@{(x)->pop.dismiss()}"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                app:srcCompat="@drawable/ic_arrow_bottom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 <!--            <View-->
 <!--                android:id="@+id/view"-->
 <!--                android:layout_width="@dimen/dp_40"-->
@@ -50,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:text="欢迎使用"
+                android:text="@{pop.tvTitleObservable}"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +86,8 @@
                 android:layout_marginEnd="40dp"
                 android:textColorHint="#FFFFFF"
                 app:hintTextColor="#FFFFFF"
-                app:layout_constraintTop_toBottomOf="@id/tvLogin">
+                app:layout_constraintTop_toBottomOf="@id/tvLogin"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAccount"

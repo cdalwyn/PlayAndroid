@@ -65,7 +65,7 @@ class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContent
     }
 
     override fun initData() {
-        if (!title.isNullOrEmpty()) {
+        if (useBaseLayout()) {
             viewModel.tvTitle.set(title)
         }
         initAdapter()

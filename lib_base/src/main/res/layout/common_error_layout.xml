@@ -7,20 +7,20 @@
     android:gravity="center"
     android:orientation="vertical">
 
-<!--    <ImageView-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        android:layout_marginBottom="@dimen/dp_10"-->
-<!--        android:background="@drawable/ic_load_error"/>-->
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/iv_avatar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="load_error.json"
-        app:lottie_repeatCount="1"
-        app:lottie_loop="false"
-        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:src="@drawable/ic_load_error"/>
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/iv_avatar"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_fileName="load_error.json"-->
+<!--        app:lottie_repeatCount="1"-->
+<!--        app:lottie_loop="false"-->
+<!--        />-->
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"

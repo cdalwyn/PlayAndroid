@@ -1,5 +1,6 @@
 package com.czl.lib_base.di
 
+import android.util.SparseArray
 import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.data.net.RetrofitClient
@@ -16,9 +17,12 @@ import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.widget.AddTodoPopView
 import com.czl.lib_base.widget.LoginPopView
 import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
  * @author Alwyn
@@ -39,10 +43,21 @@ val appModule = module {
     single { DataRepository(get(), get()) }
     // bind 将指定的实例绑定到对应的class  single { AppViewModelFactory(androidApplication(), get()) } bind TestActivity::class
     single { AppViewModelFactory(get(), get()) }
+    // 维护一个全局单例的登录弹窗组 避免多次弹出
+    single(named("login_map")) { ConcurrentHashMap<Int,BasePopupView>(1) }
 
 }
 val factoryModule = module {
+    // 主动点击按钮弹出的pop
     factory(named("login")) {
+        XPopup.Builder(AppManager.instance.currentActivity())
+            .enableDrag(true)
+            .moveUpToKeyboard(false)
+            .autoOpenSoftInput(true)
+            .asCustom(LoginPopView(AppManager.instance.currentActivity() as BaseActivity<*, *>))
+    }
+    // 接口请求被动弹出的pop
+    factory(named("token_login")) {
         XPopup.Builder(AppManager.instance.currentActivity())
             .enableDrag(true)
             .moveUpToKeyboard(false)

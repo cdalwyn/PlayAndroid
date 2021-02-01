@@ -31,32 +31,31 @@ class HomeArticleFragment : BaseFragment<CommonRecyclerviewBinding, HomeArticleV
         return false
     }
 
-
     override fun initData() {
-        binding.smartCommon.autoRefresh()
+//        binding.smartCommon.autoRefresh()
     }
 
     override fun initViewObservable() {
 //        mAdapter = HomeArticleAdapter(this)
-        mAdapter.setDiffCallback(mAdapter.diffConfig)
-        binding.ryCommon.apply {
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-            adapter = mAdapter
-            setDemoLayoutReference(R.layout.main_article_item_skeleton)
-            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
-            showShimmerAdapter()
-        }
-        viewModel.loadCompleteEvent.observe(this, { data ->
-            handleRecyclerviewData(
-                data == null,
-                data?.datas as MutableList<*>?,
-                mAdapter,
-                binding.ryCommon,
-                binding.smartCommon,
-                viewModel.currentArticlePage,
-                data?.over
-            )
-        })
+//        mAdapter.setDiffCallback(mAdapter.diffConfig)
+//        binding.ryCommon.apply {
+//            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+//            adapter = mAdapter
+//            setDemoLayoutReference(R.layout.main_article_item_skeleton)
+//            setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
+//            showShimmerAdapter()
+//        }
+//        viewModel.loadCompleteEvent.observe(this, { data ->
+//            handleRecyclerviewData(
+//                data == null,
+//                data?.datas as MutableList<*>?,
+//                mAdapter,
+//                binding.ryCommon,
+//                binding.smartCommon,
+//                viewModel.currentArticlePage,
+//                data?.over
+//            )
+//        })
     }
 
 }

@@ -6,7 +6,7 @@
     >
 
     <data>
-
+        <import type="com.blankj.utilcode.util.TimeUtils"/>
         <variable
             name="data"
             type="com.czl.lib_base.data.bean.TodoBean.Data" />
@@ -29,7 +29,7 @@
             android:gravity="center_vertical"
             android:paddingStart="@dimen/dp_10"
             android:paddingEnd="@dimen/dp_10"
-            android:text="@{data.dateStr}"
+            android:text="@{TimeUtils.isToday(data.date)?`今天`:data.dateStr}"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="2021-1-6" />

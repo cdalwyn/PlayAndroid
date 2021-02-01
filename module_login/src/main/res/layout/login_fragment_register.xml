@@ -24,10 +24,9 @@
             tools:context=".mvvm.ui.activity.LoginActivity">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_20"
                 android:onClick="@{viewModel.onBackClick}"
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +116,7 @@
                 app:passwordToggleTint="#ffffff">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_pwd_confirm"
                     style="@style/TextInputWhiteStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -138,9 +138,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
-                android:background="@drawable/shape_round_white"
+                android:background="@drawable/gray_btn_corner_10dp"
                 android:text="注册"
-                android:textColor="#000000"
+                android:textColor="#ffffff"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_repassword"
                 binding:onClickCommand="@{viewModel.onRegisterClickCommand}" />

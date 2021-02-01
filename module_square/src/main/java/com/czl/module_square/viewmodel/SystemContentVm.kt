@@ -39,12 +39,12 @@ class SystemContentVm(application: MyApplication, model: DataRepository) :
     private fun getArticlesByCid() {
         model.getArticlesByCid(currentPage + 1, cid!!)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
-            .subscribe(object :ApiSubscriberHelper<BaseBean<SystemDetailBean>>(){
+            .subscribe(object : ApiSubscriberHelper<BaseBean<SystemDetailBean>>() {
                 override fun onResult(t: BaseBean<SystemDetailBean>) {
-                    if (t.errorCode==0){
+                    if (t.errorCode == 0) {
                         currentPage++
                         loadCompletedEvent.postValue(t.data)
-                    }else{
+                    } else {
                         loadCompletedEvent.postValue(null)
                     }
                 }
@@ -56,6 +56,8 @@ class SystemContentVm(application: MyApplication, model: DataRepository) :
 
             })
     }
+
+
     /**
      * 收藏
      */

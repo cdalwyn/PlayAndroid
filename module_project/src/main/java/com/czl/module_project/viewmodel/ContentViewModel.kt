@@ -21,13 +21,13 @@ import com.czl.lib_base.util.RxThreadHelper
 class ContentViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
     var currentPage = 1
-    var cid:String? = null
+    var cid: String? = null
 
     val uc = UiChangeEvent()
 
     class UiChangeEvent {
         val refreshCompleteEvent: SingleLiveEvent<ProjectBean?> = SingleLiveEvent()
-        val moveTopEvent:SingleLiveEvent<Void> = SingleLiveEvent()
+        val moveTopEvent: SingleLiveEvent<Void> = SingleLiveEvent()
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -45,30 +45,27 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
 
     private fun getProjectDataByCid() {
         cid?.let {
-            model.getProjectByCid((currentPage+1).toString(), it)
+            model.getProjectByCid((currentPage + 1).toString(), it)
                 .compose(RxThreadHelper.rxSchedulerHelper(this))
                 .subscribe(object : ApiSubscriberHelper<BaseBean<ProjectBean>>(loadService) {
                     override fun onResult(t: BaseBean<ProjectBean>) {
                         if (t.errorCode == 0) {
                             currentPage++
                             uc.refreshCompleteEvent.postValue(t.data)
-                        }else{
+                        } else {
                             uc.refreshCompleteEvent.postValue(null)
                         }
-
-
                     }
 
                     override fun onFailed(msg: String?) {
                         showErrorToast(msg)
                         uc.refreshCompleteEvent.postValue(null)
                     }
-
                 })
         }
     }
 
-    fun getCacheList():List<ProjectBean.Data>{
-        return model.getCacheListData(AppConstants.CacheKey.CACHE_PROJECT_CONTENT)?: emptyList()
+    fun getCacheList(): List<ProjectBean.Data> {
+        return model.getCacheListData(AppConstants.CacheKey.CACHE_PROJECT_CONTENT) ?: emptyList()
     }
 }

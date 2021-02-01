@@ -45,6 +45,10 @@ class RegisterViewModel(application: MyApplication, model: DataRepository) :
 
     // 注册
     val onRegisterClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        if (tvPwd.get()!=tvRePwd.get()){
+            showNormalToast("两次密码输入不一致")
+            return@BindingAction
+        }
         model.register(tvAccount.get()!!, tvPwd.get()!!, tvRePwd.get()!!)
             .compose(RxThreadHelper.rxSchedulerHelper(this))
             .doOnSubscribe { showLoading() }

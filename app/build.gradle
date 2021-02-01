@@ -7,10 +7,10 @@ apply plugin: 'com.didi.dokit'
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\ASUS\\Desktop\\mvvmcomponents.jks')
-            storePassword '123456'
+            storeFile file('C:\\Users\\ASUS\\Desktop\\mvvm.jks')
+            storePassword 'czl7758258.0'
             keyAlias 'key0'
-            keyPassword '123456'
+            keyPassword 'czl7758258.0'
         }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -36,7 +36,10 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            zipAlignEnabled true  //压缩优化
+            shrinkResources true  //移出无用资源
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }

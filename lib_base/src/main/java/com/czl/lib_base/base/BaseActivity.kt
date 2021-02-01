@@ -3,6 +3,7 @@ package com.czl.lib_base.base
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ import org.koin.core.qualifier.named
 import java.lang.reflect.ParameterizedType
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Created by Alwyn on 2020/10/10.
@@ -51,6 +53,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private var rootBinding: ViewDataBinding? = null
 
     val dataRepository: DataRepository by inject()
+    // 维护的未登录或登录过期后的登录弹窗组 避免并发请求多次弹出
+    val loginPopMap: ConcurrentHashMap<Int,BasePopupView> by inject(named("login_map"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
