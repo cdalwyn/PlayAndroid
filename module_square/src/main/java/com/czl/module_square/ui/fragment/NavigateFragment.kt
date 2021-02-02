@@ -46,6 +46,7 @@ class NavigateFragment :BaseFragment<CommonRecyclerviewBinding,NavigateViewModel
                 binding.smartCommon.finishRefresh(false)
                 return@observe
             }
+            ryCommon = binding.ryCommon
             binding.smartCommon.finishRefresh(true)
             if (!mAdapter.hasEmptyView()){
                 val emptyView = View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)

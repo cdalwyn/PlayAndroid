@@ -23,7 +23,7 @@ import java.util.stream.Collectors
  */
 class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWebsiteVm>() {
 
-    private lateinit var mAdapter:UserCollectWebAdapter
+    private lateinit var mAdapter: UserCollectWebAdapter
 
     companion object {
         fun getInstance(): CollectWebsiteFragment = CollectWebsiteFragment()
@@ -54,14 +54,14 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
             if (it == null) {
                 return@observe
             }
-            if (!mAdapter.hasEmptyView()){
+            if (!mAdapter.hasEmptyView()) {
                 val emptyView = View.inflate(context, R.layout.common_empty_layout, null)
                 emptyView.findViewById<ViewGroup>(R.id.ll_empty).setOnClickListener {
                     binding.smartCommon.autoRefresh()
                 }
                 mAdapter.setEmptyView(emptyView)
             }
-            mAdapter.setDiffNewData(it.reversed() as MutableList<CollectWebsiteBean>?)
+            mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
         })
         LiveBusCenter.observeRefreshWebListEvent(this) {
             viewModel.getCollectWebsite()

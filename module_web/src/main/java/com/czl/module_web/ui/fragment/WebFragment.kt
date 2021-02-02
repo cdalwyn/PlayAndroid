@@ -6,13 +6,21 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
+import android.view.KeyEvent
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.webkit.*
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.databinding.Observable
+import androidx.test.espresso.action.EditorAction
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BR
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -21,6 +29,7 @@ import com.czl.module_web.databinding.WebFragmentWebBinding
 import com.czl.module_web.viewmodel.WebFmViewModel
 import com.czl.module_web.widget.WebMenuPop
 import com.google.android.material.appbar.AppBarLayout
+import com.jakewharton.rxbinding3.widget.editorActions
 import com.just.agentweb.*
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
@@ -67,6 +76,36 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
     override fun initData() {
         initWebView()
+        binding.etWeb.apply {
+            setOnTouchListener(object : View.OnTouchListener {
+                override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                    // 得到一个长度为4的数组，分别表示左右上下四张图片 如果右边没有图片，不再处理
+                    val drawable = compoundDrawables[2] ?: return false
+                    // 如果不是按下事件，不再处理
+                    if (event?.action != MotionEvent.ACTION_UP) {
+                        return false
+                    }
+                    if (event.x > width - paddingRight - drawable.intrinsicWidth) {
+                        if (binding.etWeb.text.isNullOrBlank()) return false
+                        agentWeb?.urlLoader?.loadUrl(binding.etWeb.text.toString())
+                    }
+                    return false
+                }
+            })
+            setOnEditorActionListener { _, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_GO, EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_SEARCH -> {
+                        if (!binding.etWeb.text.isNullOrBlank()) {
+                            agentWeb?.urlLoader?.loadUrl(binding.etWeb.text.toString())
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                    else -> false
+                }
+            }
+        }
     }
 
     override fun initViewObservable() {
@@ -80,8 +119,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             }
             clearEditFocus()
             viewModel.collectWebsite(currentTitle, currentLink)
-//            if (!viewModel.collectFlag.get()!!) viewModel.collectWebsite(currentTitle, currentLink)
-//            else viewModel.unCollectWebsite(arguments?.getString(AppConstants.BundleKey.WEB_URL_ID))
         })
         viewModel.uc.goForwardEvent.observe(this, {
             if (viewModel.canForwardFlag.get()!!) agentWeb?.webCreator?.webView?.goForward()
@@ -102,6 +139,16 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             ClipboardUtils.copyText(currentLink)
             showSuccessToast("复制成功")
             clearEditFocus()
+        })
+        viewModel.showWebLinkMenuFlag.addOnPropertyChangedCallback(object :
+            Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (viewModel.showWebLinkMenuFlag.get()!!) {
+                    binding.etWeb.setText(currentLink)
+                } else {
+                    binding.etWeb.setText(currentTitle)
+                }
+            }
         })
     }
 
@@ -203,6 +250,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             super.onPageStarted(view, url, favicon)
             errorFlag = false
             currentLink = url
+            clearEditFocus()
         }
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
