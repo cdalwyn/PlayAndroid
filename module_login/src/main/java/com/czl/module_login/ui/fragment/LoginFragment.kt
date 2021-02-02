@@ -54,9 +54,7 @@ class LoginFragment : BaseFragment<LoginFragmentLoginBinding, LoginViewModel>() 
             .subscribe {
                 binding.btnLogin.isEnabled = it
                 binding.btnLogin.setTextColor(
-                    if (it) Color.parseColor("#000000") else Color.parseColor(
-                        "#ffffff"
-                    )
+                    if (it) Color.parseColor("#000000") else Color.parseColor("#ffffff")
                 )
                 binding.btnLogin.setBackgroundResource(if (it) R.drawable.shape_round_white else R.drawable.gray_btn_corner_10dp)
             })

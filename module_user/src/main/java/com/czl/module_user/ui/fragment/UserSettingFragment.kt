@@ -18,6 +18,7 @@ import com.czl.module_user.viewmodel.UserSettingVm
  */
 @Route(path = AppConstants.Router.User.F_USER_SETTING)
 class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSettingVm>() {
+
     override fun initContentView(): Int {
         return R.layout.user_fragment_setting
     }
@@ -33,6 +34,7 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             logoutVisible.set(!model.getLoginName().isNullOrBlank())
             historyVisible.set(model.getReadHistoryState())
         }
+        LogUtils.i("checked=${viewModel.model.getFollowSysUiModeFlag()}")
         binding.swSys.isChecked = viewModel.model.getFollowSysUiModeFlag()
         // 跟随系统模式关闭时 判断黑夜模式状态
         if (!binding.swSys.isChecked) binding.swNight.isChecked = viewModel.model.getUiMode()
@@ -40,21 +42,16 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
 
     override fun initViewObservable() {
         viewModel.uc.switchUiModeEvent.observe(this, { checked ->
-            LogUtils.iTag("life", "夜间模式=$checked")
             if (checked) {
                 // 当前app状态与选中模式不同才进行模式变化 通过渐变动画避免模式改变而引起的闪屏
                 if (!DayModeUtil.isNightMode(requireContext())) {
-                    DayModeUtil.setNightMode(requireContext())
-                    back()
-                    startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
-                    activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+                    DayModeUtil.setNightMode()
+                    restart()
                 }
             } else {
                 if (DayModeUtil.isNightMode(requireContext())) {
-                    DayModeUtil.setLightMode(requireContext())
-                    back()
-                    startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
-                    activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+                    DayModeUtil.setLightMode()
+                    restart()
                 }
             }
         })
@@ -64,9 +61,9 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                 viewModel.model.saveUiMode(DayModeUtil.isNightMode(requireContext()))
                 binding.swNight.isChecked = DayModeUtil.isNightMode(requireContext())
                 if (DayModeUtil.isNightMode(requireContext())) {
-                    DayModeUtil.setNightMode(requireContext())
+                    DayModeUtil.setNightMode()
                 } else {
-                    DayModeUtil.setLightMode(requireContext())
+                    DayModeUtil.setLightMode()
                 }
             }
             if (viewModel.model.getFollowSysUiModeFlag() && checked) {
@@ -75,9 +72,7 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             viewModel.model.saveFollowSysModeFlag(checked)
             if (checked) {
                 DayModeUtil.autoModeBySys()
-                back()
-                startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
-                activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+                restart()
             }
         })
         viewModel.uc.confirmLogoutEvent.observe(this, {
@@ -85,5 +80,11 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                 viewModel.logout()
             }
         })
+    }
+
+    private fun restart() {
+        back()
+        startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
+        activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
     }
 }

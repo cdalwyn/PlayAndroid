@@ -1,28 +1,21 @@
 package com.czl.lib_base.base
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
-import com.czl.lib_base.bus.event.SingleLiveEvent
-import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
-import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
-import com.czl.lib_base.widget.LoginPopView
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
@@ -32,11 +25,8 @@ import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
-import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import java.lang.reflect.ParameterizedType
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -74,7 +64,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
 //        viewModel.registerRxBus();
     }
 
-
     open fun initStatusBar() {
         ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(this), 0.2f)
             .transparentStatusBar().init()
@@ -85,17 +74,14 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        //解除Messenger注册
-        Messenger.getDefault().unregister(viewModel)
-//        if (viewModel != null) {
-//            viewModel.removeRxBus();
-//        }
+        //解除Messenger注册 暂无业务使用到
+//        Messenger.getDefault().unregister(viewModel)
         binding.unbind()
         rootBinding?.unbind()
-
+        super.onDestroy()
     }
 
+    // Fragment入场动画
     override fun onCreateFragmentAnimator(): FragmentAnimator {
         return DefaultVerticalAnimator()
     }
@@ -127,7 +113,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         } else {
             binding = DataBindingUtil.setContentView(this, initContentView())
         }
-
         viewModelId = initVariableId()
         viewModel = initViewModel()
         //关联ViewModel
@@ -145,12 +130,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         binding.setVariable(viewModelId, viewModel)
     }
 
-
     /**
      * 注册ViewModel与View的契约UI回调事件
      */
     private fun registerUIChangeLiveDataCallBack() {
-
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
             .observe(this, { title: String? -> showLoading(title) })
@@ -217,7 +200,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         ToastHelper.showSuccessToast(msg)
     }
 
-
     /**
      * 跳转页面
      *
@@ -244,7 +226,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     /**
      * 跳转容器页面
      * @param routePath Fragment路由地址
-     * @param bundle        跳转所携带的信息
+     * @param bundle    跳转所携带的信息
      */
     fun startContainerActivity(
         routePath: String?,
@@ -258,11 +240,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         startActivity(intent)
     }
 
-    override fun initParam() {
-
-    }
-
-    open fun onDataReload() {}
+    override fun initParam() {}
 
     /**
      * @return 是否需要标题栏
@@ -270,7 +248,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     protected open fun useBaseLayout(): Boolean {
         return true
     }
-
 
     /**
      * 添加根内容布局id（目前在xml内加了标题栏）
@@ -302,8 +279,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
      */
     private fun initViewModel(): VM {
         val type = javaClass.genericSuperclass
-        val modelClass: Class<VM> =
-            (type as ParameterizedType).actualTypeArguments[1] as Class<VM>
+        val modelClass = (type as ParameterizedType).actualTypeArguments[1] as Class<VM>
         return ViewModelProvider(this, get<AppViewModelFactory>()).get(modelClass)
     }
 

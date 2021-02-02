@@ -29,10 +29,10 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
     val uc = UiChangeEvent()
-    val followSysUiModeState: ObservableBoolean = ObservableBoolean(false)
+    val followSysUiModeState: ObservableBoolean = ObservableBoolean(model.getFollowSysUiModeFlag())
     val cacheSize: ObservableField<String> = ObservableField("")
     val historyVisible: ObservableBoolean = ObservableBoolean(false)
-    val logoutVisible:ObservableBoolean = ObservableBoolean(true)
+    val logoutVisible: ObservableBoolean = ObservableBoolean(true)
 
     class UiChangeEvent {
         val switchUiModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
@@ -44,6 +44,7 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
         followSysUiModeState.set(checked)
         uc.switchSysModeEvent.postValue(checked)
     }
+
     val onSwitchNightModeCheckedCommand: BindingCommand<Boolean> = BindingCommand { checked ->
         // 不随系统模式才发送
         if (!followSysUiModeState.get()) {

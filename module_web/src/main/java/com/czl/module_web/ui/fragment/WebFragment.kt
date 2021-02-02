@@ -218,6 +218,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
     }
 
     override fun onBackPressedSupport(): Boolean {
+        agentWeb?:return super.onBackPressedSupport()
         if (agentWeb!!.webCreator.webView.canGoBack()) {
             agentWeb!!.back()
         } else {
@@ -265,7 +266,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             return super.shouldOverrideUrlLoading(view, url)
         }
 
-
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest
@@ -283,7 +283,6 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
 
             return super.shouldOverrideUrlLoading(view, request)
         }
-
 
         @RequiresApi(Build.VERSION_CODES.M)
         override fun onReceivedError(

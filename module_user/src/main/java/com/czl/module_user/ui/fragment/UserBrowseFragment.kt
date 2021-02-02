@@ -2,9 +2,12 @@ package com.czl.module_user.ui.fragment
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SnackbarUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -15,6 +18,10 @@ import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.adapter.UserBrowseAdapter
 import com.czl.module_user.viewmodel.UserBrowseVm
+import com.google.android.material.snackbar.Snackbar
+import com.lxj.xpopup.core.BasePopupView
+import org.koin.android.ext.android.get
+import org.koin.core.qualifier.named
 
 /**
  * @author Alwyn
@@ -24,6 +31,7 @@ import com.czl.module_user.viewmodel.UserBrowseVm
 @Route(path = AppConstants.Router.User.F_USER_BROWSE)
 class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>() {
     private lateinit var mAdapter: UserBrowseAdapter
+    private lateinit var mSnackBar:Snackbar
     override fun initContentView(): Int {
         return R.layout.common_recyclerview
     }
@@ -38,6 +46,27 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
         binding.smartCommon.autoRefresh()
     }
 
+    override fun onSupportVisible() {
+        super.onSupportVisible()
+        LogUtils.i("onSupportVisible")
+        // 未登录
+        if (viewModel.model.getLoginName().isNullOrBlank()){
+            if (this::mSnackBar.isInitialized){
+                mSnackBar.show()
+                return
+            }
+            mSnackBar = SnackbarUtils.with(binding.smartCommon)
+                .setMessage("当前尚未登录，请登录后再试~")
+                .setDuration(SnackbarUtils.LENGTH_INDEFINITE)
+                .setBgColor(ContextCompat.getColor(requireContext(),R.color.black))
+                .setMessageColor(ContextCompat.getColor(requireContext(),R.color.white))
+                .setAction("登录"){
+                    get<BasePopupView>(named("login")).show()
+                }
+                .show(true)
+        }
+    }
+
     override fun initViewObservable() {
         viewModel.loadCompleteEvent.observe(this, {
             viewModel.toolbarRightText.set(if (it.isEmpty()) "" else "清空")
@@ -45,8 +74,8 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
             binding.ryCommon.hideShimmerAdapter()
             if (!mAdapter.hasEmptyView()) {
                 val emptyView =
-                    View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)
-                emptyView.findViewById<ViewGroup>(com.czl.lib_base.R.id.ll_empty)
+                    View.inflate(context, R.layout.common_empty_layout, null)
+                emptyView.findViewById<ViewGroup>(R.id.ll_empty)
                     .setOnClickListener {
                         binding.smartCommon.autoRefresh()
                     }

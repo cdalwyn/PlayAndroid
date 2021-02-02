@@ -1,6 +1,7 @@
 package com.czl.lib_base.widget
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
@@ -17,6 +18,9 @@ import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
 import com.lxj.xpopup.core.BottomPopupView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.subjects.PublishSubject
 
 /**
  * @author Alwyn
@@ -61,7 +65,6 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
                         activity.viewModel.dismissLoading()
                         activity.showErrorToast(msg)
                     }
-
                 })
         }
     })
@@ -69,7 +72,7 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
     override fun doAfterShow() {
         super.doAfterShow()
         registerFlag.set(0)
-        activity.loginPopMap.put(0, this)
+        activity.loginPopMap[0] = this
     }
 
     override fun beforeDismiss() {
@@ -146,14 +149,53 @@ class LoginPopView(val activity: BaseActivity<*, *>) : BottomPopupView(activity)
             )
             ivBack.layoutParams = params
             tvLogin.layoutParams = layoutParams
+            val accountSub = PublishSubject.create<String>()
+            val pwdSub = PublishSubject.create<String>()
+            btnLogin.isEnabled = false
+            etAccount.addTextChangedListener(EditTextMonitor(accountSub))
+            etPwd.addTextChangedListener(EditTextMonitor(pwdSub))
+            activity.viewModel.addSubscribe(Observable.combineLatest(accountSub, pwdSub,
+                { account: String, pwd: String -> account.isNotBlank() && pwd.isNotBlank() })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    btnLogin.isEnabled = it
+                    btnLogin.setBackgroundResource(if (it) R.drawable.shape_round_white else R.drawable.gray_btn_corner_10dp)
+                    btnLogin.setTextColor(
+                        if (it) Color.parseColor("#000000") else Color.parseColor(
+                            "#ffffff"
+                        )
+                    )
+                }
+            )
+            btnReg.isEnabled = false
+            val regAccountSub = PublishSubject.create<String>()
+            val regPwdSub = PublishSubject.create<String>()
+            val regConfirmPwdSub = PublishSubject.create<String>()
+            etRegAccount.addTextChangedListener(EditTextMonitor(regAccountSub))
+            etRegPwd.addTextChangedListener(EditTextMonitor(regPwdSub))
+            etRegRePwd.addTextChangedListener(EditTextMonitor(regConfirmPwdSub))
+            activity.viewModel.addSubscribe(
+                Observable.combineLatest(
+                    regAccountSub,
+                    regPwdSub,
+                    regConfirmPwdSub,
+                    { account: String, pwd: String, rePwd: String ->
+                        account.isNotBlank() && pwd.isNotBlank() && rePwd.isNotBlank()
+                    }).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        btnReg.apply {
+                            isEnabled = it
+                            setBackgroundResource(if (it) R.drawable.shape_round_white else R.drawable.gray_btn_corner_10dp)
+                            setTextColor(if (it) Color.parseColor("#000000") else Color.parseColor("#ffffff"))
+                        }
+                    }
+            )
             executePendingBindings()
         }
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         dataBinding?.unbind()
+        super.onDestroy()
     }
-
-
 }
