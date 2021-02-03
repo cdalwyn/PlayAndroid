@@ -69,15 +69,18 @@ open class BaseViewModel<M : BaseModel>(application: MyApplication, val model: M
     val refreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         refreshCommand()
     })
+
     val loadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         loadMoreCommand()
     })
+
     val scrollToTopCommand: BindingCommand<Void> =
         BindingCommand(BindingAction { scrollToTop() })
 
-    fun scrollToTop(){
+    fun scrollToTop() {
         uC.scrollTopEvent.call()
     }
+
     /**
      * 通用recyclerview刷新
      */

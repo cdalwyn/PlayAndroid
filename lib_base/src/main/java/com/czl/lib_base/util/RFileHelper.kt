@@ -1,23 +1,13 @@
 package com.czl.lib_base.util
 
-import android.annotation.SuppressLint
-import android.content.ContentUris
-import android.content.Context
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.os.StrictMode
-import android.provider.MediaStore
 import android.content.ContentValues
-import android.os.Looper
-import com.blankj.utilcode.util.*
+import android.content.Context
+import android.graphics.Bitmap
+import android.provider.MediaStore
+import com.blankj.utilcode.util.AppUtils
+import com.blankj.utilcode.util.FileUtils
+import com.blankj.utilcode.util.PathUtils
 import com.czl.lib_base.extension.SingleMediaScanner
-import io.reactivex.Flowable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.io.*
 
 

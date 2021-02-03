@@ -44,7 +44,7 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
         val layoutParams = binding.llWx.layoutParams as ConstraintLayout.LayoutParams
         layoutParams.setMargins(
             layoutParams.leftMargin,
-            BarUtils.getStatusBarHeight() + BarUtils.getActionBarHeight(),
+            BarUtils.getStatusBarHeight() + SizeUtils.dp2px(60f),
             layoutParams.rightMargin,
             layoutParams.bottomMargin
         )

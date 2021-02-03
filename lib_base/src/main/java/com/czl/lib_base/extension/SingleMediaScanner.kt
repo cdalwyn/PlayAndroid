@@ -16,6 +16,7 @@ class SingleMediaScanner(
     }
 
     private val mMs: MediaScannerConnection = MediaScannerConnection(context, this)
+
     override fun onMediaScannerConnected() {
         mMs.scanFile(mFile.absolutePath, null)
     }

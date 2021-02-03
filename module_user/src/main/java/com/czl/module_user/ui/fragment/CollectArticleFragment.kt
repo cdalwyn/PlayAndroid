@@ -36,7 +36,6 @@ class CollectArticleFragment : BaseFragment<CommonRecyclerviewBinding, CollectAr
         return false
     }
 
-
     override fun onResume() {
         super.onResume()
         if (firstLoad) {

@@ -34,7 +34,6 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             logoutVisible.set(!model.getLoginName().isNullOrBlank())
             historyVisible.set(model.getReadHistoryState())
         }
-        LogUtils.i("checked=${viewModel.model.getFollowSysUiModeFlag()}")
         binding.swSys.isChecked = viewModel.model.getFollowSysUiModeFlag()
         // 跟随系统模式关闭时 判断黑夜模式状态
         if (!binding.swSys.isChecked) binding.swNight.isChecked = viewModel.model.getUiMode()
