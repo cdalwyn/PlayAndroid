@@ -250,6 +250,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/dp_4"
+                    binding:isVisible="@{viewModel.historyVisible}"
                     app:mBackground="@color/color_default_bg_deep"
                     app:mIcon="@drawable/ic_read"
                     app:mRight="true"

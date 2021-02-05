@@ -41,7 +41,9 @@ abstract class ApiSubscriberHelper<T>(private val loadService: LoadService<BaseB
             if (t.errorCode == -1001) {
                 LogUtils.e("当前用户未登录或者登录已失效")
                 if (loginPopMap.isEmpty()){
-                    loginPopView.show()
+                    // 利用ConcurrentHashMap线程安全特性避免并发请求下弹出多次
+                    loginPopMap[0] = loginPopView
+                    loginPopMap[0]?.show()
                 }else{
                     val basePopupView = loginPopMap[0]
                     basePopupView?.show()

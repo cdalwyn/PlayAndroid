@@ -3,9 +3,6 @@ package com.czl.lib_base.data.net.cookie.store
 import okhttp3.Cookie
 import okhttp3.HttpUrl
 
-/**
- * Created by goldze on 2017/5/13.
- */
 interface CookieStore {
     /** 保存url对应所有cookie  */
     fun saveCookie(url: HttpUrl?, cookie: List<Cookie?>?)
@@ -14,7 +11,7 @@ interface CookieStore {
     fun saveCookie(url: HttpUrl?, cookie: Cookie?)
 
     /** 加载url所有的cookie  */
-    fun loadCookie(url: HttpUrl?): List<Cookie?>?
+    fun loadCookie(url: HttpUrl?): List<Cookie?>
 
     /** 获取当前所有保存的cookie  */
     val allCookie: List<Cookie?>?

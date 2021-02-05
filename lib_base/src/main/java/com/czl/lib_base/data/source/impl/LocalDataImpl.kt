@@ -272,13 +272,15 @@ class LocalDataImpl : LocalDataSource {
                 is ProjectSortBean -> {
                     CacheDiskUtils.getInstance().put(
                         AppConstants.CacheKey.CACHE_PROJECT_SORT,
-                        HomeProjectSortCache(list as List<ProjectSortBean>)
+                        HomeProjectSortCache(list as List<ProjectSortBean>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
                     )
                 }
                 is ProjectBean.Data -> {
                     CacheDiskUtils.getInstance().put(
                         AppConstants.CacheKey.CACHE_PROJECT_CONTENT,
-                        HomeProjectContentCache(list as List<ProjectBean.Data>)
+                        HomeProjectContentCache(list as List<ProjectBean.Data>),
+                        AppConstants.CacheKey.CACHE_SAVE_TIME_SECONDS
                     )
                 }
             }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectBean
@@ -25,7 +26,6 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
 
     private lateinit var mAdapter: ProjectItemGridAdapter
     private var firstLoad = true
-    private var sortId: String? = null
 
     companion object {
         const val SORT_ID = "sort_id"
@@ -64,7 +64,8 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
     private fun loadFirstPageCache() {
         viewModel.addSubscribe(Observable.create<List<ProjectBean.Data>> {
             it.onNext(viewModel.getCacheList())
-        }.compose(RxThreadHelper.rxSchedulerHelper()).subscribe({ cacheList ->
+        }.compose(RxThreadHelper.rxSchedulerHelper())
+            .subscribe({ cacheList ->
             if (cacheList.isNotEmpty()) {
                 firstLoad = false
                 mAdapter.setDiffNewData(cacheList as MutableList<ProjectBean.Data>)
@@ -78,11 +79,7 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
     }
 
     private fun refreshData() {
-        sortId = arguments?.getString(SORT_ID)
-        sortId?.let {
-            viewModel.cid = it
-            binding.smartCommon.autoRefresh()
-        }
+        binding.smartCommon.autoRefresh()
     }
 
     override fun reload() {
@@ -90,8 +87,12 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
         refreshData()
     }
 
-    override fun initViewObservable() {
+    override fun initData() {
+        viewModel.cid = arguments?.getString(SORT_ID)
         initAdapter()
+    }
+
+    override fun initViewObservable() {
         // 接收加载完成的数据
         viewModel.uc.refreshCompleteEvent.observe(this, Observer {
             // 仅缓存第一个fragment的数据

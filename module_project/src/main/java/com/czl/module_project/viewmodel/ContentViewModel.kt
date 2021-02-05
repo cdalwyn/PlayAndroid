@@ -44,6 +44,7 @@ class ContentViewModel(application: MyApplication, model: DataRepository) :
     }
 
     private fun getProjectDataByCid() {
+        cid?:uc.refreshCompleteEvent.postValue(null)
         cid?.let {
             model.getProjectByCid((currentPage + 1).toString(), it)
                 .compose(RxThreadHelper.rxSchedulerHelper(this))

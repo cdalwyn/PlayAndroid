@@ -38,7 +38,7 @@ class MemoryCookieStore : CookieStore {
     }
 
     @Synchronized
-    override fun loadCookie(url: HttpUrl?): List<Cookie?>? {
+    override fun loadCookie(url: HttpUrl?): List<Cookie?> {
         var cookies = memoryCookies[url!!.host()]
         if (cookies == null) {
             cookies = ArrayList()

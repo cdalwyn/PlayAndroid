@@ -47,7 +47,7 @@ class HomeViewModel(application: MyApplication, model: DataRepository) :
         val searchItemDeleteEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val moveTopEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val loadArticleCompleteEvent: SingleLiveEvent<HomeArticleBean?> = SingleLiveEvent()
-        val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean> = SingleLiveEvent()
+        val loadProjectCompleteEvent: SingleLiveEvent<ProjectBean?> = SingleLiveEvent()
         val tabSelectedEvent: SingleLiveEvent<Int> = SingleLiveEvent()
         val loadSearchHotKeyEvent: SingleLiveEvent<List<SearchHotKeyBean>> = SingleLiveEvent()
         val searchIconClickEvent: SingleLiveEvent<Void> = SingleLiveEvent()

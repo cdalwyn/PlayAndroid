@@ -27,7 +27,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
     var tvScore = ObservableField("0")
     var tvCollect = ObservableField("0")
     var tvShare = ObservableField("0")
-    val historyVisible = ObservableBoolean(true)
+    val historyVisible = ObservableBoolean(model.getReadHistoryState())
     var firstSuccessLoadFlag = false
     val uc = UiChangeEvent()
 
@@ -83,7 +83,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
                             tvScore.set(data.coinInfo.coinCount.toString())
                             tvShare.set(data.shareArticles.datas.size.toString())
                         }
-                    }else{
+                    } else {
                         firstSuccessLoadFlag = false
                     }
                 }
@@ -104,7 +104,7 @@ class UserViewModel(application: MyApplication, model: DataRepository) :
                         t.data?.let { data ->
                             tvCollect.set(data.datas.size.toString())
                         }
-                    }else{
+                    } else {
                         firstSuccessLoadFlag = false
                     }
                 }

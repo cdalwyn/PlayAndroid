@@ -1,39 +1,27 @@
-package com.czl.lib_base.data.net.cookie;
+package com.czl.lib_base.data.net.cookie
 
-
-import com.czl.lib_base.data.net.cookie.store.CookieStore;
-
-import java.util.List;
-
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
+import com.czl.lib_base.data.net.cookie.store.CookieStore
+import okhttp3.Cookie
+import okhttp3.CookieJar
+import okhttp3.HttpUrl
 
 /**
  * Created by goldze on 2017/5/13.
  */
-public class CookieJarImpl implements CookieJar {
-
-    private CookieStore cookieStore;
-
-    public CookieJarImpl(CookieStore cookieStore) {
-        if (cookieStore == null) {
-            throw new IllegalArgumentException("cookieStore can not be null!");
-        }
-        this.cookieStore = cookieStore;
+class CookieJarImpl(cookieStore: CookieStore?) : CookieJar {
+    val cookieStore: CookieStore
+    @Synchronized
+    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+        cookieStore.saveCookie(url, cookies)
     }
 
-    @Override
-    public synchronized void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-        cookieStore.saveCookie(url, cookies);
+    @Synchronized
+    override fun loadForRequest(url: HttpUrl): List<Cookie?> {
+        return cookieStore.loadCookie(url)
     }
 
-    @Override
-    public synchronized List<Cookie> loadForRequest(HttpUrl url) {
-        return cookieStore.loadCookie(url);
-    }
-
-    public CookieStore getCookieStore() {
-        return cookieStore;
+    init {
+        requireNotNull(cookieStore) { "cookieStore can not be null!" }
+        this.cookieStore = cookieStore
     }
 }

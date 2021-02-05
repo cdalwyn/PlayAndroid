@@ -47,7 +47,6 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>(),
             viewModel.getUserCollectData()
             viewModel.getUserShareData()
         }
-        viewModel.historyVisible.set(viewModel.model.getReadHistoryState())
         NetworkUtils.registerNetworkStatusChangedListener(this)
     }
 

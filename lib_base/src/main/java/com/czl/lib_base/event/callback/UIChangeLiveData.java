@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer;
 
 import com.czl.lib_base.bus.event.SingleLiveEvent;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +64,7 @@ public class UIChangeLiveData extends SingleLiveEvent {
     }
 
     @Override
-    public void observe(LifecycleOwner owner, Observer observer) {
+    public void observe(@NotNull LifecycleOwner owner, @NotNull Observer observer) {
         super.observe(owner, observer);
     }
 }

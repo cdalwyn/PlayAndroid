@@ -1,22 +1,15 @@
 package com.czl.module_project.ui.fragment
 
-import android.annotation.SuppressLint
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.NetworkUtils
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
-import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseFragment
-import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.bean.ProjectSortBean
-import com.czl.lib_base.extension.ApiSubscriberHelper
-import com.czl.lib_base.util.RxThreadHelper
 import com.czl.module_project.BR
 import com.czl.module_project.R
 import com.czl.module_project.databinding.ProjectFragmentProjectBinding
 import com.czl.module_project.viewmodel.ProjectViewModel
 import com.google.android.material.tabs.TabLayoutMediator
-import com.gyf.immersionbar.ImmersionBar
 
 
 @Route(path = AppConstants.Router.Project.F_PROJECT)
