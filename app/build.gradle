@@ -8,9 +8,9 @@ android {
     signingConfigs {
         release {
             storeFile file('C:\\Users\\ASUS\\Desktop\\mvvm.jks')
-            storePassword 'czl7758258.0'
+            storePassword '123456'
             keyAlias 'key0'
-            keyPassword 'czl7758258.0'
+            keyPassword '123456'
         }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -41,7 +41,7 @@ android {
             shrinkResources true  //移出无用资源
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
