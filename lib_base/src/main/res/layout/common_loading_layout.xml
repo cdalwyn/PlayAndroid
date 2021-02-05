@@ -9,10 +9,10 @@
 
     <ProgressBar
         android:id="@+id/iv_avatar"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:padding="@dimen/dp_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:indeterminateTint="@color/md_theme_red"
         android:indeterminateTintMode="src_atop"
         />
+
 </LinearLayout>

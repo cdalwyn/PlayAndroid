@@ -1,33 +1,26 @@
 package com.czl.lib_base.base
 
 import android.content.Intent
-import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.R
 import com.czl.lib_base.bus.Messenger
-import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.callback.ErrorCallback
 import com.czl.lib_base.callback.LoadingCallback
-import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.mvvm.ui.ContainerFmActivity
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.ToastHelper
-import com.czl.lib_base.widget.LoginPopView
 import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.kingja.loadsir.callback.Callback
@@ -40,8 +33,6 @@ import com.lxj.xpopup.core.BasePopupView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import me.yokeyword.fragmentation.SupportFragment
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
 import java.lang.reflect.ParameterizedType
 
 
@@ -77,8 +68,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         if (useBaseLayout()) {
             rootView = inflater.inflate(R.layout.activity_base, null, false)
                 .findViewById(R.id.activity_root)
-            // 设置跑马灯
-            rootView.findViewById<TextView>(R.id.toolbar_contentTitle).isSelected = true
             rootBinding = DataBindingUtil.bind(rootView)
             binding =
                 DataBindingUtil.inflate(inflater, initContentView(), rootView as ViewGroup, true)
@@ -119,7 +108,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         super.onDestroyView()
         ImmersionBar.destroy(this)
         //解除Messenger注册
-        Messenger.getDefault().unregister(viewModel)
+//        Messenger.getDefault().unregister(viewModel)
         binding.unbind()
         rootBinding?.unbind()
     }
@@ -129,16 +118,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
         savedInstanceState: Bundle?
     ) {
         super.onViewCreated(view, savedInstanceState)
-        //私有的初始化Databinding和ViewModel方法
+        //私有的初始化DataBinding和ViewModel方法
         initViewDataBinding()
         //私有的ViewModel与View的契约事件回调逻辑
         registerUIChangeLiveDataCallBack()
-        if (enableLazy()) {
-            //页面数据初始化方法
-            initData()
-            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
-            initViewObservable()
-        }
     }
 
     /**
@@ -147,6 +130,12 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      */
     override fun onLazyInitView(savedInstanceState: Bundle?) {
         super.onLazyInitView(savedInstanceState)
+        if (enableLazy()) {
+            //页面数据初始化方法
+            initData()
+            //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
+            initViewObservable()
+        }
     }
 
     /**
@@ -230,11 +219,9 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     /**
-     * =====================================================================
+     * 注册ViewModel与View的契约UI回调事件
      */
-    //注册ViewModel与View的契约UI回调事件
     private fun registerUIChangeLiveDataCallBack() {
-
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
             .observe(this, { title: String? -> showLoading(title) })
@@ -315,6 +302,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setDiffNewData(data as MutableList<T>?)
+            ryCommon.smoothScrollToPosition(0)
             if (over!!) smartCommon.finishRefreshWithNoMoreData()
             else smartCommon.finishRefresh(true)
             return
@@ -346,20 +334,10 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
 
     fun showLoading(title: String?) {
         dialog = DialogHelper.showLoadingDialog(requireContext(), title)
-//        if (dialog != null) {
-//            dialog = dialog!!.builder.title(title!!).build()
-//            dialog!!.show()
-//        } else {
-//            val builder = MaterialDialogUtils.showIndeterminateProgressDialog(activity, title, true)
-//            dialog = builder.show()
-//        }
     }
 
     fun dismissLoading() {
         dialog?.smartDismiss()
-//        if (dialog != null && dialog!!.isShowing) {
-//            dialog!!.dismiss()
-//        }
     }
 
     fun showErrorToast(msg: String?) {
@@ -427,9 +405,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
             startActivityForResult(intent, reqCode)
     }
 
-    /**
-     * =====================================================================
-     */
     //刷新布局
     fun refreshLayout() {
         binding.setVariable(viewModelId, viewModel)
@@ -464,7 +439,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @return 继承BaseViewModel的ViewModel
      */
-    fun initViewModel(): VM {
+    private fun initViewModel(): VM {
         val type = javaClass.genericSuperclass
         val modelClass: Class<VM> =
             (type as ParameterizedType).actualTypeArguments[1] as Class<VM>
@@ -478,10 +453,4 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     open fun isImmersionBarEnabled(): Boolean {
         return useBaseLayout()
     }
-//    open fun <T : ViewModel?> createViewModel(
-//        fragment: Fragment?,
-//        cls: Class<T>?
-//    ): T {
-//        return ViewModelProvider(fragment!!).get(cls)
-//    }
 }

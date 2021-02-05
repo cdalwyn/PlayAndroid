@@ -48,14 +48,13 @@ open class MyApplication : Application() {
 //            install(this@MyApplication)
 //        }
         }
-
         ARouter.init(this)
         setApplication(this)
         LitePal.initialize(this)
         MMKV.initialize(this)
         // 初始化Fragmentation
         Fragmentation.builder()
-            .stackViewMode(Fragmentation.BUBBLE)
+            .stackViewMode(Fragmentation.NONE)
             .debug(BuildConfig.DEBUG)
             .install()
         // 屏幕适配

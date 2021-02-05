@@ -2,6 +2,7 @@
     package="com.czl.module_project">
 
     <application
+        android:name="com.czl.lib_base.base.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/project_app_name"

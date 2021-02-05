@@ -1,10 +1,12 @@
 package com.czl.module_main.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -74,7 +76,13 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
         return false
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showLoadingStatePage()
+    }
+
     override fun initData() {
+        super.initData()
         viewModel.tabSelectedPosition.set(0)
         initBanner()
         initSearchBar()
@@ -85,7 +93,6 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun loadData() {
-        showLoadingStatePage()
         val bannerObservable = Observable.create<List<HomeBannerBean?>> {
             it.onNext(viewModel.getCacheData(AppConstants.CacheKey.CACHE_HOME_BANNER))
         }.subscribeOn(Schedulers.io())
