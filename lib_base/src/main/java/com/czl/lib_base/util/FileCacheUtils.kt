@@ -1,23 +1,22 @@
-package com.czl.lib_base.util;
+package com.czl.lib_base.util
 
-import android.content.Context;
-import android.os.Environment;
-import android.text.TextUtils;
-
-import java.io.File;
-import java.math.BigDecimal;
+import android.content.Context
+import android.os.Environment
+import android.text.TextUtils
+import java.io.File
+import java.math.BigDecimal
 
 /**
  * 本应用数据清除管理器
  */
-public class FileCacheUtils {
+object FileCacheUtils {
     /**
      * * 清除本应用内部缓存(/data/data/com.xxx.xxx/cache) * *
      *
      * @param context
      */
-    public static void cleanInternalCache(Context context) {
-        deleteFilesByDirectory(context.getCacheDir());
+    fun cleanInternalCache(context: Context) {
+        deleteFilesByDirectory(context.cacheDir)
     }
 
     /**
@@ -25,9 +24,13 @@ public class FileCacheUtils {
      *
      * @param context
      */
-    public static void cleanDatabases(Context context) {
-        deleteFilesByDirectory(new File(context.getFilesDir().getPath()
-                + context.getPackageName() + "/databases"));
+    fun cleanDatabases(context: Context) {
+        deleteFilesByDirectory(
+            File(
+                context.filesDir.path
+                        + context.packageName + "/databases"
+            )
+        )
     }
 
     /**
@@ -35,9 +38,13 @@ public class FileCacheUtils {
      *
      * @param context
      */
-    public static void cleanSharedPreference(Context context) {
-        deleteFilesByDirectory(new File(context.getFilesDir().getPath()
-                + context.getPackageName() + "/shared_prefs"));
+    fun cleanSharedPreference(context: Context) {
+        deleteFilesByDirectory(
+            File(
+                context.filesDir.path
+                        + context.packageName + "/shared_prefs"
+            )
+        )
     }
 
     /**
@@ -46,8 +53,8 @@ public class FileCacheUtils {
      * @param context
      * @param dbName
      */
-    public static void cleanDatabaseByName(Context context, String dbName) {
-        context.deleteDatabase(dbName);
+    fun cleanDatabaseByName(context: Context, dbName: String?) {
+        context.deleteDatabase(dbName)
     }
 
     /**
@@ -55,8 +62,8 @@ public class FileCacheUtils {
      *
      * @param context
      */
-    public static void cleanFiles(Context context) {
-        deleteFilesByDirectory(context.getFilesDir());
+    fun cleanFiles(context: Context) {
+        deleteFilesByDirectory(context.filesDir)
     }
 
     /**
@@ -64,10 +71,11 @@ public class FileCacheUtils {
      *
      * @param context
      */
-    public static void cleanExternalCache(Context context) {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            deleteFilesByDirectory(context.getExternalCacheDir());
+    fun cleanExternalCache(context: Context) {
+        if (Environment.getExternalStorageState() ==
+            Environment.MEDIA_MOUNTED
+        ) {
+            deleteFilesByDirectory(context.externalCacheDir)
         }
     }
 
@@ -76,8 +84,8 @@ public class FileCacheUtils {
      *
      * @param filePath
      */
-    public static void cleanCustomCache(String filePath) {
-        deleteFilesByDirectory(new File(filePath));
+    fun cleanCustomCache(filePath: String?) {
+        deleteFilesByDirectory(File(filePath))
     }
 
     /**
@@ -86,17 +94,14 @@ public class FileCacheUtils {
      * @param context
      * @param filepath
      */
-    public static void cleanApplicationData(Context context, String... filepath) {
-        cleanInternalCache(context);
-        cleanExternalCache(context);
-        cleanDatabases(context);
-        cleanSharedPreference(context);
-        cleanFiles(context);
-        if (filepath == null) {
-            return;
-        }
-        for (String filePath : filepath) {
-            cleanCustomCache(filePath);
+    fun cleanApplicationData(context: Context, vararg filepath: String?) {
+        cleanInternalCache(context)
+        cleanExternalCache(context)
+        cleanDatabases(context)
+        cleanSharedPreference(context)
+        cleanFiles(context)
+        for (filePath in filepath) {
+            cleanCustomCache(filePath)
         }
     }
 
@@ -105,33 +110,34 @@ public class FileCacheUtils {
      *
      * @param directory
      */
-    private static void deleteFilesByDirectory(File directory) {
-        if (directory != null && directory.exists() && directory.isDirectory()) {
-            for (File item : directory.listFiles()) {
-                item.delete();
+    private fun deleteFilesByDirectory(directory: File?) {
+        if (directory != null && directory.exists() && directory.isDirectory) {
+            for (item in directory.listFiles()) {
+                item.delete()
             }
         }
     }
 
     // 获取文件
-//Context.getExternalFilesDir() --  SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据 
-//Context.getExternalCacheDir() --  SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据 
-    public static long getFolderSize(File file) throws Exception {
-        long size = 0;
+    //Context.getExternalFilesDir() --  SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
+    //Context.getExternalCacheDir() --  SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
+    @Throws(Exception::class)
+    fun getFolderSize(file: File): Long {
+        var size: Long = 0
         try {
-            File[] fileList = file.listFiles();
-            for (int i = 0; i < fileList.length; i++) {
-// 如果下面还有文件 
-                if (fileList[i].isDirectory()) {
-                    size = size + getFolderSize(fileList[i]);
+            val fileList = file.listFiles()
+            for (i in fileList.indices) {
+// 如果下面还有文件
+                size = if (fileList[i].isDirectory) {
+                    size + getFolderSize(fileList[i])
                 } else {
-                    size = size + fileList[i].length();
+                    size + fileList[i].length()
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        return size;
+        return size
     }
 
     /**
@@ -141,27 +147,27 @@ public class FileCacheUtils {
      * @param filePath
      * @return
      */
-    public static void deleteFolderFile(String filePath, boolean deleteThisPath) {
+    fun deleteFolderFile(filePath: String?, deleteThisPath: Boolean) {
         if (!TextUtils.isEmpty(filePath)) {
             try {
-                File file = new File(filePath);
-                if (file.isDirectory()) {// 如果下面还有文件
-                    File files[] = file.listFiles();
-                    for (int i = 0; i < files.length; i++) {
-                        deleteFolderFile(files[i].getAbsolutePath(), true);
+                val file = File(filePath)
+                if (file.isDirectory) { // 如果下面还有文件
+                    val files = file.listFiles()
+                    for (i in files.indices) {
+                        deleteFolderFile(files[i].absolutePath, true)
                     }
                 }
                 if (deleteThisPath) {
-                    if (!file.isDirectory()) {// 如果是文件，删除
-                        file.delete();
-                    } else {// 目录
-                        if (file.listFiles().length == 0) {// 目录下没有文件或者目录，删除
-                            file.delete();
+                    if (!file.isDirectory) { // 如果是文件，删除
+                        file.delete()
+                    } else { // 目录
+                        if (file.listFiles().size == 0) { // 目录下没有文件或者目录，删除
+                            file.delete()
                         }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
@@ -172,32 +178,32 @@ public class FileCacheUtils {
      * @param size
      * @return
      */
-    public static String getFormatSize(double size) {
-        double kiloByte = size / 1024;
+    fun getFormatSize(size: Double): String {
+        val kiloByte = size / 1024
         if (kiloByte < 1) {
-            return size + "Byte";
+            return size.toString() + "Byte"
         }
-        double megaByte = kiloByte / 1024;
+        val megaByte = kiloByte / 1024
         if (megaByte < 1) {
-            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));
+            val result1 = BigDecimal(java.lang.Double.toString(kiloByte))
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "KB";
+                .toPlainString() + "KB"
         }
-        double gigaByte = megaByte / 1024;
+        val gigaByte = megaByte / 1024
         if (gigaByte < 1) {
-            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+            val result2 = BigDecimal(java.lang.Double.toString(megaByte))
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "MB";
+                .toPlainString() + "MB"
         }
-        double teraBytes = gigaByte / 1024;
+        val teraBytes = gigaByte / 1024
         if (teraBytes < 1) {
-            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));
+            val result3 = BigDecimal(java.lang.Double.toString(gigaByte))
             return result3.setScale(2, BigDecimal.ROUND_HALF_UP)
-                    .toPlainString() + "GB";
+                .toPlainString() + "GB"
         }
-        BigDecimal result4 = new BigDecimal(teraBytes);
-        return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
-                + "TB";
+        val result4 = BigDecimal(teraBytes)
+        return (result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
+                + "TB")
     }
 
     /***
@@ -206,7 +212,8 @@ public class FileCacheUtils {
      * @return
      * @throws Exception
      */
-    public static String getCacheSize(File file) throws Exception {
-        return getFormatSize(getFolderSize(file));
+    @Throws(Exception::class)
+    fun getCacheSize(file: File): String {
+        return getFormatSize(getFolderSize(file).toDouble())
     }
-} 
+}

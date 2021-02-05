@@ -1,60 +1,58 @@
-package com.czl.lib_base.data.net.cookie.store;
+package com.czl.lib_base.data.net.cookie.store
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import okhttp3.Cookie
+import java.io.IOException
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
+import java.io.Serializable
 
-import okhttp3.Cookie;
-
-public class SerializableHttpCookie implements Serializable {
-    private static final long serialVersionUID = 6374381323722046732L;
-
-    private transient final Cookie cookie;
-    private transient Cookie clientCookie;
-
-    public SerializableHttpCookie(Cookie cookie) {
-        this.cookie = cookie;
-    }
-
-    public Cookie getCookie() {
-        Cookie bestCookie = cookie;
+class SerializableHttpCookie(@field:Transient private val cookie: Cookie) : Serializable {
+    @Transient
+    private var clientCookie: Cookie? = null
+    fun getCookie(): Cookie {
+        var bestCookie = cookie
         if (clientCookie != null) {
-            bestCookie = clientCookie;
+            bestCookie = clientCookie as Cookie
         }
-        return bestCookie;
+        return bestCookie
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.writeObject(cookie.name());
-        out.writeObject(cookie.value());
-        out.writeLong(cookie.expiresAt());
-        out.writeObject(cookie.domain());
-        out.writeObject(cookie.path());
-        out.writeBoolean(cookie.secure());
-        out.writeBoolean(cookie.httpOnly());
-        out.writeBoolean(cookie.hostOnly());
-        out.writeBoolean(cookie.persistent());
+    @Throws(IOException::class)
+    private fun writeObject(out: ObjectOutputStream) {
+        out.writeObject(cookie.name())
+        out.writeObject(cookie.value())
+        out.writeLong(cookie.expiresAt())
+        out.writeObject(cookie.domain())
+        out.writeObject(cookie.path())
+        out.writeBoolean(cookie.secure())
+        out.writeBoolean(cookie.httpOnly())
+        out.writeBoolean(cookie.hostOnly())
+        out.writeBoolean(cookie.persistent())
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        String name = (String) in.readObject();
-        String value = (String) in.readObject();
-        long expiresAt = in.readLong();
-        String domain = (String) in.readObject();
-        String path = (String) in.readObject();
-        boolean secure = in.readBoolean();
-        boolean httpOnly = in.readBoolean();
-        boolean hostOnly = in.readBoolean();
-        boolean persistent = in.readBoolean();
-        Cookie.Builder builder = new Cookie.Builder();
-        builder = builder.name(name);
-        builder = builder.value(value);
-        builder = builder.expiresAt(expiresAt);
-        builder = hostOnly ? builder.hostOnlyDomain(domain) : builder.domain(domain);
-        builder = builder.path(path);
-        builder = secure ? builder.secure() : builder;
-        builder = httpOnly ? builder.httpOnly() : builder;
-        clientCookie = builder.build();
+    @Throws(IOException::class, ClassNotFoundException::class)
+    private fun readObject(`in`: ObjectInputStream) {
+        val name = `in`.readObject() as String
+        val value = `in`.readObject() as String
+        val expiresAt = `in`.readLong()
+        val domain = `in`.readObject() as String
+        val path = `in`.readObject() as String
+        val secure = `in`.readBoolean()
+        val httpOnly = `in`.readBoolean()
+        val hostOnly = `in`.readBoolean()
+        val persistent = `in`.readBoolean()
+        var builder = Cookie.Builder()
+        builder = builder.name(name)
+        builder = builder.value(value)
+        builder = builder.expiresAt(expiresAt)
+        builder = if (hostOnly) builder.hostOnlyDomain(domain) else builder.domain(domain)
+        builder = builder.path(path)
+        builder = if (secure) builder.secure() else builder
+        builder = if (httpOnly) builder.httpOnly() else builder
+        clientCookie = builder.build()
+    }
+
+    companion object {
+        private const val serialVersionUID = 6374381323722046732L
     }
 }

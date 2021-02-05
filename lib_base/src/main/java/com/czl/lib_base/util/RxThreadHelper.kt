@@ -1,54 +1,48 @@
-package com.czl.lib_base.util;
+package com.czl.lib_base.util
 
-import android.view.View;
+import android.view.View
+import com.czl.lib_base.base.BaseViewModel
+import com.trello.rxlifecycle3.android.RxLifecycleAndroid
+import io.reactivex.Flowable
+import io.reactivex.FlowableTransformer
+import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-import com.czl.lib_base.base.BaseViewModel;
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
-
-import io.reactivex.FlowableTransformer;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-
-public class RxThreadHelper {
-    private RxThreadHelper() {
+object RxThreadHelper {
+    fun <T> rxSchedulerHelper(viewModel: BaseViewModel<*>?): ObservableTransformer<T, T> {    //compose简化线程
+        return ObservableTransformer { observable: Observable<T> ->
+            observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()) //                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider()))
+                .doOnSubscribe(viewModel)
+        } //请求与ViewModel周期同步;
     }
 
-    public static <T> ObservableTransformer<T, T> rxSchedulerHelper(BaseViewModel viewModel) {    //compose简化线程
-        return observable -> observable.subscribeOn(Schedulers.io())
+    fun <T> rxSchedulerHelper(view: View?): ObservableTransformer<T, T> {    //compose简化线程
+        return ObservableTransformer { observable: Observable<T> ->
+            observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
+                .compose(RxLifecycleAndroid.bindView(view!!))
                 .observeOn(AndroidSchedulers.mainThread())
-//                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider()))
-                .doOnSubscribe(viewModel)//请求与ViewModel周期同步;
-                ;
+        }
     }
 
-    public static <T> FlowableTransformer<T, T> rxFlowHelper(BaseViewModel viewModel) {    //compose简化线程
-        return observable -> observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-//                .compose(RxUtils.bindToLifecycle(viewModel.getLifecycleProvider()))
-                .doOnSubscribe(viewModel)//请求与ViewModel周期同步;
-                ;
-    }
-
-    public static <T> ObservableTransformer<T, T> rxSchedulerHelper(View view) {    //compose简化线程
-        return observable -> observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .compose(RxLifecycleAndroid.bindView(view))
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    public static <T> FlowableTransformer<T, T> rxFlowSchedulerHelper() {    //compose简化线程
-        return observable -> observable
+    fun <T> rxFlowSchedulerHelper(): FlowableTransformer<T, T> {    //compose简化线程
+        return FlowableTransformer { observable: Flowable<T> ->
+            observable
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 
-    public static <T> ObservableTransformer<T, T> rxSchedulerHelper() {    //compose简化线程
-        return observable -> observable.subscribeOn(Schedulers.io())
+    fun <T> rxSchedulerHelper(): ObservableTransformer<T, T> {    //compose简化线程
+        return ObservableTransformer { observable: Observable<T> ->
+            observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+        }
     }
 }
