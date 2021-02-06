@@ -1,4 +1,10 @@
-![](https://img.shields.io/badge/platform-Android-blue.svg)![](https://img.shields.io/badge/license-Apache%202-blue.svg)
+[![Platform][1]][2]  [![GitHub license][3]][4]
+
+[1]:https://img.shields.io/badge/platform-Android-blue.svg
+[2]:https://github.com/cdalwyn/mvvmcomponent
+[3]:https://img.shields.io/badge/license-Apache%202-blue.svg
+[4]:https://github.com/cdalwyn/mvvmcomponent/blob/master/LICENSE
+
 # :v::fist::wave:MvvmComponents
 ## 项目截图
 
