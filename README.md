@@ -1,9 +1,10 @@
+![](https://img.shields.io/badge/platform-Android-blue.svg)![](https://img.shields.io/badge/license-Apache%202-blue.svg)
 # :v::fist::wave:MvvmComponents
 ## 项目截图
 
 ![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme1.png)![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme2.png)![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme3.png)
 
-## 实现思路
+## 项目介绍
 
 - **基于Mvvm模式集成谷歌官方推荐的JetPack组件库LiveData+ViewModel+DataBinding，以ARouter为组件路由实现的玩Android开放API安卓客户端**
 - **项目以okhttp+Retrofit+RxJava2+Gson为网络框架基础、Glide图像加载、Koin实现依赖注入、阿里ARouter实现组件路由通信跳转、腾讯MMKV替代Sharedpreferences实现高性能本地缓存、基于LiveData的消息总线LiveEventbus事件分发等等**
@@ -24,7 +25,7 @@
 ## License
 
 ```
-   Copyright 2021 Zhilong Chan(陈志龙)
+   Copyright 2021 cdalwyn(陈志龙)
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
