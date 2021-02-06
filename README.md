@@ -1,5 +1,11 @@
 # :v::fist::wave:MvvmCoponents
 
+[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme1.png)
+
+[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme2.png)
+
+[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme3.png)
+
 ## 实现思路
 
 - **基于Mvvm模式集成谷歌官方推荐的JetPack组件库LiveData+ViewModel+DataBinding，以ARouter为组件路由实现的玩Android开放API安卓客户端**
@@ -11,6 +17,10 @@
 - [MvvmHabit: Mvvm整合JetPack快速开发框架](https://github.com/goldze/MVVMHabit)
 - [Agentweb: 轻量和极度灵活解决原生webview系列方案](https://github.com/Justson/AgentWeb)
 - [Litepal: 轻松地使用SQLite数据库](https://github.com/guolindev/LitePal)
+- [Koin: 实用的轻量级依赖注入框架](https://github.com/InsertKoinIO/koin)
+- [LiveEventBus: 基于LiveData生命周期安全的消息总线](https://github.com/JeremyLiao/LiveEventBus)
+- [LoadSir: 优雅地处理加载中，重试，无数据等](https://github.com/KingJA/LoadSir)
+- [BaseRecyclerViewAdapterHelper: 强大灵活的列表适配器](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 - ······
 - **致敬所有为开源贡献的大佬！**
 
