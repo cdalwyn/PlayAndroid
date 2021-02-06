@@ -1,10 +1,10 @@
 # :v::fist::wave:MvvmCoponents
 
-[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme1.png)
+[截图1](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme1.png)
 
-[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme2.png)
+[截图2](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme2.png)
 
-[](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme3.png)
+[截图3](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme3.png)
 
 ## 实现思路
 
