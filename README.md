@@ -13,8 +13,14 @@
 ## 项目介绍
 
 - **基于Mvvm模式集成谷歌官方推荐的JetPack组件库LiveData+ViewModel+DataBinding，以ARouter为组件路由实现的玩Android开放API安卓客户端**
-- **项目以okhttp+Retrofit+RxJava2+Gson为网络框架基础、Glide图像加载、Koin实现依赖注入、阿里ARouter实现组件路由通信跳转、腾讯MMKV替代Sharedpreferences实现高性能本地缓存、基于LiveData的消息总线LiveEventbus事件分发等等**
+- **数据源于玩Android 开放API，集成了登录注册、收藏、分享、搜索、浏览热门博客和项目、添加Todo待办功能等，涵盖了几乎所有玩Android开放接口**
+- **项目结合okhttp+Retrofit+RxJava2+Gson组合实现网络请求、Glide图像加载、Koin实现依赖注入、阿里ARouter实现组件路由通信跳转、腾讯MMKV替代Sharedpreferences实现高性能本地缓存、基于LiveData的消息总线LiveEventbus事件分发等等**
 - **以一个通用库模块+多业务组件的Mvvm组件化方案，编译、调试、多人开发更方便更快捷**
+
+## 未来版本
+
+- [ ] 网络框架使用Retrofit+Kotlin Coroutines更轻便更简洁
+- [ ] 依赖注入使用谷歌专为Android打造的Dagger Hilt实现 
 
 ## 感谢
 
