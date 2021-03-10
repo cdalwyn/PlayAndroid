@@ -17,6 +17,25 @@
 - **项目结合okhttp+Retrofit+RxJava2+Gson组合实现网络请求、Glide图像加载、Koin实现依赖注入、阿里ARouter实现组件路由通信跳转、腾讯MMKV替代Sharedpreferences实现高性能本地缓存、基于LiveData的消息总线LiveEventbus事件分发等等**
 - **以一个通用库模块+多业务组件的Mvvm组件化方案，编译、调试、多人开发更方便更快捷**
 
+## 项目架构
+
+![Google官方推荐架构图](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/mvvm架构图.png)
+
+遵循如上Google Mvvm官方推荐架构，UI与数据分离，以ViewModel为中介进行通信，实现数据驱动UI。通过Koin依赖注入**本地数据+远程数据=数据仓库**，外部只需一行代码调用，隐藏具体实现，规避数据滥用、后期维护难等问题
+
+采用单一容器ContainerActivity+多Fragment配合Fragmentation库、阿里ARouter通信跳转实现单activity多fragment组件化架构
+
+![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/包结构.png)
+
+- lib_base：通用功能组件，支撑业务组件基础，提供其他业务组件实现能力
+- module_login：业务组件，注册登录模块，以及启动页
+- module_main：业务组件，app内Tab首页模块
+- module_project：业务组件，app内Tab项目模块
+- module_search：功能组件，提供搜索功能
+- module_square：业务组件，app内Tab广场模块
+- module_user：业务组件，用户管理以及系统设置模块
+- module_web：功能组件，提供H5功能
+
 ## 未来版本
 
 - [ ] 网络框架使用Retrofit+Kotlin Coroutines更轻便更简洁
