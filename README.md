@@ -19,13 +19,13 @@
 
 ## 项目架构
 
-![Google官方推荐架构图](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/mvvm架构图.png)
+![Google官方推荐架构图](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme4.png)
 
 遵循如上Google Mvvm官方推荐架构，UI与数据分离，以ViewModel为中介进行通信，实现数据驱动UI。通过Koin依赖注入**本地数据+远程数据=数据仓库**，外部只需一行代码调用，隐藏具体实现，规避数据滥用、后期维护难等问题
 
 采用单一容器ContainerActivity+多Fragment配合Fragmentation库、阿里ARouter通信跳转实现单activity多fragment组件化架构
 
-![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/包结构.png)
+![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme5.png)
 
 - lib_base：通用功能组件，支撑业务组件基础，提供其他业务组件实现能力
 - module_login：业务组件，注册登录模块，以及启动页
