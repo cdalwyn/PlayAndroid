@@ -60,8 +60,6 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         initData()
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable()
-        //注册RxBus 消息事件分发使用LiveEventBus
-//        viewModel.registerRxBus();
     }
 
     open fun initStatusBar() {
