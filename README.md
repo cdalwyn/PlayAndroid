@@ -36,6 +36,10 @@
 - module_user：业务组件，用户管理以及系统设置模块
 - module_web：功能组件，提供H5功能
 
+## 快速上手
+
+[Mvvm组件化脚手架](https://github.com/cdalwyn/BaseMvvmScaffold)
+
 ## 未来版本
 
 - [ ] 网络框架使用Retrofit+Kotlin Coroutines更轻便更简洁
