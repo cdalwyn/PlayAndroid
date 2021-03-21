@@ -159,8 +159,10 @@ dependencies {
     api rootProject.ext.dependencies["dialog-lifecycle"]
     api rootProject.ext.dependencies["matisse"]
     api rootProject.ext.dependencies["loadingview"]
+    api rootProject.ext.dependencies["pgy_sdk"]
+
 //    api rootProject.ext.dependencies["calendarview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
-    debugApi rootProject.ext.dependencies["dokitx"]
+//    debugApi rootProject.ext.dependencies["dokitx"]
 
 }

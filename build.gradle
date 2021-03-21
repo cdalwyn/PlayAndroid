@@ -6,13 +6,14 @@ buildscript {
         jcenter()
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://jitpack.io' }
+        maven { url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master" }
         maven { url 'https://maven.aliyun.com/repository/google' }
         google()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.5.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.didichuxing.doraemonkit:dokitx-plugin:3.3.5'
+//        classpath 'com.didichuxing.doraemonkit:dokitx-plugin:3.3.5'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -23,6 +24,7 @@ allprojects {
         jcenter()
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://jitpack.io' }
+        maven { url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master" }
         maven { url 'https://maven.aliyun.com/repository/google' }
         google()
     }

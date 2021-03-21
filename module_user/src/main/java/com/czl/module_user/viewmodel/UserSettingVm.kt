@@ -13,7 +13,10 @@ import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
+import com.czl.lib_base.util.PgyUtil
 import com.czl.lib_base.util.RxThreadHelper
+import com.pgyersdk.feedback.PgyerFeedbackManager
+import com.pgyersdk.update.PgyUpdateManager
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.FlowableOnSubscribe
@@ -33,11 +36,13 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
     val cacheSize: ObservableField<String> = ObservableField("")
     val historyVisible: ObservableBoolean = ObservableBoolean(false)
     val logoutVisible: ObservableBoolean = ObservableBoolean(true)
+    val versionText = ObservableField("V${AppUtils.getAppVersionName()}")
 
     class UiChangeEvent {
         val switchUiModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val switchSysModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val confirmLogoutEvent: SingleLiveEvent<Void> = SingleLiveEvent()
+        val checkVerEvent = SingleLiveEvent<Void>()
     }
 
     val onFollowSysModeCheckedCommand: BindingCommand<Boolean> = BindingCommand { checked ->
@@ -84,6 +89,12 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
     })
     val logoutClickCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         uc.confirmLogoutEvent.call()
+    })
+    val onFeedbackCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        PgyUtil.showFeedback()
+    })
+    val onVersionCheckCommand: BindingCommand<Void> = BindingCommand(BindingAction {
+        uc.checkVerEvent.call()
     })
 
     fun setTvCacheSize() {

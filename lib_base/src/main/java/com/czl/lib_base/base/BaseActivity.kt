@@ -20,6 +20,7 @@ import com.czl.lib_base.widget.ShareArticlePopView
 import com.gyf.immersionbar.ImmersionBar
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
+import com.pgyersdk.feedback.PgyerFeedbackManager
 import me.yokeyword.fragmentation.SupportFragment
 import me.yokeyword.fragmentation.anim.DefaultVerticalAnimator
 import me.yokeyword.fragmentation.anim.FragmentAnimator
@@ -56,6 +57,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
             initStatusBar()
         //私有的ViewModel与View的契约事件回调逻辑
         registerUIChangeLiveDataCallBack()
+        PgyerFeedbackManager.PgyerFeedbackBuilder()
+            .setDisplayType(PgyerFeedbackManager.TYPE.DIALOG_TYPE)
+            .builder()
+            .register();
         //页面数据初始化方法
         initData()
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册

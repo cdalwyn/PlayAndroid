@@ -35,6 +35,15 @@ object DialogHelper {
         return XPopup.Builder(context).asConfirm(title, content, OnConfirmListener(func)).show()
     }
 
+    fun showVersionDialog(
+        context: Context,
+        title: String,
+        content: String,
+        func: () -> Unit
+    ): BasePopupView {
+        return XPopup.Builder(context).asConfirm(title, content, "取消","下载",OnConfirmListener(func),null,false).show()
+    }
+
     fun showLoadingDialog(context: Context, title: String? = "加载中"): BasePopupView {
         return XPopup.Builder(context).asLoading(title, R.layout.common_loading_dialog).show()
     }

@@ -16,6 +16,7 @@ import com.czl.lib_base.di.allModule
 import com.czl.lib_base.util.SpHelper
 import com.czl.lib_base.util.ToastHelper
 import com.lxj.xpopup.XPopup
+import com.pgyersdk.crash.PgyCrashManager
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -50,6 +51,7 @@ open class MyApplication : Application() {
         }
         ARouter.init(this)
         setApplication(this)
+        PgyCrashManager.register()
         LitePal.initialize(this)
         MMKV.initialize(this)
         // 初始化Fragmentation
@@ -70,6 +72,7 @@ open class MyApplication : Application() {
         RxJavaPlugins.setErrorHandler {
             ToastHelper.showErrorToast("系统错误")
             it.printStackTrace()
+            PgyCrashManager.reportCaughtException(Exception(it))
         }
         // 设置吐司不以队列循环展示
         Toasty.Config.getInstance().allowQueue(false).apply()
@@ -77,6 +80,7 @@ open class MyApplication : Application() {
         // 切换情景模式
         initNightMode()
     }
+
 
     private fun initNightMode() {
         if (SpHelper.decodeBoolean(AppConstants.SpKey.SYS_UI_MODE))

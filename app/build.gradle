@@ -2,16 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.didi.dokit'
+//apply plugin: 'com.didi.dokit'
 
 android {
     signingConfigs {
-        release {
-            storeFile file('C:\\Users\\ASUS\\Desktop\\mvvm.jks')
-            storePassword '123456'
-            keyAlias 'key0'
-            keyPassword '123456'
-        }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -36,17 +30,28 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
-            zipAlignEnabled true  //压缩优化
-            shrinkResources true  //移出无用资源
-            debuggable true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
 //            applicationIdSuffix '.debug' //增加包名后缀 （debug包与release包共存）
         }
+    }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        if (variant.buildType.name == 'release') {
+                            outputFileName = "wanandroid${nowTime()}_release_V${variant.versionName}.apk"
+                        } else if (variant.buildType.name == 'debug') {
+                            outputFileName = "wanandroid${nowTime()}_debug_V${variant.versionName}.apk"
+                        }
+                    }
+            }
     }
 
     sourceSets {
@@ -78,19 +83,19 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    dokitExt {
-        //通用设置
-        comm {
-            //地图经纬度开关
-            gpsSwitch true
-            //网络开关
-            networkSwitch true
-            //大图开关
-            bigImgSwitch true
-            //webView js 抓包
-            webViewSwitch true
-        }
-    }
+//    dokitExt {
+//        //通用设置
+//        comm {
+//            //地图经纬度开关
+//            gpsSwitch true
+//            //网络开关
+//            networkSwitch true
+//            //大图开关
+//            bigImgSwitch true
+//            //webView js 抓包
+//            webViewSwitch true
+//        }
+//    }
 }
 
 dependencies {
@@ -104,4 +109,7 @@ dependencies {
         implementation project(path: ':module_project')
         implementation project(path: ':module_web')
     }
+}
+static def nowTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }

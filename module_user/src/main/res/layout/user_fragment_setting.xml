@@ -192,13 +192,75 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btn_logout"
+            android:id="@+id/btn_feedback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@color/color_default_bg"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_about"
+            binding:onClickCommand="@{viewModel.onFeedbackCommand}">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_10"
+                android:text='意见反馈'
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:gravity="center"
+                android:text="任意界面“摇一摇”唤出"
+                app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/btn_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_default_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_feedback"
+            binding:onClickCommand="@{viewModel.onVersionCheckCommand}">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_weight="1"
+                android:padding="@dimen/dp_10"
+                android:text="检查更新"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/dp_20"
+                android:gravity="center"
+                android:text="@{viewModel.versionText}"
+                app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_default_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_version"
             binding:isVisible="@{viewModel.logoutVisible}"
             binding:onClickCommand="@{viewModel.logoutClickCommand}">
 

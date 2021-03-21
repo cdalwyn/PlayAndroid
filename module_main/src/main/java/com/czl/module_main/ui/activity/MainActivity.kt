@@ -1,20 +1,27 @@
 package com.czl.module_main.ui.activity
 
-import androidx.lifecycle.Observer
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
+import com.blankj.utilcode.util.AppUtils
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
+import com.czl.lib_base.util.DialogHelper
+import com.czl.lib_base.util.PgyUtil
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
 import com.czl.module_main.viewmodel.MainViewModel
-import com.gyf.immersionbar.ImmersionBar
+import com.pgyersdk.update.DownloadFileListener
+import com.pgyersdk.update.PgyUpdateManager
+import com.pgyersdk.update.UpdateManagerListener
+import com.pgyersdk.update.javabean.AppBean
 import me.yokeyword.fragmentation.SupportFragment
+import java.io.File
+import java.lang.Exception
 
 @Route(path = AppConstants.Router.Main.A_MAIN)
 class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
@@ -35,7 +42,7 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     override fun initViewObservable() {
         viewModel.uc.tabChangeLiveEvent.observe(this, {
-            binding.viewPager2.setCurrentItem(it,false)
+            binding.viewPager2.setCurrentItem(it, false)
         })
         viewModel.uc.pageChangeLiveEvent.observe(this, {
             binding.bottomBar.selectTab(it)
@@ -47,8 +54,9 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 //        initToolbar()
         initBottomBar()
         initViewPager()
-
+        PgyUtil.checkVersion(this)
     }
+
 
     private fun initViewPager() {
         // 设置不可滑动
@@ -68,40 +76,40 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
     private fun initBottomBar() {
         binding.bottomBar.apply {
-                setMode(BottomNavigationBar.MODE_FIXED)
-                setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
-                addItem(
-                    BottomNavigationItem(
-                        R.drawable.ic_home_on,
-                        getString(R.string.main_tab_home)
-                    ).setActiveColorResource(R.color.md_theme_red)
-                        .setInactiveIconResource(R.drawable.ic_home_off)
+            setMode(BottomNavigationBar.MODE_FIXED)
+            setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+            addItem(
+                BottomNavigationItem(
+                    R.drawable.ic_home_on,
+                    getString(R.string.main_tab_home)
+                ).setActiveColorResource(R.color.md_theme_red)
+                    .setInactiveIconResource(R.drawable.ic_home_off)
+            )
+            addItem(
+                BottomNavigationItem(
+                    R.drawable.ic_square_on,
+                    getString(R.string.main_tab_square)
+                ).setActiveColorResource(R.color.md_theme_red)
+                    .setInactiveIconResource(R.drawable.ic_square_off)
+            )
+            addItem(
+                BottomNavigationItem(
+                    R.drawable.ic_project_on,
+                    getString(R.string.main_tab_project)
                 )
-                addItem(
-                    BottomNavigationItem(
-                        R.drawable.ic_square_on,
-                        getString(R.string.main_tab_square)
-                    ).setActiveColorResource(R.color.md_theme_red)
-                        .setInactiveIconResource(R.drawable.ic_square_off)
-                )
-                addItem(
-                    BottomNavigationItem(
-                        R.drawable.ic_project_on,
-                        getString(R.string.main_tab_project)
-                    )
-                        .setActiveColorResource(R.color.md_theme_red)
-                        .setInactiveIconResource(R.drawable.ic_project_off)
-                )
-                addItem(
-                    BottomNavigationItem(
-                        R.drawable.ic_me_on,
-                        getString(R.string.main_tab_me)
-                    ).setActiveColorResource(R.color.md_theme_red)
-                        .setInactiveIconResource(R.drawable.ic_me_off)
-                )
-                setFirstSelectedPosition(0)
-                initialise()
-            }
+                    .setActiveColorResource(R.color.md_theme_red)
+                    .setInactiveIconResource(R.drawable.ic_project_off)
+            )
+            addItem(
+                BottomNavigationItem(
+                    R.drawable.ic_me_on,
+                    getString(R.string.main_tab_me)
+                ).setActiveColorResource(R.color.md_theme_red)
+                    .setInactiveIconResource(R.drawable.ic_me_off)
+            )
+            setFirstSelectedPosition(0)
+            initialise()
+        }
     }
 
 

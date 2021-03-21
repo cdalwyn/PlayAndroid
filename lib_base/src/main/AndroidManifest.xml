@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:name=".base.MyApplication"
@@ -21,11 +23,15 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        tools:targetApi="n">
+        tools:targetApi="n"
+        >
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="7ba1347a5d025ce4f2f43aff01482974" >
+        </meta-data>
         <meta-data
             android:name="design_height_in_dp"
             android:value="720" />
@@ -44,16 +50,19 @@
         <meta-data
             android:name="android.vendor.full_screen"
             android:value="true" />
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
-        </provider>
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="${applicationId}.provider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true"-->
+<!--            >-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/provider_paths" />-->
+
+<!--        </provider>-->
         <activity android:name=".mvvm.ui.ContainerFmActivity" />
+        <activity android:name="com.pgyersdk.feedback.FeedbackActivity"/>
     </application>
 
 </manifest>

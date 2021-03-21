@@ -6,6 +6,7 @@ import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
+import com.czl.lib_base.util.PgyUtil
 import com.czl.module_user.BR
 import com.czl.module_user.R
 import com.czl.module_user.databinding.UserFragmentSettingBinding
@@ -78,6 +79,9 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
             DialogHelper.showBaseDialog(requireContext(), "注销", "是否确定退出登录？") {
                 viewModel.logout()
             }
+        })
+        viewModel.uc.checkVerEvent.observe(this,{
+            PgyUtil.checkVersion(requireContext())
         })
     }
 

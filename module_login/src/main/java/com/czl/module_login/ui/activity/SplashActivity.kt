@@ -1,21 +1,28 @@
 package com.czl.module_login.ui.activity
 
 
-import android.animation.Animator
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.czl.module_login.BR
-import com.czl.module_login.R
-import com.czl.module_login.databinding.LoginActivitySplashBinding
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
+import com.czl.lib_base.util.DialogHelper
+import com.czl.module_login.BR
+import com.czl.module_login.R
+import com.czl.module_login.databinding.LoginActivitySplashBinding
 import com.czl.module_login.viewmodel.SplashViewModel
 import com.gyf.immersionbar.ImmersionBar
+import com.pgyersdk.update.DownloadFileListener
+import com.pgyersdk.update.PgyUpdateManager
+import com.pgyersdk.update.UpdateManagerListener
+import com.pgyersdk.update.javabean.AppBean
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import java.io.File
+import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -37,14 +44,23 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
     }
 
     override fun initData() {
-        Glide.with(this).load(if (DayModeUtil.isNightMode(this))
-            arrayDark[Random().nextInt(arrayDark.size)]
-        else arrayLight[Random().nextInt(arrayLight.size)])
-            .override(ScreenUtils.getAppScreenWidth(),ScreenUtils.getAppScreenHeight())
+        initSplashBg()
+        toLogin()
+    }
+
+    private fun initSplashBg() {
+        Glide.with(this).load(
+            if (DayModeUtil.isNightMode(this))
+                arrayDark[Random().nextInt(arrayDark.size)]
+            else arrayLight[Random().nextInt(arrayLight.size)]
+        )
+            .override(ScreenUtils.getAppScreenWidth(), ScreenUtils.getAppScreenHeight())
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .skipMemoryCache(true)
             .into(binding.ivSplash)
+    }
 
+    private fun toLogin() {
         viewModel.addSubscribe(
             Flowable.timer(1500L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
