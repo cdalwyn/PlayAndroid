@@ -48,6 +48,6 @@ object PgyUtil {
     }
 
     fun showFeedback() {
-        PgyerFeedbackManager.getInstance().invoke()
+        PgyerFeedbackManager.PgyerFeedbackBuilder().builder().invoke()
     }
 }
