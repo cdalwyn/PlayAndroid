@@ -43,6 +43,7 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
         val switchSysModeEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
         val confirmLogoutEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val checkVerEvent = SingleLiveEvent<Void>()
+        val feedbackEvent = SingleLiveEvent<Void>()
     }
 
     val onFollowSysModeCheckedCommand: BindingCommand<Boolean> = BindingCommand { checked ->
@@ -91,7 +92,7 @@ class UserSettingVm(application: MyApplication, model: DataRepository) :
         uc.confirmLogoutEvent.call()
     })
     val onFeedbackCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        PgyUtil.showFeedback()
+        uc.feedbackEvent.call()
     })
     val onVersionCheckCommand: BindingCommand<Void> = BindingCommand(BindingAction {
         uc.checkVerEvent.call()

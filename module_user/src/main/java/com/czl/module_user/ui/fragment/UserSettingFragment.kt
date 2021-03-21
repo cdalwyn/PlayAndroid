@@ -6,6 +6,7 @@ import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.util.DayModeUtil
 import com.czl.lib_base.util.DialogHelper
+import com.czl.lib_base.util.PermissionUtil
 import com.czl.lib_base.util.PgyUtil
 import com.czl.module_user.BR
 import com.czl.module_user.R
@@ -80,9 +81,20 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                 viewModel.logout()
             }
         })
-        viewModel.uc.checkVerEvent.observe(this,{
-            PgyUtil.checkVersion(requireContext())
+        viewModel.uc.checkVerEvent.observe(this, {
+            PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
+                if (allGranted)
+                    PgyUtil.checkVersion(requireContext())
+            })
         })
+        viewModel.uc.feedbackEvent.observe(this, {
+            PermissionUtil.reqStorageAndAudio(fragment = this, callback = { allGranted, _, _ ->
+                if (allGranted) {
+                    PgyUtil.showFeedback()
+                }
+            })
+        })
+
     }
 
     private fun restart() {

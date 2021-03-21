@@ -16,9 +16,6 @@ import java.lang.Exception
  * @Description
  */
 object PgyUtil {
-    /**
-     * @param hasCallback 有无更新的回调
-     */
     fun checkVersion(context: Context) {
         PgyUpdateManager.Builder()
             .setForced(false)                //设置是否强制提示更新,非自定义回调更新接口此方法有用
