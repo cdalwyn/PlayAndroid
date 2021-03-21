@@ -10,6 +10,8 @@
 
 ![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme1.png)![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme2.png)![](https://github.com/cdalwyn/mvvmcomponent/blob/master/readme/readme3.png)
 
+**下载体验请移步:** [玩安卓](https://www.pgyer.com/wanandroid_czl)
+
 ## 项目介绍
 
 - **基于Mvvm模式集成谷歌官方推荐的JetPack组件库LiveData+ViewModel+DataBinding，以ARouter为组件路由实现的玩Android开放API安卓客户端**
