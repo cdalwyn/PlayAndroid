@@ -216,7 +216,6 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="@dimen/dp_20"
                 android:gravity="center"
-                android:text="任意界面“摇一摇”唤出"
                 app:drawableEndCompat="@drawable/ic_navigate_next_black_24dp"
                 />
 
