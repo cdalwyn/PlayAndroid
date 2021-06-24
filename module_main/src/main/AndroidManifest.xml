@@ -4,7 +4,6 @@
 
     <application>
         <activity android:name=".ui.activity.MainActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ui.activity.TestActivity" />
     </application>
 
 </manifest>

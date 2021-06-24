@@ -9,7 +9,6 @@
         <item name="colorPrimaryDark">@color/mColorPrimaryDark</item>
         <item name="colorAccent">@color/mColorAccent</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:fontFamily">sans-serif</item>
         <!--取消水波纹效果-->
         <!--        <item name="android:colorControlHighlight">@android:color/transparent</item>-->
     </style>
