@@ -6,8 +6,8 @@ ext {
             applicationId    : "com.czl.mvvmcomponents",
             minSdkVersion    : 21,
             targetSdkVersion : 28,
-            versionCode      : 102,
-            versionName      : "1.0.2",
+            versionCode      : 103,
+            versionName      : "1.0.3",
     ]
     //androidx配置
     androidx = [
@@ -28,7 +28,7 @@ ext {
     versions = [
             "support-version": "1.0.0",
             "junit-version"  : "4.12",
-            "koin-version"   : "2.2.0"
+            "koin-version"   : "3.1.1"
     ]
     //support配置
     support = [
@@ -78,9 +78,8 @@ ext {
             "MVVMHabit"                            : "com.github.goldze:MVVMHabit:3.1.3",
             "toolbar"                              : "com.gyf.immersionbar:immersionbar:3.0.0",
             'viewpager2'                           : 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-viewpager2:4.0.0',
-            'koin_scope'                           : "org.koin:koin-androidx-scope:${versions["koin-version"]}",
-            'koin_viewmodel'                       : "org.koin:koin-androidx-viewmodel:${versions["koin-version"]}",
-            'koin_fragment'                        : "org.koin:koin-androidx-fragment:${versions["koin-version"]}",
+            'koin_core'                            : "io.insert-koin:koin-android:${versions["koin-version"]}",
+            'koin_java'                            : "io.insert-koin:koin-android-compat:${versions["koin-version"]}",
             'utils'                                : 'com.blankj:utilcodex:1.30.5',
             'mmkv'                                 : 'com.tencent:mmkv:1.0.23',
             'livebus'                              : 'com.jeremyliao:live-event-bus-x:1.7.2',

@@ -7,6 +7,7 @@
     <data>
 
         <import type="android.text.TextUtils" />
+        <import type="androidx.core.text.HtmlCompat"/>
 
         <variable
             name="data"
@@ -85,12 +86,12 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_4"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@{data.title}"
+                android:text="@{HtmlCompat.fromHtml(data.title,HtmlCompat.FROM_HTML_MODE_COMPACT)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
                 tools:text="标题标题标题标题标题标题标题标标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题题标题标题标题标题标题标题标题标题" />

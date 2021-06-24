@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+                name="viewModel"
+                type="com.czl.module_user.viewmodel.UserCollectVm" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat

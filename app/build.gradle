@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'com.didi.dokit'
 
@@ -20,7 +21,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
-                includeCompileClasspath = true
+//                includeCompileClasspath = true
             }
         }
 //        ndk {
@@ -71,8 +72,8 @@ android {
     }
     //统一资源前缀，规范资源引用
     resourcePrefix "app_"
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

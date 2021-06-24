@@ -1,17 +1,12 @@
 package com.czl.lib_base.data.bean
 
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import androidx.versionedparcelable.ParcelField
-import com.chad.library.adapter.base.entity.SectionEntity
 import com.czl.lib_base.BR
-import com.czl.lib_base.annotation.TodoPriority
-import com.czl.lib_base.annotation.TodoType
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
-import org.litepal.crud.LitePalSupport
 import java.io.Serializable
 
 /**
@@ -190,6 +185,7 @@ data class CollectArticleBean(
         val zan: Int
     )
 }
+
 data class HomeBannerBean(
     @SerializedName("desc")
     val desc: String = "",
@@ -207,7 +203,7 @@ data class HomeBannerBean(
     val type: Int,
     @SerializedName("url")
     val url: String = ""
-):Serializable
+) : Serializable
 
 data class HomeArticleBean(
     @SerializedName("curPage")
@@ -224,7 +220,7 @@ data class HomeArticleBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-) :Serializable{
+) : Serializable {
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -290,7 +286,7 @@ data class HomeArticleBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable(),Serializable {
+    ) : BaseObservable(), Serializable {
         @Bindable
         var collect: Boolean = false
             set(value) {
@@ -310,7 +306,7 @@ data class HomeArticleBean(
             val name: String,
             @SerializedName("url")
             val url: String
-        ):Serializable
+        ) : Serializable
     }
 }
 
@@ -329,7 +325,7 @@ data class ProjectBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-):Serializable {
+) : Serializable {
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -395,7 +391,7 @@ data class ProjectBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable(),Serializable {
+    ) : BaseObservable(), Serializable {
         @Bindable
         @SerializedName("collect")
         var collect: Boolean = false
@@ -409,7 +405,7 @@ data class ProjectBean(
             val name: String,
             @SerializedName("url")
             val url: String
-        ):Serializable
+        ) : Serializable
     }
 }
 
@@ -521,7 +517,7 @@ data class SearchHotKeyBean(
     val order: Int,
     @SerializedName("visible")
     val visible: Int
-):Serializable
+) : Serializable
 
 data class ProjectSortBean(
     @SerializedName("children")
@@ -538,7 +534,7 @@ data class ProjectSortBean(
     val parentChapterId: Int,
     @SerializedName("visible")
     val visible: Int
-):Serializable
+) : Serializable
 
 data class UserScoreBean(
     @SerializedName("coinCount")
@@ -755,7 +751,7 @@ data class SquareListBean(
     val size: Int,
     @SerializedName("total")
     val total: Int
-):Serializable {
+) : Serializable {
     data class Data(
         @SerializedName("apkLink")
         val apkLink: String,
@@ -819,7 +815,7 @@ data class SquareListBean(
         val visible: Int,
         @SerializedName("zan")
         val zan: Int
-    ) : BaseObservable(),Serializable {
+    ) : BaseObservable(), Serializable {
         @Bindable
         @SerializedName("collect")
         var collect: Boolean = false
@@ -1204,7 +1200,11 @@ class TodoBean() : Parcelable {
             title = parcel.readString()
             type = parcel.readInt()
             userId = parcel.readInt()
-            dateExpired = parcel.readBoolean()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                dateExpired = parcel.readBoolean()
+            } else {
+                dateExpired = parcel.readInt() == 1
+            }
             status = parcel.readInt()
         }
 
@@ -1220,7 +1220,11 @@ class TodoBean() : Parcelable {
             parcel.writeString(title)
             parcel.writeInt(type)
             parcel.writeInt(userId)
-            parcel.writeBoolean(dateExpired)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                parcel.writeBoolean(dateExpired)
+            } else {
+                parcel.writeInt(if (dateExpired) 1 else 0)
+            }
             parcel.writeInt(status)
         }
 

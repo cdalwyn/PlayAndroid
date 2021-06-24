@@ -1,6 +1,8 @@
 package com.czl.module_search.adapter
 
 import android.os.Bundle
+import android.text.Html
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder

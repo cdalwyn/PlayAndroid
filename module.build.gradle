@@ -6,6 +6,7 @@ if (isBuildModule.toBoolean()) {
     apply plugin: 'com.android.library'
 }
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -21,7 +22,7 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
-                includeCompileClasspath = true
+//                includeCompileClasspath = true
             }
         }
 //        ndk {
@@ -66,7 +67,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding true
     }
 }

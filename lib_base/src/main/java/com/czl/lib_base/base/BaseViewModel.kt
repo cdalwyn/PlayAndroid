@@ -15,11 +15,7 @@ import com.trello.rxlifecycle3.LifecycleProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
-import org.koin.core.Koin
-import org.koin.core.component.KoinApiExtension
-import org.koin.core.component.KoinComponent
 import java.lang.ref.WeakReference
-import kotlin.collections.HashMap
 
 /**
  * Created by Alwyn on 2020/10/10.

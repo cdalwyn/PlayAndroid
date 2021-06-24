@@ -60,8 +60,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
+    buildFeatures {
+        dataBinding true
     }
 }
 dependencies {
@@ -127,9 +127,8 @@ dependencies {
     api rootProject.ext.androidx["kotlin_core"]
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_compiler"]
-    api rootProject.ext.dependencies["koin_scope"]
-    api rootProject.ext.dependencies["koin_viewmodel"]
-    api rootProject.ext.dependencies["koin_fragment"]
+    api rootProject.ext.dependencies["koin_core"]
+    api rootProject.ext.dependencies["koin_java"]
     api rootProject.ext.dependencies["utils"]
     api rootProject.ext.dependencies["mmkv"]
     api rootProject.ext.dependencies["livebus"]
