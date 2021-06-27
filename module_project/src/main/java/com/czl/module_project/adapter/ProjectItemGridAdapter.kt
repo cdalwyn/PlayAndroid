@@ -4,12 +4,10 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.SparseArray
 import androidx.recyclerview.widget.DiffUtil
+import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.ImageViewTarget
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.czl.lib_base.binding.command.BindingCommand
@@ -26,7 +24,7 @@ import com.czl.module_project.ui.fragment.ContentFragment
  * @Date 2020/11/11
  * @Description 瀑布流适配器
  */
-class ProjectItemGridAdapter(val contentFragment: ContentFragment) :
+class ProjectItemGridAdapter(private val contentFragment: ContentFragment) :
     BaseQuickAdapter<ProjectBean.Data, BaseDataBindingHolder<ProjectItemGridBinding>>(R.layout.project_item_grid) {
 
     // 存储图片的高度
@@ -42,7 +40,7 @@ class ProjectItemGridAdapter(val contentFragment: ContentFragment) :
             this.item = item
             // 设置图片宽高
             val layoutParams = ivProjectItem.layoutParams
-            val screenWidth = context.resources.displayMetrics.widthPixels
+            val screenWidth = ScreenUtils.getAppScreenWidth()
             val mWidth = screenWidth / 2
             layoutParams.width = mWidth
             if (sizeSparseArray.get(getItemPosition(item)) != null) {
@@ -60,36 +58,32 @@ class ProjectItemGridAdapter(val contentFragment: ContentFragment) :
             Glide.with(context)
                 .asBitmap()
                 .apply(options)
-                .addListener(object : RequestListener<Bitmap> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Bitmap?,
-                        model: Any?,
-                        target: Target<Bitmap>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        if (sizeSparseArray.get(getItemPosition(item)) == null) {
-                            resource?.let { bitmap ->
-                                sizeSparseArray.put(
-                                    getItemPosition(item),
-                                    bitmap.height
-                                )
+                .load(item.envelopePic)
+                .into(object :ImageViewTarget<Bitmap>(ivProjectItem){
+                    override fun setResource(resource: Bitmap?) {
+                        resource?.let {
+                            view.setImageBitmap(resource)
+                            //获取原图的宽高
+                            val width = resource.width
+                            val height = resource.height
+                            //获取imageView的宽
+                            val imageViewWidth = ivProjectItem.width
+                            //计算缩放比例
+                            val sy = (imageViewWidth * 0.1).toFloat() / (width * 0.1).toFloat()
+                            //计算图片等比例放大后的高
+                            val imageViewHeight = (height * sy).toInt()
+                            val params = ivProjectItem.layoutParams
+                            params.height = imageViewHeight
+                            ivProjectItem.layoutParams = params
+                            val itemPosition = getItemPosition(item)
+                            if (sizeSparseArray.get(itemPosition)==null){
+                                sizeSparseArray.put(itemPosition,imageViewHeight)
                             }
                         }
-                        return false
+
                     }
+
                 })
-                .load(item.envelopePic)
-                .into(ivProjectItem)
             executePendingBindings()
         }
     }
@@ -114,7 +108,7 @@ class ProjectItemGridAdapter(val contentFragment: ContentFragment) :
             oldItem: ProjectBean.Data,
             newItem: ProjectBean.Data
         ): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem == newItem
         }
     }
 }

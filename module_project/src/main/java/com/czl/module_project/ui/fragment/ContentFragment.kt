@@ -133,14 +133,12 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
         binding.ryCommon.apply {
             layoutManager = manager
             adapter = mAdapter
+            // 禁用动画
+            binding.ryCommon.itemAnimator = null
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     // 解决滑到顶部留白问题
-                    val first = IntArray(2)
-                    manager.findFirstCompletelyVisibleItemPositions(first)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE && (first[0] == 1 || first[1] == 1)) {
-                        manager.invalidateSpanAssignments()
-                    }
+                    manager.invalidateSpanAssignments()
                 }
             })
         }
