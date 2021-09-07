@@ -5,7 +5,7 @@ import android.util.SparseArray;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
-import com.czl.lib_base.bus.event.SingleLiveEvent;
+import com.czl.lib_base.event.SingleLiveEvent;
 
 import org.jetbrains.annotations.NotNull;
 

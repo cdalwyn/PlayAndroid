@@ -1,28 +1,19 @@
 package com.czl.module_search.viewmodel
 
-import android.text.TextUtils
 import android.view.View
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
-import androidx.databinding.ObservableList
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
 import com.czl.lib_base.binding.command.BindingConsumer
-import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.event.SingleLiveEvent
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.SearchDataBean
-import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.module_search.BR
-import com.czl.module_search.R
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 /**
  * @author Alwyn
@@ -40,8 +31,8 @@ class SearchViewModel(application: MyApplication, model: DataRepository) :
     inner class UiChangeEvent {
         val searchCancelEvent: SingleLiveEvent<Void> = SingleLiveEvent()
         val finishLoadEvent: SingleLiveEvent<SearchDataBean?> = SingleLiveEvent()
-        val searchConfirmEvent:SingleLiveEvent<String> = SingleLiveEvent()
-        val searchFocusEvent:SingleLiveEvent<Boolean> = SingleLiveEvent()
+        val searchConfirmEvent: SingleLiveEvent<String> = SingleLiveEvent()
+        val searchFocusEvent: SingleLiveEvent<Boolean> = SingleLiveEvent()
     }
 
     /*左边返回按钮的显示*/

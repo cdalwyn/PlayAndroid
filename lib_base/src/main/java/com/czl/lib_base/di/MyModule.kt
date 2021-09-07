@@ -1,19 +1,16 @@
 package com.czl.lib_base.di
 
-import android.util.SparseArray
 import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.data.net.RetrofitClient
 import com.czl.lib_base.base.AppViewModelFactory
 import com.czl.lib_base.base.BaseActivity
-import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.api.ApiService
 import com.czl.lib_base.data.source.HttpDataSource
 import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.data.source.impl.HttpDataImpl
 import com.czl.lib_base.data.source.impl.LocalDataImpl
-import com.czl.lib_base.event.TokenExpiredEvent
 import com.czl.lib_base.widget.AddTodoPopView
 import com.czl.lib_base.widget.LoginPopView
 import com.lxj.xpopup.XPopup
@@ -22,7 +19,6 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.ConcurrentLinkedQueue
 
 /**
  * @author Alwyn

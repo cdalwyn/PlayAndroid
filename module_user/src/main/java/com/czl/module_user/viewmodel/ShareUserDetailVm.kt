@@ -1,18 +1,15 @@
 package com.czl.module_user.viewmodel
 
-import android.view.View
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.base.MyApplication
 import com.czl.lib_base.binding.command.BindingAction
 import com.czl.lib_base.binding.command.BindingCommand
-import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.event.SingleLiveEvent
 import com.czl.lib_base.data.bean.ShareUserDetailBean
-import com.czl.lib_base.event.LiveBusCenter
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import io.reactivex.Observable
 
 

@@ -1,17 +1,14 @@
 package com.czl.module_project.viewmodel
 
-import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.base.MyApplication
-import com.czl.lib_base.bus.event.SingleLiveEvent
+import com.czl.lib_base.event.SingleLiveEvent
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.DataRepository
 import com.czl.lib_base.data.bean.ProjectSortBean
 import com.czl.lib_base.extension.ApiSubscriberHelper
 import com.czl.lib_base.util.RxThreadHelper
-import com.czl.module_project.ui.fragment.ContentFragment
-import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * @author Alwyn
@@ -20,7 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  */
 class ProjectViewModel(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
-    val loadCompleteEvent:SingleLiveEvent<List<ProjectSortBean>> = SingleLiveEvent()
+    val loadCompleteEvent: SingleLiveEvent<List<ProjectSortBean>> = SingleLiveEvent()
     fun getProjectSort(){
         model.getProjectSort()
             .compose(RxThreadHelper.rxSchedulerHelper(this))

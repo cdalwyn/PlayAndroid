@@ -1,27 +1,20 @@
 package com.czl.module_main.ui.activity
 
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.ashokvarma.bottomnavigation.BottomNavigationBar
 import com.ashokvarma.bottomnavigation.BottomNavigationItem
-import com.blankj.utilcode.util.AppUtils
 import com.czl.lib_base.adapter.ViewPagerFmAdapter
 import com.czl.lib_base.base.AppManager
 import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
-import com.czl.lib_base.util.DialogHelper
 import com.czl.lib_base.util.PgyUtil
 import com.czl.module_main.BR
 import com.czl.module_main.R
 import com.czl.module_main.databinding.MainActivityMainBinding
 import com.czl.module_main.viewmodel.MainViewModel
-import com.pgyersdk.update.DownloadFileListener
-import com.pgyersdk.update.PgyUpdateManager
-import com.pgyersdk.update.UpdateManagerListener
-import com.pgyersdk.update.javabean.AppBean
 import me.yokeyword.fragmentation.SupportFragment
-import java.io.File
-import java.lang.Exception
 
 @Route(path = AppConstants.Router.Main.A_MAIN)
 class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {

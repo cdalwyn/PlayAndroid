@@ -1,6 +1,5 @@
 package com.czl.lib_base.event
 
-import com.czl.lib_base.bus.event.SingleLiveEvent
 import com.czl.lib_base.data.bean.TodoBean
 import com.jeremyliao.liveeventbus.core.LiveEvent
 
