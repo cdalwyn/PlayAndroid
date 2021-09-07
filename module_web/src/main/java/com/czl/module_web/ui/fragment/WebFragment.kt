@@ -185,6 +185,13 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                     }
                     this@WebFragment.currentTitle = title
                 }
+
+                override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                    super.onProgressChanged(view, newProgress)
+                    if (newProgress == 100) {
+                        LogUtils.e("title=${view?.title}")
+                    }
+                }
             })
             .createAgentWeb()
             .ready()
@@ -218,7 +225,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
     }
 
     override fun onBackPressedSupport(): Boolean {
-        agentWeb?:return super.onBackPressedSupport()
+        agentWeb ?: return super.onBackPressedSupport()
         if (agentWeb!!.webCreator.webView.canGoBack()) {
             agentWeb!!.back()
         } else {

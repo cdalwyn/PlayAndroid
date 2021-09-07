@@ -13,11 +13,14 @@ import com.czl.lib_base.data.source.LocalDataSource
 import com.czl.lib_base.util.SpHelper
 import com.google.gson.reflect.TypeToken
 import io.reactivex.*
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import org.apache.commons.lang3.time.DateFormatUtils
 import org.litepal.LitePal
 import org.litepal.extension.findFirst
 import java.io.Serializable
+import java.util.*
 
 /**
  * @author Alwyn
@@ -156,12 +159,12 @@ class LocalDataImpl : LocalDataSource {
                 val allWebHistory = entity?.getAllWebHistory()
                 // 遍历去重 并删除
                 if (!allWebHistory.isNullOrEmpty()) {
-                    allWebHistory.filter { x -> x.webLink == link && x.webTitle == title }
+                    allWebHistory.filter { x -> x.webLink == link || x.webTitle == title }
                         .forEach { y -> y.delete() }
                 }
                 val userEntity = UserEntity(getUserId(), getLoginName())
                 val webHistoryEntity =
-                    WebHistoryEntity(title, link, System.currentTimeMillis().toInt(), userEntity)
+                    WebHistoryEntity(title, link, DateFormatUtils.format(Date(),"yyyy-MM-dd HH:mm:ss"), userEntity)
                 userEntity.browseEntities.add(webHistoryEntity)
                 webHistoryEntity.userEntity = userEntity
                 userEntity.saveOrUpdate("uid =?", userEntity.uid.toString())

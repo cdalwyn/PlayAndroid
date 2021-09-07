@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="wanandroid" />
-    <version value="7" />
+    <version value="8" />
     <list>
         <mapping class="com.czl.lib_base.data.db.UserEntity" />
         <mapping class="com.czl.lib_base.data.db.SearchHistoryEntity" />

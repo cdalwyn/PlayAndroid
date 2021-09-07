@@ -98,8 +98,8 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
     }
 
     private fun restart() {
-        back()
         startContainerActivity(AppConstants.Router.User.F_USER_SETTING)
         activity?.overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
+        back()
     }
 }

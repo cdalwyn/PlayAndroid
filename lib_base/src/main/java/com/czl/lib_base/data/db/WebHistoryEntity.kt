@@ -11,6 +11,6 @@ import java.sql.Date
 data class WebHistoryEntity(
     val webTitle: String,
     val webLink:String,
-    val browseDate: Int,
+    val browseDate: String,
     var userEntity: UserEntity
 ) : LitePalSupport()
