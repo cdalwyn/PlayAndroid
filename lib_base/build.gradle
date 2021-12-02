@@ -66,23 +66,32 @@ android {
 }
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
-    //support
-    api rootProject.ext.support["support-v4"]
-    api rootProject.ext.support["recyclerview-v7"]
-    //rxjava
-    api rootProject.ext.dependencies.rxjava
-    api rootProject.ext.dependencies.rxandroid
+
+    api(rootProject.ext.androidx["design"]) {
+        exclude group: 'com.androidx.appcompat'
+    }
+    api rootProject.ext.androidx["viewpager2"]
+    api rootProject.ext.androidx["constraintlayout"]
+    api rootProject.ext.androidx["appcompat"]
+    api rootProject.ext.androidx["junit"]
+    api rootProject.ext.androidx["runner"]
+    api rootProject.ext.androidx["espresso-core"]
+    api rootProject.ext.androidx["lifecycle-extensions"]
+    kapt rootProject.ext.androidx["lifecycle-compiler"]
+    api rootProject.ext.androidx["multidex"]
+    api rootProject.ext.androidx["kotlin_lib"]
+    api rootProject.ext.androidx["kotlin_core"]
+
     //rx管理View的生命周期
     api(rootProject.ext.dependencies.rxlifecycle) {
-        exclude group: 'com.android.support'
+        exclude group: 'com.androidx.appcompat'
     }
     api(rootProject.ext.dependencies["rxlifecycle-components"]) {
-        exclude group: 'com.android.support'
+        exclude group: 'com.androidx.appcompat'
     }
-    api rootProject.ext.androidx["design"]
     //rxbinding
     api(rootProject.ext.dependencies.rxbinding) {
-        exclude group: 'com.android.support'
+        exclude group: 'com.androidx.appcompat'
     }
     //network
     api rootProject.ext.dependencies.okhttp
@@ -93,38 +102,20 @@ dependencies {
     api rootProject.ext.dependencies.gson
     //glide图片加载库
     api(rootProject.ext.dependencies.glide) {
-        exclude group: 'com.android.support'
+        exclude group: 'com.androidx.appcompat'
     }
     api rootProject.ext.dependencies["glide-transfer"]
     kapt rootProject.ext.dependencies["glide-compiler"]
-    //recyclerview的databinding套装
-    api(rootProject.ext.dependencies.bindingcollectionadapter) {
-        exclude group: 'com.android.support'
-    }
-    api(rootProject.ext.dependencies["bindingcollectionadapter-recyclerview"]) {
-        exclude group: 'com.android.support'
-    }
-    //Google LiveData和ViewModel组件
-    api rootProject.ext.dependencies["lifecycle-extensions"]
-    kapt rootProject.ext.dependencies["lifecycle-compiler"]
 
     api rootProject.ext.dependencies["toolbar"]
-    api rootProject.ext.dependencies["viewpager2"]
+
     api rootProject.ext.dependencies["navigation"]
     api rootProject.ext.dependencies["refresh-header"]
     api rootProject.ext.dependencies["refresh-footer-ball"]
     api rootProject.ext.dependencies["refresh-footer-classic"]
     api rootProject.ext.dependencies["refresh"]
     api rootProject.ext.dependencies["searchview"]
-    api rootProject.ext.androidx["constraintlayout"]
-    api rootProject.ext.androidx["appcompat"]
-    api rootProject.ext.androidx["junit"]
-    api rootProject.ext.androidx["runner"]
-    api rootProject.ext.androidx["espresso-core"]
-    api rootProject.ext.androidx["lifecycle-extensions"]
-    api rootProject.ext.androidx["multidex"]
-    api rootProject.ext.androidx["kotlin_lib"]
-    api rootProject.ext.androidx["kotlin_core"]
+
     api rootProject.ext.dependencies["arouter_api"]
     api rootProject.ext.dependencies["arouter_compiler"]
     api rootProject.ext.dependencies["koin_core"]
@@ -138,7 +129,7 @@ dependencies {
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["toast"]
     api rootProject.ext.dependencies["webview"]
-//    api rootProject.ext.dependencies["tablayout"]
+
     api rootProject.ext.dependencies["autosize"]
     api rootProject.ext.dependencies["xpopup"]
     api rootProject.ext.dependencies["shadowlayout"]
@@ -152,14 +143,17 @@ dependencies {
     api rootProject.ext.dependencies["round_imageview"]
     api rootProject.ext.dependencies["loadsir"]
     api rootProject.ext.dependencies["flexbox"]
-    api rootProject.ext.dependencies["linkage-recyclerview"]
+    api (rootProject.ext.dependencies["linkage-recyclerview"]) {
+        exclude group: 'com.androidx.appcompat'
+    }
     api rootProject.ext.dependencies["dialog-datetime"]
-    api rootProject.ext.dependencies["dialog-lifecycle"]
+    api (rootProject.ext.dependencies["dialog-lifecycle"]) {
+        exclude group: 'com.androidx.lifecycle'
+    }
     api rootProject.ext.dependencies["matisse"]
     api rootProject.ext.dependencies["loadingview"]
     api rootProject.ext.dependencies["pgy_sdk"]
 
-//    api rootProject.ext.dependencies["calendarview"]
     debugApi rootProject.ext.dependencies["leakcanary"]
 //    debugApi rootProject.ext.dependencies["dokitx"]
 
