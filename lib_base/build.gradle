@@ -67,9 +67,7 @@ android {
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
 
-    api(rootProject.ext.androidx["design"]) {
-        exclude group: 'com.androidx.appcompat'
-    }
+    api rootProject.ext.androidx["design"]
     api rootProject.ext.androidx["viewpager2"]
     api rootProject.ext.androidx["constraintlayout"]
     api rootProject.ext.androidx["appcompat"]
@@ -83,27 +81,19 @@ dependencies {
     api rootProject.ext.androidx["kotlin_core"]
 
     //rx管理View的生命周期
-    api(rootProject.ext.dependencies.rxlifecycle) {
-        exclude group: 'com.androidx.appcompat'
-    }
-    api(rootProject.ext.dependencies["rxlifecycle-components"]) {
-        exclude group: 'com.androidx.appcompat'
-    }
+    api rootProject.ext.dependencies["rxlifecycle"]
+    api rootProject.ext.dependencies["rxlifecycle-components"]
     //rxbinding
-    api(rootProject.ext.dependencies.rxbinding) {
-        exclude group: 'com.androidx.appcompat'
-    }
+    api rootProject.ext.dependencies["rxbinding"]
     //network
-    api rootProject.ext.dependencies.okhttp
-    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies["okhttp"]
+    api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["converter-gson"]
     api rootProject.ext.dependencies["adapter-rxjava"]
     //json解析
-    api rootProject.ext.dependencies.gson
+    api rootProject.ext.dependencies["gson"]
     //glide图片加载库
-    api(rootProject.ext.dependencies.glide) {
-        exclude group: 'com.androidx.appcompat'
-    }
+    api rootProject.ext.dependencies["glide"]
     api rootProject.ext.dependencies["glide-transfer"]
     kapt rootProject.ext.dependencies["glide-compiler"]
 
@@ -143,13 +133,9 @@ dependencies {
     api rootProject.ext.dependencies["round_imageview"]
     api rootProject.ext.dependencies["loadsir"]
     api rootProject.ext.dependencies["flexbox"]
-    api (rootProject.ext.dependencies["linkage-recyclerview"]) {
-        exclude group: 'com.androidx.appcompat'
-    }
+    api rootProject.ext.dependencies["linkage-recyclerview"]
     api rootProject.ext.dependencies["dialog-datetime"]
-    api (rootProject.ext.dependencies["dialog-lifecycle"]) {
-        exclude group: 'com.androidx.lifecycle'
-    }
+    api rootProject.ext.dependencies["dialog-lifecycle"]
     api rootProject.ext.dependencies["matisse"]
     api rootProject.ext.dependencies["loadingview"]
     api rootProject.ext.dependencies["pgy_sdk"]
