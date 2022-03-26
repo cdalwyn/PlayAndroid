@@ -34,6 +34,7 @@ import com.just.agentweb.*
 import com.just.agentweb.WebChromeClient
 import com.just.agentweb.WebViewClient
 import com.lxj.xpopup.XPopup
+import io.reactivex.Flowable
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
@@ -189,7 +190,7 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
                     if (newProgress == 100) {
-                        LogUtils.e("title=${view?.title}")
+//                        LogUtils.e("title=${view?.title}")
                     }
                 }
             })
@@ -291,15 +292,21 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
             return super.shouldOverrideUrlLoading(view, request)
         }
 
-        @RequiresApi(Build.VERSION_CODES.M)
         override fun onReceivedError(
             view: WebView?,
-            request: WebResourceRequest,
-            error: WebResourceError
+            request: WebResourceRequest?,
+            error: WebResourceError?
         ) {
             super.onReceivedError(view, request, error)
-            if (request.isForMainFrame) {
-                errorFlag = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                error?.run {
+                    errorFlag = true.takeIf {
+                        errorCode == ERROR_CONNECT
+                                || errorCode == ERROR_TIMEOUT
+                                || errorCode == ERROR_BAD_URL
+                                || errorCode == ERROR_AUTHENTICATION
+                    } ?: false
+                }
             }
         }
 

@@ -50,7 +50,7 @@
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group"
-            android:visibility="invisible"
+            binding:isVisible="@{user.coinCount != 0}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:constraint_referenced_ids="tv_score,tv_rank"/>

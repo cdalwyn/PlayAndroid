@@ -23,6 +23,7 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
 
     var currentPage = 1
     var userId: String? = null
+    var userName: String? = null
     val uc = UiChangeEvent()
 
     class UiChangeEvent {
@@ -38,6 +39,41 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
     })
 
     fun getUserDetail() {
+        userName?.run {
+            model.getArticlesByUserName(currentPage + 1, this)
+                .compose(RxThreadHelper.rxSchedulerHelper(this@ShareUserDetailVm))
+                .subscribe(object :
+                    ApiSubscriberHelper<BaseBean<ShareUserDetailBean.ShareArticles>>(loadService) {
+                    override fun onResult(t: BaseBean<ShareUserDetailBean.ShareArticles>) {
+                        if (t.errorCode == 0) {
+                            currentPage++
+                            t.data?.let {
+                                uc.loadCompleteEvent.postValue(
+                                    ShareUserDetailBean(
+                                        ShareUserDetailBean.CoinInfo(
+                                            0,
+                                            0,
+                                            "未知的",
+                                            0,
+                                            it.datas[0].author
+                                        ),
+                                        it
+                                    )
+                                )
+                            } ?: uc.loadCompleteEvent.postValue(null)
+                        } else {
+                            uc.loadCompleteEvent.postValue(null)
+                        }
+                    }
+
+                    override fun onFailed(msg: String?) {
+                        showErrorToast(msg)
+                        uc.loadCompleteEvent.postValue(null)
+                    }
+
+                })
+           return
+        }
         userId?.let {
             model.getShareUserDetail(it, currentPage + 1)
                 .compose(RxThreadHelper.rxSchedulerHelper(this))

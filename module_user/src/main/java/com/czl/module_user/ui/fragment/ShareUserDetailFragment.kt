@@ -53,6 +53,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
         initAdapter()
         initRvScroll()
         viewModel.userId = arguments?.getString(AppConstants.BundleKey.USER_ID)
+        viewModel.userName = arguments?.getString(AppConstants.BundleKey.USER_NAME)
         viewModel.userId?.let {
             viewModel.currentPage = 0
             viewModel.getUserDetail()

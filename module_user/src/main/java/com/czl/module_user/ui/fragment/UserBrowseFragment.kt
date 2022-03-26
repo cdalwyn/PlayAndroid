@@ -48,7 +48,6 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
 
     override fun onSupportVisible() {
         super.onSupportVisible()
-        LogUtils.i("onSupportVisible")
         // 未登录
         if (viewModel.model.getLoginName().isNullOrBlank()){
             if (this::mSnackBar.isInitialized){

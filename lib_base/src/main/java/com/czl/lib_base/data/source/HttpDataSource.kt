@@ -8,6 +8,7 @@ import com.czl.lib_base.data.bean.*
 import io.reactivex.Observable
 import retrofit2.http.Field
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @author Alwyn
@@ -21,6 +22,7 @@ interface HttpDataSource {
     fun getBannerData(): Observable<BaseBean<List<HomeBannerBean>>>
     fun getHomeArticle(page: String = "0"): Observable<BaseBean<HomeArticleBean>>
     fun getHomeProject(page: String = "0"): Observable<BaseBean<ProjectBean>>
+    fun getArticlesByUserName(page:Int = 0, author:String): Observable<BaseBean<ShareUserDetailBean.ShareArticles>>
     fun collectArticle(articleId: Int): Observable<BaseBean<Any?>>
     fun unCollectArticle(articleId: Int): Observable<BaseBean<Any?>>
     fun logout(): Observable<BaseBean<Any?>>

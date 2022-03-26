@@ -50,6 +50,12 @@ interface ApiService {
     fun getHomeProject(@Path("page") page: String): Observable<BaseBean<ProjectBean>>
 
     /**
+     * 按照作者名称搜索文章
+     */
+    @GET("article/list/{page}/json")
+    fun getArticlesByUserName(@Path("page")page:Int, @Query("author") author:String): Observable<BaseBean<ShareUserDetailBean.ShareArticles>>
+
+    /**
      * 收藏
      */
     @POST("lg/collect/{articleId}/json")

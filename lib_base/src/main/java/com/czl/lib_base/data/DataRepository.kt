@@ -12,7 +12,6 @@ import com.czl.lib_base.data.source.LocalDataSource
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import org.litepal.crud.LitePalSupport
 import java.io.Serializable
 
 /**
@@ -62,6 +61,13 @@ class DataRepository constructor(
 
     override fun getHomeProject(page: String): Observable<BaseBean<ProjectBean>> {
         return mHttpDataSource.getHomeProject(page)
+    }
+
+    override fun getArticlesByUserName(
+        page: Int,
+        author: String
+    ): Observable<BaseBean<ShareUserDetailBean.ShareArticles>> {
+        return mHttpDataSource.getArticlesByUserName(page,author)
     }
 
     override fun collectArticle(articleId: Int): Observable<BaseBean<Any?>> {

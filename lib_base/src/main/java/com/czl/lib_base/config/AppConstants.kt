@@ -92,6 +92,7 @@ interface AppConstants {
         const val SYSTEM_DETAIL_POSITION = "system_detail_position"
         const val WEB_MENU_KEY = "web_menu_key"
         const val USER_ID = "user_id"
+        const val USER_NAME = "user_name"
         const val SEARCH_HOT_KEY_LIST = "search_hot_key_list"
         const val SYS_CONTENT_TITLE = "sys_content_title"
         const val TODO_INFO_DATA = "todo_info_data"

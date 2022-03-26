@@ -21,17 +21,17 @@ data class UserEntity(
 ) : LitePalSupport() {
     var id: Long = 0
     fun getRecentHistory(): List<SearchHistoryEntity> {
-        val allHistory = LitePal.select("history").where("userentity_id =?", id.toString())
-            .find<SearchHistoryEntity>().reversed()
+        val allHistory = LitePal.select("history").where("userentity_id = ?", id.toString())
+            .order("searchDate desc").find<SearchHistoryEntity>()
         if (allHistory.isNullOrEmpty()) return arrayListOf()
         return if (allHistory.size >= 5) allHistory.subList(0, 5) else allHistory
     }
 
     fun getAllHistory(): List<SearchHistoryEntity> {
-        return LitePal.where("userentity_id =?", id.toString()).find()
+        return LitePal.where("userentity_id = ?", id.toString()).find(isEager = true)
     }
 
     fun getAllWebHistory(): List<WebHistoryEntity> {
-        return LitePal.where("userentity_id=?", id.toString()).order("browseDate desc").find()
+        return LitePal.where("userentity_id = ?", id.toString()).order("browseDate desc").find(isEager = true)
     }
 }

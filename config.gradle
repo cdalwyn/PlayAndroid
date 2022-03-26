@@ -6,8 +6,8 @@ ext {
             applicationId    : "com.czl.mvvmcomponents",
             minSdkVersion    : 21,
             targetSdkVersion : 28,
-            versionCode      : 105,
-            versionName      : "1.0.5",
+            versionCode      : 106,
+            versionName      : "1.0.6",
     ]
     //androidx配置
     androidx = [
@@ -90,7 +90,7 @@ ext {
             // 骨架屏
             'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
             'shimmer-recyclerView'                 : 'com.github.sharish:ShimmerRecyclerView:v1.3',
-            'litepal'                              : 'org.litepal.guolindev:core:3.2.2',
+            'litepal'                              : 'org.litepal.guolindev:core:3.2.3',
             'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
 
             'qrcode'                               : "cn.bingoogolapple:bga-qrcode-zxing:1.3.7",

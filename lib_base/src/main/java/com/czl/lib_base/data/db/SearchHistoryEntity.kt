@@ -1,8 +1,7 @@
 package com.czl.lib_base.data.db
 
-import org.litepal.annotation.Column
 import org.litepal.crud.LitePalSupport
-import java.sql.Date
+import java.util.*
 
 /**
  * @author Alwyn
@@ -11,6 +10,6 @@ import java.sql.Date
  */
 data class SearchHistoryEntity(
     val history: String,
-    val searchDate: Int,
+    val searchDate: Date,
     var userEntity: UserEntity
 ) : LitePalSupport()

@@ -18,7 +18,10 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.apache.commons.lang3.time.DateFormatUtils
 import org.litepal.LitePal
+import org.litepal.LitePalDB
+import org.litepal.crud.LitePalSupport
 import org.litepal.extension.findFirst
+import org.litepal.extension.runInTransaction
 import java.io.Serializable
 import java.util.*
 
@@ -81,22 +84,21 @@ class LocalDataImpl : LocalDataSource {
                 it.onComplete()
                 return@create
             }
-            // 找到当前用户的数据
-            val entity =
-                LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
-            // 遍历查询当前用户的搜索历史是否与现在搜索的内容重复 并删除
-            if (entity?.getAllHistory() != null && entity.getAllHistory().isNotEmpty()
-            ) {
-                entity.getAllHistory().filter { x -> x.history == keyword }
-                    .forEach { y -> y.delete() }
-            }
-            val user = UserEntity(getUserId(), getLoginName())
-            val searchHistoryEntity =
-                SearchHistoryEntity(keyword, System.currentTimeMillis().toInt(), user)
-            user.historyEntities.add(searchHistoryEntity)
-            searchHistoryEntity.userEntity = user
-            user.saveOrUpdate("uid =?", user.uid.toString())
-            it.onNext(searchHistoryEntity.save())
+            it.onNext(LitePal.runInTransaction {
+                val user = LitePal.where("uid = ?", getUserId().toString())
+                    .findFirst<UserEntity>(isEager = true)
+                user?.run {
+                    val searchHistoryEntity =
+                        SearchHistoryEntity(keyword, Date(), user)
+                    user.historyEntities.add(searchHistoryEntity)
+                    user.saveOrUpdate("uid =?", user.uid.toString())
+                            && searchHistoryEntity.saveOrUpdate(
+                        "history = ? and userentity_id = ?",
+                        keyword,
+                        user.id.toString()
+                    )
+                } ?: false
+            })
         }, BackpressureStrategy.BUFFER)
     }
 
@@ -153,22 +155,25 @@ class LocalDataImpl : LocalDataSource {
                 if (getUserId() == 0) {
                     return@subscribe
                 }
-                // 找到当前用户的数据
-                val entity =
-                    LitePal.where("uid=?", getUserId().toString()).findFirst<UserEntity>()
-                val allWebHistory = entity?.getAllWebHistory()
-                // 遍历去重 并删除
-                if (!allWebHistory.isNullOrEmpty()) {
-                    allWebHistory.filter { x -> x.webLink == link || x.webTitle == title }
-                        .forEach { y -> y.delete() }
+                LitePal.runInTransaction {
+                    val userEntity = LitePal.where("uid = ?", getUserId().toString())
+                        .findFirst<UserEntity>(isEager = true)
+                    userEntity?.run {
+                        val webHistoryEntity =
+                            WebHistoryEntity(
+                                title,
+                                link,
+                                DateFormatUtils.format(Date(), "yyyy-MM-dd HH:mm:ss"),
+                                userEntity
+                            )
+                        userEntity.browseEntities.add(webHistoryEntity)
+                        webHistoryEntity.saveOrUpdate(
+                            "userentity_id = ? and weblink = ?",
+                            userEntity.id.toString(),
+                            link
+                        ) && userEntity.saveOrUpdate("uid =?", userEntity.uid.toString())
+                    } ?: false
                 }
-                val userEntity = UserEntity(getUserId(), getLoginName())
-                val webHistoryEntity =
-                    WebHistoryEntity(title, link, DateFormatUtils.format(Date(),"yyyy-MM-dd HH:mm:ss"), userEntity)
-                userEntity.browseEntities.add(webHistoryEntity)
-                webHistoryEntity.userEntity = userEntity
-                userEntity.saveOrUpdate("uid =?", userEntity.uid.toString())
-                webHistoryEntity.save()
             }) {
                 it.printStackTrace()
                 LogUtils.e("阅读历史保存失败，error=${it.message}")
