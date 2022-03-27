@@ -85,19 +85,20 @@ class LocalDataImpl : LocalDataSource {
                 return@create
             }
             it.onNext(LitePal.runInTransaction {
-                val user = LitePal.where("uid = ?", getUserId().toString())
+                var user = LitePal.where("uid = ?", getUserId().toString())
                     .findFirst<UserEntity>(isEager = true)
-                user?.run {
-                    val searchHistoryEntity =
-                        SearchHistoryEntity(keyword, Date(), user)
-                    user.historyEntities.add(searchHistoryEntity)
-                    user.saveOrUpdate("uid =?", user.uid.toString())
-                            && searchHistoryEntity.saveOrUpdate(
-                        "history = ? and userentity_id = ?",
-                        keyword,
-                        user.id.toString()
-                    )
-                } ?: false
+                if (user == null) {
+                    user = UserEntity(getUserId(), getLoginName())
+                }
+                val searchHistoryEntity =
+                    SearchHistoryEntity(keyword, Date(), user)
+                user.historyEntities.add(searchHistoryEntity)
+                user.saveOrUpdate("uid =?", user.uid.toString())
+                        && searchHistoryEntity.saveOrUpdate(
+                    "history = ? and userentity_id = ?",
+                    keyword,
+                    user.id.toString()
+                )
             })
         }, BackpressureStrategy.BUFFER)
     }
@@ -156,23 +157,24 @@ class LocalDataImpl : LocalDataSource {
                     return@subscribe
                 }
                 LitePal.runInTransaction {
-                    val userEntity = LitePal.where("uid = ?", getUserId().toString())
+                    var userEntity = LitePal.where("uid = ?", getUserId().toString())
                         .findFirst<UserEntity>(isEager = true)
-                    userEntity?.run {
-                        val webHistoryEntity =
-                            WebHistoryEntity(
-                                title,
-                                link,
-                                DateFormatUtils.format(Date(), "yyyy-MM-dd HH:mm:ss"),
-                                userEntity
-                            )
-                        userEntity.browseEntities.add(webHistoryEntity)
-                        webHistoryEntity.saveOrUpdate(
-                            "userentity_id = ? and weblink = ?",
-                            userEntity.id.toString(),
-                            link
-                        ) && userEntity.saveOrUpdate("uid =?", userEntity.uid.toString())
-                    } ?: false
+                    if (userEntity == null) {
+                        userEntity = UserEntity(getUserId(), getLoginName())
+                    }
+                    val webHistoryEntity =
+                        WebHistoryEntity(
+                            title,
+                            link,
+                            DateFormatUtils.format(Date(), "yyyy-MM-dd HH:mm:ss"),
+                            userEntity
+                        )
+                    userEntity.browseEntities.add(webHistoryEntity)
+                    webHistoryEntity.saveOrUpdate(
+                        "userentity_id = ? and weblink = ?",
+                        userEntity.id.toString(),
+                        link
+                    ) && userEntity.saveOrUpdate("uid =?", userEntity.uid.toString())
                 }
             }) {
                 it.printStackTrace()
