@@ -54,7 +54,7 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
             adapter = mAdapter
             showShimmerAdapter()
         }
-        viewModel.uc.loadDataEvent.observe(this, { data ->
+        viewModel.uc.loadDataEvent.observe(this) { data ->
             handleRecyclerviewData(
                 data == null, data?.datas as MutableList<*>?,
                 mAdapter,
@@ -63,7 +63,7 @@ class UserRankFragment : BaseFragment<UserFragmentRankBinding, UserRankVm>() {
                 viewModel.currentPage,
                 data?.over, 1
             )
-        })
+        }
     }
 
     override fun reload() {

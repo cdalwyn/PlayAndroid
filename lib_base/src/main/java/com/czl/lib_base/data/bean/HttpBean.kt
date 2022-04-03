@@ -6,6 +6,7 @@ import android.os.Parcelable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.czl.lib_base.BR
+import com.czl.lib_base.annotation.TodoPriority
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

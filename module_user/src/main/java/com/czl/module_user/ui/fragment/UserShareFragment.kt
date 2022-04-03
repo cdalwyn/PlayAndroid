@@ -43,7 +43,7 @@ class UserShareFragment : BaseFragment<CommonRecyclerviewBinding, UserShareVm>()
             setDemoLayoutReference(R.layout.user_item_share_skeleton)
             showShimmerAdapter()
         }
-        viewModel.loadDataCompleteEvent.observe(this, { data ->
+        viewModel.loadDataCompleteEvent.observe(this) { data ->
             handleRecyclerviewData(
                 data == null, data?.datas as MutableList<*>?,
                 mAdapter,
@@ -52,7 +52,7 @@ class UserShareFragment : BaseFragment<CommonRecyclerviewBinding, UserShareVm>()
                 viewModel.currentPage,
                 data?.over, 1
             )
-        })
+        }
     }
 
     override fun reload() {

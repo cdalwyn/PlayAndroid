@@ -54,9 +54,13 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
         initRvScroll()
         viewModel.userId = arguments?.getString(AppConstants.BundleKey.USER_ID)
         viewModel.userName = arguments?.getString(AppConstants.BundleKey.USER_NAME)
-        viewModel.userId?.let {
-            viewModel.currentPage = 0
-            viewModel.getUserDetail()
+        viewModel.run {
+            if (userId.isNullOrBlank() && userName.isNullOrBlank()) {
+                this@ShareUserDetailFragment.showErrorStatePage()
+                return@run
+            }
+            currentPage = -1
+            getUserDetail()
         }
     }
 
@@ -64,7 +68,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
         val skeleton = Skeleton.bind(binding.smartCommon)
             .load(R.layout.user_detail_skeleton)
             .show()
-        viewModel.uc.loadCompleteEvent.observe(this, { data ->
+        viewModel.uc.loadCompleteEvent.observe(this) { data ->
             ryCommon = binding.ryCommon
             val smartCommon = binding.smartCommon
             if (data == null) {
@@ -73,7 +77,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
                 smartCommon.finishLoadMore(false)
                 return@observe
             }
-            if (viewModel.currentPage == 1) {
+            if (viewModel.currentPage == 0) {
                 skeleton.hide()
                 viewModel.tvTitle.set(data.coinInfo.username)
                 headerDataBinding?.apply {
@@ -98,7 +102,7 @@ class ShareUserDetailFragment : BaseFragment<UserShareDetailBinding, ShareUserDe
             if (data.shareArticles.over) smartCommon.finishLoadMoreWithNoMoreData()
             else smartCommon.finishLoadMore(true)
             userDetailAdapter.addData(data.shareArticles.datas)
-        })
+        }
     }
 
     private fun initAdapter() {

@@ -1,5 +1,6 @@
 package com.czl.module_user.viewmodel
 
+import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseBean
 import com.czl.lib_base.base.BaseViewModel
 import com.czl.lib_base.data.DataRepository
@@ -21,7 +22,7 @@ import io.reactivex.Observable
 class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
     BaseViewModel<DataRepository>(application, model) {
 
-    var currentPage = 1
+    var currentPage = -1
     var userId: String? = null
     var userName: String? = null
     val uc = UiChangeEvent()
@@ -31,7 +32,7 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
     }
 
     val onRefreshCommand: BindingCommand<Void> = BindingCommand(BindingAction {
-        currentPage = 0
+        currentPage = -1
         getUserDetail()
     })
     val onLoadMoreCommand: BindingCommand<Void> = BindingCommand(BindingAction {
@@ -47,20 +48,19 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
                     override fun onResult(t: BaseBean<ShareUserDetailBean.ShareArticles>) {
                         if (t.errorCode == 0) {
                             currentPage++
-                            t.data?.let {
-                                uc.loadCompleteEvent.postValue(
-                                    ShareUserDetailBean(
-                                        ShareUserDetailBean.CoinInfo(
-                                            0,
-                                            0,
-                                            "未知的",
-                                            0,
-                                            it.datas[0].author
-                                        ),
-                                        it
-                                    )
-                                )
-                            } ?: uc.loadCompleteEvent.postValue(null)
+                            t.data?.let { articles ->
+                                val bean = ShareUserDetailBean(
+                                    ShareUserDetailBean.CoinInfo(
+                                        0,
+                                        0,
+                                        "未知的",
+                                        0,
+                                        articles.datas[0].author
+                                    ),
+                                    articles
+                                ).takeIf { articles.datas.isNotEmpty() }
+                                uc.loadCompleteEvent.postValue(bean)
+                            }
                         } else {
                             uc.loadCompleteEvent.postValue(null)
                         }
@@ -72,7 +72,7 @@ class ShareUserDetailVm(application: MyApplication, model: DataRepository) :
                     }
 
                 })
-           return
+            return
         }
         userId?.let {
             model.getShareUserDetail(it, currentPage + 1)

@@ -110,37 +110,37 @@ class WebFragment : BaseFragment<WebFragmentWebBinding, WebFmViewModel>() {
     }
 
     override fun initViewObservable() {
-        viewModel.uc.closeEvent.observe(this, {
+        viewModel.uc.closeEvent.observe(this) {
             requireActivity().finish()
-        })
-        viewModel.uc.collectEvent.observe(this, {
+        }
+        viewModel.uc.collectEvent.observe(this) {
             if (errorFlag) {
                 showNormalToast("当前页面加载错误,收藏失败")
                 return@observe
             }
             clearEditFocus()
             viewModel.collectWebsite(currentTitle, currentLink)
-        })
-        viewModel.uc.goForwardEvent.observe(this, {
+        }
+        viewModel.uc.goForwardEvent.observe(this) {
             if (viewModel.canForwardFlag.get()!!) agentWeb?.webCreator?.webView?.goForward()
-        })
-        viewModel.uc.showMenuEvent.observe(this, {
+        }
+        viewModel.uc.showMenuEvent.observe(this) {
             XPopup.Builder(context)
                 .enableDrag(true)
                 .asCustom(WebMenuPop(this))
                 .show()
-        })
-        viewModel.uc.openBrowserEvent.observe(this, {
+        }
+        viewModel.uc.openBrowserEvent.observe(this) {
             clearEditFocus()
             val uri = Uri.parse(currentLink)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
-        })
-        viewModel.uc.copyCurrentLinkEvent.observe(this, {
+        }
+        viewModel.uc.copyCurrentLinkEvent.observe(this) {
             ClipboardUtils.copyText(currentLink)
             showSuccessToast("复制成功")
             clearEditFocus()
-        })
+        }
         viewModel.showWebLinkMenuFlag.addOnPropertyChangedCallback(object :
             Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {

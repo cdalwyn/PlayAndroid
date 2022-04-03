@@ -51,7 +51,7 @@ class SystemTreeFragment : BaseFragment<SquareFragmentSystemBinding, SystemTreeV
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompletedEvent.observe(this, { datas ->
+        viewModel.loadCompletedEvent.observe(this) { datas ->
             binding.smartCommon.finishRefresh()
             if (datas == null) {
                 return@observe
@@ -71,7 +71,7 @@ class SystemTreeFragment : BaseFragment<SquareFragmentSystemBinding, SystemTreeV
                 init(list, PrimaryAdapterConfig(context), SecondGroupAdapterConfig())
 //                isGridMode = true
             }
-        })
+        }
     }
 
     override fun reload() {

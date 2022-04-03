@@ -47,10 +47,10 @@ class LoginFragment : BaseFragment<LoginFragmentLoginBinding, LoginViewModel>() 
         binding.etPwd.addTextChangedListener(EditTextMonitor(pwdSubject))
         viewModel.addSubscribe(Observable.combineLatest(
             accountSubject,
-            pwdSubject,
-            { account: String, pwd: String ->
-                account.isNotBlank() && pwd.isNotBlank()
-            }).observeOn(AndroidSchedulers.mainThread())
+            pwdSubject
+        ) { account: String, pwd: String ->
+            account.isNotBlank() && pwd.isNotBlank()
+        }.observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 binding.btnLogin.isEnabled = it
                 binding.btnLogin.setTextColor(

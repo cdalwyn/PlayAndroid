@@ -53,7 +53,10 @@ interface ApiService {
      * 按照作者名称搜索文章
      */
     @GET("article/list/{page}/json")
-    fun getArticlesByUserName(@Path("page")page:Int, @Query("author") author:String): Observable<BaseBean<ShareUserDetailBean.ShareArticles>>
+    fun getArticlesByUserName(
+        @Path("page") page: Int,
+        @Query("author") author: String
+    ): Observable<BaseBean<ShareUserDetailBean.ShareArticles>>
 
     /**
      * 收藏
@@ -288,5 +291,5 @@ interface ApiService {
         @Path("id") todoId: Int, @Field("title") title: String, @Field("content") content: String,
         @Field("date") date: String, @Field("status") status: Int, @Field("type") type: Int,
         @Field("priority") priority: Int
-    ):Observable<BaseBean<TodoBean.Data>>
+    ): Observable<BaseBean<TodoBean.Data>>
 }

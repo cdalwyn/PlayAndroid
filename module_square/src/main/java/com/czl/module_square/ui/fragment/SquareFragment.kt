@@ -58,11 +58,11 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
     }
 
     override fun initViewObservable() {
-        viewModel.uc.scrollTopEvent.observe(this,{
+        viewModel.uc.scrollTopEvent.observe(this) {
             binding.ryCommon.smoothScrollToPosition(0)
-        })
-        viewModel.uc.loadCompleteEvent.observe(this, { data ->
-            if (!data?.datas.isNullOrEmpty()){
+        }
+        viewModel.uc.loadCompleteEvent.observe(this) { data ->
+            if (!data?.datas.isNullOrEmpty()) {
                 viewModel.model.saveCacheListData(data!!.datas)
             }
             handleRecyclerviewData(
@@ -74,7 +74,7 @@ class SquareFragment : BaseFragment<SquareFragmentSquareBinding, SquareViewModel
                 viewModel.currentPage,
                 data?.over
             )
-        })
+        }
         // 接收收藏夹取消收藏事件
         LiveBusCenter.observeCollectStateEvent(this) { event ->
             val list = mAdapter.data.filter { it.id == event.originId }

@@ -42,7 +42,7 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
     }
 
     override fun initViewObservable() {
-        viewModel.uc.switchUiModeEvent.observe(this, { checked ->
+        viewModel.uc.switchUiModeEvent.observe(this) { checked ->
             if (checked) {
                 // 当前app状态与选中模式不同才进行模式变化 通过渐变动画避免模式改变而引起的闪屏
                 if (!DayModeUtil.isNightMode(requireContext())) {
@@ -55,8 +55,8 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                     restart()
                 }
             }
-        })
-        viewModel.uc.switchSysModeEvent.observe(this, { checked ->
+        }
+        viewModel.uc.switchSysModeEvent.observe(this) { checked ->
             // 跟随系统模式关闭后 需要给下面的黑夜模式开关进行判断并设置当前app模式
             if (!checked) {
                 viewModel.model.saveUiMode(DayModeUtil.isNightMode(requireContext()))
@@ -75,25 +75,25 @@ class UserSettingFragment : BaseFragment<UserFragmentSettingBinding, UserSetting
                 DayModeUtil.autoModeBySys()
                 restart()
             }
-        })
-        viewModel.uc.confirmLogoutEvent.observe(this, {
+        }
+        viewModel.uc.confirmLogoutEvent.observe(this) {
             DialogHelper.showBaseDialog(requireContext(), "注销", "是否确定退出登录？") {
                 viewModel.logout()
             }
-        })
-        viewModel.uc.checkVerEvent.observe(this, {
+        }
+        viewModel.uc.checkVerEvent.observe(this) {
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted)
                     PgyUtil.checkVersion(requireContext())
             })
-        })
-        viewModel.uc.feedbackEvent.observe(this, {
+        }
+        viewModel.uc.feedbackEvent.observe(this) {
             PermissionUtil.reqStorageAndAudio(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     PgyUtil.showFeedback()
                 }
             })
-        })
+        }
 
     }
 

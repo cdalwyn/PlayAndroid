@@ -138,7 +138,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
 
     override fun initViewObservable() {
         // 轮播图数据获取完成
-        viewModel.uc.bannerCompleteEvent.observe(this, {
+        viewModel.uc.bannerCompleteEvent.observe(this) {
             bannerSkeleton.hide()
             if (!this::bannerAdapter.isInitialized) {
                 // 第一次加载
@@ -148,34 +148,34 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             } else {
                 bannerAdapter.setData(binding.banner, it)
             }
-        })
+        }
         // 置顶
-        viewModel.uc.moveTopEvent.observe(this, { tabPosition ->
+        viewModel.uc.moveTopEvent.observe(this) { tabPosition ->
             when (tabPosition) {
                 0 -> binding.ryArticle.smoothScrollToPosition(0)
                 1 -> binding.ryProject.smoothScrollToPosition(0)
             }
-        })
+        }
         // 打开抽屉
-        viewModel.uc.drawerOpenEvent.observe(this, {
+        viewModel.uc.drawerOpenEvent.observe(this) {
             XPopup.Builder(context)
                 .asCustom(mHomeDrawerPop)
                 .show()
-        })
+        }
         // 确认搜索后关闭焦点
-        viewModel.uc.searchConfirmEvent.observe(this, {
+        viewModel.uc.searchConfirmEvent.observe(this) {
             startSearch(it)
-        })
+        }
         // 搜索历史记录item点击
-        viewModel.uc.searchItemClickEvent.observe(this, {
+        viewModel.uc.searchItemClickEvent.observe(this) {
             startSearch(suggestAdapter.suggestions[it])
-        })
+        }
         // 搜素框历史记录Item删除
-        viewModel.uc.searchItemDeleteEvent.observe(this, {
+        viewModel.uc.searchItemDeleteEvent.observe(this) {
             setSuggestAdapterData()
             // 数据库同步
             viewModel.addSubscribe(viewModel.model.deleteSearchHistory(suggestAdapter.suggestions[it]))
-        })
+        }
         // 接收搜索界面点击搜索的事件
         LiveBusCenter.observeSearchHistoryEvent(this) {
             if (it.code == 0) {
@@ -191,18 +191,24 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             mHomeDrawerPop.binding?.user = viewModel.model.getUserData()
         }
         // 点击项目tab判断数据是否为空(第一次加载)
-        viewModel.uc.tabSelectedEvent.observe(this, { position ->
-            if (position == 1 && mProjectAdapter.data.isNullOrEmpty()) {
-                viewModel.currentProjectPage = -1
-                viewModel.getProject()
+        viewModel.uc.tabSelectedEvent.observe(this) { position ->
+            when (position) {
+                1 -> {
+                    if (mProjectAdapter.data.isNullOrEmpty()) {
+                        viewModel.currentProjectPage = -1
+                        viewModel.getProject()
+                    }
+                }
+                0 -> {
+                    if (mArticleAdapter.data.isNullOrEmpty()) {
+                        viewModel.currentArticlePage = -1
+                        viewModel.getArticle()
+                    }
+                }
             }
-            if (position == 0 && mArticleAdapter.data.isNullOrEmpty()) {
-                viewModel.currentArticlePage = -1
-                viewModel.getArticle()
-            }
-        })
+        }
         // 接收文章列表数据
-        viewModel.uc.loadArticleCompleteEvent.observe(this, { data ->
+        viewModel.uc.loadArticleCompleteEvent.observe(this) { data ->
             if (!data?.datas.isNullOrEmpty()) {
                 viewModel.model.saveCacheListData(data!!.datas)
             }
@@ -215,9 +221,9 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 viewModel.currentArticlePage,
                 data?.over
             )
-        })
+        }
         // 接收项目列表数据
-        viewModel.uc.loadProjectCompleteEvent.observe(this, { data ->
+        viewModel.uc.loadProjectCompleteEvent.observe(this) { data ->
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -227,7 +233,7 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
                 viewModel.currentProjectPage,
                 data?.over
             )
-        })
+        }
         // 接收收藏夹取消收藏事件
         LiveBusCenter.observeCollectStateEvent(this) { event ->
             // 同步两个列表存在相同文章的收藏状态
@@ -237,22 +243,22 @@ class HomeFragment : BaseFragment<MainFragmentHomeBinding, HomeViewModel>() {
             if (filterList.isNotEmpty()) filterList[0].collect = false
         }
         // 接收搜索热词
-        viewModel.uc.loadSearchHotKeyEvent.observe(this, { list ->
+        viewModel.uc.loadSearchHotKeyEvent.observe(this) { list ->
             if (list.isNotEmpty()) {
                 // 缓存
                 viewModel.model.saveCacheListData(list)
                 setTimerHotKey(list)
             }
-        })
+        }
         // 搜索框右边图标点击事件
-        viewModel.uc.searchIconClickEvent.observe(this, {
+        viewModel.uc.searchIconClickEvent.observe(this) {
             if (getString(R.string.main_default_search_placeholder) == binding.searchBar.placeHolderText) {
                 binding.searchBar.openSearch()
             } else {
 //                suggestAdapter.addSuggestion(binding.searchBar.placeHolderText.toString())
                 startSearch(binding.searchBar.placeHolderText.toString())
             }
-        })
+        }
     }
 
     private fun setTimerHotKey(list: List<SearchHotKeyBean>) {

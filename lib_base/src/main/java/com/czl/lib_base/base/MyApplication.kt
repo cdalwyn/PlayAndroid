@@ -2,9 +2,11 @@ package com.czl.lib_base.base
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
@@ -17,9 +19,11 @@ import com.czl.lib_base.util.SpHelper
 import com.czl.lib_base.util.ToastHelper
 import com.lxj.xpopup.XPopup
 import com.pgyersdk.crash.PgyCrashManager
+import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle
 import com.tencent.mmkv.MMKV
 import es.dmoral.toasty.Toasty
 import io.reactivex.plugins.RxJavaPlugins
@@ -95,13 +99,15 @@ open class MyApplication : Application() {
     companion object {
         init {
             ClassicsFooter.REFRESH_FOOTER_FINISH = ""
+            ClassicsFooter.REFRESH_FOOTER_LOADING = "加载中"
             SmartRefreshLayout.setDefaultRefreshInitializer { _, layout ->
                 layout.apply {
                     setEnableOverScrollDrag(true)
-                    setEnableScrollContentWhenLoaded(false)
+                    setEnableScrollContentWhenLoaded(true)
                     setEnableAutoLoadMore(true)
                     setEnableOverScrollBounce(true)
                     setFooterHeight(60f)
+                    setEnableFooterTranslationContent(true)
                 }
             }
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
@@ -115,8 +121,12 @@ open class MyApplication : Application() {
                     )
                 )
             }
-            SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
-                ClassicsFooter(context).setFinishDuration(0)
+            SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
+                ClassicsFooter(context)
+                    .setFinishDuration(0)
+                    .setProgressDrawable(CircularProgressDrawable(context).apply {
+                        setColorSchemeColors(ContextCompat.getColor(context,R.color.mColorAccent))
+                    })
             }
         }
     }

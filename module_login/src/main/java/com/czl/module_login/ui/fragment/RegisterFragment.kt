@@ -54,9 +54,9 @@ class RegisterFragment : BaseFragment<LoginFragmentRegisterBinding, RegisterView
         binding.etPwd.addTextChangedListener(EditTextMonitor(pwdSubject))
         binding.etPwdConfirm.addTextChangedListener(EditTextMonitor(pwdConfirmSubject))
         viewModel.addSubscribe(
-            Observable.combineLatest(accountSubject, pwdSubject, pwdConfirmSubject, { account: String, pwd: String, pwdConfirm:String ->
-            account.isNotBlank() && pwd.isNotBlank() && pwdConfirm.isNotBlank()
-        }).observeOn(AndroidSchedulers.mainThread())
+            Observable.combineLatest(accountSubject, pwdSubject, pwdConfirmSubject) { account: String, pwd: String, pwdConfirm: String ->
+                account.isNotBlank() && pwd.isNotBlank() && pwdConfirm.isNotBlank()
+            }.observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 binding.btnRegister.isEnabled = it
                 binding.btnRegister.setTextColor(if (it) Color.parseColor("#000000") else Color.parseColor("#ffffff"))

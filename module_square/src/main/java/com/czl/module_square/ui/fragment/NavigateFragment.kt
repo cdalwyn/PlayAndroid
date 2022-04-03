@@ -41,22 +41,24 @@ class NavigateFragment :BaseFragment<CommonRecyclerviewBinding,NavigateViewModel
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompleteEvent.observe(this,{data->
-            if (data==null) {
+        viewModel.loadCompleteEvent.observe(this) { data ->
+            if (data == null) {
                 binding.smartCommon.finishRefresh(false)
                 return@observe
             }
             ryCommon = binding.ryCommon
             binding.smartCommon.finishRefresh(true)
-            if (!mAdapter.hasEmptyView()){
-                val emptyView = View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)
-                emptyView.findViewById<ViewGroup>(com.czl.lib_base.R.id.ll_empty).setOnClickListener {
-                    binding.smartCommon.autoRefresh()
-                }
+            if (!mAdapter.hasEmptyView()) {
+                val emptyView =
+                    View.inflate(context, com.czl.lib_base.R.layout.common_empty_layout, null)
+                emptyView.findViewById<ViewGroup>(com.czl.lib_base.R.id.ll_empty)
+                    .setOnClickListener {
+                        binding.smartCommon.autoRefresh()
+                    }
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setList(data)
-        })
+        }
     }
 
     override fun reload() {

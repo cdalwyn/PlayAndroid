@@ -34,12 +34,12 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
 
 
     override fun initViewObservable() {
-        viewModel.uc.tabChangeLiveEvent.observe(this, {
+        viewModel.uc.tabChangeLiveEvent.observe(this) {
             binding.viewPager2.setCurrentItem(it, false)
-        })
-        viewModel.uc.pageChangeLiveEvent.observe(this, {
+        }
+        viewModel.uc.pageChangeLiveEvent.observe(this) {
             binding.bottomBar.selectTab(it)
-        })
+        }
     }
 
     override fun initData() {

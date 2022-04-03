@@ -51,7 +51,7 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
         // 显示骨架屏
         binding.ryCommon.showShimmerAdapter()
         // 接收刷新完成事件
-        viewModel.uc.loadCompleteEvent.observe(this, { over ->
+        viewModel.uc.loadCompleteEvent.observe(this) { over ->
             if (viewModel.currentPage == 1) {
                 binding.ryCommon.hideShimmerAdapter()
                 binding.smartCommon.finishRefresh()
@@ -61,13 +61,13 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
             } else {
                 binding.smartCommon.finishLoadMore()
             }
-        })
+        }
         // 置顶
-        viewModel.uc.moveTopEvent.observe(this, {
+        viewModel.uc.moveTopEvent.observe(this) {
             binding.ryCommon.smoothScrollToPosition(0)
-        })
+        }
         // 总积分动画
-        viewModel.uc.getTotalScoreEvent.observe(this, {
+        viewModel.uc.getTotalScoreEvent.observe(this) {
             if (it == null) {
                 binding.smartCommon.finishRefresh(false)
                 binding.smartCommon.finishLoadMore(false)
@@ -79,16 +79,16 @@ class UserScoreFragment : BaseFragment<UserFragmentScoreBinding, UserScoreVm>() 
                 binding.tvScore.text = animation.animatedValue.toString()
             }
             animator.start()
-        })
+        }
         // 接收列表数据
-        viewModel.uc.loadDataFinishEvent.observe(this, { list ->
+        viewModel.uc.loadDataFinishEvent.observe(this) { list ->
             if (viewModel.currentPage > 1) {
                 mAdapter.addData(list)
                 return@observe
             }
             mAdapter.setDiffCallback(mAdapter.diffConfig)
             mAdapter.setDiffNewData(list as MutableList<UserScoreDetailBean.Data>)
-        })
+        }
 
     }
 

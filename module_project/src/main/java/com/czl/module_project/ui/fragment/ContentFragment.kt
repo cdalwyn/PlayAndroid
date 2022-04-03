@@ -2,6 +2,7 @@ package com.czl.module_project.ui.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.blankj.utilcode.util.LogUtils
@@ -119,28 +120,28 @@ class ContentFragment : BaseFragment<ProjectFragmentContentBinding, ContentViewM
             mAdapter.setDiffNewData(it.datas as MutableList<ProjectBean.Data>)
         })
         // 置顶
-        viewModel.uc.moveTopEvent.observe(this, {
+        viewModel.uc.moveTopEvent.observe(this) {
             binding.ryCommon.smoothScrollToPosition(0)
-        })
+        }
     }
 
     private fun initAdapter() {
-        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val manager = GridLayoutManager(activity,2)
         //解决item跳动
-        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+//        manager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mAdapter = ProjectItemGridAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
             layoutManager = manager
             adapter = mAdapter
             // 禁用动画
-            binding.ryCommon.itemAnimator = null
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    // 解决滑到顶部留白问题
-                    manager.invalidateSpanAssignments()
-                }
-            })
+//            binding.ryCommon.itemAnimator = null
+//            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                    // 解决滑到顶部留白问题
+//                    manager.invalidateSpanAssignments()
+//                }
+//            })
         }
     }
 }

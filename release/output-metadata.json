@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.czl.mvvmcomponents",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 108,
+      "versionName": "1.0.8",
+      "outputFile": "wanandroid20220403_release_V1.0.8.apk"
+    }
+  ]
+}

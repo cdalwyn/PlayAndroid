@@ -45,10 +45,10 @@ class FirstAboutFragment : BaseFragment<UserFragmentFirstAboutBinding, FirstAbou
     }
 
     override fun initViewObservable() {
-        viewModel.showSecPageEvent.observe(this, {
-            if (parentFragment is AboutUsFragment){
+        viewModel.showSecPageEvent.observe(this) {
+            if (parentFragment is AboutUsFragment) {
                 (parentFragment as AboutUsFragment).binding.viewPager2.currentItem = 1
             }
-        })
+        }
     }
 }

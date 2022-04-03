@@ -49,7 +49,7 @@ class CollectArticleFragment : BaseFragment<CommonRecyclerviewBinding, CollectAr
     }
 
     override fun initViewObservable() {
-        viewModel.uc.refreshCompleteEvent.observe(this, { data ->
+        viewModel.uc.refreshCompleteEvent.observe(this) { data ->
             if (data != null) {
                 firstLoad = false
             }
@@ -62,7 +62,7 @@ class CollectArticleFragment : BaseFragment<CommonRecyclerviewBinding, CollectAr
                 viewModel.currentPage,
                 data?.over
             )
-        })
+        }
     }
 
     private fun initAdapter() {

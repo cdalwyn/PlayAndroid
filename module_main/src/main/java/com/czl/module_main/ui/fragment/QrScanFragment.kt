@@ -47,14 +47,14 @@ class QrScanFragment : BaseFragment<MainFragmentQrScanBinding, QrScanViewModel>(
     }
 
     override fun initViewObservable() {
-        viewModel.uc.flashLightEvent.observe(this, {
+        viewModel.uc.flashLightEvent.observe(this) {
             if (viewModel.isOpenFlag.get()) {
                 binding.scanView.openFlashlight()
             } else {
                 binding.scanView.closeFlashlight()
             }
-        })
-        viewModel.uc.openAlbumEvent.observe(this, {
+        }
+        viewModel.uc.openAlbumEvent.observe(this) {
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     Matisse.from(this)
@@ -69,7 +69,7 @@ class QrScanFragment : BaseFragment<MainFragmentQrScanBinding, QrScanViewModel>(
                         .forResult(ALBUM_REQUEST_CODE)
                 }
             })
-        })
+        }
     }
 
     override fun onScanQRCodeSuccess(result: String?) {

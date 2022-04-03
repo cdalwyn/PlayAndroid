@@ -58,7 +58,7 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
     }
 
     override fun initViewObservable() {
-        viewModel.uc.pickDateEvent.observe(this, {
+        viewModel.uc.pickDateEvent.observe(this) {
             DialogHelper.showDateDialog(
                 requireActivity() as BaseActivity<*, *>,
                 binding.tvDate.text.toString()
@@ -67,18 +67,18 @@ class TodoInfoFragment : BaseFragment<UserFragmentTodoInfoBinding, TodoInfoFmVie
                     SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(datetime.time)
                 dialog.dismiss()
             }
-        })
-        viewModel.uc.saveDataEvent.observe(this, {
+        }
+        viewModel.uc.saveDataEvent.observe(this) {
             updateTodoData()
-        })
-        viewModel.uc.updateSuccessEvent.observe(this, { data ->
+        }
+        viewModel.uc.updateSuccessEvent.observe(this) { data ->
             activity?.setResult(200, Intent().apply {
                 putExtra(AppConstants.BundleKey.TODO_INFO_DATA, data.apply {
                     dateExpired = date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(date)
                 })
             })
             viewModel.finish()
-        })
+        }
     }
 
     // 处理返回更新数据

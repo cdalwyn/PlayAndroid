@@ -45,6 +45,9 @@ class UserShareAdapter(val mFragment: UserShareFragment) :
     val onNameClick:BindingCommand<Any> = BindingCommand(BindingConsumer {
         if (it is UserShareBean.ShareArticles.Data) {
             mFragment.startContainerActivity(AppConstants.Router.User.F_USER_DETAIL, Bundle().apply {
+                if (it.userId == -1){
+                    putString(AppConstants.BundleKey.USER_NAME,it.author)
+                }
                 putString(AppConstants.BundleKey.USER_ID, it.userId.toString())
             })
         }

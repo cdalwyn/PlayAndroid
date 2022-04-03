@@ -48,7 +48,7 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
     }
 
     override fun initViewObservable() {
-        viewModel.loadDataCompleteEvent.observe(this, {
+        viewModel.loadDataCompleteEvent.observe(this) {
             binding.smartCommon.finishRefresh()
             binding.ryCommon.hideShimmerAdapter()
             if (it == null) {
@@ -62,7 +62,7 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setDiffNewData(it as MutableList<CollectWebsiteBean>?)
-        })
+        }
         LiveBusCenter.observeRefreshWebListEvent(this) {
             viewModel.getCollectWebsite()
         }

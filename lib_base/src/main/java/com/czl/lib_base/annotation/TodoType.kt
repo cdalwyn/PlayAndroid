@@ -1,23 +1,30 @@
-package com.czl.lib_base.annotation;
+package com.czl.lib_base.annotation
 
-import androidx.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import androidx.annotation.IntDef
 
 /**
  * @author Alwyn
  * @Date 2021/1/6
  * @Description
  */
-@IntDef({TodoType.ALL,TodoType.WORK,TodoType.STUDY,TodoType.LIFE,TodoType.PAY,TodoType.PLAY,TodoType.FAMILY})
-@Retention(RetentionPolicy.SOURCE)
-public @interface TodoType {
-    int ALL = 0;
-    int WORK = 1;
-    int STUDY = 2;
-    int LIFE = 3;
-    int PAY = 4;
-    int PLAY = 5;
-    int FAMILY = 6;
+@IntDef(
+    TodoType.ALL,
+    TodoType.WORK,
+    TodoType.STUDY,
+    TodoType.LIFE,
+    TodoType.PAY,
+    TodoType.PLAY,
+    TodoType.FAMILY
+)
+@kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+annotation class TodoType {
+    companion object {
+        const val ALL = 0
+        const val WORK = 1
+        const val STUDY = 2
+        const val LIFE = 3
+        const val PAY = 4
+        const val PLAY = 5
+        const val FAMILY = 6
+    }
 }

@@ -73,10 +73,10 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
     }
 
     override fun initViewObservable() {
-        viewModel.uc.searchCancelEvent.observe(this, {
+        viewModel.uc.searchCancelEvent.observe(this) {
             binding.searchBar.closeSearch()
-        })
-        viewModel.uc.finishLoadEvent.observe(this, { data ->
+        }
+        viewModel.uc.finishLoadEvent.observe(this) { data ->
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -86,8 +86,8 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
                 viewModel.currentPage,
                 data?.over
             )
-        })
-        viewModel.uc.searchConfirmEvent.observe(this, {
+        }
+        viewModel.uc.searchConfirmEvent.observe(this) {
             viewModel.searchPlaceHolder.set(it)
             viewModel.keyword = it
             viewModel.addSubscribe(viewModel.model.saveUserSearchHistory(it)
@@ -101,8 +101,8 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
                 mRecAdapter.notifyDataSetChanged()
             }
             binding.includeRy.smartCommon.autoRefresh()
-        })
-        viewModel.uc.searchFocusEvent.observe(this, { focus ->
+        }
+        viewModel.uc.searchFocusEvent.observe(this) { focus ->
             // 搜索框获取到焦点显示热门搜索和历史搜索 布局使用viewstub延迟加载
             if (focus) {
                 binding.includeRy.clRoot.visibility = View.GONE
@@ -124,7 +124,7 @@ class SearchFragment : BaseFragment<SearchFragmentSearchBinding, SearchViewModel
                 if (this::ryRecommend.isInitialized)
                     binding.searchStub.viewStub?.visibility = View.GONE
             }
-        })
+        }
     }
 
     override fun reload() {

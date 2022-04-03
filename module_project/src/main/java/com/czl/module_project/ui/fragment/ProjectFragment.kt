@@ -37,12 +37,12 @@ class ProjectFragment : BaseFragment<ProjectFragmentProjectBinding, ProjectViewM
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompleteEvent.observe(this, {
+        viewModel.loadCompleteEvent.observe(this) {
             if (!it.isNullOrEmpty()) {
                 viewModel.model.saveCacheListData(it)
             }
             initViewpager(it)
-        })
+        }
     }
 
     private fun initViewpager(it: List<ProjectSortBean>) {

@@ -72,7 +72,7 @@ class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContent
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompletedEvent.observe(this, { data ->
+        viewModel.loadCompletedEvent.observe(this) { data ->
             if (data != null) {
                 firstLoad = false
             }
@@ -85,7 +85,7 @@ class SysContentFragment : BaseFragment<CommonRecyclerviewBinding, SystemContent
                 viewModel.currentPage,
                 data?.over
             )
-        })
+        }
     }
 
     private fun initAdapter() {

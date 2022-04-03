@@ -43,7 +43,7 @@ class HomeProjectFragment : BaseFragment<CommonRecyclerviewBinding, HomeProjectV
             setDemoLayoutManager(ShimmerRecyclerView.LayoutMangerType.LINEAR_VERTICAL)
             showShimmerAdapter()
         }
-        viewModel.loadCompleteEvent.observe(this, { data ->
+        viewModel.loadCompleteEvent.observe(this) { data ->
             handleRecyclerviewData(
                 data == null,
                 data?.datas as MutableList<*>?,
@@ -53,6 +53,6 @@ class HomeProjectFragment : BaseFragment<CommonRecyclerviewBinding, HomeProjectV
                 viewModel.currentProjectPage,
                 data?.over
             )
-        })
+        }
     }
 }

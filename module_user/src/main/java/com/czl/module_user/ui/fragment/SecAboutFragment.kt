@@ -52,7 +52,7 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
     }
 
     override fun initViewObservable() {
-        viewModel.saveWxImgEvent.observe(this, {
+        viewModel.saveWxImgEvent.observe(this) {
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     val bitmap = BitmapFactory.decodeResource(resources, R.drawable.wx_pay)
@@ -61,8 +61,8 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
                     showSuccessToast("保存成功")
                 }
             })
-        })
-        viewModel.saveAliImgEvent.observe(this, {
+        }
+        viewModel.saveAliImgEvent.observe(this) {
             PermissionUtil.reqStorage(fragment = this, callback = { allGranted, _, _ ->
                 if (allGranted) {
                     val bitmap = BitmapFactory.decodeResource(resources, R.drawable.ali_pay)
@@ -71,6 +71,6 @@ class SecAboutFragment : BaseFragment<UserFragmentSecAboutBinding, SecAboutViewM
                     showSuccessToast("保存成功")
                 }
             })
-        })
+        }
     }
 }

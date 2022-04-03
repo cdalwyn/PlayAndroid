@@ -63,7 +63,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
     }
 
     override fun initViewObservable() {
-        viewModel.uc.refreshCompleteEvent.observe(this, { data ->
+        viewModel.uc.refreshCompleteEvent.observe(this) { data ->
             // 遍历设置时间是否过期
             data?.datas?.forEach { item ->
                 if (item.date < TimeUtils.date2Millis(Date()) && !TimeUtils.isToday(item.date)) {
@@ -89,17 +89,17 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                 viewModel.currentPage,
                 data?.isOver, 1
             )
-        })
-        viewModel.uc.showAddTodoPopEvent.observe(this, {
+        }
+        viewModel.uc.showAddTodoPopEvent.observe(this) {
             todoPopView.show()
-        })
-        LiveBusCenter.observeTodoListRefreshEvent(this, {
+        }
+        LiveBusCenter.observeTodoListRefreshEvent(this) {
             if (it.code == 0) {
                 // 查找是否有相同日期的数据存在
                 updateList(it.todoInfo, true)
             }
-        })
-        viewModel.uc.showDrawerPopEvent.observe(this, {
+        }
+        viewModel.uc.showDrawerPopEvent.observe(this) {
             XPopup.Builder(context)
                 .popupPosition(PopupPosition.Right)
                 .hasStatusBar(false)
@@ -113,7 +113,7 @@ class UserTodoFragment : BaseFragment<UserFragmentTodoBinding, UserTodoViewModel
                     )
                 )
                 .show()
-        })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

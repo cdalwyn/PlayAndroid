@@ -67,12 +67,12 @@ class UserFragment : BaseFragment<UserFragmentUserBinding, UserViewModel>(),
         LiveBusCenter.observeRefreshUserFmEvent(this) {
             viewModel.getUserCollectData()
         }
-        viewModel.uc.showLoginPopEvent.observe(this, {
+        viewModel.uc.showLoginPopEvent.observe(this) {
             loginPopView.show()
-        })
-        viewModel.uc.refreshEvent.observe(this, {
+        }
+        viewModel.uc.refreshEvent.observe(this) {
             binding.smartCommon.finishRefresh(1500)
-        })
+        }
         LiveBusCenter.observeReadHistoryEvent(this) {
             viewModel.historyVisible.set(it.checked)
         }

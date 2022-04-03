@@ -67,7 +67,7 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
     }
 
     override fun initViewObservable() {
-        viewModel.loadCompleteEvent.observe(this, {
+        viewModel.loadCompleteEvent.observe(this) {
             viewModel.toolbarRightText.set(if (it.isEmpty()) "" else "清空")
             binding.smartCommon.finishRefreshWithNoMoreData()
             binding.ryCommon.hideShimmerAdapter()
@@ -81,8 +81,8 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
                 mAdapter.setEmptyView(emptyView)
             }
             mAdapter.setList(it)
-        })
-        viewModel.clearAllEvent.observe(this, {
+        }
+        viewModel.clearAllEvent.observe(this) {
             DialogHelper.showBaseDialog(requireContext(), "提示", "确定清空所有历史记录吗？") {
                 viewModel.model.deleteAllWebHistory()
                     .compose(RxThreadHelper.rxSchedulerHelper(viewModel))
@@ -91,7 +91,7 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
                         viewModel.toolbarRightText.set("")
                     }
             }
-        })
+        }
     }
 
     private fun initAdapter() {

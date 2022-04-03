@@ -50,7 +50,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
         //页面接受的参数方法
         initParam()
         //私有的初始化Databinding和ViewModel方法
-        initViewDataBinding(savedInstanceState)
+        initViewDataBinding()
         if (isImmersionBarEnabled())
             initStatusBar()
         //私有的ViewModel与View的契约事件回调逻辑
@@ -87,7 +87,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     /**
      * 注入绑定
      */
-    private fun initViewDataBinding(savedInstanceState: Bundle?) {
+    private fun initViewDataBinding() {
         if (useBaseLayout()) {
             setContentView(R.layout.activity_base)
             val mActivityRoot = findViewById<ViewGroup>(R.id.activity_root)
@@ -134,55 +134,55 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private fun registerUIChangeLiveDataCallBack() {
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
-            .observe(this, { title: String? -> showLoading(title) })
+            .observe(this) { title: String? -> showLoading(title) }
         //加载对话框消失
         viewModel.uC.getDismissDialogEvent()
-            .observe(this, { v: Void? -> dismissLoading() })
+            .observe(this) { dismissLoading() }
         //跳入新页面
         viewModel.uC.getStartActivityEvent().observe(
-            this, { map ->
-                val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
-                val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-                RouteCenter.navigate(routePath, bundle)
-            }
-        )
-        viewModel.uC.getStartFragmentEvent().observe(this, { map ->
+            this
+        ) { map ->
+            val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
+            val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            RouteCenter.navigate(routePath, bundle)
+        }
+        viewModel.uC.getStartFragmentEvent().observe(this) { map ->
             val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
             val bundle: Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
             start(RouteCenter.navigate(routePath, bundle) as SupportFragment)
-        })
+        }
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
-            this, { params: Map<String?, Any?> ->
-                val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
-                val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-                startContainerActivity(canonicalName, bundle)
-            }
-        )
+            this
+        ) { params: Map<String?, Any?> ->
+            val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
+            val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            startContainerActivity(canonicalName, bundle)
+        }
         //关闭界面
-        viewModel.uC.getFinishEvent().observe(this, {
+        viewModel.uC.getFinishEvent().observe(this) {
             finish()
-        })
+        }
         //关闭上一层
         viewModel.uC.getOnBackPressedEvent().observe(
-            this, { onBackPressedSupport() }
-        )
+            this
+        ) { onBackPressedSupport() }
         // 弹出分享文章窗口
-        viewModel.uC.getShowSharePopEvent().observe(this, {
+        viewModel.uC.getShowSharePopEvent().observe(this) {
             XPopup.Builder(this)
                 .enableDrag(true)
                 .moveUpToKeyboard(true)
                 .autoOpenSoftInput(true)
                 .asCustom(ShareArticlePopView(this, it))
                 .show()
-        })
+        }
     }
 
-    fun showLoading(title: String?) {
+    private fun showLoading(title: String?) {
         dialog = DialogHelper.showLoadingDialog(this, title)
     }
 
-    fun dismissLoading() {
+    private fun dismissLoading() {
         dialog?.smartDismiss()
     }
 

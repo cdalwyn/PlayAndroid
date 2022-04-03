@@ -46,6 +46,9 @@ class SearchAdapter(val mFragment: SearchFragment) :
             mFragment.viewModel.startContainerActivity(
                 AppConstants.Router.User.F_USER_DETAIL,
                 Bundle().apply {
+                    if (it.userId == -1){
+                        putString(AppConstants.BundleKey.USER_NAME,it.author)
+                    }
                     putString(AppConstants.BundleKey.USER_ID, it.userId.toString())
                 })
         }

@@ -2,12 +2,11 @@ ext {
     //android开发版本配置
     android = [
             compileSdkVersion: 29,
-            buildToolsVersion: "30.0.0",
             applicationId    : "com.czl.mvvmcomponents",
             minSdkVersion    : 21,
             targetSdkVersion : 28,
-            versionCode      : 106,
-            versionName      : "1.0.6",
+            versionCode      : 108,
+            versionName      : "1.0.8",
     ]
     //androidx配置
     androidx = [
@@ -77,10 +76,10 @@ ext {
             'navigation'                           : 'com.ashokvarma.android:bottom-navigation-bar:2.2.0',
             'banner'                               : 'com.youth.banner:banner:2.1.0',
             'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
-            'refresh'                              : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
-            'refresh-header'                       : 'com.scwang.smart:refresh-header-material:2.0.1',
-            'refresh-footer-ball'                  : 'com.scwang.smart:refresh-footer-ball:2.0.1',
-            'refresh-footer-classic'               : 'com.scwang.smart:refresh-footer-classics:2.0.1',
+            'refresh'                              : 'io.github.scwang90:refresh-layout-kernel:2.0.5',
+            'refresh-header'                       : 'io.github.scwang90:refresh-header-material:2.0.5',
+            'refresh-footer-ball'                  : 'io.github.scwang90:refresh-footer-ball:2.0.5',
+            'refresh-footer-classic'               : 'io.github.scwang90:refresh-footer-classics:2.0.5',
             'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
             'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
             'autosize'                             : "me.jessyan:autosize:1.1.2",

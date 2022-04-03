@@ -222,50 +222,50 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel<*>> :
     private fun registerUIChangeLiveDataCallBack() {
         //加载对话框显示
         viewModel.uC.getShowLoadingEvent()
-            .observe(this, { title: String? -> showLoading(title) })
+            .observe(this) { title: String? -> showLoading(title) }
         //加载对话框消失
         viewModel.uC.getDismissDialogEvent()
-            .observe(this, { dismissLoading() })
+            .observe(this) { dismissLoading() }
         //跳入新页面
-        viewModel.uC.getStartActivityEvent().observe(this, { map ->
+        viewModel.uC.getStartActivityEvent().observe(this
+        ) { map ->
             val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
             val bundle = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
             RouteCenter.navigate(routePath, bundle)
         }
-        )
-        viewModel.uC.getStartFragmentEvent().observe(this, { map ->
+        viewModel.uC.getStartFragmentEvent().observe(this) { map ->
             val routePath: String = map[BaseViewModel.ParameterField.ROUTE_PATH] as String
             val bundle: Bundle? = map[BaseViewModel.ParameterField.BUNDLE] as Bundle?
             start(RouteCenter.navigate(routePath, bundle) as SupportFragment)
-        })
+        }
         //跳入ContainerActivity
         viewModel.uC.getStartContainerActivityEvent().observe(
-            this, { params: Map<String?, Any?> ->
-                val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
-                val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
-                val code = params[BaseViewModel.ParameterField.REQUEST_CODE] as Int?
-                startContainerActivity(canonicalName, bundle, code)
-            }
-        )
+            this
+        ) { params: Map<String?, Any?> ->
+            val canonicalName = params[BaseViewModel.ParameterField.ROUTE_PATH] as String?
+            val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+            val code = params[BaseViewModel.ParameterField.REQUEST_CODE] as Int?
+            startContainerActivity(canonicalName, bundle, code)
+        }
         //关闭界面
-        viewModel.uC.getFinishEvent().observe(this, {
+        viewModel.uC.getFinishEvent().observe(this) {
             back()
-        })
+        }
         //关闭上一层
         viewModel.uC.getOnBackPressedEvent().observe(
-            this, { onBackPressedSupport() }
-        )
-        viewModel.uC.getScrollTopEvent().observe(this, {
+            this
+        ) { onBackPressedSupport() }
+        viewModel.uC.getScrollTopEvent().observe(this) {
             ryCommon?.smoothScrollToPosition(0)
-        })
-        viewModel.uC.getShowSharePopEvent().observe(this, {
+        }
+        viewModel.uC.getShowSharePopEvent().observe(this) {
             XPopup.Builder(context)
                 .enableDrag(true)
                 .moveUpToKeyboard(true)
                 .autoOpenSoftInput(true)
                 .asCustom(ShareArticlePopView(requireActivity() as BaseActivity<*, *>, it))
                 .show()
-        })
+        }
     }
 
     /**
