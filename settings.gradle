@@ -8,4 +8,3 @@ include ':module_web'
 include ':lib_base'
 include ':app'
 rootProject.name = "PlayAndroid"
-//include ':lib_common'

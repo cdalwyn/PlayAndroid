@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/mColorPrimary</item>
         <item name="colorPrimaryDark">@color/mColorPrimaryDark</item>
         <item name="colorAccent">@color/mColorAccent</item>
-
+        <item name="android:windowAnimationStyle">@android:style/Animation.Activity</item>
     </style>
 
     <!--Toolbar-->
@@ -18,6 +18,8 @@
     <style name="Launcher" parent="AppTheme">
         <item name="android:windowBackground">@drawable/app_launch_background</item>
         <item name="android:windowAnimationStyle">@style/Animation_Splash</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
     </style>
 
     <style name="Animation_Splash" parent="@android:style/Animation.Activity">

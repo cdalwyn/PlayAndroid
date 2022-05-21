@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/app_launch_background">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_splash"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        tools:background="@drawable/splash_bg_light"
-        />
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_splash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Play Android"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/sp_26"
-            android:textStyle="bold"
-            android:typeface="monospace"
-            app:layout_constraintBottom_toTopOf="@id/tv_play"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Play Android"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_26"
+                android:textStyle="bold"
+                android:typeface="monospace"
+                app:layout_constraintBottom_toTopOf="@id/tv_play"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
-            android:id="@+id/tv_play"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:gravity="center"
-            android:textSize="@dimen/sp_16"
-            android:textColor="#ffffff"
-            android:layout_marginBottom="@dimen/dp_20"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+                android:id="@+id/tv_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:gravity="center"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/black"
+                android:layout_marginBottom="@dimen/dp_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

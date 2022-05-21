@@ -63,8 +63,11 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel<*>> :
     }
 
     open fun initStatusBar() {
-        ImmersionBar.with(this).statusBarDarkFont(!DayModeUtil.isNightMode(this), 0.2f)
-            .transparentStatusBar().init()
+        ImmersionBar.with(this)
+            .statusBarDarkFont(!DayModeUtil.isNightMode(this), 0.2f)
+            .transparentStatusBar()
+            .autoNavigationBarDarkModeEnable(true)
+            .init()
     }
 
     open fun isImmersionBarEnabled(): Boolean {
