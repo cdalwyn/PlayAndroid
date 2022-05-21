@@ -16,13 +16,11 @@ import io.reactivex.*
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.apache.commons.lang3.time.DateFormatUtils
 import org.litepal.LitePal
-import org.litepal.LitePalDB
-import org.litepal.crud.LitePalSupport
 import org.litepal.extension.findFirst
 import org.litepal.extension.runInTransaction
 import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -162,11 +160,15 @@ class LocalDataImpl : LocalDataSource {
                     if (userEntity == null) {
                         userEntity = UserEntity(getUserId(), getLoginName())
                     }
+
                     val webHistoryEntity =
                         WebHistoryEntity(
                             title,
                             link,
-                            DateFormatUtils.format(Date(), "yyyy-MM-dd HH:mm:ss"),
+                            SimpleDateFormat(
+                                "yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault()
+                            ).format(Date()),
                             userEntity
                         )
                     userEntity.browseEntities.add(webHistoryEntity)

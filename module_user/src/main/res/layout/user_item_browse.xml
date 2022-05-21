@@ -6,8 +6,6 @@
 
     <data>
 
-        <import type="org.apache.commons.lang3.time.DateFormatUtils" />
-
         <variable
             name="data"
             type="com.czl.lib_base.data.db.WebHistoryEntity" />

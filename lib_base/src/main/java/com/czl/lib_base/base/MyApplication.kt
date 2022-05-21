@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.multidex.MultiDexApplication
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.LogUtils
@@ -83,6 +84,7 @@ open class MyApplication : Application() {
         XPopup.setPrimaryColor(ContextCompat.getColor(this, R.color.md_theme_red))
         // 切换情景模式
         initNightMode()
+        LogUtils.i("currentApp=${packageName}")
     }
 
 
@@ -148,7 +150,7 @@ open class MyApplication : Application() {
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivityStopped(activity: Activity) {}
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
             override fun onActivityDestroyed(activity: Activity) {
                 AppManager.instance.removeActivity(activity)
             }

@@ -1,67 +1,10 @@
-apply plugin: 'com.android.library'
+def isApp = rootProject.ext.state.baseToApp
+apply plugin: alternatePlugin(isApp)
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
-//apply from: "../module.build.gradle"
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    defaultConfig {
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //阿里路由框架配置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-//                includeCompileClasspath = true
-            }
-        }
-//        ndk {
-//            abiFilters 'armeabi-v7a'
-//        }
-//        kapt {
-//            arguments {
-//                arg("AROUTER_MODULE_NAME", project.getName())
-//            }
-//        }
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            if (isBuildModule.toBoolean()) {
-                //独立运行
-                manifest.srcFile 'src/main/alone/AndroidManifest.xml'
-            } else {
-                //合并到宿主
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                resources {
-                    //正式版本时，排除alone文件夹下所有调试文件
-                    exclude 'src/main/alone/*'
-                }
-            }
-        }
-    }
-    buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    buildFeatures {
-        dataBinding true
-    }
+    androidClosure(it, isApp, rootProject.ext.appId.libBaseId)
 }
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
@@ -138,7 +81,7 @@ dependencies {
     api rootProject.ext.dependencies["matisse"]
     api rootProject.ext.dependencies["loadingview"]
     api rootProject.ext.dependencies["pgy_sdk"]
-
+    api 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
     debugApi rootProject.ext.dependencies["leakcanary"]
 //    debugApi rootProject.ext.dependencies["dokitx"]
 

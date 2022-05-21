@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">玩安卓</string>
     <string name="customactivityoncrash_error_activity_error_occurred_explanation">发生意外错误。\n抱歉，给您带来不便。</string>
     <string name="customactivityoncrash_error_activity_restart_app">重新启动</string>
     <string name="customactivityoncrash_error_activity_close_app">关闭程序</string>

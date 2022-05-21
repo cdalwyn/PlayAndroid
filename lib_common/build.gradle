@@ -1,0 +1,12 @@
+def isApp = false
+apply plugin: alternatePlugin(isApp)
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+android {
+    androidClosure(it, isApp, "com.czl.common")
+}
+dependencies {
+    //组件依赖基础库
+    api project(':lib_base')
+}

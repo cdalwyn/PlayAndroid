@@ -6,21 +6,19 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.webkit.*
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
+import android.webkit.WebView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.Observable
-import androidx.test.espresso.action.EditorAction
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.KeyboardUtils
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.BR
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
@@ -29,14 +27,8 @@ import com.czl.module_web.databinding.WebFragmentWebBinding
 import com.czl.module_web.viewmodel.WebFmViewModel
 import com.czl.module_web.widget.WebMenuPop
 import com.google.android.material.appbar.AppBarLayout
-import com.jakewharton.rxbinding3.widget.editorActions
 import com.just.agentweb.*
-import com.just.agentweb.WebChromeClient
-import com.just.agentweb.WebViewClient
 import com.lxj.xpopup.XPopup
-import io.reactivex.Flowable
-import java.lang.reflect.InvocationTargetException
-import java.lang.reflect.Method
 
 
 @Route(path = AppConstants.Router.Web.F_WEB)

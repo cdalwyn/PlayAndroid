@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.LogUtils
 import com.czl.lib_base.base.BaseFragment
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.data.pojo.GroupItem

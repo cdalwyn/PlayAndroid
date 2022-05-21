@@ -1,105 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:binding="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
         <import type="android.text.TextUtils" />
 
-        <variable
-            name="data"
-            type="com.czl.lib_base.data.bean.ShareUserDetailBean.ShareArticles.Data" />
+        <import type="androidx.core.text.HtmlCompat" />
 
         <variable
-            name="adapter"
-            type="com.czl.module_user.adapter.UserDetailAdapter" />
+                name="data"
+                type="com.czl.lib_base.data.bean.ShareUserDetailBean.ShareArticles.Data" />
+
+        <variable
+                name="adapter"
+                type="com.czl.module_user.adapter.UserDetailAdapter" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="@dimen/dp_10"
-        binding:onRvItemCommand="@{adapter.onArticleItemClick}"
-        binding:rvItemBean="@{data}">
-
-        <TextView
-            android:id="@+id/item_tv_identity"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_20"
-            android:background="@{TextUtils.isEmpty(data.author)?@drawable/stroke_green:@drawable/stroke_red}"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:text="@{TextUtils.isEmpty(data.author)?adapter.tvShare:adapter.tvAuthor}"
-            android:textColor="@{TextUtils.isEmpty(data.author)?@color/green_68:@color/md_theme_red}"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintEnd_toStartOf="@id/item_tv_author"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/stroke_green"
-            tools:text=" 作者 "
-            tools:textColor="@color/green_68" />
-
-        <TextView
-            android:id="@+id/item_tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_20"
-            android:layout_marginStart="@dimen/dp_10"
-            android:maxLines="1"
-            android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
-            app:layout_constraintStart_toEndOf="@id/item_tv_identity"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="扔物线" />
-
-        <ImageView
-            android:id="@+id/iv_collect"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/dp_24"
-            android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off_gray}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            binding:onRvItemCommand="@{adapter.onCollectClickCommand}"
-            binding:rvItemBean="@{data}"
-            tools:src="@drawable/ic_like_off_gray" />
-
-        <TextView
-            android:id="@+id/item_tv_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="@{data.title}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
-            tools:text="啊实打实大啊实打实大苏打实打实的阿三大苏打萨达萨达萨达萨达是阿斯顿撒打算啊实打实大苏打撒旦萨达萨达萨达是阿斯顿撒旦啊实打实的撒啊实打实的阿松大苏打" />
+            android:background="@color/white"
+            android:padding="@dimen/dp_10"
+            binding:onRvItemCommand="@{adapter.onArticleItemClick}"
+            binding:rvItemBean="@{data}">
 
         <TextView
-            android:id="@+id/item_tv_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:maxLines="1"
-            android:text="@{data.superChapterName}"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
-            tools:text="干货资源" />
+                android:id="@+id/item_tv_identity"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_20"
+                android:background="@{TextUtils.isEmpty(data.author)?@drawable/stroke_green:@drawable/stroke_red}"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{TextUtils.isEmpty(data.author)?adapter.tvShare:adapter.tvAuthor}"
+                android:textColor="@{TextUtils.isEmpty(data.author)?@color/green_68:@color/md_theme_red}"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintEnd_toStartOf="@id/item_tv_author"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@drawable/stroke_green"
+                tools:text=" 作者 "
+                tools:textColor="@color/green_68" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:text="@{data.niceShareDate}"
-            android:textSize="@dimen/sp_12"
-            app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
-            tools:text="1天前" />
+                android:id="@+id/item_tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_20"
+                android:layout_marginStart="@dimen/dp_10"
+                android:maxLines="1"
+                android:text="@{TextUtils.isEmpty(data.author)?data.shareUser:data.author}"
+                app:layout_constraintStart_toEndOf="@id/item_tv_identity"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="扔物线" />
+
+        <ImageView
+                android:id="@+id/iv_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_24"
+                android:src="@{data.collect?@drawable/ic_like_on:@drawable/ic_like_off_gray}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                binding:onRvItemCommand="@{adapter.onCollectClickCommand}"
+                binding:rvItemBean="@{data}"
+                tools:src="@drawable/ic_like_off_gray" />
+
+        <TextView
+                android:id="@+id/item_tv_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{HtmlCompat.fromHtml(data.title,HtmlCompat.FROM_HTML_MODE_COMPACT)}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintTop_toBottomOf="@id/item_tv_identity"
+                tools:text="啊实打实大啊实打实大苏打实打实的阿三大苏打萨达萨达萨达萨达是阿斯顿撒打算啊实打实大苏打撒旦萨达萨达萨达是阿斯顿撒旦啊实打实的撒啊实打实的阿松大苏打" />
+
+        <TextView
+                android:id="@+id/item_tv_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:maxLines="1"
+                android:text="@{data.superChapterName}"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
+                tools:text="干货资源" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@{data.niceShareDate}"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintBaseline_toBaselineOf="@id/item_tv_sort"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_tv_desc"
+                tools:text="1天前" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -6,6 +6,8 @@
 
     <data>
         <import type="android.text.TextUtils" />
+        <import type="androidx.core.text.HtmlCompat"/>
+
         <variable
             name="data"
             type="com.czl.lib_base.data.bean.SquareListBean.Data" />
@@ -86,7 +88,7 @@
                     android:layout_marginTop="@dimen/dp_10"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:text="@{data.title}"
+                    android:text="@{HtmlCompat.fromHtml(data.title,HtmlCompat.FROM_HTML_MODE_COMPACT)}"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintTop_toBottomOf="@id/item_tv_identity"

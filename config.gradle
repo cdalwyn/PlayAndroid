@@ -1,7 +1,7 @@
 ext {
     //android开发版本配置
     android = [
-            compileSdkVersion: 29,
+            compileSdkVersion: 31,
             applicationId    : "com.czl.mvvmcomponents",
             minSdkVersion    : 21,
             targetSdkVersion : 28,
@@ -26,85 +26,106 @@ ext {
     ]
     //version配置
     versions = [
-            "koin-version"   : "3.1.1"
+            "koin-version"   : "3.2.0"
     ]
     //依赖第三方配置
     dependencies = [
             //阿里路由框架
-            "arouter_api"                          : "com.alibaba:arouter-api:1.4.1",
-            "arouter_compiler"                     : "com.alibaba:arouter-compiler:1.2.2",
-            "pgy_sdk"                              : 'com.pgyersdk:sdk:3.0.10',
+            "arouter_api"             : "com.alibaba:arouter-api:1.4.1",
+            "arouter_compiler"        : "com.alibaba:arouter-compiler:1.2.2",
+            "pgy_sdk"                 : 'com.pgyersdk:sdk:3.0.10',
             //rx系列与View生命周期同步
-            "rxlifecycle"                          : "com.trello.rxlifecycle3:rxlifecycle:3.0.0",
-            "rxlifecycle-components"               : "com.trello.rxlifecycle3:rxlifecycle-components:3.0.0",
+            "rxlifecycle"             : "com.trello.rxlifecycle3:rxlifecycle:3.0.0",
+            "rxlifecycle-components"  : "com.trello.rxlifecycle3:rxlifecycle-components:3.0.0",
             //rxbinding
-            "rxbinding"                            : "com.jakewharton.rxbinding3:rxbinding:3.0.0",
+            "rxbinding"               : "com.jakewharton.rxbinding3:rxbinding:3.0.0",
             //network
-            "okhttp"                               : "com.squareup.okhttp3:okhttp:3.10.0",
-            "retrofit"                             : "com.squareup.retrofit2:retrofit:2.4.0",
-            "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.4.0",
-            "adapter-rxjava"                       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            "okhttp"                  : "com.squareup.okhttp3:okhttp:3.10.0",
+            "retrofit"                : "com.squareup.retrofit2:retrofit:2.4.0",
+            "converter-gson"          : "com.squareup.retrofit2:converter-gson:2.4.0",
+            "adapter-rxjava"          : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             //glide图片加载
-            "glide"                                : "com.github.bumptech.glide:glide:4.11.0",
-            "glide-compiler"                       : "com.github.bumptech.glide:compiler:4.11.0",
-            'glide-transfer'                       : 'jp.wasabeef:glide-transformations:4.3.0',
+            "glide"                   : "com.github.bumptech.glide:glide:4.11.0",
+            "glide-compiler"          : "com.github.bumptech.glide:compiler:4.11.0",
+            'glide-transfer'          : 'jp.wasabeef:glide-transformations:4.3.0',
             //json解析
-            "gson"                                 : "com.google.code.gson:gson:2.8.5",
+            "gson"                    : "com.google.code.gson:gson:2.8.5",
             //material-dialogs
-            "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.6.0",
-            "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.6.0",
+            "material-dialogs-core"   : "com.afollestad.material-dialogs:core:0.9.6.0",
+            "material-dialogs-commons": "com.afollestad.material-dialogs:commons:0.9.6.0",
 
             //沉浸式标题栏
-            "toolbar"                              : "com.gyf.immersionbar:immersionbar:3.0.0",
+            "toolbar"                 : "com.gyf.immersionbar:immersionbar:3.0.0",
             //依赖注入
-            'koin_core'                            : "io.insert-koin:koin-android:${versions["koin-version"]}",
-            'koin_java'                            : "io.insert-koin:koin-android-compat:${versions["koin-version"]}",
+            'koin_core'               : "io.insert-koin:koin-android:${versions["koin-version"]}",
+            'koin_java'               : "io.insert-koin:koin-android-compat:${versions["koin-version"]}",
             //工具类
-            'utils'                                : 'com.blankj:utilcodex:1.30.5',
+            'utils'                   : 'com.blankj:utilcodex:1.30.5',
             //缓存
-            'mmkv'                                 : 'com.tencent:mmkv:1.0.23',
+            'mmkv'                    : 'com.tencent:mmkv:1.0.23',
             //消息分发
-            'livebus'                              : 'com.jeremyliao:live-event-bus-x:1.7.2',
+            'livebus'                 : 'com.jeremyliao:live-event-bus-x:1.7.2',
             //界面管理
-            'fragmentationx'                       : "me.yokeyword:fragmentationx:1.0.2",
-            'swipeback'                            : "me.yokeyword:fragmentation-swipeback:1.3.7",
+            'fragmentationx'          : "me.yokeyword:fragmentationx:1.0.2",
+            'swipeback'               : "me.yokeyword:fragmentation-swipeback:1.3.7",
             //权限检查
-            'permissionx'                          : 'com.permissionx.guolindev:permissionx:1.4.0',
+            'permissionx'             : 'com.permissionx.guolindev:permissionx:1.4.0',
             //内存泄漏检查
-            'leakcanary'                           : 'com.squareup.leakcanary:leakcanary-android:2.5',
+            'leakcanary'              : 'com.squareup.leakcanary:leakcanary-android:2.5',
             //底部导航
-            'navigation'                           : 'com.ashokvarma.android:bottom-navigation-bar:2.2.0',
-            'banner'                               : 'com.youth.banner:banner:2.1.0',
-            'toast'                                : 'com.github.GrenderG:Toasty:1.5.0',
-            'refresh'                              : 'io.github.scwang90:refresh-layout-kernel:2.0.5',
-            'refresh-header'                       : 'io.github.scwang90:refresh-header-material:2.0.5',
-            'refresh-footer-ball'                  : 'io.github.scwang90:refresh-footer-ball:2.0.5',
-            'refresh-footer-classic'               : 'io.github.scwang90:refresh-footer-classics:2.0.5',
-            'webview'                              : 'com.just.agentweb:agentweb-androidx:4.1.4',
-            'tablayout'                            : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
-            'autosize'                             : "me.jessyan:autosize:1.1.2",
-            'xpopup'                               : 'com.lxj:xpopup:2.2.5',
-            'searchview'                           : 'com.github.mancj:MaterialSearchBar:0.8.5',
-            'shadowlayout'                         : 'com.github.lihangleo2:ShadowLayout:3.1.8',
+            'navigation'              : 'com.ashokvarma.android:bottom-navigation-bar:2.2.0',
+            'banner'                  : 'com.youth.banner:banner:2.1.0',
+            'toast'                   : 'com.github.GrenderG:Toasty:1.5.0',
+            'refresh'                 : 'io.github.scwang90:refresh-layout-kernel:2.0.5',
+            'refresh-header'          : 'io.github.scwang90:refresh-header-material:2.0.5',
+            'refresh-footer-ball'     : 'io.github.scwang90:refresh-footer-ball:2.0.5',
+            'refresh-footer-classic'  : 'io.github.scwang90:refresh-footer-classics:2.0.5',
+            'webview'                 : 'com.just.agentweb:agentweb-androidx:4.1.4',
+            'tablayout'               : 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar',
+            'autosize'                : "me.jessyan:autosize:1.1.2",
+            'xpopup'                  : 'com.lxj:xpopup:2.2.5',
+            'searchview'              : 'com.github.mancj:MaterialSearchBar:0.8.5',
+            'shadowlayout'            : 'com.github.lihangleo2:ShadowLayout:3.1.8',
             // 骨架屏
-            'skeleton'                             : 'com.ethanhua:skeleton:1.1.2',
-            'shimmer-recyclerView'                 : 'com.github.sharish:ShimmerRecyclerView:v1.3',
-            'litepal'                              : 'org.litepal.guolindev:core:3.2.3',
-            'adapter-helper'                       : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+            'skeleton'                : 'com.ethanhua:skeleton:1.1.2',
+            'shimmer-recyclerView'    : 'com.github.sharish:ShimmerRecyclerView:v1.3',
+            'litepal'                 : 'org.litepal.guolindev:core:3.2.3',
+            'adapter-helper'          : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
 
-            'qrcode'                               : "cn.bingoogolapple:bga-qrcode-zxing:1.3.7",
-            'lottie'                               : 'com.airbnb.android:lottie:3.5.0',
-            'swipe_menu'                           : "com.github.anzaizai:EasySwipeMenuLayout:1.1.4",
-            'round_imageview'                      : 'com.makeramen:roundedimageview:2.3.0',
-            'loadsir'                              : 'com.kingja.loadsir:loadsir:1.3.8',
-            'loadingview'                          : 'com.github.ybq:Android-SpinKit:1.4.0',
-            'ConsecutiveScroller'                  : 'com.github.donkingliang:ConsecutiveScroller:4.4.0',
-            'flexbox'                              : 'com.google.android:flexbox:2.0.1',
-            'linkage-recyclerview'                 : 'com.kunminx.linkage:linkage-recyclerview:2.1.5',
-            'dokitx'                               : 'com.didichuxing.doraemonkit:dokitx:3.3.5',
-            'dialog-datetime'                      : 'com.afollestad.material-dialogs:datetime:3.3.0',
-            'dialog-lifecycle'                     : 'com.afollestad.material-dialogs:lifecycle:3.3.0',
-            'matisse'                              : 'com.zhihu.android:matisse:0.5.3-beta3'
+            'qrcode'                  : "cn.bingoogolapple:bga-qrcode-zxing:1.3.7",
+            'lottie'                  : 'com.airbnb.android:lottie:3.5.0',
+            'swipe_menu'              : "com.github.anzaizai:EasySwipeMenuLayout:1.1.4",
+            'round_imageview'         : 'com.makeramen:roundedimageview:2.3.0',
+            'loadsir'                 : 'com.kingja.loadsir:loadsir:1.3.8',
+            'loadingview'             : 'com.github.ybq:Android-SpinKit:1.4.0',
+            'ConsecutiveScroller'     : 'com.github.donkingliang:ConsecutiveScroller:4.4.0',
+            'flexbox'                 : 'com.google.android:flexbox:2.0.1',
+            'linkage-recyclerview'    : 'com.kunminx.linkage:linkage-recyclerview:2.1.5',
+            'dokitx'                  : 'com.didichuxing.doraemonkit:dokitx:3.3.5',
+            'dialog-datetime'         : 'com.afollestad.material-dialogs:datetime:3.3.0',
+            'dialog-lifecycle'        : 'com.afollestad.material-dialogs:lifecycle:3.3.0',
+            'matisse'                 : 'com.zhihu.android:matisse:0.5.3-beta3'
 
+    ]
+    // 各模块状态配置
+    state = [
+            baseToApp: false,
+            loginToApp : false,
+            mainToApp : false,
+            projectToApp : false,
+            searchToApp : false,
+            squareToApp : false,
+            userToApp : false,
+            webToApp : false,
+    ]
+    appId = [
+            libBaseId : "com.czl.lib_base",
+            loginAppId : "com.czl.module_login",
+            mainAppId : "com.czl.module_main",
+            projectAppId : "com.czl.module_project",
+            searchAppId : "com.czl.module_search",
+            squareAppId : "com.czl.module_square",
+            userAppId : "com.czl.module_user",
+            webAppId : "com.czl.module_web"
     ]
 }

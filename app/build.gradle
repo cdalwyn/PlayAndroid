@@ -1,43 +1,16 @@
-apply plugin: 'com.android.application'
+def isApp = true
+apply plugin: alternatePlugin(isApp)
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
 //apply plugin: 'com.didi.dokit'
 
 android {
-    signingConfigs {
+    androidClosure(it, isApp, rootProject.ext.android.applicationId)
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    defaultConfig {
-        applicationId rootProject.ext.android.applicationId
-        minSdkVersion rootProject.ext.android.minSdkVersion
-        targetSdkVersion rootProject.ext.android.targetSdkVersion
-        versionCode rootProject.ext.android.versionCode
-        versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        //阿里路由框架配置
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [AROUTER_MODULE_NAME: project.getName()]
-//                includeCompileClasspath = true
-            }
-        }
-//        ndk {
-//            abiFilters 'armeabi-v7a'
-//        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-//            applicationIdSuffix '.debug' //增加包名后缀 （debug包与release包共存）
-        }
-    }
-
     android.applicationVariants.all {
         variant ->
             variant.outputs.all {
@@ -51,36 +24,6 @@ android {
                         }
                     }
             }
-    }
-
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-            if (isBuildModule.toBoolean()) {
-                //独立运行
-                manifest.srcFile 'src/main/alone/AndroidManifest.xml'
-            } else {
-                //合并到宿主
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                resources {
-                    //正式版本时，排除debug文件夹下所有调试文件
-                    exclude 'src/debug/*'
-                }
-            }
-        }
-    }
-    //统一资源前缀，规范资源引用
-    resourcePrefix "app_"
-    buildFeatures {
-        dataBinding true
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
     }
 //    dokitExt {
 //        //通用设置
@@ -99,16 +42,29 @@ android {
 
 dependencies {
     implementation project(path: ':lib_base')
-    if (!isBuildModule.toBoolean()) {
+    if (!rootProject.ext.state.loginToApp) {
         implementation project(path: ':module_login')
+    }
+    if (!rootProject.ext.state.mainToApp) {
         implementation project(path: ':module_main')
+    }
+    if (!rootProject.ext.state.userToApp) {
         implementation project(path: ':module_user')
+    }
+    if (!rootProject.ext.state.searchToApp) {
         implementation project(path: ':module_search')
+    }
+    if (!rootProject.ext.state.squareToApp) {
         implementation project(path: ':module_square')
+    }
+    if (!rootProject.ext.state.projectToApp) {
         implementation project(path: ':module_project')
+    }
+    if (!rootProject.ext.state.webToApp) {
         implementation project(path: ':module_web')
     }
 }
+
 static def nowTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }

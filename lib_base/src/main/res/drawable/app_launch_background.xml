@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--白色矩形 作为背景色-->
+    <item android:drawable="@color/white" />
+
+    <!--单独的slogan图片 并且设置下间距-->
+    <item android:top="300dp">
+        <bitmap
+            android:gravity="center_horizontal|top"
+            android:src="@drawable/ic_logo" />
+    </item>
+</layer-list>

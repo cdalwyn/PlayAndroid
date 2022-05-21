@@ -14,43 +14,43 @@ object OkLogger {
         isLogEnable = isEnable
     }
 
-    fun v(msg: String?) {
+    fun v(msg: String) {
         v(tag, msg)
     }
 
-    fun v(tag: String?, msg: String?) {
+    fun v(tag: String?, msg: String) {
         if (isLogEnable) Log.v(tag, msg)
     }
 
-    fun d(msg: String?) {
+    fun d(msg: String) {
         d(tag, msg)
     }
 
-    fun d(tag: String?, msg: String?) {
+    fun d(tag: String, msg: String) {
         if (isLogEnable) Log.d(tag, msg)
     }
 
-    fun i(msg: String?) {
+    fun i(msg: String) {
         i(tag, msg)
     }
 
-    fun i(tag: String?, msg: String?) {
+    fun i(tag: String?, msg: String) {
         if (isLogEnable) Log.i(tag, msg)
     }
 
-    fun w(msg: String?) {
+    fun w(msg: String) {
         w(tag, msg)
     }
 
-    fun w(tag: String?, msg: String?) {
+    fun w(tag: String, msg: String) {
         if (isLogEnable) Log.w(tag, msg)
     }
 
-    fun e(msg: String?) {
+    fun e(msg: String) {
         e(tag, msg)
     }
 
-    fun e(tag: String?, msg: String?) {
+    fun e(tag: String?, msg: String) {
         if (isLogEnable) Log.e(tag, msg)
     }
 

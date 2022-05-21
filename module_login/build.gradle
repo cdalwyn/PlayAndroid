@@ -1,17 +1,15 @@
-apply from: "../module.build.gradle"
-
+def isApp = rootProject.ext.state.loginToApp
+apply plugin: alternatePlugin(isApp)
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
 android {
-    defaultConfig {
-        //如果是独立模块，则使用当前组件的包名
-        if (isBuildModule.toBoolean()) {
-            applicationId "com.czl.login"
-        }
-    }
+    androidClosure(it, isApp, rootProject.ext.appId.loginAppId)
     //统一资源前缀，规范资源引用
     resourcePrefix "login_"
 }
 
 dependencies {
     //组件依赖基础库
-    api project(':lib_base')
+    implementation project(':lib_base')
 }

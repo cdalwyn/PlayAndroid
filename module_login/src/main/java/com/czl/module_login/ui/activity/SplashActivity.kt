@@ -1,7 +1,6 @@
 package com.czl.module_login.ui.activity
 
-
-import com.blankj.utilcode.util.AppUtils
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -9,23 +8,17 @@ import com.czl.lib_base.base.BaseActivity
 import com.czl.lib_base.config.AppConstants
 import com.czl.lib_base.route.RouteCenter
 import com.czl.lib_base.util.DayModeUtil
-import com.czl.lib_base.util.DialogHelper
 import com.czl.module_login.BR
 import com.czl.module_login.R
 import com.czl.module_login.databinding.LoginActivitySplashBinding
 import com.czl.module_login.viewmodel.SplashViewModel
 import com.gyf.immersionbar.ImmersionBar
-import com.pgyersdk.update.DownloadFileListener
-import com.pgyersdk.update.PgyUpdateManager
-import com.pgyersdk.update.UpdateManagerListener
-import com.pgyersdk.update.javabean.AppBean
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import java.io.File
-import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+@Route(path = AppConstants.Router.Login.A_SPLASH)
 class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>() {
 
     private val arrayLight = arrayListOf(R.drawable.splash_bg_light, R.drawable.bg_splash_light2)
@@ -36,6 +29,7 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
     }
 
     override fun initParam() {
+        window.setBackgroundDrawableResource(R.color.white)
         ImmersionBar.hideStatusBar(window)
     }
 

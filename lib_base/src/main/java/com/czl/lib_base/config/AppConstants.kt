@@ -44,6 +44,7 @@ interface AppConstants {
         }
 
         object Login {
+            const val A_SPLASH = "/login/SplashActivity"
             const val F_LOGIN = "/login/LoginFragment"
             const val F_REGISTER = "/login/RegisterFragment"
         }

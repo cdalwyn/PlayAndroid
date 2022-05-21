@@ -7,7 +7,7 @@
     <data>
 
         <import type="android.text.TextUtils" />
-
+        <import type="androidx.core.text.HtmlCompat"/>
         <variable
             name="data"
             type="com.czl.lib_base.data.bean.ProjectBean.Data" />
@@ -61,7 +61,7 @@
                 android:layout_height="80dp"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="@{data.desc}"
+                android:text="@{HtmlCompat.fromHtml(data.desc,HtmlCompat.FROM_HTML_MODE_COMPACT)}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp_12"
                 tools:text="一个轻量级的适合快速编写出一个可定制的条目设置选项类型的View。做项目的过程中发现经常要写各种各样的点击选项的条目，一般做法每一个条目都要写一个子布局里面配置一堆的View，虽然也能完成效果，但是如果数量很多会容易出错效率不高。为了方便开发，我根据作者GitLqr的代码进行修改和完善用于自己的项目中。由于原作者的项目近几年好像都没有继续维护了，于是我打算自己动手改进完善代码，并将项目开源出来。" />
