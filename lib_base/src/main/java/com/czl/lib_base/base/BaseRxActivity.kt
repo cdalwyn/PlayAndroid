@@ -10,9 +10,9 @@ import com.trello.rxlifecycle3.android.ActivityEvent
 import com.trello.rxlifecycle3.android.RxLifecycleAndroid
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity
+import me.yokeyword.fragmentation.SupportActivity
 
-abstract class BaseRxActivity : SwipeBackActivity(), LifecycleProvider<ActivityEvent> {
+abstract class BaseRxActivity : SupportActivity(), LifecycleProvider<ActivityEvent> {
     private val lifecycleSubject = BehaviorSubject.create<ActivityEvent>()
     @CheckResult
     override fun lifecycle(): Observable<ActivityEvent> {

@@ -30,7 +30,8 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
     }
 
     override fun initParam() {
-        window.setBackgroundDrawableResource(R.color.white)
+        // 避免过度绘制
+        window.setBackgroundDrawable(null)
         ImmersionBar.hideStatusBar(window)
     }
 
@@ -57,7 +58,7 @@ class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>
 
     private fun toLogin() {
         viewModel.addSubscribe(
-            Flowable.timer(1500L, TimeUnit.MILLISECONDS)
+            Flowable.timer(200L, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     if (viewModel.model.getLoginName().isNullOrBlank()) {

@@ -12,7 +12,6 @@ import com.trello.rxlifecycle3.android.RxLifecycleAndroid
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import me.yokeyword.fragmentation.SupportFragment
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment
 
 abstract class BaseRxFragment : SupportFragment(), LifecycleProvider<FragmentEvent> {
     private val lifecycleSubject = BehaviorSubject.create<FragmentEvent>()

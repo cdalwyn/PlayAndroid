@@ -43,8 +43,6 @@ class MainActivity : BaseActivity<MainActivityMainBinding, MainViewModel>() {
     }
 
     override fun initData() {
-        setSwipeBackEnable(false)
-//        initToolbar()
         initBottomBar()
         initViewPager()
         PgyUtil.checkVersion(this)

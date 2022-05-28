@@ -56,7 +56,6 @@ dependencies {
     api rootProject.ext.dependencies["mmkv"]
     api rootProject.ext.dependencies["livebus"]
     api rootProject.ext.dependencies["fragmentationx"]
-    api rootProject.ext.dependencies["swipeback"]
     api rootProject.ext.dependencies["permissionx"]
     api rootProject.ext.dependencies["banner"]
     api rootProject.ext.dependencies["toast"]
