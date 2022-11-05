@@ -20,7 +20,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 @Route(path = AppConstants.Router.Login.A_SPLASH)
-class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>(),CancelAdapt {
+class SplashActivity : BaseActivity<LoginActivitySplashBinding, SplashViewModel>(), CancelAdapt {
 
     private val arrayLight = arrayListOf(R.drawable.splash_bg_light, R.drawable.bg_splash_light2)
     private val arrayDark = arrayListOf(R.drawable.splash_bg_dark, R.drawable.bg_splash_dark2)

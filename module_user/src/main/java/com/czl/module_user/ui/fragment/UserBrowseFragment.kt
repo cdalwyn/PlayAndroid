@@ -97,6 +97,7 @@ class UserBrowseFragment : BaseFragment<CommonRecyclerviewBinding, UserBrowseVm>
     private fun initAdapter() {
         mAdapter = UserBrowseAdapter(this)
         binding.ryCommon.apply {
+            ryCommon = this
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
             setDemoChildCount(20)

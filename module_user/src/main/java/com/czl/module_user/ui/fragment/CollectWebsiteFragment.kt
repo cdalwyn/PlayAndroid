@@ -72,6 +72,7 @@ class CollectWebsiteFragment : BaseFragment<CommonRecyclerviewBinding, CollectWe
         mAdapter = UserCollectWebAdapter(this)
         mAdapter.setDiffCallback(mAdapter.diffConfig)
         binding.ryCommon.apply {
+            ryCommon = this
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
             setDemoLayoutReference(R.layout.user_item_collect_skeleton)
